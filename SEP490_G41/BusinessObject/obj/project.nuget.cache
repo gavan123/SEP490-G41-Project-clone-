@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "kPjsUGqA+ul62BSK/B5U8fFMB71bGIFAm+VmV6CuPBD/A+Yu/KlUm8NWamagwML5e/iRfCDtk1zXEPUQ4f8+lQ==",
+  "dgSpecHash": "rgjOOggobkDyLYEviSJKl7hjUIhHH4RdCjVeW1xO0q5nY+SlZQdeGOtAGqgfGlPPo09dk14mUm8BZSemYrd9oQ==",
   "success": true,
-  "projectFilePath": "D:\\DO-AN\\SEP490_G41\\BusinessObject\\BusinessObject.csproj",
+  "projectFilePath": "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ADMIN\\.nuget\\packages\\automapper\\13.0.1\\automapper.13.0.1.nupkg.sha512",
     "C:\\Users\\ADMIN\\.nuget\\packages\\bouncycastle.cryptography\\2.2.1\\bouncycastle.cryptography.2.2.1.nupkg.sha512",
