@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.Configuration;
+using MySqlConnector;
 
 namespace BusinessObject.Models
 {
@@ -157,6 +158,14 @@ namespace BusinessObject.Models
                     .HasForeignKey(d => d.MapId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Map_MapPoint");
+
+                // Ánh xạ cột Location kiểu Point trong MySQL với thuộc tính Location của đối tượng Mappoint
+                entity.Property(e => e.Location)
+                      .HasColumnType("Point")
+                      .HasConversion(
+                            v => new { X = v.X, Y = v.Y }, // Chuyển từ MySQL Point sang lớp Point
+                            v => new Point { X = v.X, Y = v.Y }); // Chuyển từ lớp Point sang MySQL Point
+
             });
 
             modelBuilder.Entity<Member>(entity =>

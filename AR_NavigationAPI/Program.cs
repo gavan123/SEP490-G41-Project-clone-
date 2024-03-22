@@ -4,13 +4,28 @@ using BusinessObject.Models;
 using DataAccess.DAO;
 using DataAccess.IRepository;
 using DataAccess.IRepository.Repository;
+using Microsoft.AspNetCore.OData;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OData.Edm;
+using Microsoft.OData.ModelBuilder;
+using System.Security.Policy;
 
+
+static IEdmModel GetEdmModel()
+{
+    ODataModelBuilder builder = new ODataConventionModelBuilder();
+
+    builder.EntitySet<Building>("building"); // EntitySet tương ứng với bảng Authors trong migration của bạn
+
+
+    return builder.GetEdmModel();
+}
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddOData(option => option.Select()
+      .Filter().Count().OrderBy().Expand().SetMaxTop(100).AddRouteComponents("odata", GetEdmModel()));
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddScoped<finsContext>();

@@ -1,12 +1,82 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BusinessObject.DTO;
+using DataAccess.IRepository;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OData.Query;
+using Microsoft.AspNetCore.OData.Routing.Controllers;
+using System.Collections.Generic;
 
 namespace AR_NavigationAPI.Controllers
 {
-    public class BuildingController : Controller
+    [Route("api/buildings")]
+    [ApiController]
+    public class BuildingsController : ODataController
     {
-        public IActionResult Index()
+        private readonly IBuildingRepository _buildingRepository;
+
+        public BuildingsController(IBuildingRepository buildingRepository)
         {
-            return View();
+            _buildingRepository = buildingRepository;
+        }
+
+        // GET: api/buildings
+        [HttpGet]
+        [EnableQuery]
+        public IActionResult Get()
+        {
+            var buildings = _buildingRepository.GetAllBuildings();
+            return Ok(buildings);
+        }
+
+        // GET: api/buildings/5
+        [HttpGet("{id}")]
+        public IActionResult Get(int id)
+        {
+            var building = _buildingRepository.GetBuildingById(id);
+
+            if (building == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(building);
+        }
+
+        // POST: api/buildings
+        [HttpPost]
+        public ActionResult<BuildingAddDTO> CreateBuilding(BuildingAddDTO building)
+        {
+            _buildingRepository.AddBuilding(building);
+            return Ok(building);
+        }
+
+        // PUT: api/buildings/5
+        [HttpPut("{id}")]
+        public IActionResult UpdateBuilding(int id, BuildingUpdateDTO building)
+        {
+            var tmpBuilding = _buildingRepository.GetBuildingById(id);
+            if (tmpBuilding == null)
+            {
+                return NotFound();
+            }
+            _buildingRepository.UpdateBuilding(building);
+
+            return Ok();
+        }
+
+        // DELETE: api/buildings/5
+        [HttpDelete("{id}")]
+        public IActionResult DeleteBuilding(int id)
+        {
+            var building = _buildingRepository.GetBuildingById(id);
+
+            if (building == null)
+            {
+                return NotFound();
+            }
+
+            _buildingRepository.DeleteBuilding(id);
+
+            return Ok();
         }
     }
 }

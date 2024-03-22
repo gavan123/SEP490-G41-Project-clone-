@@ -14,7 +14,7 @@ namespace BusinessObject.Models
 
         public int MapPointId { get; set; }
         public int MapId { get; set; }
-
+        public Point Location { get; set; }
         public virtual Map Map { get; set; } = null!;
         public virtual ICollection<Room> Rooms { get; set; }
         public virtual ICollection<Route> RouteEndPointNavigations { get; set; }
