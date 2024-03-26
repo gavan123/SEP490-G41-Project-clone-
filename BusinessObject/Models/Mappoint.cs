@@ -1,5 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using NetTopologySuite.Geometries;
+using NetTopologySuite.Geometries.Utilities;
+
 
 namespace BusinessObject.Models
 {
@@ -14,7 +18,7 @@ namespace BusinessObject.Models
 
         public int MapPointId { get; set; }
         public int MapId { get; set; }
-        public Point Location { get; set; }
+        public NetTopologySuite.Geometries.Point Location { get; set; }
         public virtual Map Map { get; set; } = null!;
         public virtual ICollection<Room> Rooms { get; set; }
         public virtual ICollection<Route> RouteEndPointNavigations { get; set; }

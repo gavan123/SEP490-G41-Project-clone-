@@ -12,6 +12,7 @@ namespace BusinessObject.DTO
         public string BuildingName { get; set; } = null!;
         public string Image { get; set; } = null!;
         public string Status { get; set; } = null!;
+        public int FacilityId { get; set; }
         public string FacilityName { get; set; }
     }
 

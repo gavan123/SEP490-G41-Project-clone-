@@ -1,4 +1,5 @@
 ﻿using BusinessObject.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -59,7 +60,7 @@ namespace DataAccess.DAO
         // Lấy danh sách tất cả các tòa nhà
         public List<Building> GetAllBuildings()
         {
-            return _context.Buildings.ToList();
+            return _context.Buildings.Include(b => b.Facility).ToList();
         }
 
 

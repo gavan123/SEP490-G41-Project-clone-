@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\AR_Navigation.props" />
+</Project>

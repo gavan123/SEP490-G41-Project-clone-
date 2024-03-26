@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.Configuration;
 using MySqlConnector;
+using NetTopologySuite.Geometries;
+using NetTopologySuite.IO;
 
 namespace BusinessObject.Models
 {
@@ -32,13 +34,17 @@ namespace BusinessObject.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var builder = new ConfigurationBuilder()
-                              .SetBasePath(Directory.GetCurrentDirectory())
-                              .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
-            IConfigurationRoot configuration = builder.Build();
-            optionsBuilder.UseSqlServer(configuration.GetConnectionString("Project"));
-        }
+            if (!optionsBuilder.IsConfigured)
+            {
+                var builder = new ConfigurationBuilder()
+                                    .SetBasePath(Directory.GetCurrentDirectory())
+                                    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+                IConfigurationRoot configuration = builder.Build();
 
+                optionsBuilder.UseMySql(configuration.GetConnectionString("Project"), ServerVersion.AutoDetect(configuration.GetConnectionString("Project")),
+                    mysqlOptions => mysqlOptions.UseNetTopologySuite()); // Enable NetTopologySuite for MySQL
+            }
+        }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.UseCollation("utf8mb4_0900_ai_ci")
@@ -159,13 +165,11 @@ namespace BusinessObject.Models
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Map_MapPoint");
 
-                // Ánh xạ cột Location kiểu Point trong MySQL với thuộc tính Location của đối tượng Mappoint
                 entity.Property(e => e.Location)
-                      .HasColumnType("Point")
-                      .HasConversion(
-                            v => new { X = v.X, Y = v.Y }, // Chuyển từ MySQL Point sang lớp Point
-                            v => new Point { X = v.X, Y = v.Y }); // Chuyển từ lớp Point sang MySQL Point
-
+       .HasColumnType("point")
+       .HasConversion(
+           v => new WKTWriter().Write(v),
+           v => (Point)new WKTReader().Read(v));
             });
 
             modelBuilder.Entity<Member>(entity =>
