@@ -19,6 +19,10 @@ namespace BusinessObject.MappingProfile
                .ForMember(x => x.FacilityName, y => y.MapFrom(src => src.Facility.FacilityName)).ReverseMap();
             CreateMap<Building, BuildingUpdateDTO>().ReverseMap();
 
+            CreateMap<Facility, FacilityAddDTO>().ReverseMap();
+            CreateMap<Building, FacilityDTO>().ReverseMap();
+            CreateMap<Facility, FacilityUpdateDTO>().ReverseMap();
+
         }
     }
 }

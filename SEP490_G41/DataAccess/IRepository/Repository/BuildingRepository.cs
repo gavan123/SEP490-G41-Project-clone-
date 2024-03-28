@@ -55,6 +55,5 @@ namespace DataAccess.IRepository.Repository
             return buildingDTOs;
         }*/
 
-        // Các phương thức tìm kiếm và thêm mới khác có thể được thêm vào tương tự như trong ProductRepository
     }
 }

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "U/8Nck8sl2nxQp2dbesc42gGDe1Mts2UN2cEWhAGQcPmrjbMhAMdMhK3+N8aDkWaeK45RztHU6PKjneWzWGa2g==",
+  "dgSpecHash": "EK/Pv2hLVhE9/fPuUH9NxyFQPqgaIJ2K8VAHSgAS62mlSuSD1cm92y9ftglM+Rm+5v+6w8jrGbDq2KubqyQQgA==",
   "success": true,
-  "projectFilePath": "D:\\DO-AN\\sep490-g41-project\\AR_NavigationAPI\\AR_NavigationAPI.csproj",
+  "projectFilePath": "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\AR_NavigationAPI\\AR_NavigationAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ADMIN\\.nuget\\packages\\automapper\\13.0.1\\automapper.13.0.1.nupkg.sha512",
     "C:\\Users\\ADMIN\\.nuget\\packages\\bouncycastle.cryptography\\2.2.1\\bouncycastle.cryptography.2.2.1.nupkg.sha512",

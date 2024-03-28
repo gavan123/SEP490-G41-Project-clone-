@@ -15,7 +15,8 @@ static IEdmModel GetEdmModel()
 {
     ODataModelBuilder builder = new ODataConventionModelBuilder();
 
-    builder.EntitySet<Building>("building"); // EntitySet tương ứng với bảng Authors trong migration của bạn
+    builder.EntitySet<Building>("building");
+    builder.EntitySet<Facility>("facilities");
 
 
     return builder.GetEdmModel();
@@ -42,8 +43,11 @@ builder.Services.AddCors(policy =>
 });
 
 builder.Services.AddScoped<BuildingDAO>();
+builder.Services.AddScoped<FacilityDAO>();
 
 builder.Services.AddScoped<IBuildingRepository, BuildingRepository>();
+builder.Services.AddScoped<IFacilityRepository, FacilityRepository>();
+
 
 var app = builder.Build();
 
