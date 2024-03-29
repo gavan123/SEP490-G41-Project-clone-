@@ -3,8 +3,11 @@ Create or upload files
 Add files using the command line or push an existing Git repository with the following command:
 
 cd existing_repo
+
 git remote add origin https://gitlab.com/minhpche153232/sep490-g41-project.git
+
 git branch -M main
+
 git push -uf origin main
 
 Dưới đây là một số lệnh cơ bản trong Git:
