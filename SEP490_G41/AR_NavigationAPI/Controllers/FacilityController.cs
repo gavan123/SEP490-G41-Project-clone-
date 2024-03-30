@@ -20,7 +20,7 @@ namespace AR_NavigationAPI.Controllers
         // GET: api/facilities
         [HttpGet]
         [EnableQuery]
-        public IActionResult Get()
+        public IActionResult GetAllFacilities()
         {
             var facilities = _facilityRepository.GetAllFacilities();
             return Ok(facilities);
@@ -28,7 +28,7 @@ namespace AR_NavigationAPI.Controllers
 
         // GET: api/facilities/5
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public IActionResult GetFacilityById(int id)
         {
             var facility = _facilityRepository.GetFacilityById(id);
 
@@ -42,7 +42,7 @@ namespace AR_NavigationAPI.Controllers
 
         // POST: api/facilities
         [HttpPost]
-        public ActionResult<FacilityAddDTO> CreateFacility(FacilityAddDTO facility)
+        public ActionResult<FacilityAddDTO> CreateFacility([FromBody] FacilityAddDTO facility)
         {
             _facilityRepository.AddFacility(facility);
             return Ok(facility);
@@ -50,10 +50,10 @@ namespace AR_NavigationAPI.Controllers
 
         // PUT: api/facilities/5
         [HttpPut("{id}")]
-        public IActionResult UpdateFacility(int id, FacilityUpdateDTO facility)
+        public IActionResult UpdateFacility(int id, [FromBody] FacilityUpdateDTO facility)
         {
-            var tmpFacility = _facilityRepository.GetFacilityById(id);
-            if (tmpFacility == null)
+            var existingFacility = _facilityRepository.GetFacilityById(id);
+            if (existingFacility == null)
             {
                 return NotFound();
             }

@@ -23,30 +23,64 @@ namespace DataAccess.IRepository.Repository
 
         public FacilityDTO GetFacilityById(int facilityId)
         {
-            return _mapper.Map<FacilityDTO>(_facilityDAO.GetFacilityById(facilityId));
+            try
+            {
+                return _mapper.Map<FacilityDTO>(_facilityDAO.GetFacilityById(facilityId));
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error occurred while getting facility by ID.", ex);
+            }
         }
 
         public List<FacilityDTO> GetAllFacilities()
         {
-            var facilities = _facilityDAO.GetAllFacilities();
-            var facilityDTOs = facilities.Select(facility => _mapper.Map<FacilityDTO>(facility)).ToList();
-            return facilityDTOs;
+            try
+            {
+                var facilities = _facilityDAO.GetAllFacilities();
+                var facilityDTOs = facilities.Select(facility => _mapper.Map<FacilityDTO>(facility)).ToList();
+                return facilityDTOs;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error occurred while getting all facilities.", ex);
+            }
         }
 
         public void AddFacility(FacilityAddDTO facility)
         {
-            _facilityDAO.AddFacility(_mapper.Map<Facility>(facility));
+            try
+            {
+                _facilityDAO.AddFacility(_mapper.Map<Facility>(facility));
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error occurred while adding facility.", ex);
+            }
         }
 
         public void UpdateFacility(FacilityUpdateDTO facility)
         {
-            _facilityDAO.UpdateFacility(_mapper.Map<Facility>(facility));
+            try
+            {
+                _facilityDAO.UpdateFacility(_mapper.Map<Facility>(facility));
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error occurred while updating facility.", ex);
+            }
         }
 
         public void DeleteFacility(int facilityId)
         {
-            _facilityDAO.DeleteFacility(facilityId);
+            try
+            {
+                _facilityDAO.DeleteFacility(facilityId);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error occurred while deleting facility.", ex);
+            }
         }
-
     }
 }

@@ -21,7 +21,7 @@ namespace AR_NavigationAPI.Controllers
         // GET: api/buildings
         [HttpGet]
         [EnableQuery]
-        public IActionResult Get()
+        public IActionResult GetAllBuildings()
         {
             var buildings = _buildingRepository.GetAllBuildings();
             return Ok(buildings);
@@ -29,7 +29,7 @@ namespace AR_NavigationAPI.Controllers
 
         // GET: api/buildings/5
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public IActionResult GetBuildingById(int id)
         {
             var building = _buildingRepository.GetBuildingById(id);
 
@@ -43,7 +43,7 @@ namespace AR_NavigationAPI.Controllers
 
         // POST: api/buildings
         [HttpPost]
-        public ActionResult<BuildingAddDTO> CreateBuilding(BuildingAddDTO building)
+        public ActionResult<BuildingAddDTO> AddBuilding(BuildingAddDTO building)
         {
             _buildingRepository.AddBuilding(building);
             return Ok(building);
@@ -51,7 +51,7 @@ namespace AR_NavigationAPI.Controllers
 
         // PUT: api/buildings/5
         [HttpPut("{id}")]
-        public IActionResult UpdateBuilding(int id, BuildingUpdateDTO building)
+        public IActionResult UpdateBuildingById(int id, BuildingUpdateDTO building)
         {
             var tmpBuilding = _buildingRepository.GetBuildingById(id);
             if (tmpBuilding == null)
@@ -65,7 +65,7 @@ namespace AR_NavigationAPI.Controllers
 
         // DELETE: api/buildings/5
         [HttpDelete("{id}")]
-        public IActionResult DeleteBuilding(int id)
+        public IActionResult DeleteBuildingById(int id)
         {
             var building = _buildingRepository.GetBuildingById(id);
 

@@ -23,37 +23,69 @@ namespace DataAccess.IRepository.Repository
 
         public BuildingDTO GetBuildingById(int buildingId)
         {
-            return _mapper.Map<BuildingDTO>(_buildingDAO.GetBuildingById(buildingId));
+            var building = _buildingDAO.GetBuildingById(buildingId);
+            if (building == null)
+            {
+                throw new Exception("Building not found");
+            }
+            return _mapper.Map<BuildingDTO>(building);
         }
 
         public List<BuildingDTO> GetAllBuildings()
         {
-            var buildings = _buildingDAO.GetAllBuildings();
-            var buildingDTOs = buildings.Select(building => _mapper.Map<BuildingDTO>(building)).ToList();
-            return buildingDTOs;
+            try
+            {
+                var buildings = _buildingDAO.GetAllBuildings();
+                var buildingDTOs = buildings.Select(building => _mapper.Map<BuildingDTO>(building)).ToList();
+                return buildingDTOs;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error occurred while getting all buildings.", ex);
+            }
         }
 
         public void AddBuilding(BuildingAddDTO building)
         {
-            _buildingDAO.AddBuilding(_mapper.Map<Building>(building));
+            try
+            {
+                _buildingDAO.AddBuilding(_mapper.Map<Building>(building));
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error occurred while adding building.", ex);
+            }
         }
 
         public void UpdateBuilding(BuildingUpdateDTO building)
         {
-            _buildingDAO.UpdateBuilding(_mapper.Map<Building>(building));
+            try
+            {
+                _buildingDAO.UpdateBuilding(_mapper.Map<Building>(building));
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error occurred while updating building.", ex);
+            }
         }
 
         public void DeleteBuilding(int buildingId)
         {
-            _buildingDAO.DeleteBuilding(buildingId);
+            try
+            {
+                _buildingDAO.DeleteBuilding(buildingId);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error occurred while deleting building.", ex);
+            }
         }
 
         /*public List<BuildingDTO> SearchBuildingsByName(string keyword)
-        {
-            var buildings = _buildingDAO.SearchBuildingsByName(keyword);
-            var buildingDTOs = buildings.Select(building => _mapper.Map<BuildingDTO>(building)).ToList();
-            return buildingDTOs;
-        }*/
-
+{
+    var buildings = _buildingDAO.SearchBuildingsByName(keyword);
+    var buildingDTOs = buildings.Select(building => _mapper.Map<BuildingDTO>(building)).ToList();
+    return buildingDTOs;
+}*/
     }
 }
