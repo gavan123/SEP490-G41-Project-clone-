@@ -44,3 +44,14 @@
 10. **git status**: Kiểm tra trạng thái hiện tại của repository
 - git status
 
+11. **cd**: Hướng đến repository
+cd existing_repo
+
+12. **git remote add origin**: Hướng đến repository
+git remote add origin https://gitlab.com/minhpche153232/test-project.git
+
+13. **git branch -m**: Chuyển đổi giữa các nhánh
+- git branch -m branch_name
+
+14. **git init**: Tạo git
+- git init
