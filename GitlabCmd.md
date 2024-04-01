@@ -1,46 +1,46 @@
 //**Cmd Command**//
 
-1. **cd**: Thay đổi thư mục làm việc hiện tại.
-cd path_to_directory
+1. **cd**: Thay đổi thư mục làm việc hiện tại
+- cd path_to_directory
 
-2. **dir**: Liệt kê các tệp tin và thư mục trong thư mục hiện tại.
-dir
+2. **dir**: Liệt kê các tệp tin và thư mục trong thư mục hiện tại
+- dir
 
-3. **cls**: Xóa màn hình hiện tại.
-cls
+3. **cls**: Xóa màn hình hiện tại
+- cls
 
-4. **exit**: Thoát khỏi Command Prompt.
-exit
+4. **exit**: Thoát khỏi Command Prompt
+- exit
 
 //**GitLab Command**//
 
-1. **git clone**: Sao chép một repository từ GitLab về máy local của bạn.
-git clone "URL"
+1. **git clone**: Sao chép một repository từ GitLab về máy local của bạn
+- git clone "URL"
 
-2. **git add**: Thêm các thay đổi đã sửa đổi vào staging area.
-git add file_name or git add .
+2. **git add**: Thêm các thay đổi đã sửa đổi vào staging area
+- git add file_name or git add .
 
-3. **git commit**: Lưu các thay đổi đã thêm vào staging area vào repository.
-git commit -m "commit"
+3. **git commit**: Lưu các thay đổi đã thêm vào staging area vào repository
+- git commit -m "commit"
 
-4. **git push**: Đẩy các thay đổi từ máy local của bạn lên repository trên GitLab.
-git push origin branch_name
+4. **git push**: Đẩy các thay đổi từ máy local của bạn lên repository trên GitLab
+- git push origin branch_name
 
-5. **git pull**: Lấy các thay đổi từ repository trên GitLab và cập nhật máy local của bạn.
-git pull origin branch_name
+5. **git pull**: Lấy các thay đổi từ repository trên GitLab và cập nhật máy local của bạn
+- git pull origin branch_name
 
-6. **git branch**: Liệt kê tất cả các nhánh trong repository.
-git branch
+6. **git branch**: Liệt kê tất cả các nhánh trong repository
+- git branch
 
-7. **git checkout**: Chuyển đổi giữa các nhánh hoặc khôi phục file từ commit cụ thể.
-git checkout branch_name
+7. **git checkout**: Chuyển đổi giữa các nhánh hoặc khôi phục file từ commit cụ thể
+- git checkout branch_name
 
-8. **git merge**: Hợp nhất các thay đổi từ một nhánh khác vào nhánh hiện tại.
-git merge branch_name
+8. **git merge**: Hợp nhất các thay đổi từ một nhánh khác vào nhánh hiện tại
+- git merge branch_name
 
-9. **git log**: Hiển thị lịch sử các commit.
-git log
+9. **git log**: Hiển thị lịch sử các commit
+- git log
 
-10. **git status**: Kiểm tra trạng thái hiện tại của repository.
-git status
+10. **git status**: Kiểm tra trạng thái hiện tại của repository
+- git status
 
