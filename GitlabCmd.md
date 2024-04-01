@@ -29,18 +29,18 @@ git push origin branch_name
 5. **git pull**: Lấy các thay đổi từ repository trên GitLab và cập nhật máy local của bạn.
 git pull origin branch_name
 
-6. git branch: Liệt kê tất cả các nhánh trong repository.
+6. **git branch**: Liệt kê tất cả các nhánh trong repository.
 git branch
 
-7. git checkout: Chuyển đổi giữa các nhánh hoặc khôi phục file từ commit cụ thể.
+7. **git checkout**: Chuyển đổi giữa các nhánh hoặc khôi phục file từ commit cụ thể.
 git checkout branch_name
 
-8. git merge: Hợp nhất các thay đổi từ một nhánh khác vào nhánh hiện tại.
+8. **git merge**: Hợp nhất các thay đổi từ một nhánh khác vào nhánh hiện tại.
 git merge branch_name
 
-9. git log: Hiển thị lịch sử các commit.
+9. **git log**: Hiển thị lịch sử các commit.
 git log
 
-10. git status: Kiểm tra trạng thái hiện tại của repository.
+10. **git status**: Kiểm tra trạng thái hiện tại của repository.
 git status
 
