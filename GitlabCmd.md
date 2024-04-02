@@ -26,7 +26,7 @@
 4. **git remote add origin**: Hướng đến repository
 - git remote add origin https://gitlab.com/minhpche153232/sep490-g41-project.git
 
-5. **git branch -m**: Chuyển đổi giữa các nhánh
+5. **git branch -m**: Tạo nhánh mới
 - git branch -m branch_name
 
 6. **git add**: Thêm các thay đổi đã sửa đổi vào staging area
@@ -37,6 +37,7 @@
 
 8. **git push**: Đẩy các thay đổi từ máy local của bạn lên repository trên GitLab
 - git push origin branch_name
+- git push origin HEAD:branch_name
 
 9. **git pull**: Lấy các thay đổi từ repository trên GitLab và cập nhật máy local của bạn
 - git pull origin branch_name
