@@ -24,7 +24,7 @@
 - cd existing_repo
 
 4. **git remote add origin**: Hướng đến repository
-- git remote add origin https://gitlab.com/minhpche153232/test-project.git
+- git remote add origin https://gitlab.com/minhpche153232/sep490-g41-project.git
 
 5. **git branch -m**: Chuyển đổi giữa các nhánh
 - git branch -m branch_name
