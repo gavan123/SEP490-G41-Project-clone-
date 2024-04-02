@@ -1,8 +1,14 @@
 {
   "version": 2,
+<<<<<<< HEAD
   "dgSpecHash": "wzIm4uzjqFqNEW96kRmGWjQsFIinw/eaTzFB8At77o/cO2UCWBgzH7HmSVLRQladlHUcAZHdEXkVZwc+/VtXPw==",
   "success": true,
   "projectFilePath": "F:\\FINS\\SEP490_G41\\AR_NavigationAPI\\AR_NavigationAPI.csproj",
+=======
+  "dgSpecHash": "iZErJVokOswWtyYJtioO2Z9IsnL0eFOyOCWJypamXH+8d4P7Q8dMBMkJk6n76U9M0tsd91Nsip6GlCun3jTMfg==",
+  "success": true,
+  "projectFilePath": "F:\\sep490-g41-project\\SEP490_G41\\AR_NavigationAPI\\AR_NavigationAPI.csproj",
+>>>>>>> 70fbe8c830cbcd9629ef3db8b99e93c81e4afb56
   "expectedPackageFiles": [
     "C:\\Users\\theon\\.nuget\\packages\\automapper\\13.0.1\\automapper.13.0.1.nupkg.sha512",
     "C:\\Users\\theon\\.nuget\\packages\\bouncycastle.cryptography\\2.2.1\\bouncycastle.cryptography.2.2.1.nupkg.sha512",

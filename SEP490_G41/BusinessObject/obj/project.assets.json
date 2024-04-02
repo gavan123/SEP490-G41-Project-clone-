@@ -2823,11 +2823,19 @@
   "project": {
     "version": "1.0.0",
     "restore": {
+<<<<<<< HEAD
       "projectUniqueName": "F:\\FINS\\SEP490_G41\\BusinessObject\\BusinessObject.csproj",
       "projectName": "BusinessObject",
       "projectPath": "F:\\FINS\\SEP490_G41\\BusinessObject\\BusinessObject.csproj",
       "packagesPath": "C:\\Users\\theon\\.nuget\\packages\\",
       "outputPath": "F:\\FINS\\SEP490_G41\\BusinessObject\\obj\\",
+=======
+      "projectUniqueName": "F:\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj",
+      "projectName": "BusinessObject",
+      "projectPath": "F:\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj",
+      "packagesPath": "C:\\Users\\theon\\.nuget\\packages\\",
+      "outputPath": "F:\\sep490-g41-project\\SEP490_G41\\BusinessObject\\obj\\",
+>>>>>>> 70fbe8c830cbcd9629ef3db8b99e93c81e4afb56
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

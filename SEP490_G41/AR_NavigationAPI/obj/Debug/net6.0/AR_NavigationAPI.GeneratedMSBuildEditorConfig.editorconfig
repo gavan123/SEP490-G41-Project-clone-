@@ -9,11 +9,19 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = AR_NavigationAPI
 build_property.RootNamespace = AR_NavigationAPI
+<<<<<<< HEAD
 build_property.ProjectDir = F:\FINS\SEP490_G41\AR_NavigationAPI\
+=======
+build_property.ProjectDir = F:\sep490-g41-project\SEP490_G41\AR_NavigationAPI\
+>>>>>>> 70fbe8c830cbcd9629ef3db8b99e93c81e4afb56
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 6.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+<<<<<<< HEAD
 build_property.MSBuildProjectDirectory = F:\FINS\SEP490_G41\AR_NavigationAPI
+=======
+build_property.MSBuildProjectDirectory = F:\sep490-g41-project\SEP490_G41\AR_NavigationAPI
+>>>>>>> 70fbe8c830cbcd9629ef3db8b99e93c81e4afb56
 build_property._RazorSourceGeneratorDebug = 

@@ -1,0 +1,13 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\SEP490_G41",
+    "\\SEP490_G41\\AR_Navigation",
+    "\\SEP490_G41\\DataAccess",
+    "\\SEP490_G41\\DataAccess\\DAO",
+    "\\SEP490_G41\\DataAccess\\IRepository",
+    "\\SEP490_G41\\DataAccess\\IRepository\\Repository"
+  ],
+  "SelectedNode": "\\SEP490_G41\\DataAccess\\IRepository\\Repository\\FacilityRepository.cs",
+  "PreviewInSolutionExplorer": false
+}

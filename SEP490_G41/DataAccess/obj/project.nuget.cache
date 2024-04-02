@@ -1,8 +1,14 @@
 {
   "version": 2,
+<<<<<<< HEAD
   "dgSpecHash": "AGwLGQJz+zo6qwCvs67Sgw0Tos2XvrZqkuJKsCCmPRR7LoIJrFTE461NSY5/xJdq+1EFAsEGpgY4UOA2uqfulA==",
   "success": true,
   "projectFilePath": "F:\\FINS\\SEP490_G41\\DataAccess\\DataAccess.csproj",
+=======
+  "dgSpecHash": "UGLpW3RWDTOW1DqnRBQX4g5P4neln/jfAyE5YZ1RNnpgOmyQImNOxI+KXLf4i3QOxSCqmuxj2vxa9rGOWHFrxg==",
+  "success": true,
+  "projectFilePath": "F:\\sep490-g41-project\\SEP490_G41\\DataAccess\\DataAccess.csproj",
+>>>>>>> 70fbe8c830cbcd9629ef3db8b99e93c81e4afb56
   "expectedPackageFiles": [
     "C:\\Users\\theon\\.nuget\\packages\\automapper\\13.0.1\\automapper.13.0.1.nupkg.sha512",
     "C:\\Users\\theon\\.nuget\\packages\\bouncycastle.cryptography\\2.2.1\\bouncycastle.cryptography.2.2.1.nupkg.sha512",
