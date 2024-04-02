@@ -9,39 +9,39 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = AR_Navigation
 build_property.RootNamespace = AR_Navigation
-build_property.ProjectDir = D:\DO-AN\sep490-g41-project\SEP490_G41\AR_Navigation\
+build_property.ProjectDir = F:\FINS\SEP490_G41\AR_Navigation\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 6.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = D:\DO-AN\sep490-g41-project\SEP490_G41\AR_Navigation
+build_property.MSBuildProjectDirectory = F:\FINS\SEP490_G41\AR_Navigation
 build_property._RazorSourceGeneratorDebug = 
 
-[D:/DO-AN/sep490-g41-project/SEP490_G41/AR_Navigation/Pages/Error.cshtml]
+[F:/FINS/SEP490_G41/AR_Navigation/Pages/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/DO-AN/sep490-g41-project/SEP490_G41/AR_Navigation/Pages/Index.cshtml]
+[F:/FINS/SEP490_G41/AR_Navigation/Pages/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/DO-AN/sep490-g41-project/SEP490_G41/AR_Navigation/Pages/Privacy.cshtml]
+[F:/FINS/SEP490_G41/AR_Navigation/Pages/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJpdmFjeS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/DO-AN/sep490-g41-project/SEP490_G41/AR_Navigation/Pages/Shared/_ValidationScriptsPartial.cshtml]
+[F:/FINS/SEP490_G41/AR_Navigation/Pages/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/DO-AN/sep490-g41-project/SEP490_G41/AR_Navigation/Pages/_ViewImports.cshtml]
+[F:/FINS/SEP490_G41/AR_Navigation/Pages/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/DO-AN/sep490-g41-project/SEP490_G41/AR_Navigation/Pages/_ViewStart.cshtml]
+[F:/FINS/SEP490_G41/AR_Navigation/Pages/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/DO-AN/sep490-g41-project/SEP490_G41/AR_Navigation/Pages/Shared/_Layout.cshtml]
+[F:/FINS/SEP490_G41/AR_Navigation/Pages/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-af9evyrji6
