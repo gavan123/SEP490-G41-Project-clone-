@@ -77,7 +77,7 @@ namespace DataAccess.DAO
                     builder.Append(bytes[i].ToString("x2"));
                 }
                 // Chuỗi hex này là mật khẩu đã được mã hóa
-                string encodePassword = builder.ToString();
+                string encodePassword = "dasdasdahdgh5453" + builder.ToString() + "asgdsfgs23424";
 
                 return encodePassword;
             }

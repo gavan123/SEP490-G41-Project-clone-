@@ -1,16 +1,17 @@
 {
   "version": 2,
-<<<<<<< HEAD
   "dgSpecHash": "IPaqHw0pp57rCAmQSX99oEqXPCOQ4OYVNt5fZnOpk5MPtv7Qd+VKitaVyiSmUC4ULS23tH2PbNLhJRbPP4um/Q==",
   "success": true,
   "projectFilePath": "F:\\FINS\\SEP490_G41\\AR_Navigation\\AR_Navigation.csproj",
-=======
-  "dgSpecHash": "8ubgbId9x66F4MZC2XP0GcM1cpjymPbOqLV39b0sEc8Hr9P+RsQy5Lhy0iGYcwrSvM+CkiFZuJfUKETMDROeWQ==",
-  "success": true,
-  "projectFilePath": "F:\\sep490-g41-project\\SEP490_G41\\AR_Navigation\\AR_Navigation.csproj",
->>>>>>> 70fbe8c830cbcd9629ef3db8b99e93c81e4afb56
   "expectedPackageFiles": [
     "C:\\Users\\theon\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file F:\\FINS\\SEP490_G41\\AR_Navigation\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    }
+  ]
 }

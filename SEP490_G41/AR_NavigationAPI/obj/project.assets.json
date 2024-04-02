@@ -3599,19 +3599,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-<<<<<<< HEAD
       "projectUniqueName": "F:\\FINS\\SEP490_G41\\AR_NavigationAPI\\AR_NavigationAPI.csproj",
       "projectName": "AR_NavigationAPI",
       "projectPath": "F:\\FINS\\SEP490_G41\\AR_NavigationAPI\\AR_NavigationAPI.csproj",
       "packagesPath": "C:\\Users\\theon\\.nuget\\packages\\",
       "outputPath": "F:\\FINS\\SEP490_G41\\AR_NavigationAPI\\obj\\",
-=======
-      "projectUniqueName": "F:\\sep490-g41-project\\SEP490_G41\\AR_NavigationAPI\\AR_NavigationAPI.csproj",
-      "projectName": "AR_NavigationAPI",
-      "projectPath": "F:\\sep490-g41-project\\SEP490_G41\\AR_NavigationAPI\\AR_NavigationAPI.csproj",
-      "packagesPath": "C:\\Users\\theon\\.nuget\\packages\\",
-      "outputPath": "F:\\sep490-g41-project\\SEP490_G41\\AR_NavigationAPI\\obj\\",
->>>>>>> 70fbe8c830cbcd9629ef3db8b99e93c81e4afb56
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -3633,19 +3625,11 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-<<<<<<< HEAD
             "F:\\FINS\\SEP490_G41\\BusinessObject\\BusinessObject.csproj": {
               "projectPath": "F:\\FINS\\SEP490_G41\\BusinessObject\\BusinessObject.csproj"
             },
             "F:\\FINS\\SEP490_G41\\DataAccess\\DataAccess.csproj": {
               "projectPath": "F:\\FINS\\SEP490_G41\\DataAccess\\DataAccess.csproj"
-=======
-            "F:\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj": {
-              "projectPath": "F:\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj"
-            },
-            "F:\\sep490-g41-project\\SEP490_G41\\DataAccess\\DataAccess.csproj": {
-              "projectPath": "F:\\sep490-g41-project\\SEP490_G41\\DataAccess\\DataAccess.csproj"
->>>>>>> 70fbe8c830cbcd9629ef3db8b99e93c81e4afb56
             }
           }
         }
@@ -3696,5 +3680,13 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202\\RuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file F:\\FINS\\SEP490_G41\\AR_NavigationAPI\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    }
+  ]
 }

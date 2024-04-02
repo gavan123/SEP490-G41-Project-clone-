@@ -61,19 +61,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-<<<<<<< HEAD
       "projectUniqueName": "F:\\FINS\\SEP490_G41\\AR_Navigation\\AR_Navigation.csproj",
       "projectName": "AR_Navigation",
       "projectPath": "F:\\FINS\\SEP490_G41\\AR_Navigation\\AR_Navigation.csproj",
       "packagesPath": "C:\\Users\\theon\\.nuget\\packages\\",
       "outputPath": "F:\\FINS\\SEP490_G41\\AR_Navigation\\obj\\",
-=======
-      "projectUniqueName": "F:\\sep490-g41-project\\SEP490_G41\\AR_Navigation\\AR_Navigation.csproj",
-      "projectName": "AR_Navigation",
-      "projectPath": "F:\\sep490-g41-project\\SEP490_G41\\AR_Navigation\\AR_Navigation.csproj",
-      "packagesPath": "C:\\Users\\theon\\.nuget\\packages\\",
-      "outputPath": "F:\\sep490-g41-project\\SEP490_G41\\AR_Navigation\\obj\\",
->>>>>>> 70fbe8c830cbcd9629ef3db8b99e93c81e4afb56
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -139,5 +131,13 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202\\RuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file F:\\FINS\\SEP490_G41\\AR_Navigation\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    }
+  ]
 }
