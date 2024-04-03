@@ -14,6 +14,7 @@ namespace BusinessObject.MappingProfile
         public MappingProfile()
         {
 
+<<<<<<< HEAD
             CreateMap<Building, BuildingAddDTO>().ReverseMap();
             CreateMap<Building, BuildingDTO>()
                .ForMember(x => x.FacilityName, y => y.MapFrom(src => src.Facility.FacilityName)).ReverseMap();
@@ -22,6 +23,19 @@ namespace BusinessObject.MappingProfile
             CreateMap<Facility, FacilityAddDTO>().ReverseMap();
             CreateMap<Building, FacilityDTO>().ReverseMap();
             CreateMap<Facility, FacilityUpdateDTO>().ReverseMap();
+=======
+            CreateMap<Map, MapDTO>()
+               .ForMember(dest => dest.FloorName, opt => opt.MapFrom(src => src.Floor.FloorName));
+            CreateMap<MapDTO, Map>();
+
+            // Định nghĩa ánh xạ từ MapAddDTO sang Map và ngược lại
+            CreateMap<MapAddDTO, Map>();
+            CreateMap<Map, MapAddDTO>();
+
+            // Định nghĩa ánh xạ từ MapUpdateDTO sang Map và ngược lại
+            CreateMap<MapUpdateDTO, Map>();
+            CreateMap<Map, MapUpdateDTO>();
+>>>>>>> hieunh
 
         }
     }
