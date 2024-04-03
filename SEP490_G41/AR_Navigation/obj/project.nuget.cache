@@ -1,16 +1,17 @@
 {
   "version": 2,
-<<<<<<< HEAD
   "dgSpecHash": "msTERVEVcvw8AAunpzIy37JUr05zxxvz47ZvnVL8pgn1KRrBOQId5I+grlE0mRDjIMLETNcs9HwUOKOsfGkk0g==",
   "success": true,
   "projectFilePath": "C:\\Users\\TGDD'\\Dropbox\\PC\\Documents\\SEP490_G41\\sep490-g41-project\\SEP490_G41\\AR_Navigation\\AR_Navigation.csproj",
-=======
-  "dgSpecHash": "mToa2pMFa7H/fAhDROTUeBAUGHdhiTnVpMJRlufYDvW5L5bmJ1gD8fuyoe1jUvVhdb01MpqanJNWdFyrLPBvEQ==",
-  "success": true,
-  "projectFilePath": "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\AR_Navigation\\AR_Navigation.csproj",
->>>>>>> f5d676ffa01de042082ed42daab101c2c1a480a3
   "expectedPackageFiles": [
     "C:\\Users\\TGDD'\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file C:\\Users\\TGDD'\\Dropbox\\PC\\Documents\\SEP490_G41\\sep490-g41-project\\SEP490_G41\\AR_Navigation\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    }
+  ]
 }

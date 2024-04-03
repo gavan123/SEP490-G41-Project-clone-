@@ -1,7 +1,6 @@
 {
   "format": 1,
   "restore": {
-<<<<<<< HEAD
     "C:\\Users\\TGDD'\\Dropbox\\PC\\Documents\\SEP490_G41\\sep490-g41-project\\SEP490_G41\\AR_Navigation\\AR_Navigation.csproj": {}
   },
   "projects": {
@@ -13,19 +12,6 @@
         "projectPath": "C:\\Users\\TGDD'\\Dropbox\\PC\\Documents\\SEP490_G41\\sep490-g41-project\\SEP490_G41\\AR_Navigation\\AR_Navigation.csproj",
         "packagesPath": "C:\\Users\\TGDD'\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\TGDD'\\Dropbox\\PC\\Documents\\SEP490_G41\\sep490-g41-project\\SEP490_G41\\AR_Navigation\\obj\\",
-=======
-    "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\AR_Navigation\\AR_Navigation.csproj": {}
-  },
-  "projects": {
-    "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\AR_Navigation\\AR_Navigation.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\AR_Navigation\\AR_Navigation.csproj",
-        "projectName": "AR_Navigation",
-        "projectPath": "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\AR_Navigation\\AR_Navigation.csproj",
-        "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\AR_Navigation\\obj\\",
->>>>>>> f5d676ffa01de042082ed42daab101c2c1a480a3
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
