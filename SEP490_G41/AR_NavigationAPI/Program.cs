@@ -1,4 +1,3 @@
-using BusinessObject.DTO;
 using BusinessObject.MappingProfile;
 using BusinessObject.Models;
 using DataAccess.DAO;
@@ -8,7 +7,7 @@ using Microsoft.AspNetCore.OData;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OData.Edm;
 using Microsoft.OData.ModelBuilder;
-using System.Security.Policy;
+
 
 
 static IEdmModel GetEdmModel()
@@ -44,9 +43,11 @@ builder.Services.AddCors(policy =>
 
 builder.Services.AddScoped<BuildingDAO>();
 builder.Services.AddScoped<FacilityDAO>();
+builder.Services.AddScoped<MapDAO>();
 
 builder.Services.AddScoped<IBuildingRepository, BuildingRepository>();
 builder.Services.AddScoped<IFacilityRepository, FacilityRepository>();
+builder.Services.AddScoped<IMapRepository, MapRepository>();
 
 
 var app = builder.Build();
