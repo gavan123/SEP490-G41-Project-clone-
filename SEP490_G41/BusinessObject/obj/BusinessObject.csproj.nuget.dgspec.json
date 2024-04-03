@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "D:\\DO-AN\\SEP490_G41\\BusinessObject\\BusinessObject.csproj": {}
+    "D:\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj": {}
   },
   "projects": {
-    "D:\\DO-AN\\SEP490_G41\\BusinessObject\\BusinessObject.csproj": {
+    "D:\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\DO-AN\\SEP490_G41\\BusinessObject\\BusinessObject.csproj",
+        "projectUniqueName": "D:\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj",
         "projectName": "BusinessObject",
-        "projectPath": "D:\\DO-AN\\SEP490_G41\\BusinessObject\\BusinessObject.csproj",
-        "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "D:\\DO-AN\\SEP490_G41\\BusinessObject\\obj\\",
+        "projectPath": "D:\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj",
+        "packagesPath": "C:\\Users\\hieud\\.nuget\\packages\\",
+        "outputPath": "D:\\sep490-g41-project\\SEP490_G41\\BusinessObject\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\hieud\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -44,16 +48,6 @@
               "target": "Package",
               "version": "[13.0.1, )"
             },
-            "Microsoft.EntityFrameworkCore.Design": {
-              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
-              "suppressParent": "All",
-              "target": "Package",
-              "version": "[6.0.28, )"
-            },
-            "Microsoft.EntityFrameworkCore.SqlServer": {
-              "target": "Package",
-              "version": "[6.0.28, )"
-            },
             "Microsoft.Extensions.Configuration": {
               "target": "Package",
               "version": "[6.0.1, )"
@@ -70,7 +64,15 @@
               "target": "Package",
               "version": "[2.3.5, )"
             },
+            "NetTopologySuite": {
+              "target": "Package",
+              "version": "[2.5.0, )"
+            },
             "Pomelo.EntityFrameworkCore.MySql": {
+              "target": "Package",
+              "version": "[6.0.3, )"
+            },
+            "Pomelo.EntityFrameworkCore.MySql.NetTopologySuite": {
               "target": "Package",
               "version": "[6.0.3, )"
             }
@@ -91,7 +93,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.403\\RuntimeIdentifierGraph.json"
         }
       }
     }
