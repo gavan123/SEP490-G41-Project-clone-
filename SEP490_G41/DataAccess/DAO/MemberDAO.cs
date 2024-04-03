@@ -48,10 +48,10 @@ namespace DataAccess.DAO
             }
         }
         //Xóa bỏ 1 member
-        public bool DeleteMember(string name)
+        public bool DeleteMember(int id)
         {
             bool result = false;
-            var member = _context.Members.FirstOrDefault(m => m.FullName.Contains(name));
+            var member = _context.Members.FirstOrDefault(m => m.MemberId ==);
             if (member != null)
             {
                 _context.Members.Remove(member);
