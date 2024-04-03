@@ -1,26 +1,14 @@
-<<<<<<< HEAD
-using BusinessObject.DTO;
 using BusinessObject.MappingProfile;
 using BusinessObject.Models;
 using DataAccess.DAO;
 using DataAccess.IRepository;
 using DataAccess.IRepository.Repository;
-=======
-﻿using BusinessObject.MappingProfile;
-using BusinessObject.Models;
-using DataAccess.DAO;
-using DataAccess.IRepository.Repository;
-using DataAccess.IRepository;
->>>>>>> hieunh
 using Microsoft.AspNetCore.OData;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OData.Edm;
 using Microsoft.OData.ModelBuilder;
-<<<<<<< HEAD
-using System.Security.Policy;
 
-=======
->>>>>>> hieunh
+
 
 static IEdmModel GetEdmModel()
 {
@@ -53,19 +41,13 @@ builder.Services.AddCors(policy =>
     policy.AddPolicy("AllowAll", builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 });
 
-<<<<<<< HEAD
 builder.Services.AddScoped<BuildingDAO>();
 builder.Services.AddScoped<FacilityDAO>();
+builder.Services.AddScoped<MapDAO>();
 
 builder.Services.AddScoped<IBuildingRepository, BuildingRepository>();
 builder.Services.AddScoped<IFacilityRepository, FacilityRepository>();
-=======
-builder.Services.AddScoped<MapDAO>();
-
 builder.Services.AddScoped<IMapRepository, MapRepository>();
-
-
->>>>>>> hieunh
 
 
 var app = builder.Build();

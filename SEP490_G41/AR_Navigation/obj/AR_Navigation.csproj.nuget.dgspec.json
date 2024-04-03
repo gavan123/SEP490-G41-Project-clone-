@@ -1,19 +1,6 @@
 {
   "format": 1,
   "restore": {
-<<<<<<< HEAD
-    "F:\\FINS\\SEP490_G41\\AR_Navigation\\AR_Navigation.csproj": {}
-  },
-  "projects": {
-    "F:\\FINS\\SEP490_G41\\AR_Navigation\\AR_Navigation.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "F:\\FINS\\SEP490_G41\\AR_Navigation\\AR_Navigation.csproj",
-        "projectName": "AR_Navigation",
-        "projectPath": "F:\\FINS\\SEP490_G41\\AR_Navigation\\AR_Navigation.csproj",
-        "packagesPath": "C:\\Users\\theon\\.nuget\\packages\\",
-        "outputPath": "F:\\FINS\\SEP490_G41\\AR_Navigation\\obj\\",
-=======
     "D:\\sep490-g41-project\\SEP490_G41\\AR_Navigation\\AR_Navigation.csproj": {}
   },
   "projects": {
@@ -25,17 +12,12 @@
         "projectPath": "D:\\sep490-g41-project\\SEP490_G41\\AR_Navigation\\AR_Navigation.csproj",
         "packagesPath": "C:\\Users\\hieud\\.nuget\\packages\\",
         "outputPath": "D:\\sep490-g41-project\\SEP490_G41\\AR_Navigation\\obj\\",
->>>>>>> hieunh
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-<<<<<<< HEAD
-          "C:\\Users\\theon\\AppData\\Roaming\\NuGet\\NuGet.Config",
-=======
           "C:\\Users\\hieud\\AppData\\Roaming\\NuGet\\NuGet.Config",
->>>>>>> hieunh
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -44,7 +26,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -57,11 +38,6 @@
           "warnAsError": [
             "NU1605"
           ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -92,11 +68,7 @@
               "privateAssets": "all"
             }
           },
-<<<<<<< HEAD
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202\\RuntimeIdentifierGraph.json"
-=======
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.403\\RuntimeIdentifierGraph.json"
->>>>>>> hieunh
         }
       }
     }

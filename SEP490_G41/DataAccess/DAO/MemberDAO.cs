@@ -51,7 +51,7 @@ namespace DataAccess.DAO
         public bool DeleteMember(int id)
         {
             bool result = false;
-            var member = _context.Members.FirstOrDefault(m => m.MemberId ==);
+            var member = _context.Members.FirstOrDefault(m => m.MemberId == id);
             if (member != null)
             {
                 _context.Members.Remove(member);
