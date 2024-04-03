@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AR_Navigation")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fe123078139f401c86e168ce62eb3e8cc5236090")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+53eff64e2dacb00e18ef39f4c300d6ddf3ec4252")]
 [assembly: System.Reflection.AssemblyProductAttribute("AR_Navigation")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AR_Navigation")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
