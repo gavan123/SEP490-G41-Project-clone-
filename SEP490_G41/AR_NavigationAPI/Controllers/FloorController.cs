@@ -18,13 +18,13 @@ namespace AR_NavigationAPI.Controllers
             _floorRepository = floorRepository;
         }
 
-        // GET: api/floors
+               // GET: api/floors
         [HttpGet]
         [EnableQuery]
-        public IActionResult GetAllFloors()
+        public IQueryable<FloorDTO> GetAllFloors()
         {
             var floors = _floorRepository.GetAllFloors();
-            return Ok(floors);
+            return floors.AsQueryable(); // Chuyển đổi sang IQueryable
         }
 
         // GET: api/floors/5
