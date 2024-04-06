@@ -16,6 +16,8 @@ static IEdmModel GetEdmModel()
 
     builder.EntitySet<Building>("building");
     builder.EntitySet<Facility>("facilities");
+    builder.EntitySet<Floor>("floor");
+
 
 
     return builder.GetEdmModel();
@@ -44,10 +46,13 @@ builder.Services.AddCors(policy =>
 builder.Services.AddScoped<BuildingDAO>();
 builder.Services.AddScoped<FacilityDAO>();
 builder.Services.AddScoped<MapDAO>();
+builder.Services.AddScoped<FloorDAO>();
 
 builder.Services.AddScoped<IBuildingRepository, BuildingRepository>();
 builder.Services.AddScoped<IFacilityRepository, FacilityRepository>();
 builder.Services.AddScoped<IMapRepository, MapRepository>();
+builder.Services.AddScoped<IFloorRepository, FloorRepository>();
+
 
 
 var app = builder.Build();

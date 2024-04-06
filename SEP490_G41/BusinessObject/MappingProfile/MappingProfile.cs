@@ -20,8 +20,13 @@ namespace BusinessObject.MappingProfile
             CreateMap<Building, BuildingUpdateDTO>().ReverseMap();
 
             CreateMap<Facility, FacilityAddDTO>().ReverseMap();
-            CreateMap<Building, FacilityDTO>().ReverseMap();
+            CreateMap<Facility, FacilityDTO>().ReverseMap();
             CreateMap<Facility, FacilityUpdateDTO>().ReverseMap();
+
+            CreateMap<Floor, FloorAddDTO>().ReverseMap();
+            CreateMap<Floor, FloorDTO>().ReverseMap();
+
+
             CreateMap<Map, MapDTO>()
                .ForMember(dest => dest.FloorName, opt => opt.MapFrom(src => src.Floor.FloorName));
             CreateMap<MapDTO, Map>();
