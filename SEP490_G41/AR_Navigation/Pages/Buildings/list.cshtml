@@ -3,6 +3,25 @@
 @{
     Layout = "_Layout1";
 }
+<style>
+    /* Đặt kích thước cho container chứa ảnh */
+    #selected-image-container {
+        width: 200px;
+        height: 200px;
+        border: 2px solid #ced4da;
+        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 10px;
+    }
+
+    .selected-image-container img {
+        max-width: 100%;
+        max-height: 100%;
+        border-radius: 8px;
+    }
+</style>
 <div class="page-header no-gutters">
     <h1>Building List</h1>
     <div class="row align-items-md-center">
@@ -18,9 +37,9 @@
         </div>
         <div class="col-md-6">
             <div class="text-md-right m-v-10">
-                <button class="btn btn-primary" data-toggle="modal" data-target="#create-new-project">
+                <button class="btn btn-primary" data-toggle="modal" data-target="#create-new-building">
                     <i class="anticon anticon-plus"></i>
-                    <span class="m-l-5">New Project</span>
+                    <span class="m-l-5">New Building</span>
                 </button>
             </div>
         </div>
@@ -41,25 +60,79 @@
                         </tr>
                     </thead>
                     <tbody id="building-list">
-
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
-    
 </div>
+
+@* Modal Create
+ *@
+<div class="modal fade" id="create-new-building">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Create New Building</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <i class="anticon anticon-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="form-add-building" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="new-building-name">Building Name</label>
+                        <input type="text" class="form-control" id="new-building-name" placeholder="Please input building name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="new-building-image">Image</label>
+                        <div class="input-group">
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="new-building-image" aria-describedby="inputGroupFileAddon" onchange="displaySelectedImage(this)">
+                                <label class="custom-file-label" for="new-building-image">Choose file</label>
+                            </div>
+                        </div>
+                        <div id="selected-image-container" class="selected-image-container" style="margin-top: 10px;"></div>
+                    </div>
+                    <div class="form-group">
+                        <label>Status</label>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="statusActive" name="statusRadios" class="custom-control-input" value="active" checked>
+                            <label class="custom-control-label" for="statusActive">Active</label>
+                        </div>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="statusDeactive" name="statusRadios" class="custom-control-input" value="deactive">
+                            <label class="custom-control-label" for="statusDeactive">Deactive</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="new-building-facility">Facility</label>
+                        <select class="form-control" id="new-building-facility">
+                            <!-- Option sẽ được tạo bởi JavaScript -->
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="create-building-btn">Create Building</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
 
 <script>
     $(document).ready(function () {
+
         function updateBuildingList(buildings) {
             $('#building-list').empty();
 
             buildings.forEach(function (building) {
-                // Lấy buildingId của mỗi tòa nhà
                 var buildingId = building.buildingId;
 
-                // Gửi yêu cầu AJAX để lấy số lượng tầng của tòa nhà từ OData COUNT
                 $.ajax({
                     url: `https://localhost:7186/api/floors?$filter=buildingId eq ${buildingId}`,
                     type: 'GET',
@@ -67,53 +140,53 @@
                     success: function (floors) {
                         var count = floors.length;
 
-                        // Tạo hàng cho mỗi tòa nhà và thêm vào bảng
                         var buildingRow = `
-                                <tr>
-                                    <td>
-                                        <div class="media align-items-center">
-                                            <div class="avatar avatar-image rounded">
-                                                <img src="${building.image}" alt="">
-                                            </div>
-                                            <div class="m-l-10">
-                                                <h5 class="m-b-0">${building.buildingName}</h5>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <span>${count}</span>
-                                    </td>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="badge badge-${building.status === 'active' ? 'success' : 'danger'} badge-dot m-r-10"></div>
-                                            <div>${building.status}</div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <span>${building.facilityName}</span>
-                                    </td>
-                                    <td class="text-right">
-                                        <div class="dropdown dropdown-animated scale-left">
-                                            <a class="text-gray font-size-18" href="javascript:void(0);" data-toggle="dropdown">
-                                                <i class="anticon anticon-ellipsis"></i>
-                                            </a>
-                                            <div class="dropdown-menu">
-                                                <button class="dropdown-item" type="button">
-                                                    <i class="anticon anticon-eye"></i>
-                                                    <span class="m-l-10">View</span>
-                                                </button>
-                                                <button class="dropdown-item" type="button">
-                                                    <i class="anticon anticon-edit"></i>
-                                                    <span class="m-l-10">Edit</span>
-                                                </button>
-                                                <button class="dropdown-item" type="button">
-                                                    <i class="anticon anticon-delete"></i>
-                                                    <span class="m-l-10">Delete</span>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>`;
+    <tr>
+        <td>
+            <div class="media align-items-center">
+                <div class="avatar avatar-image rounded">
+                    <img src="${building.image}" alt="">
+                </div>
+                <div class="m-l-10">
+                    <h5 class="m-b-0">${building.buildingName}</h5>
+                </div>
+            </div>
+        </td>
+        <td>
+            <span>${count}</span>
+        </td>
+        <td>
+            <div class="d-flex align-items-center">
+                <div class="badge badge-${building.status === 'active' ? 'success' : 'danger'} badge-dot m-r-10"></div>
+                <div>${building.status}</div>
+            </div>
+        </td>
+        <td>
+            <span>${building.facilityName}</span>
+        </td>
+        <td class="text-right">
+            <div class="dropdown dropdown-animated scale-left">
+                <a class="text-gray font-size-18" href="javascript:void(0);" data-toggle="dropdown">
+                    <i class="anticon anticon-ellipsis"></i>
+                </a>
+                <div class="dropdown-menu">
+                    <button class="dropdown-item btn viewBuilding" type="button" data-id="${building.buildingId}">
+                        <i class="anticon anticon-eye"></i>
+                        <span class="m-l-10">View</span>
+                    </button>
+                    <button class="dropdown-item btn editBuilding" type="button" data-id="${building.buildingId}">
+                        <i class="anticon anticon-edit"></i>
+                        <span class="m-l-10">Edit</span>
+                    </button>
+                    <button class="dropdown-item btn deleteBuilding " type="button" data-id="${building.buildingId}">
+                        <i class="anticon anticon-delete"></i>
+                        <span class="m-l-10">Delete</span>
+                    </button>
+                </div>
+            </div>
+        </td>
+    </tr>
+    `;
 
                         $('#building-list').append(buildingRow);
                     },
@@ -124,7 +197,8 @@
             });
         }
 
-        // Lấy danh sách tòa nhà từ API
+
+        // Get building list from API
         $.ajax({
             url: 'https://localhost:7186/api/buildings',
             type: 'GET',
@@ -136,7 +210,88 @@
                 console.log('Error loading buildings from API: ' + error);
             }
         });
+
+        //API get facility
+        $.ajax({
+            url: 'https://localhost:7186/api/facilities',
+            type: 'GET',
+            success: function (response) {
+                response.forEach(function (facility) {
+                    $('#new-building-facility').append('<option value="' + facility.facilityId + '">' + facility.facilityName + '</option>');
+                });
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+
+        $('#create-building-btn').click(function () {
+            // Get data from input fields
+            var buildingName = $('#new-building-name').val();
+            var status = $('input[name="statusRadios"]:checked').val();
+            var facilityId = $('#new-building-facility').val();
+            var imageInput = $('#new-building-image');
+
+            // Create FormData to send data to the API
+            var formData = new FormData();
+            formData.append('BuildingName', buildingName);
+            formData.append('Status', status);
+            formData.append('FacilityId', facilityId);
+            if (imageInput[0].files.length > 0) {
+                var imageFile = imageInput[0].files[0];
+                formData.append('Image', imageFile);
+            }
+
+            // Send an AJAX POST request to the API
+            $.ajax({
+                url: 'https://localhost:7186/api/buildings',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    console.log('Building added successfully:', response);
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Building added successfully!',
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then(() => {
+                        location.reload();
+                    });
+                    $('#create-new-building').modal('hide');
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error adding building:', error);
+                    // Log details of the error response
+                    console.log(imageInput[0].files);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Failed to add building. Please try again later.',
+                    });
+                }
+            });
+        });
     });
+
+    //get image when selected
+    function displaySelectedImage(input) {
+        var file = input.files[0];
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            var imgElement = document.createElement('img');
+            imgElement.src = e.target.result;
+            imgElement.className = "img-fluid rounded";
+
+            var selectedImageContainer = document.getElementById('selected-image-container');
+            selectedImageContainer.innerHTML = ''; // Xóa ảnh cũ
+            selectedImageContainer.appendChild(imgElement); // Thêm ảnh mới
+        }
+
+        reader.readAsDataURL(file);
+    }
 </script>
 
 

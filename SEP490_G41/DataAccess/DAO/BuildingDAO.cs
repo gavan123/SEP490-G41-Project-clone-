@@ -63,25 +63,5 @@ namespace DataAccess.DAO
             return _context.Buildings.Include(b => b.Facility).ToList();
         }
 
-
-        // Tìm kiếm tòa nhà theo tên
-        public List<Building> SearchBuildingsByName(string keyword)
-        {
-            var buildings = _context.Buildings
-                .Where(b => b.BuildingName.Contains(keyword))
-                .ToList();
-
-            return buildings;
-        }
-
-        // Tìm kiếm tòa nhà theo trạng thái
-        public List<Building> SearchBuildingsByStatus(string status)
-        {
-            var buildings = _context.Buildings
-                .Where(b => b.Status == status)
-                .ToList();
-
-            return buildings;
-        }
     }
 }

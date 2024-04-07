@@ -2,11 +2,13 @@
 using BusinessObject.DTO;
 using BusinessObject.Models;
 using DataAccess.DAO;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace DataAccess.IRepository.Repository
 {
@@ -49,13 +51,36 @@ namespace DataAccess.IRepository.Repository
         {
             try
             {
-                _buildingDAO.AddBuilding(_mapper.Map<Building>(building));
+                string targetDirectory = @"D:\PRN231\PRN221_block5_project1\BookStory\BookStory\wwwroot\StoriesImage";
+                string uniqueFileName = null;
+
+                if (building.Image != null && building.Image.Length > 0)
+                {
+                    uniqueFileName = Guid.NewGuid().ToString() + "_" + building.Image.FileName;
+                    string filePath = Path.Combine(targetDirectory, uniqueFileName);
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        building.Image.CopyTo(stream);
+                    }
+                }
+
+                var buildingModel = new Building
+                {
+                    BuildingName = building.BuildingName,
+                    Status = building.Status,
+                    FacilityId = building.FacilityId,
+                    Image = uniqueFileName 
+                };
+
+                _buildingDAO.AddBuilding(buildingModel);
             }
             catch (Exception ex)
             {
                 throw new Exception("Error occurred while adding building.", ex);
             }
         }
+
+
 
         public void UpdateBuilding(BuildingUpdateDTO building)
         {
@@ -81,11 +106,6 @@ namespace DataAccess.IRepository.Repository
             }
         }
 
-        /*public List<BuildingDTO> SearchBuildingsByName(string keyword)
-{
-    var buildings = _buildingDAO.SearchBuildingsByName(keyword);
-    var buildingDTOs = buildings.Select(building => _mapper.Map<BuildingDTO>(building)).ToList();
-    return buildingDTOs;
-}*/
+      
     }
 }

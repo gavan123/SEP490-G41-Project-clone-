@@ -3,6 +3,8 @@ using DataAccess.IRepository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Query;
 using Microsoft.AspNetCore.OData.Routing.Controllers;
+using Microsoft.EntityFrameworkCore;
+using Org.BouncyCastle.Utilities.Collections;
 using System.Collections.Generic;
 
 namespace AR_NavigationAPI.Controllers
@@ -43,7 +45,7 @@ namespace AR_NavigationAPI.Controllers
 
         // POST: api/buildings
         [HttpPost]
-        public ActionResult<BuildingAddDTO> AddBuilding(BuildingAddDTO building)
+        public ActionResult<BuildingAddDTO> AddBuilding([FromForm] BuildingAddDTO building)
         {
             _buildingRepository.AddBuilding(building);
             return Ok(building);

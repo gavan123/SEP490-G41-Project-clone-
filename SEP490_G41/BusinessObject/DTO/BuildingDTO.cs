@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,7 +20,7 @@ namespace BusinessObject.DTO
     public class BuildingAddDTO
     {
         public string BuildingName { get; set; } = null!;
-        public string Image { get; set; } = null!;
+        public IFormFile Image { get; set; } = null!;
         public string Status { get; set; } = null!;
         public int FacilityId { get; set; }
     }
@@ -28,7 +29,7 @@ namespace BusinessObject.DTO
     {
         public int BuildingId { get; set; }
         public string BuildingName { get; set; } = null!;
-        public string Image { get; set; } = null!;
+        public IFormFile Image { get; set; } = null!;
         public string Status { get; set; } = null!;
         public int FacilityId { get; set; }
     }
