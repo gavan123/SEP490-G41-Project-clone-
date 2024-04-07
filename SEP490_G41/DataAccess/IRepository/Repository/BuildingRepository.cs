@@ -51,13 +51,13 @@ namespace DataAccess.IRepository.Repository
         {
             try
             {
-                string targetDirectory = @"D:\PRN231\PRN221_block5_project1\BookStory\BookStory\wwwroot\StoriesImage";
+                string currentDirectory = @"D:\DO-AN\sep490-g41-project\SEP490_G41\AR_Navigation\wwwroot\Images";
                 string uniqueFileName = null;
 
                 if (building.Image != null && building.Image.Length > 0)
                 {
                     uniqueFileName = Guid.NewGuid().ToString() + "_" + building.Image.FileName;
-                    string filePath = Path.Combine(targetDirectory, uniqueFileName);
+                    string filePath = Path.Combine(currentDirectory, uniqueFileName);
                     using (var stream = new FileStream(filePath, FileMode.Create))
                     {
                         building.Image.CopyTo(stream);

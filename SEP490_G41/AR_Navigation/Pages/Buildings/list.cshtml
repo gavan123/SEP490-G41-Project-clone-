@@ -127,89 +127,85 @@
 <script>
     $(document).ready(function () {
 
-        function updateBuildingList(buildings) {
+        async function updateBuildingList(buildings) {
+            // Sắp xếp danh sách tòa nhà theo tên (buildingName)
+            buildings.sort((a, b) => a.buildingName.localeCompare(b.buildingName));
+
             $('#building-list').empty();
 
-            buildings.forEach(function (building) {
-                var buildingId = building.buildingId;
+            for (const building of buildings) {
+                const buildingId = building.buildingId;
 
-                $.ajax({
-                    url: `https://localhost:7186/api/floors?$filter=buildingId eq ${buildingId}`,
-                    type: 'GET',
-                    dataType: 'json',
-                    success: function (floors) {
-                        var count = floors.length;
+                try {
+                    // Gửi yêu cầu AJAX để lấy thông tin của tòa nhà
+                    const floors = await $.ajax({
+                        url: `https://localhost:7186/api/floors?$filter=buildingId eq ${buildingId}`,
+                        type: 'GET',
+                        dataType: 'json'
+                    });
 
-                        var buildingRow = `
-    <tr>
-        <td>
-            <div class="media align-items-center">
-                <div class="avatar avatar-image rounded">
-                    <img src="${building.image}" alt="">
-                </div>
-                <div class="m-l-10">
-                    <h5 class="m-b-0">${building.buildingName}</h5>
-                </div>
-            </div>
-        </td>
-        <td>
-            <span>${count}</span>
-        </td>
-        <td>
-            <div class="d-flex align-items-center">
-                <div class="badge badge-${building.status === 'active' ? 'success' : 'danger'} badge-dot m-r-10"></div>
-                <div>${building.status}</div>
-            </div>
-        </td>
-        <td>
-            <span>${building.facilityName}</span>
-        </td>
-        <td class="text-right">
-            <div class="dropdown dropdown-animated scale-left">
-                <a class="text-gray font-size-18" href="javascript:void(0);" data-toggle="dropdown">
-                    <i class="anticon anticon-ellipsis"></i>
-                </a>
-                <div class="dropdown-menu">
-                    <button class="dropdown-item btn viewBuilding" type="button" data-id="${building.buildingId}">
-                        <i class="anticon anticon-eye"></i>
-                        <span class="m-l-10">View</span>
-                    </button>
-                    <button class="dropdown-item btn editBuilding" type="button" data-id="${building.buildingId}">
-                        <i class="anticon anticon-edit"></i>
-                        <span class="m-l-10">Edit</span>
-                    </button>
-                    <button class="dropdown-item btn deleteBuilding " type="button" data-id="${building.buildingId}">
-                        <i class="anticon anticon-delete"></i>
-                        <span class="m-l-10">Delete</span>
-                    </button>
-                </div>
-            </div>
-        </td>
-    </tr>
-    `;
+                    const count = floors.length;
 
-                        $('#building-list').append(buildingRow);
-                    },
-                    error: function (xhr, status, error) {
-                        console.log('Error loading building count from API: ' + error);
-                    }
-                });
-            });
+                    const buildingRow = `
+                <tr>
+                    <td>
+                        <div class="media align-items-center">
+                            <div class="avatar avatar-image rounded">
+                                <img src="/Images/${building.image}" alt="">
+                            </div>
+                            <div class="m-l-10">
+                                <h5 class="m-b-0">${building.buildingName}</h5>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <span>${count}</span>
+                    </td>
+                    <td>
+                        <div class="d-flex align-items-center">
+                            <div class="badge badge-${building.status === 'active' ? 'success' : 'danger'} badge-dot m-r-10"></div>
+                            <div>${building.status}</div>
+                        </div>
+                    </td>
+                    <td>
+                        <span>${building.facilityName}</span>
+                    </td>
+                    <td class="text-right">
+                        <div class="icon-buttons">
+                            <button class="btn viewBuilding" type="button" data-id="${building.buildingId}">
+                                <i class="anticon anticon-eye"></i>
+                            </button>
+                            <button class="btn editBuilding" type="button" data-id="${building.buildingId}">
+                                <i class="anticon anticon-edit"></i>
+                            </button>
+                            <button class="btn deleteBuilding" type="button" data-id="${building.buildingId}">
+                                <i class="anticon anticon-delete"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `;
+
+                    $('#building-list').append(buildingRow);
+                } catch (error) {
+                    console.error('Error loading building count from API: ' + error);
+                }
+            }
         }
-
 
         // Get building list from API
         $.ajax({
             url: 'https://localhost:7186/api/buildings',
             type: 'GET',
             dataType: 'json',
-            success: function (buildings) {
-                updateBuildingList(buildings);
+            success: async function (buildings) {
+                await updateBuildingList(buildings);
             },
             error: function (xhr, status, error) {
                 console.log('Error loading buildings from API: ' + error);
             }
         });
+
 
         //API get facility
         $.ajax({
@@ -225,6 +221,7 @@
             }
         });
 
+        //Create Building API
         $('#create-building-btn').click(function () {
             // Get data from input fields
             var buildingName = $('#new-building-name').val();
@@ -269,6 +266,46 @@
                         icon: 'error',
                         title: 'Error',
                         text: 'Failed to add building. Please try again later.',
+                    });
+                }
+            });
+        });
+
+        //Delete Building API
+        $(document).on('click', '.deleteBuilding', function () {
+            var buildingId = $(this).data('id');
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'You will not be able to recover this building!',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: 'https://localhost:7186/api/buildings/' + buildingId,
+                        type: 'DELETE',
+                        success: function (response) {
+                            console.log(response);
+                            Swal.fire(
+                                'Deleted!',
+                                'Building has been deleted.',
+                                'success'
+                            ).then(() => {
+                                location.reload();
+                            });
+                        },
+                        error: function (xhr, status, error) {
+                            console.error(xhr.responseText);
+                            Swal.fire(
+                                'Error!',
+                                'Failed to delete building. Please try again later.',
+                                'error'
+                            );
+                        }
                     });
                 }
             });
