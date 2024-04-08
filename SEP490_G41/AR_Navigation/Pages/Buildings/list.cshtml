@@ -67,8 +67,7 @@
     </div>
 </div>
 
-@* Modal Create
- *@
+@* Modal Create*@
 <div class="modal fade" id="create-new-building">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -79,7 +78,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="form-add-building" method="post" enctype="multipart/form-data">
+                <form asp-page="/Buildings/List" asp-page-handler="CreateBuilding" id="form-add-building" method="post" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="new-building-name">Building Name</label>
                         <input type="text" class="form-control" id="new-building-name" placeholder="Please input building name" required>
@@ -88,7 +87,7 @@
                         <label for="new-building-image">Image</label>
                         <div class="input-group">
                             <div class="custom-file">
-                                <input type="file" class="custom-file-input" id="new-building-image" aria-describedby="inputGroupFileAddon" onchange="displaySelectedImage(this)">
+                                <input type="file" name="ImageFile" class="custom-file-input" id="new-building-image" aria-describedby="inputGroupFileAddon" onchange="displaySelectedImage(this)">
                                 <label class="custom-file-label" for="new-building-image">Choose file</label>
                             </div>
                         </div>
@@ -111,15 +110,63 @@
                             <!-- Option sẽ được tạo bởi JavaScript -->
                         </select>
                     </div>
+                  <button type="button" class="btn btn-primary" id="create-building-btn">Create Building</button>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="create-building-btn">Create Building</button>
             </div>
         </div>
     </div>
 </div>
 
+
+@* Modal Edit*@
+<div class="modal fade" id="edit-building">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Building</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <i class="anticon anticon-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form asp-page="/Buildings/List" asp-page-handler="EditBuilding" id="form-edit-building" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="edit-building-name">Building Name</label>
+                        <input type="text" class="form-control" id="edit-building-name" placeholder="Please input building name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-building-image">Image</label>
+                        <div class="input-group">
+                            <div class="custom-file">
+                                <input type="file" name="ImageFile" class="custom-file-input" id="edit-building-image" aria-describedby="inputGroupFileAddon" onchange="displaySelectedImage(this)">
+                                <label class="custom-file-label" for="edit-building-image">Choose file</label>
+                            </div>
+                        </div>
+                        <div id="selected-image-container" class="selected-image-container" style="margin-top: 10px;"></div>
+                    </div>
+                    <div class="form-group">
+                        <label>Status</label>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="edit-statusActive" name="edit-statusRadios" class="custom-control-input" value="active" checked>
+                            <label class="custom-control-label" for="edit-statusActive">Active</label>
+                        </div>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="edit-statusDeactive" name="edit-statusRadios" class="custom-control-input" value="deactive">
+                            <label class="custom-control-label" for="edit-statusDeactive">Deactive</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-building-facility">Facility</label>
+                        <select class="form-control" id="edit-building-facility">
+                            <!-- Option sẽ được tạo bởi JavaScript -->
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="edit-building-btn">Save Changes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 
@@ -222,6 +269,7 @@
             success: function (response) {
                 response.forEach(function (facility) {
                     $('#new-building-facility').append('<option value="' + facility.facilityId + '">' + facility.facilityName + '</option>');
+                    $('#edit-building-facility').append('<option value="' + facility.facilityId + '">' + facility.facilityName + '</option>');
                 });
             },
             error: function (xhr, status, error) {
@@ -262,7 +310,7 @@
                         showConfirmButton: false,
                         timer: 1500
                     }).then(() => {
-                        location.reload();
+                        $('#form-add-building').submit();
                     });
                     $('#create-new-building').modal('hide');
                 },
@@ -318,6 +366,48 @@
                 }
             });
         });
+
+        // eidt API
+        $(document).on('click', '.editBuilding', function () {
+            var buildingId = $(this).data('id'); 
+            showEditModal(buildingId);
+        });
+
+        //Show edit modal have data by buildingId
+        function showEditModal(buildingId) {
+            $.ajax({
+                url: 'https://localhost:7186/api/buildings/' + buildingId, 
+                type: 'GET',
+                success: function (response) {
+                    $('#edit-building-name').val(response.buildingName);
+                    $('#edit-building-image').val(response.imageUrl); 
+                    if (response.status === 'active') {
+                        $('#edit-statusActive').prop('checked', true); 
+                    } else {
+                        $('#edit-statusDeactive').prop('checked', true); 
+                    }
+                    var facilityName = '';
+                    //API get facilities by ID
+                    $.ajax({
+                        url: 'https://localhost:7186/api/facilities/' + response.facilityId,
+                        type: 'GET',
+                        async: false, 
+                        success: function (facilityResponse) {
+                            facilityId = facilityResponse.facilityId;
+                        },
+                        error: function (xhr, status, error) {
+                            console.error('Error fetching facility details:', error);
+                        }
+                    });
+                    $('#edit-building-facility').val(facilityId);
+
+                    $('#edit-building').modal('show');
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error fetching building details:', error);
+                }
+            });
+        }
     });
 
     //get image when selected
@@ -331,8 +421,8 @@
             imgElement.className = "img-fluid rounded";
 
             var selectedImageContainer = document.getElementById('selected-image-container');
-            selectedImageContainer.innerHTML = ''; // Xóa ảnh cũ
-            selectedImageContainer.appendChild(imgElement); // Thêm ảnh mới
+            selectedImageContainer.innerHTML = ''; 
+            selectedImageContainer.appendChild(imgElement); 
         }
 
         reader.readAsDataURL(file);

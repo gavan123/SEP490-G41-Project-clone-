@@ -51,18 +51,7 @@ namespace DataAccess.IRepository.Repository
         {
             try
             {
-                string currentDirectory = @"D:\DO-AN\sep490-g41-project\SEP490_G41\AR_Navigation\wwwroot\Images";
-                string uniqueFileName = null;
-
-                if (building.Image != null && building.Image.Length > 0)
-                {
-                    uniqueFileName = Guid.NewGuid().ToString() + "_" + building.Image.FileName;
-                    string filePath = Path.Combine(currentDirectory, uniqueFileName);
-                    using (var stream = new FileStream(filePath, FileMode.Create))
-                    {
-                        building.Image.CopyTo(stream);
-                    }
-                }
+                string uniqueFileName =  building.Image.FileName;
 
                 var buildingModel = new Building
                 {
