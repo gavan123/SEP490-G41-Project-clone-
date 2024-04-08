@@ -5,7 +5,7 @@
 }
 <style>
     /* Đặt kích thước cho container chứa ảnh */
-    #selected-image-container {
+    .selected-image-container {
         width: 200px;
         height: 200px;
         border: 2px solid #ced4da;
@@ -87,11 +87,11 @@
                         <label for="new-building-image">Image</label>
                         <div class="input-group">
                             <div class="custom-file">
-                                <input type="file" name="ImageFile" class="custom-file-input" id="new-building-image" aria-describedby="inputGroupFileAddon" onchange="displaySelectedImage(this)">
+                                <input type="file" name="ImageFile" class="custom-file-input" id="new-building-image" aria-describedby="inputGroupFileAddon" onchange="displaySelectedImage(this, 'add-selected-image-container')">
                                 <label class="custom-file-label" for="new-building-image">Choose file</label>
                             </div>
                         </div>
-                        <div id="selected-image-container" class="selected-image-container" style="margin-top: 10px;"></div>
+                        <div id="add-selected-image-container" class="selected-image-container" style="margin-top: 10px;"></div>
                     </div>
                     <div class="form-group">
                         <label>Status</label>
@@ -130,6 +130,7 @@
             </div>
             <div class="modal-body">
                 <form asp-page="/Buildings/List" asp-page-handler="EditBuilding" id="form-edit-building" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="BuildingId" id="building-id" value="">
                     <div class="form-group">
                         <label for="edit-building-name">Building Name</label>
                         <input type="text" class="form-control" id="edit-building-name" placeholder="Please input building name" required>
@@ -138,11 +139,11 @@
                         <label for="edit-building-image">Image</label>
                         <div class="input-group">
                             <div class="custom-file">
-                                <input type="file" name="ImageFile" class="custom-file-input" id="edit-building-image" aria-describedby="inputGroupFileAddon" onchange="displaySelectedImage(this)">
+                                <input type="file" name="ImageFile" class="custom-file-input" id="edit-building-image" aria-describedby="inputGroupFileAddon" onchange="displaySelectedImage(this, 'edit-selected-image-container')">
                                 <label class="custom-file-label" for="edit-building-image">Choose file</label>
                             </div>
                         </div>
-                        <div id="selected-image-container" class="selected-image-container" style="margin-top: 10px;"></div>
+                        <div id="edit-selected-image-container" class="selected-image-container" style="margin-top: 10px;"></div>
                     </div>
                     <div class="form-group">
                         <label>Status</label>
@@ -161,7 +162,7 @@
                             <!-- Option sẽ được tạo bởi JavaScript -->
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-primary" id="edit-building-btn">Save Changes</button>
+                    <button type="button" class="btn btn-primary" id="edit-building-btn">Save Changes</button>
                 </form>
             </div>
         </div>
@@ -367,25 +368,25 @@
             });
         });
 
-        // eidt API
+        //Show edit modal have data by buildingId
         $(document).on('click', '.editBuilding', function () {
             var buildingId = $(this).data('id'); 
             showEditModal(buildingId);
         });
 
-        //Show edit modal have data by buildingId
         function showEditModal(buildingId) {
             $.ajax({
                 url: 'https://localhost:7186/api/buildings/' + buildingId, 
                 type: 'GET',
                 success: function (response) {
+                    $('#building-id').val(response.buildingId);
                     $('#edit-building-name').val(response.buildingName);
-                    $('#edit-building-image').val(response.imageUrl); 
                     if (response.status === 'active') {
                         $('#edit-statusActive').prop('checked', true); 
                     } else {
                         $('#edit-statusDeactive').prop('checked', true); 
                     }
+                    $('#edit-building').modal('show');
                     var facilityName = '';
                     //API get facilities by ID
                     $.ajax({
@@ -408,10 +409,59 @@
                 }
             });
         }
+
+        //Edit Building 
+        $('#edit-building-btn').click(function () {
+            var buildingId = $('#building-id').val();
+            var buildingName = $('#edit-building-name').val(); 
+            var status = $('input[name="edit-statusRadios"]:checked').val();
+            var facilityId = $('#edit-building-facility').val(); 
+            var imageInput = $('#edit-building-image'); 
+
+            var formData = new FormData();
+            formData.append('BuildingId', buildingId);
+            formData.append('BuildingName', buildingName);
+            formData.append('Status', status);
+            formData.append('FacilityId', facilityId);
+            if (imageInput[0].files.length > 0) {
+                var imageFile = imageInput[0].files[0];
+                formData.append('Image', imageFile);
+            }
+
+            $.ajax({
+                url: 'https://localhost:7186/api/buildings/' + $('#building-id').val(),
+                type: 'PUT',
+                data: formData,
+                contentType: false, 
+                processData: false, 
+                success: function (response) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Building Updated',
+                        text: 'Building information has been updated successfully!',
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then(() => {
+                        $('#form-edit-building').submit();
+                    });
+                    $('#edit-building').modal('hide');
+                    console.log('Building updated successfully:', response);
+                },
+                error: function (xhr, status, error) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'An error occurred while updating building information.',
+                    });
+                    console.error('Error updating building:', error);
+                }
+            });
+        });
+
     });
 
     //get image when selected
-    function displaySelectedImage(input) {
+    function displaySelectedImage(input, containerId) {
         var file = input.files[0];
         var reader = new FileReader();
 
@@ -420,9 +470,9 @@
             imgElement.src = e.target.result;
             imgElement.className = "img-fluid rounded";
 
-            var selectedImageContainer = document.getElementById('selected-image-container');
-            selectedImageContainer.innerHTML = ''; 
-            selectedImageContainer.appendChild(imgElement); 
+            var selectedImageContainer = document.getElementById(containerId);
+            selectedImageContainer.innerHTML = '';
+            selectedImageContainer.appendChild(imgElement);
         }
 
         reader.readAsDataURL(file);

@@ -53,7 +53,7 @@ namespace AR_NavigationAPI.Controllers
 
         // PUT: api/buildings/5
         [HttpPut("{id}")]
-        public IActionResult UpdateBuildingById(int id, BuildingUpdateDTO building)
+        public IActionResult UpdateBuildingById(int id, [FromForm] BuildingUpdateDTO building)
         {
             var tmpBuilding = _buildingRepository.GetBuildingById(id);
             if (tmpBuilding == null)

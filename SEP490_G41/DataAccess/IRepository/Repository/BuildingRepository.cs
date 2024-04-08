@@ -75,7 +75,17 @@ namespace DataAccess.IRepository.Repository
         {
             try
             {
-                _buildingDAO.UpdateBuilding(_mapper.Map<Building>(building));
+                string uniqueFileName = building.Image.FileName;
+
+                var buildingModel = new Building
+                {
+                    BuildingId = building.BuildingId,
+                    BuildingName = building.BuildingName,
+                    Status = building.Status,
+                    FacilityId = building.FacilityId,
+                    Image = uniqueFileName
+                };
+                _buildingDAO.UpdateBuilding(_mapper.Map<Building>(buildingModel));
             }
             catch (Exception ex)
             {

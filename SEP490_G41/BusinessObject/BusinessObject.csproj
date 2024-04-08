@@ -18,4 +18,10 @@
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql.NetTopologySuite" Version="6.0.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
