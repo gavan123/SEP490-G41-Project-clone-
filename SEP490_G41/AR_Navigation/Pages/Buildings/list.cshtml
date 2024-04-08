@@ -175,6 +175,7 @@
 <script>
     $(document).ready(function () {
 
+        //Buiding table
         async function updateBuildingList(buildings) {
             // Sắp xếp danh sách tòa nhà theo tên (buildingName)
             buildings.sort((a, b) => a.buildingName.localeCompare(b.buildingName));
@@ -207,7 +208,7 @@
                         </div>
                     </td>
                     <td>
-                        <span>${count}</span>
+                        <span>${count} Floor</span>
                     </td>
                     <td>
                         <div class="d-flex align-items-center">
@@ -374,6 +375,7 @@
             showEditModal(buildingId);
         });
 
+        //Get building data by buildingId 
         function showEditModal(buildingId) {
             $.ajax({
                 url: 'https://localhost:7186/api/buildings/' + buildingId, 
