@@ -37,8 +37,7 @@ namespace DataAccess.DAO
                 existingMember.Address = member.Address;
                 existingMember.Phone = member.Phone;
                 existingMember.Email = member.Email;
-                existingMember.Username = member.Username;
-                existingMember.Password = member.Password;
+                existingMember.Username = member.Username;             
                 existingMember.Status = member.Phone;      
 
                 _context.SaveChanges();
