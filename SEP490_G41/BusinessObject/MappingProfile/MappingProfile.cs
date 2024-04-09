@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
 using BusinessObject.DTO;
 using BusinessObject.Models;
+using NetTopologySuite.Geometries;
+using NetTopologySuite;
+using Org.BouncyCastle.Math.EC;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,6 +37,12 @@ namespace BusinessObject.MappingProfile
             CreateMap<MapUpdateDTO, Map>();
             CreateMap<Map, MapUpdateDTO>();
 
+            CreateMap<Mappoint, MapPointDTO>();
+            CreateMap<MapPointAddDTO, Mappoint>();
+            CreateMap<MapPointUpdateDTO, Mappoint>();
+
+
         }
+
     }
 }
