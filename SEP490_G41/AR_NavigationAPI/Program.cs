@@ -33,6 +33,7 @@ builder.Services.AddDbContext<finsContext>((serviceProvider, options) =>
 {
     var serverVersion = new MySqlServerVersion(new Version(8, 0, 23)); // Thay thế bằng phiên bản MySQL Server bạn đang sử dụng
     options.UseMySql(builder.Configuration.GetConnectionString("Project"), serverVersion);
+
 });
 builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(typeof(MappingProfile));
@@ -44,10 +45,12 @@ builder.Services.AddCors(policy =>
 builder.Services.AddScoped<BuildingDAO>();
 builder.Services.AddScoped<FacilityDAO>();
 builder.Services.AddScoped<MapDAO>();
+builder.Services.AddScoped<MappointDAO>();
 
 builder.Services.AddScoped<IBuildingRepository, BuildingRepository>();
 builder.Services.AddScoped<IFacilityRepository, FacilityRepository>();
 builder.Services.AddScoped<IMapRepository, MapRepository>();
+builder.Services.AddScoped<IMapPointRepository, MapPointRepository>();
 
 
 var app = builder.Build();

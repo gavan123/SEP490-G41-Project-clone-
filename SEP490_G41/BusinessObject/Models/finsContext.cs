@@ -283,5 +283,21 @@ namespace BusinessObject.Models
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+        public class Program
+        {
+            static void Main(string[] args)
+            {
+                using (var dbContext = new finsContext())
+                {
+                    var mappoints = dbContext.Mappoints.ToList();
+
+                    foreach (var mappoint in mappoints)
+                    {
+                        // Now you can access the Location property, which is of type NetTopologySuite.Geometries.Point
+                        Console.WriteLine($"MapPointId: {mappoint.MapPointId}, Location: {mappoint.Location}");
+                    }
+                }
+            }
+        }
     }
 }

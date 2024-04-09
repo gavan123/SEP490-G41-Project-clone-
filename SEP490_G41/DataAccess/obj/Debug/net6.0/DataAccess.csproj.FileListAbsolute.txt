@@ -1,4 +1,5 @@
 D:\sep490-g41-project\SEP490_G41\DataAccess\bin\Debug\net6.0\DataAccess.deps.json
+D:\sep490-g41-project\SEP490_G41\DataAccess\bin\Debug\net6.0\DataAccess.runtimeconfig.json
 D:\sep490-g41-project\SEP490_G41\DataAccess\bin\Debug\net6.0\DataAccess.dll
 D:\sep490-g41-project\SEP490_G41\DataAccess\bin\Debug\net6.0\DataAccess.pdb
 D:\sep490-g41-project\SEP490_G41\DataAccess\bin\Debug\net6.0\BusinessObject.dll
@@ -12,4 +13,5 @@ D:\sep490-g41-project\SEP490_G41\DataAccess\obj\Debug\net6.0\DataAccess.csproj.C
 D:\sep490-g41-project\SEP490_G41\DataAccess\obj\Debug\net6.0\DataAccess.dll
 D:\sep490-g41-project\SEP490_G41\DataAccess\obj\Debug\net6.0\refint\DataAccess.dll
 D:\sep490-g41-project\SEP490_G41\DataAccess\obj\Debug\net6.0\DataAccess.pdb
+D:\sep490-g41-project\SEP490_G41\DataAccess\obj\Debug\net6.0\DataAccess.genruntimeconfig.cache
 D:\sep490-g41-project\SEP490_G41\DataAccess\obj\Debug\net6.0\ref\DataAccess.dll

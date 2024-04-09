@@ -1,4 +1,5 @@
 D:\sep490-g41-project\SEP490_G41\BusinessObject\bin\Debug\net6.0\BusinessObject.deps.json
+D:\sep490-g41-project\SEP490_G41\BusinessObject\bin\Debug\net6.0\BusinessObject.runtimeconfig.json
 D:\sep490-g41-project\SEP490_G41\BusinessObject\bin\Debug\net6.0\BusinessObject.dll
 D:\sep490-g41-project\SEP490_G41\BusinessObject\bin\Debug\net6.0\BusinessObject.pdb
 D:\sep490-g41-project\SEP490_G41\BusinessObject\obj\Debug\net6.0\BusinessObject.csproj.AssemblyReference.cache
@@ -10,4 +11,5 @@ D:\sep490-g41-project\SEP490_G41\BusinessObject\obj\Debug\net6.0\EFCoreMySqlNetT
 D:\sep490-g41-project\SEP490_G41\BusinessObject\obj\Debug\net6.0\BusinessObject.dll
 D:\sep490-g41-project\SEP490_G41\BusinessObject\obj\Debug\net6.0\refint\BusinessObject.dll
 D:\sep490-g41-project\SEP490_G41\BusinessObject\obj\Debug\net6.0\BusinessObject.pdb
+D:\sep490-g41-project\SEP490_G41\BusinessObject\obj\Debug\net6.0\BusinessObject.genruntimeconfig.cache
 D:\sep490-g41-project\SEP490_G41\BusinessObject\obj\Debug\net6.0\ref\BusinessObject.dll
