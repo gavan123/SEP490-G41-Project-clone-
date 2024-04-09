@@ -39,7 +39,18 @@ namespace DataAccess.IRepository.Repository
             }
             catch (Exception ex)
             {
-                throw new Exception("Error occurred while updating member.", ex);
+                throw new Exception("Error occurred while updating profile.", ex);
+            }
+        }
+        public void ChangePassword(ChangePasswordDTO pass)
+        {
+            try
+            {
+                _profileDAO.ChangePassword(_mapper.Map<Member>(pass));
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error occurred while change password.", ex);
             }
         }
     }

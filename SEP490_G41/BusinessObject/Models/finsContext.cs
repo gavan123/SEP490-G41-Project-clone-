@@ -184,9 +184,9 @@ namespace BusinessObject.Models
 
                 entity.Property(e => e.FullName).HasMaxLength(50);
 
-                entity.Property(e => e.Password).HasMaxLength(50);
+                entity.Property(e => e.Password).HasMaxLength(1000);
 
-                entity.Property(e => e.DoB).HasColumnType("date");
+                entity.Property(e => e.DoB).HasColumnType("datetime");
 
                 entity.Property(e => e.Phone)
                     .HasMaxLength(10)

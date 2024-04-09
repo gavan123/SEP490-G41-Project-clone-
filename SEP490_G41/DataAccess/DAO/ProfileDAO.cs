@@ -38,10 +38,21 @@ namespace DataAccess.DAO
                 existingMember.Phone = member.Phone;
                 existingMember.Email = member.Email;
                 existingMember.Username = member.Username;             
-                existingMember.Status = member.Phone;      
+                existingMember.Status = member.Status;      
 
                 _context.SaveChanges();
             }
         }
+        // Change password
+        public void ChangePassword(Member member)
+        {
+            var existingMember = _context.Members.FirstOrDefault(m => m.MemberId == member.MemberId);
+            if(existingMember != null)
+            {
+                existingMember.Password = member.Password;
+                _context.SaveChanges();
+            }
+        }
+
     }
 }

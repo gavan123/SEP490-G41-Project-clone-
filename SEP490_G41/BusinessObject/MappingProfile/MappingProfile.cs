@@ -34,6 +34,11 @@ namespace BusinessObject.MappingProfile
             CreateMap<MapUpdateDTO, Map>();
             CreateMap<Map, MapUpdateDTO>();
 
+            CreateMap<Member, MemberUpdateDTO>().ReverseMap();
+            CreateMap<Member, MemberDTO>().ReverseMap();
+              
+            CreateMap<Member, ChangePasswordDTO>().ReverseMap();
+
         }
     }
 }

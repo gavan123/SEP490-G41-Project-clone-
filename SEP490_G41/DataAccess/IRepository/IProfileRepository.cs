@@ -11,6 +11,7 @@ namespace DataAccess.IRepository
     {
         MemberDTO GetMemberById(int memberid);
         void UpdateProfile(MemberUpdateDTO profile);
+        void ChangePassword(ChangePasswordDTO pass);
 
     }
 }

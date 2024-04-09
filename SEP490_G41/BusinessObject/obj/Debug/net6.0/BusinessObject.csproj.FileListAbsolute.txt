@@ -11,3 +11,17 @@ D:\sep490-g41-project\SEP490_G41\BusinessObject\obj\Debug\net6.0\BusinessObject.
 D:\sep490-g41-project\SEP490_G41\BusinessObject\obj\Debug\net6.0\refint\BusinessObject.dll
 D:\sep490-g41-project\SEP490_G41\BusinessObject\obj\Debug\net6.0\BusinessObject.pdb
 D:\sep490-g41-project\SEP490_G41\BusinessObject\obj\Debug\net6.0\ref\BusinessObject.dll
+C:\Users\TGDD'\Dropbox\PC\Documents\SEP490_G41\sep490-g41-project\SEP490_G41\BusinessObject\bin\Debug\net6.0\BusinessObject.deps.json
+C:\Users\TGDD'\Dropbox\PC\Documents\SEP490_G41\sep490-g41-project\SEP490_G41\BusinessObject\bin\Debug\net6.0\BusinessObject.dll
+C:\Users\TGDD'\Dropbox\PC\Documents\SEP490_G41\sep490-g41-project\SEP490_G41\BusinessObject\bin\Debug\net6.0\BusinessObject.pdb
+C:\Users\TGDD'\Dropbox\PC\Documents\SEP490_G41\sep490-g41-project\SEP490_G41\BusinessObject\obj\Debug\net6.0\BusinessObject.csproj.AssemblyReference.cache
+C:\Users\TGDD'\Dropbox\PC\Documents\SEP490_G41\sep490-g41-project\SEP490_G41\BusinessObject\obj\Debug\net6.0\BusinessObject.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\TGDD'\Dropbox\PC\Documents\SEP490_G41\sep490-g41-project\SEP490_G41\BusinessObject\obj\Debug\net6.0\BusinessObject.AssemblyInfoInputs.cache
+C:\Users\TGDD'\Dropbox\PC\Documents\SEP490_G41\sep490-g41-project\SEP490_G41\BusinessObject\obj\Debug\net6.0\BusinessObject.AssemblyInfo.cs
+C:\Users\TGDD'\Dropbox\PC\Documents\SEP490_G41\sep490-g41-project\SEP490_G41\BusinessObject\obj\Debug\net6.0\BusinessObject.csproj.CoreCompileInputs.cache
+C:\Users\TGDD'\Dropbox\PC\Documents\SEP490_G41\sep490-g41-project\SEP490_G41\BusinessObject\obj\Debug\net6.0\EFCoreMySqlNetTopologySuite.cs
+C:\Users\TGDD'\Dropbox\PC\Documents\SEP490_G41\sep490-g41-project\SEP490_G41\BusinessObject\obj\Debug\net6.0\BusinessObject.dll
+C:\Users\TGDD'\Dropbox\PC\Documents\SEP490_G41\sep490-g41-project\SEP490_G41\BusinessObject\obj\Debug\net6.0\refint\BusinessObject.dll
+C:\Users\TGDD'\Dropbox\PC\Documents\SEP490_G41\sep490-g41-project\SEP490_G41\BusinessObject\obj\Debug\net6.0\BusinessObject.pdb
+C:\Users\TGDD'\Dropbox\PC\Documents\SEP490_G41\sep490-g41-project\SEP490_G41\BusinessObject\obj\Debug\net6.0\ref\BusinessObject.dll
+C:\Users\TGDD'\Dropbox\PC\Documents\SEP490_G41\sep490-g41-project\SEP490_G41\BusinessObject\bin\Debug\net6.0\appsettings.json
