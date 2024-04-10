@@ -41,12 +41,15 @@ namespace AR_NavigationAPI.Controllers
             return Ok(floor);
         }
 
-        // POST: api/floors
         [HttpPost]
-        public ActionResult<FloorAddDTO> AddFloor(FloorAddDTO floor)
+        public ActionResult AddFloors(List<FloorAddDTO> floors)
         {
-            _floorRepository.AddFloor(floor);
-            return Ok(floor);
+            foreach (var floor in floors)
+            {
+                _floorRepository.AddFloor(floor);
+            }
+
+            return Ok("Floors added successfully");
         }
 
         // PUT: api/floors/5

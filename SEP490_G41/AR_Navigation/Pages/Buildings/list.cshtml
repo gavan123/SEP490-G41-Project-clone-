@@ -16,11 +16,11 @@
         margin-top: 10px;
     }
 
-    .selected-image-container img {
-        max-width: 100%;
-        max-height: 100%;
-        border-radius: 8px;
-    }
+        .selected-image-container img {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 8px;
+        }
 </style>
 <div class="page-header no-gutters">
     <h1>Building List</h1>
@@ -67,7 +67,7 @@
     </div>
 </div>
 
-@* Modal Create*@
+@* Modal Create Building*@
 <div class="modal fade" id="create-new-building">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -110,7 +110,7 @@
                             <!-- Option sẽ được tạo bởi JavaScript -->
                         </select>
                     </div>
-                  <button type="button" class="btn btn-primary" id="create-building-btn">Create Building</button>
+                    <button type="button" class="btn btn-primary" id="create-building-btn">Create Building</button>
                 </form>
             </div>
         </div>
@@ -118,7 +118,7 @@
 </div>
 
 
-@* Modal Edit*@
+@* Modal Edit Building*@
 <div class="modal fade" id="edit-building">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -169,7 +169,29 @@
     </div>
 </div>
 
-
+@* Modal Add Floor*@
+<div class="modal fade" id="add-floor-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Floor</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <i class="anticon anticon-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form asp-page="/Buildings/List" id="form-add-floor" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="BuildingId" id="add-floor-building-id" value="">
+                    <div class="form-group">
+                        <label for="floor-number">Floor Number</label>
+                        <input type="number" class="form-control" id="floor-number" placeholder="Enter floor number" min="1" required>
+                    </div>
+                    <button type="button" class="btn btn-primary" id="add-floor-btn">Add Floor</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <script>
@@ -194,54 +216,54 @@
                     });
 
                     const count = floors.length;
-
+                    const countText = count > 0 ? `${count} Floor` : `${count} Floor <span class="btn btn-sm btn-info addFloor" data-id="${building.buildingId}"><i class="fa fa-plus"></i></span> `;
                     const buildingRow = `
-                <tr>
-                    <td>
-                        <div class="media align-items-center">
-                            <div class="avatar avatar-image rounded">
-                                <img src="/Images/${building.image}" alt="">
+                    <tr>
+                        <td>
+                            <div class="media align-items-center">
+                                <div class="avatar avatar-image rounded">
+                                    <img src="/Images/${building.image}" alt="">
+                                </div>
+                                <div class="m-l-10">
+                                    <h5 class="m-b-0">${building.buildingName}</h5>
+                                </div>
                             </div>
-                            <div class="m-l-10">
-                                <h5 class="m-b-0">${building.buildingName}</h5>
+                        </td>
+                        <td>
+                               <span id="floorCount">${countText}</span>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <div class="badge badge-${building.status === 'active' ? 'success' : 'danger'} badge-dot m-r-10"></div>
+                                <div>${building.status}</div>
                             </div>
-                        </div>
-                    </td>
-                    <td>
-                        <span>${count} Floor</span>
-                    </td>
-                    <td>
-                        <div class="d-flex align-items-center">
-                            <div class="badge badge-${building.status === 'active' ? 'success' : 'danger'} badge-dot m-r-10"></div>
-                            <div>${building.status}</div>
-                        </div>
-                    </td>
-                    <td>
-                        <span>${building.facilityName}</span>
-                    </td>
-                    <td class="text-right">
-                            <div class="dropdown dropdown-animated scale-left">
-                <a class="text-gray font-size-18" href="javascript:void(0);" data-toggle="dropdown">
-                    <i class="anticon anticon-ellipsis"></i>
-                </a>
-                   <div class="dropdown-menu">
-        <button class="dropdown-item btn viewBuilding" type="button" data-id="${building.buildingId}">
-            <i class="anticon anticon-eye"></i>
-            <span class="m-l-10">View</span>
-        </button>
-        <button class="dropdown-item btn editBuilding" type="button" data-id="${building.buildingId}">
-            <i class="anticon anticon-edit"></i>
-            <span class="m-l-10">Edit</span>
-        </button>
-        <button class="dropdown-item btn deleteBuilding" type="button" data-id="${building.buildingId}">
-            <i class="anticon anticon-delete"></i>
-            <span class="m-l-10">Delete</span>
-        </button>
-    </div>
-            </div>
-                    </td>
-                </tr>
-            `;
+                        </td>
+                        <td>
+                            <span>${building.facilityName}</span>
+                        </td>
+                        <td class="text-right">
+                                <div class="dropdown dropdown-animated scale-left">
+                    <a class="text-gray font-size-18" href="javascript:void(0);" data-toggle="dropdown">
+                        <i class="anticon anticon-ellipsis"></i>
+                    </a>
+                       <div class="dropdown-menu">
+            <button class="dropdown-item btn viewBuilding" type="button" data-id="${building.buildingId}">
+                <i class="anticon anticon-eye"></i>
+                <span class="m-l-10">View</span>
+            </button>
+            <button class="dropdown-item btn editBuilding" type="button" data-id="${building.buildingId}">
+                <i class="anticon anticon-edit"></i>
+                <span class="m-l-10">Edit</span>
+            </button>
+            <button class="dropdown-item btn deleteBuilding" type="button" data-id="${building.buildingId}">
+                <i class="anticon anticon-delete"></i>
+                <span class="m-l-10">Delete</span>
+            </button>
+        </div>
+                </div>
+                        </td>
+                    </tr>
+                `;
 
                     $('#building-list').append(buildingRow);
                 } catch (error) {
@@ -371,22 +393,22 @@
 
         //Show edit modal have data by buildingId
         $(document).on('click', '.editBuilding', function () {
-            var buildingId = $(this).data('id'); 
+            var buildingId = $(this).data('id');
             showEditModal(buildingId);
         });
 
-        //Get building data by buildingId 
+        //Get building data by buildingId
         function showEditModal(buildingId) {
             $.ajax({
-                url: 'https://localhost:7186/api/buildings/' + buildingId, 
+                url: 'https://localhost:7186/api/buildings/' + buildingId,
                 type: 'GET',
                 success: function (response) {
                     $('#building-id').val(response.buildingId);
                     $('#edit-building-name').val(response.buildingName);
                     if (response.status === 'active') {
-                        $('#edit-statusActive').prop('checked', true); 
+                        $('#edit-statusActive').prop('checked', true);
                     } else {
-                        $('#edit-statusDeactive').prop('checked', true); 
+                        $('#edit-statusDeactive').prop('checked', true);
                     }
                     $('#edit-building').modal('show');
                     var facilityName = '';
@@ -394,7 +416,7 @@
                     $.ajax({
                         url: 'https://localhost:7186/api/facilities/' + response.facilityId,
                         type: 'GET',
-                        async: false, 
+                        async: false,
                         success: function (facilityResponse) {
                             facilityId = facilityResponse.facilityId;
                         },
@@ -412,13 +434,13 @@
             });
         }
 
-        //Edit Building 
+        //Edit Building
         $('#edit-building-btn').click(function () {
             var buildingId = $('#building-id').val();
-            var buildingName = $('#edit-building-name').val(); 
+            var buildingName = $('#edit-building-name').val();
             var status = $('input[name="edit-statusRadios"]:checked').val();
-            var facilityId = $('#edit-building-facility').val(); 
-            var imageInput = $('#edit-building-image'); 
+            var facilityId = $('#edit-building-facility').val();
+            var imageInput = $('#edit-building-image');
 
             var formData = new FormData();
             formData.append('BuildingId', buildingId);
@@ -434,8 +456,8 @@
                 url: 'https://localhost:7186/api/buildings/' + $('#building-id').val(),
                 type: 'PUT',
                 data: formData,
-                contentType: false, 
-                processData: false, 
+                contentType: false,
+                processData: false,
                 success: function (response) {
                     Swal.fire({
                         icon: 'success',
@@ -460,7 +482,67 @@
             });
         });
 
+
+        // Add Floor in building
+        $(document).on('click', '.addFloor', function () {
+            var buildingId = $(this).data('id');
+            $('#add-floor-modal').modal('show');
+
+            // Gửi AJAX request
+            $('#add-floor-btn').click(function (event) {
+                event.preventDefault(); 
+
+                var floorCount = $('#floor-number').val();
+
+                var formDataArray = []; 
+
+                for (var i = 1; i <= floorCount; i++) {
+                    var floorData = {
+                        FloorName: 'Floor ' + i, 
+                        Greeting: 'Welcome to Floor '+ i,
+                        Status: 'active', 
+                        BuildingId: buildingId
+                    };
+
+                    formDataArray.push(floorData); 
+                }
+
+
+                $.ajax({
+                    url: 'https://localhost:7186/api/floors',
+                    type: 'POST',
+                    data: JSON.stringify(formDataArray),
+                    contentType: 'application/json',
+                    success: function (response) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: 'Floor added successfully!',
+                            showConfirmButton: false,
+                            timer: 1500
+                        }).then(() => {
+                            location.reload();
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(xhr.responseText);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'An error occurred while adding the floor.'
+                        });
+                    }
+                });
+            });
+        });
+
+        //Redirect building detail
+        $(document).on('click', '.viewBuilding', function () {
+            var buildingId = $(this).data('id');
+            window.location.href = `detail/${buildingId}`;
+        });
     });
+
 
     //get image when selected
     function displaySelectedImage(input, containerId) {

@@ -7,7 +7,23 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Pages\Buildings\detail.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\Buildings\detail.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Pages\Buildings\detail.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Pages\Buildings\detail.cshtml" />
   </ItemGroup>
 
 </Project>
