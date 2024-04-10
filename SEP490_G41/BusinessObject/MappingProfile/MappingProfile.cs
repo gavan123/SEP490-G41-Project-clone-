@@ -37,9 +37,9 @@ namespace BusinessObject.MappingProfile
             CreateMap<MapUpdateDTO, Map>();
             CreateMap<Map, MapUpdateDTO>();
 
-            CreateMap<Mappoint, MapPointDTO>();
-            CreateMap<MapPointAddDTO, Mappoint>();
-            CreateMap<MapPointUpdateDTO, Mappoint>();
+            CreateMap<Mappoint, MapPointDTO>().ReverseMap();
+            CreateMap<Mappoint, MapPointAddDTO>().ReverseMap();
+            CreateMap<Mappoint, MapPointUpdateDTO>().ReverseMap();
 
 
         }

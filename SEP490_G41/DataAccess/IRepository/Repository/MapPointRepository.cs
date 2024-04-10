@@ -2,9 +2,16 @@
 using BusinessObject.DTO;
 using BusinessObject.Models;
 using DataAccess.DAO;
+using NetTopologySuite.Features;
+using NetTopologySuite.Geometries;
+using NetTopologySuite.IO;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Text.Json;
+using static Google.Protobuf.Compiler.CodeGeneratorResponse.Types;
 
 namespace DataAccess.IRepository.Repository
 {
@@ -29,12 +36,24 @@ namespace DataAccess.IRepository.Repository
             return _mapper.Map<MapPointDTO>(mapPoint);
         }
 
+       
+
         public List<MapPointDTO> GetAllMapPoints()
         {
             try
             {
                 var mapPoints = _mappointDAO.GetAllMappoints();
-                var mapPointDTOs = mapPoints.Select(mapPoint => _mapper.Map<MapPointDTO>(mapPoint)).ToList();
+                var mapPointDTOs = mapPoints.Select(mapPoint =>
+                {
+                    var mapPointDTO = new MapPointDTO();
+                    mapPointDTO.MapPointId = mapPoint.MapPointId;
+                    mapPointDTO.MapId = mapPoint.MapId;
+                    var geoJson = ConvertPointToGeoJson(mapPoint.Location);
+                    var coordinatesJson = ExtractCoordinatesFromGeoJson(geoJson);
+                    mapPointDTO.Location = coordinatesJson;
+                    return mapPointDTO;
+                }).ToList();
+
                 return mapPointDTOs;
             }
             catch (Exception ex)
@@ -42,7 +61,25 @@ namespace DataAccess.IRepository.Repository
                 throw new Exception("Error occurred while getting all map points.", ex);
             }
         }
+        private string ConvertPointToGeoJson(Point point)
+        {
+            var feature = new NetTopologySuite.Features.Feature(point, new AttributesTable());
+            var writer = new GeoJsonWriter();
+            return writer.Write(feature);
+        }
+        private string ExtractCoordinatesFromGeoJson(string geoJson)
+        {
+            // Parse chuỗi JSON thành đối tượng JObject
+            var jObject = JObject.Parse(geoJson);
 
+            // Trích xuất giá trị của trường 'coordinates' và chuyển đổi thành chuỗi
+            string coordinatesJson = jObject["geometry"]["coordinates"].ToString();
+
+            // Loại bỏ các ký tự xuống dòng và khoảng trắng
+            coordinatesJson = coordinatesJson.Replace("\r\n", "").Replace(" ", "");
+
+            return coordinatesJson;
+        }
         public void AddMapPoint(MapPointAddDTO mapPoint)
         {
             try

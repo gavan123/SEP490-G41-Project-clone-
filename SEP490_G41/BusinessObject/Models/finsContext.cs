@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.Configuration;
-using MySqlConnector;
 using NetTopologySuite.Geometries;
 using NetTopologySuite.IO;
 
@@ -45,6 +44,7 @@ namespace BusinessObject.Models
                     mysqlOptions => mysqlOptions.UseNetTopologySuite()); // Enable NetTopologySuite for MySQL
             }
         }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.UseCollation("utf8mb4_0900_ai_ci")
@@ -165,11 +165,12 @@ namespace BusinessObject.Models
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Map_MapPoint");
 
-                entity.Property(e => e.Location)
-       .HasColumnType("point")
-       .HasConversion(
-           v => new WKTWriter().Write(v),
-           v => (Point)new WKTReader().Read(v));
+
+               /* entity.Property(e => e.Location)
+                        .HasColumnType("point")
+                        .HasConversion(
+                             v => new WKTWriter().Write(v),
+                             v => (Point)new WKTReader().Read(v));*/
             });
 
             modelBuilder.Entity<Member>(entity =>
@@ -180,13 +181,13 @@ namespace BusinessObject.Models
 
                 entity.Property(e => e.Address).HasMaxLength(100);
 
+                entity.Property(e => e.DoB).HasColumnType("datetime");
+
                 entity.Property(e => e.Email).HasMaxLength(50);
 
                 entity.Property(e => e.FullName).HasMaxLength(50);
 
-                entity.Property(e => e.Password).HasMaxLength(50);
-
-                entity.Property(e => e.DoB).HasColumnType("date");
+                entity.Property(e => e.Password).HasMaxLength(1000);
 
                 entity.Property(e => e.Phone)
                     .HasMaxLength(10)
@@ -283,21 +284,5 @@ namespace BusinessObject.Models
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
-        public class Program
-        {
-            static void Main(string[] args)
-            {
-                using (var dbContext = new finsContext())
-                {
-                    var mappoints = dbContext.Mappoints.ToList();
-
-                    foreach (var mappoint in mappoints)
-                    {
-                        // Now you can access the Location property, which is of type NetTopologySuite.Geometries.Point
-                        Console.WriteLine($"MapPointId: {mappoint.MapPointId}, Location: {mappoint.Location}");
-                    }
-                }
-            }
-        }
     }
 }

@@ -66,7 +66,7 @@ namespace DataAccess.DAO
                 var mappoints = _context.Mappoints.Include(mp => mp.Map).ToList();
 
 
-                // Đọc dữ liệu địa lý từ MySQL dưới dạng chuỗi và chuyển đổi thành kiểu NetTopologySuite.Point
+                /*// Đọc dữ liệu địa lý từ MySQL dưới dạng chuỗi và chuyển đổi thành kiểu NetTopologySuite.Point
                 foreach (var mappoint in mappoints)
                 {
                     // Đọc dữ liệu POINT từ MySQL dưới dạng chuỗi
@@ -80,7 +80,7 @@ namespace DataAccess.DAO
 
                     // Gán đối tượng Point cho thuộc tính Location của đối tượng Mappoint
                     mappoint.Location = point;
-                }
+                }*/
 
                 return mappoints;
             }

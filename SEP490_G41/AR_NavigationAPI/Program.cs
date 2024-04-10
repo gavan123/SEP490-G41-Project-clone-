@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.OData;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OData.Edm;
 using Microsoft.OData.ModelBuilder;
+using System.Text.Json.Serialization;
+using System.Text.Json;
+using Microsoft.AspNetCore.Http.Json;
 
 
 
@@ -16,7 +19,7 @@ static IEdmModel GetEdmModel()
 
     builder.EntitySet<Building>("building");
     builder.EntitySet<Facility>("facilities");
-
+    builder.EntitySet<Mappoint>("mappoint");
 
     return builder.GetEdmModel();
 }
@@ -31,9 +34,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddScoped<finsContext>();
 builder.Services.AddDbContext<finsContext>((serviceProvider, options) =>
 {
-    var serverVersion = new MySqlServerVersion(new Version(8, 0, 23)); // Thay thế bằng phiên bản MySQL Server bạn đang sử dụng
-    options.UseMySql(builder.Configuration.GetConnectionString("Project"), serverVersion);
-
+    var serverVersion = new MySqlServerVersion(new Version(10, 6, 10)); 
+    options.UseMySql(builder.Configuration.GetConnectionString("Project"), serverVersion,
+        mysqlOptions => mysqlOptions.UseNetTopologySuite()); 
 });
 builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(typeof(MappingProfile));
@@ -51,7 +54,6 @@ builder.Services.AddScoped<IBuildingRepository, BuildingRepository>();
 builder.Services.AddScoped<IFacilityRepository, FacilityRepository>();
 builder.Services.AddScoped<IMapRepository, MapRepository>();
 builder.Services.AddScoped<IMapPointRepository, MapPointRepository>();
-
 
 var app = builder.Build();
 
