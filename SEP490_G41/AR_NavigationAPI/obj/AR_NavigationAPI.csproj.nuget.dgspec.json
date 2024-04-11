@@ -2,6 +2,7 @@
   "format": 1,
   "restore": {
 <<<<<<< HEAD
+<<<<<<< HEAD
     "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\AR_NavigationAPI\\AR_NavigationAPI.csproj": {}
   },
   "projects": {
@@ -14,6 +15,8 @@
         "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
         "outputPath": "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\AR_NavigationAPI\\obj\\",
 =======
+=======
+>>>>>>> main
     "D:\\DO-AN\\sep490-g41-project2\\SEP490_G41\\AR_NavigationAPI\\AR_NavigationAPI.csproj": {}
   },
   "projects": {
@@ -25,6 +28,9 @@
         "projectPath": "D:\\DO-AN\\sep490-g41-project2\\SEP490_G41\\AR_NavigationAPI\\AR_NavigationAPI.csproj",
         "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
         "outputPath": "D:\\DO-AN\\sep490-g41-project2\\SEP490_G41\\AR_NavigationAPI\\obj\\",
+<<<<<<< HEAD
+>>>>>>> main
+=======
 >>>>>>> main
         "projectStyle": "PackageReference",
         "configFilePaths": [
@@ -43,17 +49,23 @@
             "targetAlias": "net6.0",
             "projectReferences": {
 <<<<<<< HEAD
+<<<<<<< HEAD
               "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj": {
                 "projectPath": "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj"
               },
               "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\DataAccess\\DataAccess.csproj": {
                 "projectPath": "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\DataAccess\\DataAccess.csproj"
 =======
+=======
+>>>>>>> main
               "D:\\DO-AN\\sep490-g41-project2\\SEP490_G41\\BusinessObject\\BusinessObject.csproj": {
                 "projectPath": "D:\\DO-AN\\sep490-g41-project2\\SEP490_G41\\BusinessObject\\BusinessObject.csproj"
               },
               "D:\\DO-AN\\sep490-g41-project2\\SEP490_G41\\DataAccess\\DataAccess.csproj": {
                 "projectPath": "D:\\DO-AN\\sep490-g41-project2\\SEP490_G41\\DataAccess\\DataAccess.csproj"
+<<<<<<< HEAD
+>>>>>>> main
+=======
 >>>>>>> main
               }
             }
@@ -102,6 +114,7 @@
       }
     },
 <<<<<<< HEAD
+<<<<<<< HEAD
     "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj": {
       "version": "1.0.0",
       "restore": {
@@ -111,6 +124,8 @@
         "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
         "outputPath": "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\BusinessObject\\obj\\",
 =======
+=======
+>>>>>>> main
     "D:\\DO-AN\\sep490-g41-project2\\SEP490_G41\\BusinessObject\\BusinessObject.csproj": {
       "version": "1.0.0",
       "restore": {
@@ -119,6 +134,9 @@
         "projectPath": "D:\\DO-AN\\sep490-g41-project2\\SEP490_G41\\BusinessObject\\BusinessObject.csproj",
         "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
         "outputPath": "D:\\DO-AN\\sep490-g41-project2\\SEP490_G41\\BusinessObject\\obj\\",
+<<<<<<< HEAD
+>>>>>>> main
+=======
 >>>>>>> main
         "projectStyle": "PackageReference",
         "configFilePaths": [
@@ -156,7 +174,9 @@
               "target": "Package",
               "version": "[5.0.17, )"
             },
-            "Microsoft.EntityFrameworkCore.Proxies": {
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
               "target": "Package",
               "version": "[6.0.28, )"
             },
@@ -184,6 +204,10 @@
               "target": "Package",
               "version": "[6.0.3, )"
             },
+            "Pomelo.EntityFrameworkCore.MySql.Design": {
+              "target": "Package",
+              "version": "[1.1.2, )"
+            },
             "Pomelo.EntityFrameworkCore.MySql.NetTopologySuite": {
               "target": "Package",
               "version": "[6.0.3, )"
@@ -210,6 +234,7 @@
       }
     },
 <<<<<<< HEAD
+<<<<<<< HEAD
     "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\DataAccess\\DataAccess.csproj": {
       "version": "1.0.0",
       "restore": {
@@ -219,6 +244,8 @@
         "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
         "outputPath": "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\DataAccess\\obj\\",
 =======
+=======
+>>>>>>> main
     "D:\\DO-AN\\sep490-g41-project2\\SEP490_G41\\DataAccess\\DataAccess.csproj": {
       "version": "1.0.0",
       "restore": {
@@ -227,6 +254,9 @@
         "projectPath": "D:\\DO-AN\\sep490-g41-project2\\SEP490_G41\\DataAccess\\DataAccess.csproj",
         "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
         "outputPath": "D:\\DO-AN\\sep490-g41-project2\\SEP490_G41\\DataAccess\\obj\\",
+<<<<<<< HEAD
+>>>>>>> main
+=======
 >>>>>>> main
         "projectStyle": "PackageReference",
         "configFilePaths": [
@@ -245,8 +275,13 @@
             "targetAlias": "net6.0",
             "projectReferences": {
 <<<<<<< HEAD
+<<<<<<< HEAD
               "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj": {
                 "projectPath": "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj"
+=======
+              "D:\\DO-AN\\sep490-g41-project2\\SEP490_G41\\BusinessObject\\BusinessObject.csproj": {
+                "projectPath": "D:\\DO-AN\\sep490-g41-project2\\SEP490_G41\\BusinessObject\\BusinessObject.csproj"
+>>>>>>> main
 =======
               "D:\\DO-AN\\sep490-g41-project2\\SEP490_G41\\BusinessObject\\BusinessObject.csproj": {
                 "projectPath": "D:\\DO-AN\\sep490-g41-project2\\SEP490_G41\\BusinessObject\\BusinessObject.csproj"
