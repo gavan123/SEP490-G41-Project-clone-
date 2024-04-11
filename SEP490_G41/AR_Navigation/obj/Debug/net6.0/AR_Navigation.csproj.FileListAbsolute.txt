@@ -1,39 +1,3 @@
-<<<<<<< HEAD
-D:\DO-AN\sep490-g41-project\SEP490_G41\AR_Navigation\bin\Debug\net6.0\appsettings.Development.json
-D:\DO-AN\sep490-g41-project\SEP490_G41\AR_Navigation\bin\Debug\net6.0\appsettings.json
-D:\DO-AN\sep490-g41-project\SEP490_G41\AR_Navigation\bin\Debug\net6.0\AR_Navigation.staticwebassets.runtime.json
-D:\DO-AN\sep490-g41-project\SEP490_G41\AR_Navigation\bin\Debug\net6.0\AR_Navigation.exe
-D:\DO-AN\sep490-g41-project\SEP490_G41\AR_Navigation\bin\Debug\net6.0\AR_Navigation.deps.json
-D:\DO-AN\sep490-g41-project\SEP490_G41\AR_Navigation\bin\Debug\net6.0\AR_Navigation.runtimeconfig.json
-D:\DO-AN\sep490-g41-project\SEP490_G41\AR_Navigation\bin\Debug\net6.0\AR_Navigation.dll
-D:\DO-AN\sep490-g41-project\SEP490_G41\AR_Navigation\bin\Debug\net6.0\AR_Navigation.pdb
-D:\DO-AN\sep490-g41-project\SEP490_G41\AR_Navigation\bin\Debug\net6.0\Newtonsoft.Json.dll
-D:\DO-AN\sep490-g41-project\SEP490_G41\AR_Navigation\obj\Debug\net6.0\AR_Navigation.csproj.AssemblyReference.cache
-D:\DO-AN\sep490-g41-project\SEP490_G41\AR_Navigation\obj\Debug\net6.0\AR_Navigation.GeneratedMSBuildEditorConfig.editorconfig
-D:\DO-AN\sep490-g41-project\SEP490_G41\AR_Navigation\obj\Debug\net6.0\AR_Navigation.AssemblyInfoInputs.cache
-D:\DO-AN\sep490-g41-project\SEP490_G41\AR_Navigation\obj\Debug\net6.0\AR_Navigation.AssemblyInfo.cs
-D:\DO-AN\sep490-g41-project\SEP490_G41\AR_Navigation\obj\Debug\net6.0\AR_Navigation.csproj.CoreCompileInputs.cache
-D:\DO-AN\sep490-g41-project\SEP490_G41\AR_Navigation\obj\Debug\net6.0\AR_Navigation.MvcApplicationPartsAssemblyInfo.cache
-D:\DO-AN\sep490-g41-project\SEP490_G41\AR_Navigation\obj\Debug\net6.0\AR_Navigation.RazorAssemblyInfo.cache
-D:\DO-AN\sep490-g41-project\SEP490_G41\AR_Navigation\obj\Debug\net6.0\AR_Navigation.RazorAssemblyInfo.cs
-D:\DO-AN\sep490-g41-project\SEP490_G41\AR_Navigation\obj\Debug\net6.0\AR_Navigation.sourcelink.json
-D:\DO-AN\sep490-g41-project\SEP490_G41\AR_Navigation\obj\Debug\net6.0\staticwebassets.build.json
-D:\DO-AN\sep490-g41-project\SEP490_G41\AR_Navigation\obj\Debug\net6.0\staticwebassets.development.json
-D:\DO-AN\sep490-g41-project\SEP490_G41\AR_Navigation\obj\Debug\net6.0\staticwebassets\msbuild.AR_Navigation.Microsoft.AspNetCore.StaticWebAssets.props
-D:\DO-AN\sep490-g41-project\SEP490_G41\AR_Navigation\obj\Debug\net6.0\staticwebassets\msbuild.build.AR_Navigation.props
-D:\DO-AN\sep490-g41-project\SEP490_G41\AR_Navigation\obj\Debug\net6.0\staticwebassets\msbuild.buildMultiTargeting.AR_Navigation.props
-D:\DO-AN\sep490-g41-project\SEP490_G41\AR_Navigation\obj\Debug\net6.0\staticwebassets\msbuild.buildTransitive.AR_Navigation.props
-D:\DO-AN\sep490-g41-project\SEP490_G41\AR_Navigation\obj\Debug\net6.0\staticwebassets.pack.json
-D:\DO-AN\sep490-g41-project\SEP490_G41\AR_Navigation\obj\Debug\net6.0\scopedcss\Pages\Shared\_Layout.cshtml.rz.scp.css
-D:\DO-AN\sep490-g41-project\SEP490_G41\AR_Navigation\obj\Debug\net6.0\scopedcss\bundle\AR_Navigation.styles.css
-D:\DO-AN\sep490-g41-project\SEP490_G41\AR_Navigation\obj\Debug\net6.0\scopedcss\projectbundle\AR_Navigation.bundle.scp.css
-D:\DO-AN\sep490-g41-project\SEP490_G41\AR_Navigation\obj\Debug\net6.0\AR_Navigation.csproj.CopyComplete
-D:\DO-AN\sep490-g41-project\SEP490_G41\AR_Navigation\obj\Debug\net6.0\AR_Navigation.dll
-D:\DO-AN\sep490-g41-project\SEP490_G41\AR_Navigation\obj\Debug\net6.0\refint\AR_Navigation.dll
-D:\DO-AN\sep490-g41-project\SEP490_G41\AR_Navigation\obj\Debug\net6.0\AR_Navigation.pdb
-D:\DO-AN\sep490-g41-project\SEP490_G41\AR_Navigation\obj\Debug\net6.0\AR_Navigation.genruntimeconfig.cache
-D:\DO-AN\sep490-g41-project\SEP490_G41\AR_Navigation\obj\Debug\net6.0\ref\AR_Navigation.dll
-=======
 D:\DO-AN\sep490-g41-project2\SEP490_G41\AR_Navigation\bin\Debug\net6.0\appsettings.Development.json
 D:\DO-AN\sep490-g41-project2\SEP490_G41\AR_Navigation\bin\Debug\net6.0\appsettings.json
 D:\DO-AN\sep490-g41-project2\SEP490_G41\AR_Navigation\bin\Debug\net6.0\AR_Navigation.staticwebassets.runtime.json
@@ -68,4 +32,3 @@ D:\DO-AN\sep490-g41-project2\SEP490_G41\AR_Navigation\obj\Debug\net6.0\refint\AR
 D:\DO-AN\sep490-g41-project2\SEP490_G41\AR_Navigation\obj\Debug\net6.0\AR_Navigation.pdb
 D:\DO-AN\sep490-g41-project2\SEP490_G41\AR_Navigation\obj\Debug\net6.0\AR_Navigation.genruntimeconfig.cache
 D:\DO-AN\sep490-g41-project2\SEP490_G41\AR_Navigation\obj\Debug\net6.0\ref\AR_Navigation.dll
->>>>>>> Anhnh
