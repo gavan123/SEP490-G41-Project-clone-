@@ -60,7 +60,9 @@ namespace DataAccess.DAO
         // Lấy danh sách tất cả các tòa nhà
         public List<Building> GetAllBuildings()
         {
-            return _context.Buildings.Include(b => b.Facility).ToList();
+            return _context.Buildings
+                   .Include(b => b.Facility)  
+                   .ToList();
         }
 
     }

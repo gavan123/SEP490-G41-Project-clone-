@@ -1,5 +1,103 @@
 ﻿@page
-@model AR_Navigation.Pages.Buildings.detailModel
+@model AR_Navigation.Pages.Buildings.DetailModel
 @{
     Layout = "_Layout1";
 }
+<style>
+    .selected-image-container {
+        width: 700px;
+        height: 500px;
+        border: 2px solid #ced4da;
+        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 10px;
+    }
+
+    .selected-image-container img {
+        max-width: 100%;
+        max-height: 100%;
+        border-radius: 8px;
+    }
+</style>
+<div class="page-header no-gutters">
+    <h1>Building Detail</h1>
+    <div class="row align-items-md-center">
+        <div class="col-md-12">
+            <div class="text-md-right m-v-10">
+                <button class="btn btn-primary" data-toggle="modal" data-target="#create-new-building">
+                    <i class="anticon anticon-plus"></i>
+                    <span class="m-l-5">New Building</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <!-- Building Name -->
+    <div class="building-name">
+        <h2 id="building-name"></h2>
+    </div>
+
+    <!-- Floor Name -->
+    <div class="form-group">
+        <label for="floor-select">Floor Name:</label>
+        <select class="form-control" id="floor-select">
+            <!-- Dynamically populated floor options will go here -->
+        </select>
+    </div>
+
+    <!-- Map Image -->
+    <div class="selected-image-container">
+        <img id="map-image" src="~/assets/images/others/img-13.jpg" alt="Map Image">
+    </div>
+</div>
+<div class="row align-items-md-center">
+    <div class="col-md-12">
+        <div class="text-md-right m-v-10">
+            <button class="btn btn-primary">
+                <i class="anticon anticon-plus"></i>
+                <span class="m-l-5">New Building</span>
+            </button>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).on('click', '.viewBuilding', function () {
+        var buildingId = $(this).data('id');
+        // Gửi AJAX request để lấy thông tin chi tiết của tòa nhà
+        $.ajax({
+            url: 'https://localhost:7186/api/buildings/' + buildingId,
+            type: 'GET',
+            success: function (building) {
+                // Cập nhật tên tòa nhà
+                $('#building-name').text(building.name);
+
+                // Tạo danh sách các tầng
+                var floorOptions = '';
+                building.floors.forEach(function (floor) {
+                    floorOptions += `<option value="${floor.id}">${floor.name}</option>`;
+                });
+                $('#floor-select').html(floorOptions);
+
+                // Cập nhật hình ảnh bản đồ
+                $('#map-image').attr('src', building.mapImageUrl);
+
+                // Hiển thị trang chi tiết tòa nhà
+                $('#detail-building-modal').modal('show');
+            },
+            error: function (xhr, status, error) {
+                console.error(xhr.responseText);
+                // Xử lý lỗi nếu có
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'An error occurred while loading building details.'
+                });
+            }
+        });
+    });
+
+
+</script>

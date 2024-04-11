@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AR_Navigation.Pages.Buildings
 {
-    public class detailModel : PageModel
+    public class DetailModel : PageModel
     {
         public void OnGet()
         {

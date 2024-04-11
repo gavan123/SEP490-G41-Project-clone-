@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using BusinessObject.Models;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,6 @@ namespace BusinessObject.DTO
         public int FacilityId { get; set; }
         public string FacilityName { get; set; }
     }
-
     public class BuildingAddDTO
     {
         public string BuildingName { get; set; } = null!;

@@ -195,7 +195,7 @@
 
 
 <script>
-    $(document).ready(function () {
+     $(document).ready(function () {
 
         //Buiding table
         async function updateBuildingList(buildings) {
@@ -247,15 +247,15 @@
                         <i class="anticon anticon-ellipsis"></i>
                     </a>
                        <div class="dropdown-menu">
-            <button class="dropdown-item btn viewBuilding" type="button" data-id="${building.buildingId}">
+            <button class="dropdown-item btn btn-info btn-tone viewBuilding" type="button" data-id="${building.buildingId}">
                 <i class="anticon anticon-eye"></i>
                 <span class="m-l-10">View</span>
             </button>
-            <button class="dropdown-item btn editBuilding" type="button" data-id="${building.buildingId}">
+                <button class="dropdown-item btn btn-warning btn-tone editBuilding" type="button" data-id="${building.buildingId}">
                 <i class="anticon anticon-edit"></i>
                 <span class="m-l-10">Edit</span>
             </button>
-            <button class="dropdown-item btn deleteBuilding" type="button" data-id="${building.buildingId}">
+                <button class="dropdown-item btn btn-danger btn-tone deleteBuilding" type="button" data-id="${building.buildingId}">
                 <i class="anticon anticon-delete"></i>
                 <span class="m-l-10">Delete</span>
             </button>
@@ -539,7 +539,7 @@
         //Redirect building detail
         $(document).on('click', '.viewBuilding', function () {
             var buildingId = $(this).data('id');
-            window.location.href = `detail/${buildingId}`;
+            window.location.href = `Detail/${buildingId}`;
         });
     });
 
@@ -561,6 +561,7 @@
 
         reader.readAsDataURL(file);
     }
+   
 </script>
 
 
