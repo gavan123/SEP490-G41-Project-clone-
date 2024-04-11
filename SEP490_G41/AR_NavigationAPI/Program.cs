@@ -18,7 +18,7 @@ static IEdmModel GetEdmModel()
     builder.EntitySet<Building>("building");
     builder.EntitySet<Facility>("facilities");
     builder.EntitySet<Floor>("floor");
-
+    builder.EntitySet<Map>("map");
 
 
     return builder.GetEdmModel();

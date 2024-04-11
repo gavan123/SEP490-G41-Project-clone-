@@ -28,16 +28,9 @@ namespace BusinessObject.MappingProfile
 
 
             CreateMap<Map, MapDTO>()
-               .ForMember(dest => dest.FloorName, opt => opt.MapFrom(src => src.Floor.FloorName));
-            CreateMap<MapDTO, Map>();
-
-            // Định nghĩa ánh xạ từ MapAddDTO sang Map và ngược lại
-            CreateMap<MapAddDTO, Map>();
-            CreateMap<Map, MapAddDTO>();
-
-            // Định nghĩa ánh xạ từ MapUpdateDTO sang Map và ngược lại
-            CreateMap<MapUpdateDTO, Map>();
-            CreateMap<Map, MapUpdateDTO>();
+               .ForMember(dest => dest.FloorName, opt => opt.MapFrom(src => src.Floor.FloorName)).ReverseMap();
+            CreateMap<Map, MapAddDTO>().ReverseMap();
+            CreateMap<Map, MapUpdateDTO>().ReverseMap();
 
         }
     }
