@@ -20,19 +20,17 @@ namespace BusinessObject.MappingProfile
             CreateMap<Building, BuildingUpdateDTO>().ReverseMap();
 
             CreateMap<Facility, FacilityAddDTO>().ReverseMap();
-            CreateMap<Building, FacilityDTO>().ReverseMap();
+            CreateMap<Facility, FacilityDTO>().ReverseMap();
             CreateMap<Facility, FacilityUpdateDTO>().ReverseMap();
+
+            CreateMap<Floor, FloorAddDTO>().ReverseMap();
+            CreateMap<Floor, FloorDTO>().ReverseMap();
+
+
             CreateMap<Map, MapDTO>()
-               .ForMember(dest => dest.FloorName, opt => opt.MapFrom(src => src.Floor.FloorName));
-            CreateMap<MapDTO, Map>();
-
-            // Định nghĩa ánh xạ từ MapAddDTO sang Map và ngược lại
-            CreateMap<MapAddDTO, Map>();
-            CreateMap<Map, MapAddDTO>();
-
-            // Định nghĩa ánh xạ từ MapUpdateDTO sang Map và ngược lại
-            CreateMap<MapUpdateDTO, Map>();
-            CreateMap<Map, MapUpdateDTO>();
+               .ForMember(dest => dest.FloorName, opt => opt.MapFrom(src => src.Floor.FloorName)).ReverseMap();
+            CreateMap<Map, MapAddDTO>().ReverseMap();
+            CreateMap<Map, MapUpdateDTO>().ReverseMap();
 
         }
     }

@@ -60,11 +60,19 @@
   "project": {
     "version": "1.0.0",
     "restore": {
+<<<<<<< HEAD
       "projectUniqueName": "D:\\DO-AN\\sep490-g41-project2\\SEP490_G41\\AR_Navigation\\AR_Navigation.csproj",
       "projectName": "AR_Navigation",
       "projectPath": "D:\\DO-AN\\sep490-g41-project2\\SEP490_G41\\AR_Navigation\\AR_Navigation.csproj",
       "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
       "outputPath": "D:\\DO-AN\\sep490-g41-project2\\SEP490_G41\\AR_Navigation\\obj\\",
+=======
+      "projectUniqueName": "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\AR_Navigation\\AR_Navigation.csproj",
+      "projectName": "AR_Navigation",
+      "projectPath": "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\AR_Navigation\\AR_Navigation.csproj",
+      "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
+      "outputPath": "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\AR_Navigation\\obj\\",
+>>>>>>> Anhnh
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
