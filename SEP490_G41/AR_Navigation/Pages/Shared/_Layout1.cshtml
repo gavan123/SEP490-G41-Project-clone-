@@ -9,13 +9,9 @@
     <!-- page css -->
     <!-- Core css -->
     <link href="/assets/css/app.min.css" rel="stylesheet">
-
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/AR_Navigation.styles.css" asp-append-version="true" />
-    <!-- include libraries(jQuery, bootstrap) -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
-    <!-- include summernote css/js -->
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- SweetAlert CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
     <div class="app">
@@ -25,7 +21,7 @@
                 <div class="logo logo-dark">
                     <a href="#">
                         <img src="/assets/images/logo/logo.png" alt="Logo">
-                        <img class="logo-fold" src="assets/images/logo/logo-fold.png" alt="Logo">
+                        <img class="logo-fold" src="/assets/images/logo/logo-fold.png" alt="Logo">
                     </a>
                 </div>
                 <div class="logo logo-white">
@@ -204,7 +200,7 @@
                                     <a href="/Buildings/list">CRM</a>
                                 </li>
                                 <li>
-                                    <a href="#">E-commerce</a>
+                                    <a href="/Buildings/Detail">E-commerce</a>
                                 </li>
                                 <li>
                                     <a href="#">Projects</a>
@@ -651,6 +647,9 @@
 
 
 </body>
+
+
+</html>
 <!-- Core Vendors JS -->
 <script src="/assets/js/vendors.min.js"></script>
 
@@ -661,15 +660,5 @@
 
 <!-- Core JS -->
 <script src="/assets/js/app.min.js"></script>
-<!-- sweetalert -->
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<script src="~/js/site.js" asp-append-version="true"></script>
 
-<!-- include libraries(jQuery, bootstrap) -->
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
-<!-- include summernote css/js -->
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-</html>

@@ -49,39 +49,38 @@ namespace DataAccess.DAO
         // Xóa tòa nhà bằng Id
         public void DeleteBuilding(int buildingId)
         {
-            var building = _context.Buildings.FirstOrDefault(b => b.BuildingId == buildingId);
-            if (building != null)
+            try
             {
-                _context.Buildings.Remove(building);
-                _context.SaveChanges();
+                var floors = _context.Floors.Where(f => f.BuildingId == buildingId).ToList();
+
+                // Xóa từng tầng trong danh sách
+                foreach (var floor in floors)
+                {
+                    _context.Floors.Remove(floor);
+                }
+
+                // Lấy tòa nhà cần xóa
+                var building = _context.Buildings.FirstOrDefault(b => b.BuildingId == buildingId);
+                if (building != null)
+                {
+                    _context.Buildings.Remove(building);
+                    _context.SaveChanges(); 
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error occurred while deleting building: {ex.Message}");
+                throw;
             }
         }
 
         // Lấy danh sách tất cả các tòa nhà
         public List<Building> GetAllBuildings()
         {
-            return _context.Buildings.Include(b => b.Facility).ToList();
+            return _context.Buildings
+                   .Include(b => b.Facility)  
+                   .ToList();
         }
 
-
-        // Tìm kiếm tòa nhà theo tên
-        public List<Building> SearchBuildingsByName(string keyword)
-        {
-            var buildings = _context.Buildings
-                .Where(b => b.BuildingName.Contains(keyword))
-                .ToList();
-
-            return buildings;
-        }
-
-        // Tìm kiếm tòa nhà theo trạng thái
-        public List<Building> SearchBuildingsByStatus(string status)
-        {
-            var buildings = _context.Buildings
-                .Where(b => b.Status == status)
-                .ToList();
-
-            return buildings;
-        }
     }
 }

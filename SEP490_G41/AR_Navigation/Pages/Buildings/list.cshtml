@@ -3,7 +3,27 @@
 @{
     Layout = "_Layout1";
 }
- <div class="page-header no-gutters">
+<style>
+    /* Đặt kích thước cho container chứa ảnh */
+    .selected-image-container {
+        width: 200px;
+        height: 200px;
+        border: 2px solid #ced4da;
+        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 10px;
+    }
+
+        .selected-image-container img {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 8px;
+        }
+</style>
+<div class="page-header no-gutters">
+    <h1>Building List</h1>
     <div class="row align-items-md-center">
         <div class="col-md-6">
             <div class="row">
@@ -17,1128 +37,534 @@
         </div>
         <div class="col-md-6">
             <div class="text-md-right m-v-10">
-                <div class="btn-group m-r-10">
-                    <button id="list-view-btn" type="button" class="btn btn-default btn-icon" data-toggle="tooltip" data-placement="bottom" title="List View">
-                        <i class="anticon anticon-ordered-list"></i>
-                    </button>
-                    <button id="card-view-btn" type="button" class="btn btn-default btn-icon active" data-toggle="tooltip" data-placement="bottom" title="Card View">
-                        <i class="anticon anticon-appstore"></i>
-                    </button>
-                </div>
-                <button class="btn btn-primary" data-toggle="modal" data-target="#create-new-project">
+                <button class="btn btn-primary" data-toggle="modal" data-target="#create-new-building">
                     <i class="anticon anticon-plus"></i>
-                    <span class="m-l-5">New Project</span>
+                    <span class="m-l-5">New Building</span>
                 </button>
             </div>
         </div>
     </div>
 </div>
 <div class="container-fluid">
-    <div id="card-view">
-        <div class="row">
-            <div class="col-md-3">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <div class="media">
-                                <div class="avatar avatar-image rounded">
-                                    <img src="/assets/images/others/thumb-1.jpg" alt="">
-                                </div>
-                                <div class="m-l-10">
-                                    <h5 class="m-b-0">Mind Cog App</h5>
-                                    <span class="text-muted font-size-13">31 Tasks</span>
-                                </div>
-                            </div>
-                            <div class="dropdown dropdown-animated scale-left">
-                                <a class="text-gray font-size-18" href="javascript:void(0);" data-toggle="dropdown">
-                                    <i class="anticon anticon-ellipsis"></i>
-                                </a>
-                                <div class="dropdown-menu">
-                                    <button class="dropdown-item" type="button">
-                                        <i class="anticon anticon-eye"></i>
-                                        <span class="m-l-10">View</span>
-                                    </button>
-                                    <button class="dropdown-item" type="button">
-                                        <i class="anticon anticon-edit"></i>
-                                        <span class="m-l-10">Edit</span>
-                                    </button>
-                                    <button class="dropdown-item" type="button">
-                                        <i class="anticon anticon-delete"></i>
-                                        <span class="m-l-10">Delete</span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <p class="m-t-25">European minnow priapumfish mosshead warbonnet shrimpfish.</p>
-                        <div class="m-t-30">
-                            <div class="d-flex justify-content-between">
-                                <span class="font-weight-semibold">Progress</span>
-                                <span class="font-weight-semibold">100%</span>
-                            </div>
-                            <div class="progress progress-sm m-t-10">
-                                <div class="progress-bar bg-success" role="progressbar" style="width: 100%"></div>
-                            </div>
-                        </div>
-                        <div class="m-t-20">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <span class="badge badge-pill badge-cyan">Ready</span>
-                                </div>
-                                <div>
-                                    <a class="m-r-5" href="javascript:void(0);" data-toggle="tooltip" title="Pamela Wanda">
-                                        <div class="avatar avatar-image avatar-sm">
-                                            <img src="/assets/images/avatars/thumb-7.jpg" alt="">
-                                        </div>
-                                    </a>
-                                    <a class="m-r-5" href="javascript:void(0);" data-toggle="tooltip" title="Darryl Day">
-                                        <div class="avatar avatar-image avatar-sm">
-                                            <img src="/assets/images/avatars/thumb-2.jpg" alt="">
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <div class="media">
-                                <div class="avatar avatar-image rounded">
-                                    <img src="/assets/images/others/thumb-2.jpg" alt="">
-                                </div>
-                                <div class="m-l-10">
-                                    <h5 class="m-b-0">Mill Real Estate</h5>
-                                    <span class="text-muted font-size-13">56 Tasks</span>
-                                </div>
-                            </div>
-                            <div class="dropdown dropdown-animated scale-left">
-                                <a class="text-gray font-size-18" href="javascript:void(0);" data-toggle="dropdown">
-                                    <i class="anticon anticon-ellipsis"></i>
-                                </a>
-                                <div class="dropdown-menu">
-                                    <button class="dropdown-item" type="button">
-                                        <i class="anticon anticon-eye"></i>
-                                        <span class="m-l-10">View</span>
-                                    </button>
-                                    <button class="dropdown-item" type="button">
-                                        <i class="anticon anticon-edit"></i>
-                                        <span class="m-l-10">Edit</span>
-                                    </button>
-                                    <button class="dropdown-item" type="button">
-                                        <i class="anticon anticon-delete"></i>
-                                        <span class="m-l-10">Delete</span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <p class="m-t-25">Efficiently unleash cross-media information without cross-media value.</p>
-                        <div class="m-t-30">
-                            <div class="d-flex justify-content-between">
-                                <span class="font-weight-semibold">Progress</span>
-                                <span class="font-weight-semibold">100%</span>
-                            </div>
-                            <div class="progress progress-sm m-t-10">
-                                <div class="progress-bar bg-success" role="progressbar" style="width: 100%"></div>
-                            </div>
-                        </div>
-                        <div class="m-t-20">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <span class="badge badge-pill badge-cyan">Ready</span>
-                                </div>
-                                <div>
-                                    <a class="m-r-5" href="javascript:void(0);" data-toggle="tooltip" title="Virgil Gonzales">
-                                        <div class="avatar avatar-image avatar-sm">
-                                            <img src="/assets/images/avatars/thumb-4.jpg" alt="">
-                                        </div>
-                                    </a>
-                                    <a class="m-r-5" href="javascript:void(0);" data-toggle="tooltip" title="Erin Gonzales">
-                                        <div class="avatar avatar-image avatar-sm">
-                                            <img src="/assets/images/avatars/thumb-1.jpg" alt="">
-                                        </div>
-                                    </a>
-                                    <a class="m-r-5" href="javascript:void(0);" data-toggle="tooltip" title="2 More">
-                                        <div class="avatar avatar-text avatar-sm">
-                                            <span class="text-dark">+2</span>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <div class="media">
-                                <div class="avatar avatar-image rounded">
-                                    <img src="/assets/images/others/thumb-3.jpg" alt="">
-                                </div>
-                                <div class="m-l-10">
-                                    <h5 class="m-b-0">Eastern Sack</h5>
-                                    <span class="text-muted font-size-13">21 Tasks</span>
-                                </div>
-                            </div>
-                            <div class="dropdown dropdown-animated scale-left">
-                                <a class="text-gray font-size-18" href="javascript:void(0);" data-toggle="dropdown">
-                                    <i class="anticon anticon-ellipsis"></i>
-                                </a>
-                                <div class="dropdown-menu">
-                                    <button class="dropdown-item" type="button">
-                                        <i class="anticon anticon-eye"></i>
-                                        <span class="m-l-10">View</span>
-                                    </button>
-                                    <button class="dropdown-item" type="button">
-                                        <i class="anticon anticon-edit"></i>
-                                        <span class="m-l-10">Edit</span>
-                                    </button>
-                                    <button class="dropdown-item" type="button">
-                                        <i class="anticon anticon-delete"></i>
-                                        <span class="m-l-10">Delete</span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <p class="m-t-25">Jelly-o sesame snaps halvah croissant oat cake cookie.</p>
-                        <div class="m-t-30">
-                            <div class="d-flex justify-content-between">
-                                <span class="font-weight-semibold">Progress</span>
-                                <span class="font-weight-semibold">87%</span>
-                            </div>
-                            <div class="progress progress-sm m-t-10">
-                                <div class="progress-bar" role="progressbar" style="width: 87%"></div>
-                            </div>
-                        </div>
-                        <div class="m-t-20">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <span class="badge badge-pill badge-blue">In Progress</span>
-                                </div>
-                                <div>
-                                    <a class="m-r-5" href="javascript:void(0);" data-toggle="tooltip" title="Lilian Stone">
-                                        <div class="avatar avatar-image avatar-sm">
-                                            <img src="/assets/images/avatars/thumb-10.jpg" alt="">
-                                        </div>
-                                    </a>
-                                    <a class="m-r-5" href="javascript:void(0);" data-toggle="tooltip" title="Victor Terry">
-                                        <div class="avatar avatar-image avatar-sm">
-                                            <img src="/assets/images/avatars/thumb-11.jpg" alt="">
-                                        </div>
-                                    </a>
-                                    <a class="m-r-5" href="javascript:void(0);" data-toggle="tooltip" title="3 More">
-                                        <div class="avatar avatar-text avatar-sm">
-                                            <span class="text-dark">+3</span>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <div class="media">
-                                <div class="avatar avatar-image rounded">
-                                    <img src="/assets/images/others/thumb-4.jpg" alt="">
-                                </div>
-                                <div class="m-l-10">
-                                    <h5 class="m-b-0">Good Beat</h5>
-                                    <span class="text-muted font-size-13">38 Tasks</span>
-                                </div>
-                            </div>
-                            <div class="dropdown dropdown-animated scale-left">
-                                <a class="text-gray font-size-18" href="javascript:void(0);" data-toggle="dropdown">
-                                    <i class="anticon anticon-ellipsis"></i>
-                                </a>
-                                <div class="dropdown-menu">
-                                    <button class="dropdown-item" type="button">
-                                        <i class="anticon anticon-eye"></i>
-                                        <span class="m-l-10">View</span>
-                                    </button>
-                                    <button class="dropdown-item" type="button">
-                                        <i class="anticon anticon-edit"></i>
-                                        <span class="m-l-10">Edit</span>
-                                    </button>
-                                    <button class="dropdown-item" type="button">
-                                        <i class="anticon anticon-delete"></i>
-                                        <span class="m-l-10">Delete</span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <p class="m-t-25">Irish skinny, grinder affogato, dark, sweet carajillo flavour seasonal.</p>
-                        <div class="m-t-30">
-                            <div class="d-flex justify-content-between">
-                                <span class="font-weight-semibold">Progress</span>
-                                <span class="font-weight-semibold">73%</span>
-                            </div>
-                            <div class="progress progress-sm m-t-10">
-                                <div class="progress-bar" role="progressbar" style="width: 73%"></div>
-                            </div>
-                        </div>
-                        <div class="m-t-20">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <span class="badge badge-pill badge-blue">In Progress</span>
-                                </div>
-                                <div>
-                                    <a class="m-r-5" href="javascript:void(0);" data-toggle="tooltip" title="Marshall Nichols">
-                                        <div class="avatar avatar-image avatar-sm">
-                                            <img src="/assets/images/avatars/thumb-3.jpg" alt="">
-                                        </div>
-                                    </a>
-                                    <a class="m-r-5" href="javascript:void(0);" data-toggle="tooltip" title="Pamela Wanda">
-                                        <div class="avatar avatar-image avatar-sm">
-                                            <img src="/assets/images/avatars/thumb-7.jpg" alt="">
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <div class="media">
-                                <div class="avatar avatar-image rounded">
-                                    <img src="/assets/images/others/thumb-5.jpg" alt="">
-                                </div>
-                                <div class="m-l-10">
-                                    <h5 class="m-b-0">Fortier Studio</h5>
-                                    <span class="text-muted font-size-13">68 Tasks</span>
-                                </div>
-                            </div>
-                            <div class="dropdown dropdown-animated scale-left">
-                                <a class="text-gray font-size-18" href="javascript:void(0);" data-toggle="dropdown">
-                                    <i class="anticon anticon-ellipsis"></i>
-                                </a>
-                                <div class="dropdown-menu">
-                                    <button class="dropdown-item" type="button">
-                                        <i class="anticon anticon-eye"></i>
-                                        <span class="m-l-10">View</span>
-                                    </button>
-                                    <button class="dropdown-item" type="button">
-                                        <i class="anticon anticon-edit"></i>
-                                        <span class="m-l-10">Edit</span>
-                                    </button>
-                                    <button class="dropdown-item" type="button">
-                                        <i class="anticon anticon-delete"></i>
-                                        <span class="m-l-10">Delete</span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <p class="m-t-25">Let us wax poetic about the beauty of the cheeseburger.</p>
-                        <div class="m-t-30">
-                            <div class="d-flex justify-content-between">
-                                <span class="font-weight-semibold">Progress</span>
-                                <span class="font-weight-semibold">73%</span>
-                            </div>
-                            <div class="progress progress-sm m-t-10">
-                                <div class="progress-bar" role="progressbar" style="width: 73%"></div>
-                            </div>
-                        </div>
-                        <div class="m-t-20">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <span class="badge badge-pill badge-blue">In Progress</span>
-                                </div>
-                                <div>
-                                    <a class="m-r-5" href="javascript:void(0);" data-toggle="tooltip" title="Erin Gonzales">
-                                        <div class="avatar avatar-image avatar-sm">
-                                            <img src="/assets/images/avatars/thumb-1.jpg" alt="">
-                                        </div>
-                                    </a>
-                                    <a class="m-r-5" href="javascript:void(0);" data-toggle="tooltip" title="Lilian Stone">
-                                        <div class="avatar avatar-image avatar-sm">
-                                            <img src="/assets/images/avatars/thumb-10.jpg" alt="">
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <div class="media">
-                                <div class="avatar avatar-image rounded">
-                                    <img src="/assets/images/others/thumb-6.jpg" alt="">
-                                </div>
-                                <div class="m-l-10">
-                                    <h5 class="m-b-0">Indi Wheel Web</h5>
-                                    <span class="text-muted font-size-13">68 Tasks</span>
-                                </div>
-                            </div>
-                            <div class="dropdown dropdown-animated scale-left">
-                                <a class="text-gray font-size-18" href="javascript:void(0);" data-toggle="dropdown">
-                                    <i class="anticon anticon-ellipsis"></i>
-                                </a>
-                                <div class="dropdown-menu">
-                                    <button class="dropdown-item" type="button">
-                                        <i class="anticon anticon-eye"></i>
-                                        <span class="m-l-10">View</span>
-                                    </button>
-                                    <button class="dropdown-item" type="button">
-                                        <i class="anticon anticon-edit"></i>
-                                        <span class="m-l-10">Edit</span>
-                                    </button>
-                                    <button class="dropdown-item" type="button">
-                                        <i class="anticon anticon-delete"></i>
-                                        <span class="m-l-10">Delete</span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <p class="m-t-25">Here's the story of a man named Brady who was busy with three boys</p>
-                        <div class="m-t-30">
-                            <div class="d-flex justify-content-between">
-                                <span class="font-weight-semibold">Progress</span>
-                                <span class="font-weight-semibold">62%</span>
-                            </div>
-                            <div class="progress progress-sm m-t-10">
-                                <div class="progress-bar" role="progressbar" style="width: 62%"></div>
-                            </div>
-                        </div>
-                        <div class="m-t-20">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <span class="badge badge-pill badge-blue">In Progress</span>
-                                </div>
-                                <div>
-                                    <a class="m-r-5" href="javascript:void(0);" data-toggle="tooltip" title="Virgil Gonzales">
-                                        <div class="avatar avatar-image avatar-sm">
-                                            <img src="/assets/images/avatars/thumb-4.jpg" alt="">
-                                        </div>
-                                    </a>
-                                    <a class="m-r-5" href="javascript:void(0);" data-toggle="tooltip" title="Darryl Day">
-                                        <div class="avatar avatar-image avatar-sm">
-                                            <img src="/assets/images/avatars/thumb-2.jpg" alt="">
-                                        </div>
-                                    </a>
-                                    <a class="m-r-5" href="javascript:void(0);" data-toggle="tooltip" title="2 More">
-                                        <div class="avatar avatar-text avatar-sm">
-                                            <span class="text-dark">+2</span>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <div class="media">
-                                <div class="avatar avatar-image rounded">
-                                    <img src="/assets/images/others/thumb-7.jpg" alt="">
-                                </div>
-                                <div class="m-l-10">
-                                    <h5 class="m-b-0">Austin Lab</h5>
-                                    <span class="text-muted font-size-13">90 Tasks</span>
-                                </div>
-                            </div>
-                            <div class="dropdown dropdown-animated scale-left">
-                                <a class="text-gray font-size-18" href="javascript:void(0);" data-toggle="dropdown">
-                                    <i class="anticon anticon-ellipsis"></i>
-                                </a>
-                                <div class="dropdown-menu">
-                                    <button class="dropdown-item" type="button">
-                                        <i class="anticon anticon-eye"></i>
-                                        <span class="m-l-10">View</span>
-                                    </button>
-                                    <button class="dropdown-item" type="button">
-                                        <i class="anticon anticon-edit"></i>
-                                        <span class="m-l-10">Edit</span>
-                                    </button>
-                                    <button class="dropdown-item" type="button">
-                                        <i class="anticon anticon-delete"></i>
-                                        <span class="m-l-10">Delete</span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <p class="m-t-25">Caerphilly swiss fromage frais. Brie cheese and wine fromage.</p>
-                        <div class="m-t-30">
-                            <div class="d-flex justify-content-between">
-                                <span class="font-weight-semibold">Progress</span>
-                                <span class="font-weight-semibold">62%</span>
-                            </div>
-                            <div class="progress progress-sm m-t-10">
-                                <div class="progress-bar" role="progressbar" style="width: 62%"></div>
-                            </div>
-                        </div>
-                        <div class="m-t-20">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <span class="badge badge-pill badge-blue">In Progress</span>
-                                </div>
-                                <div>
-                                    <a class="m-r-5" href="javascript:void(0);" data-toggle="tooltip" title="Lilian Stone">
-                                        <div class="avatar avatar-image avatar-sm">
-                                            <img src="/assets/images/avatars/thumb-8.jpg" alt="">
-                                        </div>
-                                    </a>
-                                    <a class="m-r-5" href="javascript:void(0);" data-toggle="tooltip" title="Victor Terry">
-                                        <div class="avatar avatar-image avatar-sm">
-                                            <img src="/assets/images/avatars/thumb-9.jpg" alt="">
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <div class="media">
-                                <div class="avatar avatar-image rounded">
-                                    <img src="/assets/images/others/thumb-8.jpg" alt="">
-                                </div>
-                                <div class="m-l-10">
-                                    <h5 class="m-b-0">Moody Agency</h5>
-                                    <span class="text-muted font-size-13">165 Tasks</span>
-                                </div>
-                            </div>
-                            <div class="dropdown dropdown-animated scale-left">
-                                <a class="text-gray font-size-18" href="javascript:void(0);" data-toggle="dropdown">
-                                    <i class="anticon anticon-ellipsis"></i>
-                                </a>
-                                <div class="dropdown-menu">
-                                    <button class="dropdown-item" type="button">
-                                        <i class="anticon anticon-eye"></i>
-                                        <span class="m-l-10">View</span>
-                                    </button>
-                                    <button class="dropdown-item" type="button">
-                                        <i class="anticon anticon-edit"></i>
-                                        <span class="m-l-10">Edit</span>
-                                    </button>
-                                    <button class="dropdown-item" type="button">
-                                        <i class="anticon anticon-delete"></i>
-                                        <span class="m-l-10">Delete</span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <p class="m-t-25">Do you see any Teletubbies in here? The path of the righteous.</p>
-                        <div class="m-t-30">
-                            <div class="d-flex justify-content-between">
-                                <span class="font-weight-semibold">Behind</span>
-                                <span class="font-weight-semibold">28%</span>
-                            </div>
-                            <div class="progress progress-sm m-t-10">
-                                <div class="progress-bar bg-danger" role="progressbar" style="width: 28%"></div>
-                            </div>
-                        </div>
-                        <div class="m-t-20">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <span class="badge badge-pill badge-red">In Progress</span>
-                                </div>
-                                <div>
-                                    <a class="m-r-5" href="javascript:void(0);" data-toggle="tooltip" title="Lilian Stone">
-                                        <div class="avatar avatar-image avatar-sm">
-                                            <img src="/assets/images/avatars/thumb-8.jpg" alt="">
-                                        </div>
-                                    </a>
-                                    <a class="m-r-5" href="javascript:void(0);" data-toggle="tooltip" title="Darryl Day">
-                                        <div class="avatar avatar-image avatar-sm">
-                                            <img src="/assets/images/avatars/thumb-2.jpg" alt="">
-                                        </div>
-                                    </a>
-                                    <a class="m-r-5" href="javascript:void(0);" data-toggle="tooltip" title="3 More">
-                                        <div class="avatar avatar-text avatar-sm">
-                                            <span class="text-dark">+3</span>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="card d-none" id="list-view">
+    <div class="card " id="list-view">
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Project</th>
-                            <th>Tasks</th>
-                            <th>Members</th>
-                            <th>Progress</th>
+                            <th style="width: 30%;">Building Name</th>
+                            <th>Floor Count</th>
+                            <th>Status</th>
+                            <th>Facility</th>
                             <th></th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <div class="media align-items-center">
-                                    <div class="avatar avatar-image rounded">
-                                        <img src="/assets/images/others/thumb-1.jpg" alt="">
-                                    </div>
-                                    <div class="m-l-10">
-                                        <h5 class="m-b-0">Mind Cog App</h5>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <span>31 Tasks</span>
-                            </td>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <div>
-                                        <a class="m-r-5" href="javascript:void(0);" data-toggle="tooltip" title="Pamela Wanda">
-                                            <div class="avatar avatar-image avatar-sm">
-                                                <img src="/assets/images/avatars/thumb-7.jpg" alt="">
-                                            </div>
-                                        </a>
-                                        <a class="m-r-5" href="javascript:void(0);" data-toggle="tooltip" title="Darryl Day">
-                                            <div class="avatar avatar-image avatar-sm">
-                                                <img src="/assets/images/avatars/thumb-2.jpg" alt="">
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <div class="progress progress-sm w-100 m-b-0">
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: 100%"></div>
-                                    </div>
-                                    <div class="m-l-10">
-                                        <i class="anticon anticon-check-o text-success"></i>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="text-right">
-                                <div class="dropdown dropdown-animated scale-left">
-                                    <a class="text-gray font-size-18" href="javascript:void(0);" data-toggle="dropdown">
-                                        <i class="anticon anticon-ellipsis"></i>
-                                    </a>
-                                    <div class="dropdown-menu">
-                                        <button class="dropdown-item" type="button">
-                                            <i class="anticon anticon-eye"></i>
-                                            <span class="m-l-10">View</span>
-                                        </button>
-                                        <button class="dropdown-item" type="button">
-                                            <i class="anticon anticon-edit"></i>
-                                            <span class="m-l-10">Edit</span>
-                                        </button>
-                                        <button class="dropdown-item" type="button">
-                                            <i class="anticon anticon-delete"></i>
-                                            <span class="m-l-10">Delete</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="media align-items-center">
-                                    <div class="avatar avatar-image rounded">
-                                        <img src="/assets/images/others/thumb-2.jpg" alt="">
-                                    </div>
-                                    <div class="m-l-10">
-                                        <h5 class="m-b-0">Mill Real Estate</h5>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <span>56 Tasks</span>
-                            </td>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <div>
-                                        <a class="m-r-5" href="javascript:void(0);" data-toggle="tooltip" title="Virgil Gonzales">
-                                            <div class="avatar avatar-image avatar-sm">
-                                                <img src="/assets/images/avatars/thumb-4.jpg" alt="">
-                                            </div>
-                                        </a>
-                                        <a class="m-r-5" href="javascript:void(0);" data-toggle="tooltip" title="Erin Gonzales">
-                                            <div class="avatar avatar-image avatar-sm">
-                                                <img src="/assets/images/avatars/thumb-1.jpg" alt="">
-                                            </div>
-                                        </a>
-                                        <a class="m-r-5" href="javascript:void(0);" data-toggle="tooltip" title="2 More">
-                                            <div class="avatar avatar-text avatar-sm">
-                                                <span class="text-dark">+2</span>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <div class="progress progress-sm w-100 m-b-0">
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: 100%"></div>
-                                    </div>
-                                    <div class="m-l-10">
-                                        <i class="anticon anticon-check-o text-success"></i>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="text-right">
-                                <div class="dropdown dropdown-animated scale-left">
-                                    <a class="text-gray font-size-18" href="javascript:void(0);" data-toggle="dropdown">
-                                        <i class="anticon anticon-ellipsis"></i>
-                                    </a>
-                                    <div class="dropdown-menu">
-                                        <button class="dropdown-item" type="button">
-                                            <i class="anticon anticon-eye"></i>
-                                            <span class="m-l-10">View</span>
-                                        </button>
-                                        <button class="dropdown-item" type="button">
-                                            <i class="anticon anticon-edit"></i>
-                                            <span class="m-l-10">Edit</span>
-                                        </button>
-                                        <button class="dropdown-item" type="button">
-                                            <i class="anticon anticon-delete"></i>
-                                            <span class="m-l-10">Delete</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="media align-items-center">
-                                    <div class="avatar avatar-image rounded">
-                                        <img src="/assets/images/others/thumb-3.jpg" alt="">
-                                    </div>
-                                    <div class="m-l-10">
-                                        <h5 class="m-b-0">Eastern Sack</h5>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <span>21 Tasks</span>
-                            </td>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <div>
-                                        <a class="m-r-5" href="javascript:void(0);" data-toggle="tooltip" title="Lilian Stone">
-                                            <div class="avatar avatar-image avatar-sm">
-                                                <img src="/assets/images/avatars/thumb-10.jpg" alt="">
-                                            </div>
-                                        </a>
-                                        <a class="m-r-5" href="javascript:void(0);" data-toggle="tooltip" title="Victor Terry">
-                                            <div class="avatar avatar-image avatar-sm">
-                                                <img src="/assets/images/avatars/thumb-11.jpg" alt="">
-                                            </div>
-                                        </a>
-                                        <a class="m-r-5" href="javascript:void(0);" data-toggle="tooltip" title="3 More">
-                                            <div class="avatar avatar-text avatar-sm">
-                                                <span class="text-dark">+3</span>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <div class="progress progress-sm w-100 m-b-0">
-                                        <div class="progress-bar" role="progressbar" style="width: 87%"></div>
-                                    </div>
-                                    <div class="m-l-10">
-                                        87%
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="text-right">
-                                <div class="dropdown dropdown-animated scale-left">
-                                    <a class="text-gray font-size-18" href="javascript:void(0);" data-toggle="dropdown">
-                                        <i class="anticon anticon-ellipsis"></i>
-                                    </a>
-                                    <div class="dropdown-menu">
-                                        <button class="dropdown-item" type="button">
-                                            <i class="anticon anticon-eye"></i>
-                                            <span class="m-l-10">View</span>
-                                        </button>
-                                        <button class="dropdown-item" type="button">
-                                            <i class="anticon anticon-edit"></i>
-                                            <span class="m-l-10">Edit</span>
-                                        </button>
-                                        <button class="dropdown-item" type="button">
-                                            <i class="anticon anticon-delete"></i>
-                                            <span class="m-l-10">Delete</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="media align-items-center">
-                                    <div class="avatar avatar-image rounded">
-                                        <img src="/assets/images/others/thumb-4.jpg" alt="">
-                                    </div>
-                                    <div class="m-l-10">
-                                        <h5 class="m-b-0">Good Beat</h5>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <span>38 Tasks</span>
-                            </td>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <div>
-                                        <a class="m-r-5" href="javascript:void(0);" data-toggle="tooltip" title="Marshall Nichols">
-                                            <div class="avatar avatar-image avatar-sm">
-                                                <img src="/assets/images/avatars/thumb-3.jpg" alt="">
-                                            </div>
-                                        </a>
-                                        <a class="m-r-5" href="javascript:void(0);" data-toggle="tooltip" title="Pamela Wanda">
-                                            <div class="avatar avatar-image avatar-sm">
-                                                <img src="/assets/images/avatars/thumb-7.jpg" alt="">
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <div class="progress progress-sm w-100 m-b-0">
-                                        <div class="progress-bar" role="progressbar" style="width: 73%"></div>
-                                    </div>
-                                    <div class="m-l-10">
-                                        73%
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="text-right">
-                                <div class="dropdown dropdown-animated scale-left">
-                                    <a class="text-gray font-size-18" href="javascript:void(0);" data-toggle="dropdown">
-                                        <i class="anticon anticon-ellipsis"></i>
-                                    </a>
-                                    <div class="dropdown-menu">
-                                        <button class="dropdown-item" type="button">
-                                            <i class="anticon anticon-eye"></i>
-                                            <span class="m-l-10">View</span>
-                                        </button>
-                                        <button class="dropdown-item" type="button">
-                                            <i class="anticon anticon-edit"></i>
-                                            <span class="m-l-10">Edit</span>
-                                        </button>
-                                        <button class="dropdown-item" type="button">
-                                            <i class="anticon anticon-delete"></i>
-                                            <span class="m-l-10">Delete</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="media align-items-center">
-                                    <div class="avatar avatar-image rounded">
-                                        <img src="/assets/images/others/thumb-5.jpg" alt="">
-                                    </div>
-                                    <div class="m-l-10">
-                                        <h5 class="m-b-0">Fortier Studio</h5>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <span>68 Tasks</span>
-                            </td>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <div>
-                                        <a class="m-r-5" href="javascript:void(0);" data-toggle="tooltip" title="Erin Gonzales">
-                                            <div class="avatar avatar-image avatar-sm">
-                                                <img src="/assets/images/avatars/thumb-1.jpg" alt="">
-                                            </div>
-                                        </a>
-                                        <a class="m-r-5" href="javascript:void(0);" data-toggle="tooltip" title="Lilian Stone">
-                                            <div class="avatar avatar-image avatar-sm">
-                                                <img src="/assets/images/avatars/thumb-10.jpg" alt="">
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <div class="progress progress-sm w-100 m-b-0">
-                                        <div class="progress-bar" role="progressbar" style="width: 73%"></div>
-                                    </div>
-                                    <div class="m-l-10">
-                                        73%
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="text-right">
-                                <div class="dropdown dropdown-animated scale-left">
-                                    <a class="text-gray font-size-18" href="javascript:void(0);" data-toggle="dropdown">
-                                        <i class="anticon anticon-ellipsis"></i>
-                                    </a>
-                                    <div class="dropdown-menu">
-                                        <button class="dropdown-item" type="button">
-                                            <i class="anticon anticon-eye"></i>
-                                            <span class="m-l-10">View</span>
-                                        </button>
-                                        <button class="dropdown-item" type="button">
-                                            <i class="anticon anticon-edit"></i>
-                                            <span class="m-l-10">Edit</span>
-                                        </button>
-                                        <button class="dropdown-item" type="button">
-                                            <i class="anticon anticon-delete"></i>
-                                            <span class="m-l-10">Delete</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="media align-items-center">
-                                    <div class="avatar avatar-image rounded">
-                                        <img src="/assets/images/others/thumb-6.jpg" alt="">
-                                    </div>
-                                    <div class="m-l-10">
-                                        <h5 class="m-b-0">Indi Wheel Web</h5>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <span>68 Tasks</span>
-                            </td>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <div>
-                                        <a class="m-r-5" href="javascript:void(0);" data-toggle="tooltip" title="Virgil Gonzales">
-                                            <div class="avatar avatar-image avatar-sm">
-                                                <img src="/assets/images/avatars/thumb-4.jpg" alt="">
-                                            </div>
-                                        </a>
-                                        <a class="m-r-5" href="javascript:void(0);" data-toggle="tooltip" title="Darryl Day">
-                                            <div class="avatar avatar-image avatar-sm">
-                                                <img src="/assets/images/avatars/thumb-2.jpg" alt="">
-                                            </div>
-                                        </a>
-                                        <a class="m-r-5" href="javascript:void(0);" data-toggle="tooltip" title="2 More">
-                                            <div class="avatar avatar-text avatar-sm">
-                                                <span class="text-dark">+2</span>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <div class="progress progress-sm w-100 m-b-0">
-                                        <div class="progress-bar" role="progressbar" style="width: 62%"></div>
-                                    </div>
-                                    <div class="m-l-10">
-                                        62%
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="text-right">
-                                <div class="dropdown dropdown-animated scale-left">
-                                    <a class="text-gray font-size-18" href="javascript:void(0);" data-toggle="dropdown">
-                                        <i class="anticon anticon-ellipsis"></i>
-                                    </a>
-                                    <div class="dropdown-menu">
-                                        <button class="dropdown-item" type="button">
-                                            <i class="anticon anticon-eye"></i>
-                                            <span class="m-l-10">View</span>
-                                        </button>
-                                        <button class="dropdown-item" type="button">
-                                            <i class="anticon anticon-edit"></i>
-                                            <span class="m-l-10">Edit</span>
-                                        </button>
-                                        <button class="dropdown-item" type="button">
-                                            <i class="anticon anticon-delete"></i>
-                                            <span class="m-l-10">Delete</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="media align-items-center">
-                                    <div class="avatar avatar-image rounded">
-                                        <img src="assets/images/others/thumb-7.jpg" alt="">
-                                    </div>
-                                    <div class="m-l-10">
-                                        <h5 class="m-b-0">Austin Lab</h5>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <span>90 Tasks</span>
-                            </td>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <div>
-                                        <a class="m-r-5" href="javascript:void(0);" data-toggle="tooltip" title="Lilian Stone">
-                                            <div class="avatar avatar-image avatar-sm">
-                                                <img src="/assets/images/avatars/thumb-8.jpg" alt="">
-                                            </div>
-                                        </a>
-                                        <a class="m-r-5" href="javascript:void(0);" data-toggle="tooltip" title="Victor Terry">
-                                            <div class="avatar avatar-image avatar-sm">
-                                                <img src="/assets/images/avatars/thumb-9.jpg" alt="">
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <div class="progress progress-sm w-100 m-b-0">
-                                        <div class="progress-bar" role="progressbar" style="width: 62%"></div>
-                                    </div>
-                                    <div class="m-l-10">
-                                        62%
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="text-right">
-                                <div class="dropdown dropdown-animated scale-left">
-                                    <a class="text-gray font-size-18" href="javascript:void(0);" data-toggle="dropdown">
-                                        <i class="anticon anticon-ellipsis"></i>
-                                    </a>
-                                    <div class="dropdown-menu">
-                                        <button class="dropdown-item" type="button">
-                                            <i class="anticon anticon-eye"></i>
-                                            <span class="m-l-10">View</span>
-                                        </button>
-                                        <button class="dropdown-item" type="button">
-                                            <i class="anticon anticon-edit"></i>
-                                            <span class="m-l-10">Edit</span>
-                                        </button>
-                                        <button class="dropdown-item" type="button">
-                                            <i class="anticon anticon-delete"></i>
-                                            <span class="m-l-10">Delete</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="media align-items-center">
-                                    <div class="avatar avatar-image rounded">
-                                        <img src="/assets/images/others/thumb-8.jpg" alt="">
-                                    </div>
-                                    <div class="m-l-10">
-                                        <h5 class="m-b-0">Moody Agency</h5>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <span>165 Tasks</span>
-                            </td>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <div>
-                                        <a class="m-r-5" href="javascript:void(0);" data-toggle="tooltip" title="Lilian Stone">
-                                            <div class="avatar avatar-image avatar-sm">
-                                                <img src="/assets/images/avatars/thumb-8.jpg" alt="">
-                                            </div>
-                                        </a>
-                                        <a class="m-r-5" href="javascript:void(0);" data-toggle="tooltip" title="Darryl Day">
-                                            <div class="avatar avatar-image avatar-sm">
-                                                <img src="/assets/images/avatars/thumb-2.jpg" alt="">
-                                            </div>
-                                        </a>
-                                        <a class="m-r-5" href="javascript:void(0);" data-toggle="tooltip" title="3 More">
-                                            <div class="avatar avatar-text avatar-sm">
-                                                <span class="text-dark">+3</span>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <div class="progress progress-sm w-100 m-b-0">
-                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 28%"></div>
-                                    </div>
-                                    <div class="m-l-10">
-                                        <i class="anticon anticon-close-o text-danger"></i>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="text-right">
-                                <div class="dropdown dropdown-animated scale-left">
-                                    <a class="text-gray font-size-18" href="javascript:void(0);" data-toggle="dropdown">
-                                        <i class="anticon anticon-ellipsis"></i>
-                                    </a>
-                                    <div class="dropdown-menu">
-                                        <button class="dropdown-item" type="button">
-                                            <i class="anticon anticon-eye"></i>
-                                            <span class="m-l-10">View</span>
-                                        </button>
-                                        <button class="dropdown-item" type="button">
-                                            <i class="anticon anticon-edit"></i>
-                                            <span class="m-l-10">Edit</span>
-                                        </button>
-                                        <button class="dropdown-item" type="button">
-                                            <i class="anticon anticon-delete"></i>
-                                            <span class="m-l-10">Delete</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
+                    <tbody id="building-list">
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 </div>
-<div class="modal fade" id="create-new-project">
+
+@* Modal Create Building*@
+<div class="modal fade" id="create-new-building">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Create New Project</h5>
+                <h5 class="modal-title">Create New Building</h5>
                 <button type="button" class="close" data-dismiss="modal">
                     <i class="anticon anticon-close"></i>
                 </button>
             </div>
             <div class="modal-body">
-                <form>
+                <form asp-page="/Buildings/List" asp-page-handler="CreateBuilding" id="form-add-building" method="post" enctype="multipart/form-data">
                     <div class="form-group">
-                        <label for="new-project-name">Project</label>
-                        <input type="text" class="form-control" id="new-project-name" placeholder="Please input project name">
+                        <label for="new-building-name">Building Name</label>
+                        <input type="text" class="form-control" id="new-building-name" placeholder="Please input building name" required>
                     </div>
                     <div class="form-group">
-                        <label for="new-project-desc">Description</label>
-                        <textarea id="new-project-desc" class="form-control" placeholder=""></textarea>
+                        <label for="new-building-image">Image</label>
+                        <div class="input-group">
+                            <div class="custom-file">
+                                <input type="file" name="ImageFile" class="custom-file-input" id="new-building-image" aria-describedby="inputGroupFileAddon" onchange="displaySelectedImage(this, 'add-selected-image-container')">
+                                <label class="custom-file-label" for="new-building-image">Choose file</label>
+                            </div>
+                        </div>
+                        <div id="add-selected-image-container" class="selected-image-container" style="margin-top: 10px;"></div>
                     </div>
+                    <div class="form-group">
+                        <label>Status</label>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="statusActive" name="statusRadios" class="custom-control-input" value="active" checked>
+                            <label class="custom-control-label" for="statusActive">Active</label>
+                        </div>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="statusDeactive" name="statusRadios" class="custom-control-input" value="deactive">
+                            <label class="custom-control-label" for="statusDeactive">Deactive</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="new-building-facility">Facility</label>
+                        <select class="form-control" id="new-building-facility">
+                            <!-- Option sẽ được tạo bởi JavaScript -->
+                        </select>
+                    </div>
+                    <button type="button" class="btn btn-primary" id="create-building-btn">Create Building</button>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Create Project</button>
             </div>
         </div>
     </div>
 </div>
-               
+
+
+@* Modal Edit Building*@
+<div class="modal fade" id="edit-building">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Building</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <i class="anticon anticon-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form asp-page="/Buildings/List" asp-page-handler="EditBuilding" id="form-edit-building" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="BuildingId" id="building-id" value="">
+                    <div class="form-group">
+                        <label for="edit-building-name">Building Name</label>
+                        <input type="text" class="form-control" id="edit-building-name" placeholder="Please input building name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-building-image">Image</label>
+                        <div class="input-group">
+                            <div class="custom-file">
+                                <input type="file" name="ImageFile" class="custom-file-input" id="edit-building-image" aria-describedby="inputGroupFileAddon" onchange="displaySelectedImage(this, 'edit-selected-image-container')">
+                                <label class="custom-file-label" for="edit-building-image">Choose file</label>
+                            </div>
+                        </div>
+                        <div id="edit-selected-image-container" class="selected-image-container" style="margin-top: 10px;"></div>
+                    </div>
+                    <div class="form-group">
+                        <label>Status</label>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="edit-statusActive" name="edit-statusRadios" class="custom-control-input" value="active" checked>
+                            <label class="custom-control-label" for="edit-statusActive">Active</label>
+                        </div>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="edit-statusDeactive" name="edit-statusRadios" class="custom-control-input" value="deactive">
+                            <label class="custom-control-label" for="edit-statusDeactive">Deactive</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-building-facility">Facility</label>
+                        <select class="form-control" id="edit-building-facility">
+                            <!-- Option sẽ được tạo bởi JavaScript -->
+                        </select>
+                    </div>
+                    <button type="button" class="btn btn-primary" id="edit-building-btn">Save Changes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* Modal Add Floor*@
+<div class="modal fade" id="add-floor-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Floor</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <i class="anticon anticon-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form asp-page="/Buildings/List" id="form-add-floor" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="BuildingId" id="add-floor-building-id" value="">
+                    <div class="form-group">
+                        <label for="floor-number">Floor Number</label>
+                        <input type="number" class="form-control" id="floor-number" placeholder="Enter floor number" min="1" required>
+                    </div>
+                    <button type="button" class="btn btn-primary" id="add-floor-btn">Add Floor</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+     $(document).ready(function () {
+
+        //Buiding table
+        async function updateBuildingList(buildings) {
+            // Sắp xếp danh sách tòa nhà theo tên (buildingName)
+            buildings.sort((a, b) => a.buildingName.localeCompare(b.buildingName));
+
+            $('#building-list').empty();
+
+            for (const building of buildings) {
+                const buildingId = building.buildingId;
+
+                try {
+                    // Gửi yêu cầu AJAX để lấy thông tin của tòa nhà
+                    const floors = await $.ajax({
+                        url: `https://localhost:7186/api/floors?$filter=buildingId eq ${buildingId}`,
+                        type: 'GET',
+                        dataType: 'json'
+                    });
+
+                    const count = floors.length;
+                    const countText = count > 0 ? `${count} Floor` : `${count} Floor <span class="btn btn-sm btn-info addFloor" data-id="${building.buildingId}"><i class="fa fa-plus"></i></span> `;
+                    const buildingRow = `
+                    <tr>
+                        <td>
+                            <div class="media align-items-center">
+                                <div class="avatar avatar-image rounded">
+                                    <img src="/Images/${building.image}" alt="">
+                                </div>
+                                <div class="m-l-10">
+                                    <h5 class="m-b-0">${building.buildingName}</h5>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                               <span id="floorCount">${countText}</span>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <div class="badge badge-${building.status === 'active' ? 'success' : 'danger'} badge-dot m-r-10"></div>
+                                <div>${building.status}</div>
+                            </div>
+                        </td>
+                        <td>
+                            <span>${building.facilityName}</span>
+                        </td>
+                        <td class="text-right">
+                                <div class="dropdown dropdown-animated scale-left">
+                    <a class="text-gray font-size-18" href="javascript:void(0);" data-toggle="dropdown">
+                        <i class="anticon anticon-ellipsis"></i>
+                    </a>
+                       <div class="dropdown-menu">
+            <button class="dropdown-item btn btn-info btn-tone viewBuilding" type="button" data-id="${building.buildingId}">
+                <i class="anticon anticon-eye"></i>
+                <span class="m-l-10">View</span>
+            </button>
+                <button class="dropdown-item btn btn-warning btn-tone editBuilding" type="button" data-id="${building.buildingId}">
+                <i class="anticon anticon-edit"></i>
+                <span class="m-l-10">Edit</span>
+            </button>
+                <button class="dropdown-item btn btn-danger btn-tone deleteBuilding" type="button" data-id="${building.buildingId}">
+                <i class="anticon anticon-delete"></i>
+                <span class="m-l-10">Delete</span>
+            </button>
+        </div>
+                </div>
+                        </td>
+                    </tr>
+                `;
+
+                    $('#building-list').append(buildingRow);
+                } catch (error) {
+                    console.error('Error loading building count from API: ' + error);
+                }
+            }
+        }
+
+        // Get building list from API
+        $.ajax({
+            url: 'https://localhost:7186/api/buildings',
+            type: 'GET',
+            dataType: 'json',
+            success: async function (buildings) {
+                await updateBuildingList(buildings);
+            },
+            error: function (xhr, status, error) {
+                console.log('Error loading buildings from API: ' + error);
+            }
+        });
+
+
+        //API get facility
+        $.ajax({
+            url: 'https://localhost:7186/api/facilities',
+            type: 'GET',
+            success: function (response) {
+                response.forEach(function (facility) {
+                    $('#new-building-facility').append('<option value="' + facility.facilityId + '">' + facility.facilityName + '</option>');
+                    $('#edit-building-facility').append('<option value="' + facility.facilityId + '">' + facility.facilityName + '</option>');
+                });
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+
+        //Create Building API
+        $('#create-building-btn').click(function () {
+            // Get data from input fields
+            var buildingName = $('#new-building-name').val();
+            var status = $('input[name="statusRadios"]:checked').val();
+            var facilityId = $('#new-building-facility').val();
+            var imageInput = $('#new-building-image');
+
+            // Create FormData to send data to the API
+            var formData = new FormData();
+            formData.append('BuildingName', buildingName);
+            formData.append('Status', status);
+            formData.append('FacilityId', facilityId);
+            if (imageInput[0].files.length > 0) {
+                var imageFile = imageInput[0].files[0];
+                formData.append('Image', imageFile);
+            }
+
+            // Send an AJAX POST request to the API
+            $.ajax({
+                url: 'https://localhost:7186/api/buildings',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    console.log('Building added successfully:', response);
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Building added successfully!',
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then(() => {
+                        $('#form-add-building').submit();
+                    });
+                    $('#create-new-building').modal('hide');
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error adding building:', error);
+                    // Log details of the error response
+                    console.log(imageInput[0].files);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Failed to add building. Please try again later.',
+                    });
+                }
+            });
+        });
+
+        //Delete Building API
+        $(document).on('click', '.deleteBuilding', function () {
+            var buildingId = $(this).data('id');
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'You will not be able to recover this building!',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: 'https://localhost:7186/api/buildings/' + buildingId,
+                        type: 'DELETE',
+                        success: function (response) {
+                            console.log(response);
+                            Swal.fire(
+                                'Deleted!',
+                                'Building has been deleted.',
+                                'success'
+                            ).then(() => {
+                                location.reload();
+                            });
+                        },
+                        error: function (xhr, status, error) {
+                            console.error(xhr.responseText);
+                            Swal.fire(
+                                'Error!',
+                                'Failed to delete building. Please try again later.',
+                                'error'
+                            );
+                        }
+                    });
+                }
+            });
+        });
+
+        //Show edit modal have data by buildingId
+        $(document).on('click', '.editBuilding', function () {
+            var buildingId = $(this).data('id');
+            showEditModal(buildingId);
+        });
+
+        //Get building data by buildingId
+        function showEditModal(buildingId) {
+            $.ajax({
+                url: 'https://localhost:7186/api/buildings/' + buildingId,
+                type: 'GET',
+                success: function (response) {
+                    $('#building-id').val(response.buildingId);
+                    $('#edit-building-name').val(response.buildingName);
+                    if (response.status === 'active') {
+                        $('#edit-statusActive').prop('checked', true);
+                    } else {
+                        $('#edit-statusDeactive').prop('checked', true);
+                    }
+                    $('#edit-building').modal('show');
+                    var facilityName = '';
+                    //API get facilities by ID
+                    $.ajax({
+                        url: 'https://localhost:7186/api/facilities/' + response.facilityId,
+                        type: 'GET',
+                        async: false,
+                        success: function (facilityResponse) {
+                            facilityId = facilityResponse.facilityId;
+                        },
+                        error: function (xhr, status, error) {
+                            console.error('Error fetching facility details:', error);
+                        }
+                    });
+                    $('#edit-building-facility').val(facilityId);
+
+                    $('#edit-building').modal('show');
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error fetching building details:', error);
+                }
+            });
+        }
+
+        //Edit Building
+        $('#edit-building-btn').click(function () {
+            var buildingId = $('#building-id').val();
+            var buildingName = $('#edit-building-name').val();
+            var status = $('input[name="edit-statusRadios"]:checked').val();
+            var facilityId = $('#edit-building-facility').val();
+            var imageInput = $('#edit-building-image');
+
+            var formData = new FormData();
+            formData.append('BuildingId', buildingId);
+            formData.append('BuildingName', buildingName);
+            formData.append('Status', status);
+            formData.append('FacilityId', facilityId);
+            if (imageInput[0].files.length > 0) {
+                var imageFile = imageInput[0].files[0];
+                formData.append('Image', imageFile);
+            }
+
+            $.ajax({
+                url: 'https://localhost:7186/api/buildings/' + $('#building-id').val(),
+                type: 'PUT',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Building Updated',
+                        text: 'Building information has been updated successfully!',
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then(() => {
+                        $('#form-edit-building').submit();
+                    });
+                    $('#edit-building').modal('hide');
+                    console.log('Building updated successfully:', response);
+                },
+                error: function (xhr, status, error) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'An error occurred while updating building information.',
+                    });
+                    console.error('Error updating building:', error);
+                }
+            });
+        });
+
+
+        // Add Floor in building
+        $(document).on('click', '.addFloor', function () {
+            var buildingId = $(this).data('id');
+            $('#add-floor-modal').modal('show');
+
+            // Gửi AJAX request
+            $('#add-floor-btn').click(function (event) {
+                event.preventDefault(); 
+
+                var floorCount = $('#floor-number').val();
+
+                var formDataArray = []; 
+
+                for (var i = 1; i <= floorCount; i++) {
+                    var floorData = {
+                        FloorName: 'Floor ' + i, 
+                        Greeting: 'Welcome to Floor '+ i,
+                        Status: 'active', 
+                        BuildingId: buildingId
+                    };
+
+                    formDataArray.push(floorData); 
+                }
+
+
+                $.ajax({
+                    url: 'https://localhost:7186/api/floors',
+                    type: 'POST',
+                    data: JSON.stringify(formDataArray),
+                    contentType: 'application/json',
+                    success: function (response) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: 'Floor added successfully!',
+                            showConfirmButton: false,
+                            timer: 1500
+                        }).then(() => {
+                            location.reload();
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(xhr.responseText);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'An error occurred while adding the floor.'
+                        });
+                    }
+                });
+            });
+        });
+
+        //Redirect building detail
+        $(document).on('click', '.viewBuilding', function () {
+            var buildingId = $(this).data('id');
+            window.location.href = `Detail/${buildingId}`;
+        });
+    });
+
+
+    //get image when selected
+    function displaySelectedImage(input, containerId) {
+        var file = input.files[0];
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            var imgElement = document.createElement('img');
+            imgElement.src = e.target.result;
+            imgElement.className = "img-fluid rounded";
+
+            var selectedImageContainer = document.getElementById(containerId);
+            selectedImageContainer.innerHTML = '';
+            selectedImageContainer.appendChild(imgElement);
+        }
+
+        reader.readAsDataURL(file);
+    }
+   
+</script>
+
+
+
+
+

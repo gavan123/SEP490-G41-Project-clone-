@@ -2,11 +2,13 @@
 using BusinessObject.DTO;
 using BusinessObject.Models;
 using DataAccess.DAO;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace DataAccess.IRepository.Repository
 {
@@ -49,7 +51,17 @@ namespace DataAccess.IRepository.Repository
         {
             try
             {
-                _buildingDAO.AddBuilding(_mapper.Map<Building>(building));
+                string uniqueFileName =  building.Image.FileName;
+
+                var buildingModel = new Building
+                {
+                    BuildingName = building.BuildingName,
+                    Status = building.Status,
+                    FacilityId = building.FacilityId,
+                    Image = uniqueFileName 
+                };
+
+                _buildingDAO.AddBuilding(buildingModel);
             }
             catch (Exception ex)
             {
@@ -57,11 +69,23 @@ namespace DataAccess.IRepository.Repository
             }
         }
 
+
+
         public void UpdateBuilding(BuildingUpdateDTO building)
         {
             try
             {
-                _buildingDAO.UpdateBuilding(_mapper.Map<Building>(building));
+                string uniqueFileName = building.Image.FileName;
+
+                var buildingModel = new Building
+                {
+                    BuildingId = building.BuildingId,
+                    BuildingName = building.BuildingName,
+                    Status = building.Status,
+                    FacilityId = building.FacilityId,
+                    Image = uniqueFileName
+                };
+                _buildingDAO.UpdateBuilding(_mapper.Map<Building>(buildingModel));
             }
             catch (Exception ex)
             {
@@ -81,11 +105,6 @@ namespace DataAccess.IRepository.Repository
             }
         }
 
-        /*public List<BuildingDTO> SearchBuildingsByName(string keyword)
-{
-    var buildings = _buildingDAO.SearchBuildingsByName(keyword);
-    var buildingDTOs = buildings.Select(building => _mapper.Map<BuildingDTO>(building)).ToList();
-    return buildingDTOs;
-}*/
+      
     }
 }
