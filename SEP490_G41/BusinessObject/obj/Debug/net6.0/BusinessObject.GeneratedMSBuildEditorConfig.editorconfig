@@ -8,6 +8,4 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = BusinessObject
-build_property.ProjectDir = D:\DO-AN\sep490-g41-project3\SEP490_G41\BusinessObject\
-build_property.EnableComHosting = 
-build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.ProjectDir = D:\sep490-g41-project\SEP490_G41\BusinessObject\

@@ -1,17 +1,11 @@
 ﻿using AutoMapper;
-using BusinessObject.DTO;
 using BusinessObject.Models;
 using DataAccess.DAO;
 using NetTopologySuite.Features;
 using NetTopologySuite.Geometries;
 using NetTopologySuite.IO;
 using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using static Google.Protobuf.Compiler.CodeGeneratorResponse.Types;
+
 
 namespace DataAccess.IRepository.Repository
 {
@@ -84,7 +78,17 @@ namespace DataAccess.IRepository.Repository
         {
             try
             {
-                _mappointDAO.AddMappoint(_mapper.Map<Mappoint>(mapPoint));
+                // Parse the location string to extract the coordinates
+                string[] coordinates = mapPoint.Location.Trim('[', ']').Split(',');
+                double latitude = double.Parse(coordinates[0].Trim());
+                double longitude = double.Parse(coordinates[1].Trim());
+
+                // Create a new Point object and map the DTO to the entity
+                Point location = new Point(latitude, longitude);
+                var mapPointEntity = _mapper.Map<Mappoint>(mapPoint);
+                mapPointEntity.Location = location;
+
+                _mappointDAO.AddMappoint(mapPointEntity);
             }
             catch (Exception ex)
             {
@@ -96,13 +100,29 @@ namespace DataAccess.IRepository.Repository
         {
             try
             {
-                _mappointDAO.UpdateMappoint(_mapper.Map<Mappoint>(mapPoint));
+                // Get the existing Mappoint entity
+                var existingMapPoint = _mappointDAO.GetMappointById(mapPoint.MapPointId);
+                if (existingMapPoint == null)
+                {
+                    throw new Exception($"MapPoint with ID {mapPoint.MapPointId} not found.");
+                }
+
+                // Update the properties of the existing entity
+                string[] coordinates = mapPoint.Location.Trim('[', ']').Split(',');
+                double latitude = double.Parse(coordinates[0].Trim());
+                double longitude = double.Parse(coordinates[1].Trim());
+                existingMapPoint.Location = new Point(longitude, latitude);
+                existingMapPoint.MapId = mapPoint.MapId;
+
+                // Update the entity in the database
+                _mappointDAO.UpdateMappoint(existingMapPoint);
             }
             catch (Exception ex)
             {
                 throw new Exception("Error occurred while updating map point.", ex);
             }
         }
+
 
         public void DeleteMapPoint(int mapPointId)
         {

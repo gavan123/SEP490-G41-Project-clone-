@@ -2,18 +2,14 @@
 using BusinessObject.DTO;
 using BusinessObject.Models;
 using NetTopologySuite.Geometries;
-using NetTopologySuite;
-using Org.BouncyCastle.Math.EC;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Drawing;
+using Point = NetTopologySuite.Geometries.Point;
 
 namespace BusinessObject.MappingProfile
 {
     public class MappingProfile : Profile
     {
+        
         public MappingProfile()
         {
 
@@ -37,12 +33,29 @@ namespace BusinessObject.MappingProfile
             CreateMap<MapUpdateDTO, Map>();
             CreateMap<Map, MapUpdateDTO>();
 
+            CreateMap<MapPointAddDTO, Mappoint>()
+           .ForMember(dest => dest.Location, opt => opt.ConvertUsing(new PointConverter(), src => src.Location));
             CreateMap<Mappoint, MapPointDTO>().ReverseMap();
-            CreateMap<Mappoint, MapPointAddDTO>().ReverseMap();
-            CreateMap<Mappoint, MapPointUpdateDTO>().ReverseMap();
+            CreateMap<MapPointUpdateDTO, Mappoint>()
+           .ForMember(dest => dest.Location, opt => opt.ConvertUsing(new PointConverter(), src => src.Location));
 
 
         }
+
+        public class PointConverter : IValueConverter<string, Point>
+        {
+            public Point Convert(string source, ResolutionContext context)
+            {
+                // Parse the location string to extract the coordinates
+                string[] coordinates = source.Trim('[', ']').Split(',');
+                double latitude = double.Parse(coordinates[0].Trim());
+                double longitude = double.Parse(coordinates[1].Trim());
+
+                // Create a new Point object
+                return new Point(latitude,longitude );
+            }
+        }
+
 
     }
 }

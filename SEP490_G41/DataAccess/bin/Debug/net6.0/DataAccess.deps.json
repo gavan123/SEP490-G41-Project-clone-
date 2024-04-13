@@ -1326,6 +1326,7 @@
           "MySql.EntityFrameworkCore": "6.0.25",
           "MySqlConnector": "2.3.5",
           "NetTopologySuite": "2.5.0",
+          "NetTopologySuite.IO.GeoJSON": "4.0.0",
           "Pomelo.EntityFrameworkCore.MySql": "6.0.3",
           "Pomelo.EntityFrameworkCore.MySql.Design": "1.1.2",
           "Pomelo.EntityFrameworkCore.MySql.NetTopologySuite": "6.0.3"
