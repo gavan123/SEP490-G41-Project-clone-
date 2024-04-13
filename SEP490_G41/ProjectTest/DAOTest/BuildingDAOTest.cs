@@ -70,6 +70,52 @@ namespace ProjectTest.DAOTest
         }
 
         [Fact]
+        public void GetBuildingById_Should_Return_Building_With_Null_Details()
+        {
+            // Condition: Building with specified Id exists in the database but has null details
+
+            // Arrange
+            var options = new DbContextOptionsBuilder<finsContext>()
+                .UseInMemoryDatabase(databaseName: "fins")
+                .Options;
+
+            using (var context = new finsContext(options))
+            {
+                var buildingDAO = new BuildingDAO(context);
+                var newBuilding = new Building { BuildingId = 2, BuildingName = "", Status = "", Image = "", FacilityId = 1 };
+                context.Buildings.Add(newBuilding);
+                context.SaveChanges();
+
+                // Act
+                var retrievedBuilding = buildingDAO.GetBuildingById(2);
+
+                // Assert
+                Assert.NotNull(retrievedBuilding);
+                Assert.Equal("", retrievedBuilding.BuildingName); 
+                Assert.Equal("", retrievedBuilding.Status);
+                Assert.Equal("", retrievedBuilding.Image);
+            }
+        }
+
+        [Fact]
+        public void GetBuildingById_Should_Throw_Exception_For_Invalid_Id()
+        {
+            // Condition: None
+
+            // Arrange
+            var options = new DbContextOptionsBuilder<finsContext>()
+                .UseInMemoryDatabase(databaseName: "fins")
+                .Options;
+
+            using (var context = new finsContext(options))
+            {
+                var buildingDAO = new BuildingDAO(context);
+
+                // Act & Assert
+                Assert.Throws<ArgumentException>(() => buildingDAO.GetBuildingById(-1)); // Invalid ID
+            }
+        }
+        [Fact]
         public void UpdateBuilding_Should_Update_Building_Information()
         {
             // Condition: Building with specified Id exists in the database
@@ -98,7 +144,7 @@ namespace ProjectTest.DAOTest
 
             // Result: Building information updated successfully
         }
-
+       
         [Fact]
         public void DeleteBuilding_Should_Remove_Building_From_Database()
         {

@@ -15,6 +15,5 @@ namespace DataAccess.IRepository
         void UpdateFacility(FacilityUpdateDTO facility);
         void DeleteFacility(int facilityId);
 
-        /* List<FacilityDTO> SearchFacilitiesByName(string keyword); */
     }
 }

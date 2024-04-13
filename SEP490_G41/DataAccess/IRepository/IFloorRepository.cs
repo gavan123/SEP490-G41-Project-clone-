@@ -15,7 +15,6 @@ namespace DataAccess.IRepository
         void UpdateFloor(FloorDTO floor);
         void DeleteFloor(int floorId);
 
-        /* List<FloorDTO> SearchFloorsByName(string keyword);
-           List<FloorDTO> SearchFloorsByStatus(string status); */
+       
     }
 }
