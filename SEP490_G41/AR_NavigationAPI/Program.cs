@@ -8,8 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OData.Edm;
 using Microsoft.OData.ModelBuilder;
 using System.Text.Json.Serialization;
+<<<<<<< HEAD
 using System.Text.Json;
 using Microsoft.AspNetCore.Http.Json;
+=======
+>>>>>>> main
 
 
 
@@ -19,7 +22,13 @@ static IEdmModel GetEdmModel()
 
     builder.EntitySet<Building>("building");
     builder.EntitySet<Facility>("facilities");
+<<<<<<< HEAD
     builder.EntitySet<Mappoint>("mappoint");
+=======
+    builder.EntitySet<Floor>("floor");
+    builder.EntitySet<Map>("map");
+
+>>>>>>> main
 
     return builder.GetEdmModel();
 }
@@ -34,9 +43,15 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddScoped<finsContext>();
 builder.Services.AddDbContext<finsContext>((serviceProvider, options) =>
 {
+<<<<<<< HEAD
     var serverVersion = new MySqlServerVersion(new Version(10, 6, 10)); 
     options.UseMySql(builder.Configuration.GetConnectionString("Project"), serverVersion,
         mysqlOptions => mysqlOptions.UseNetTopologySuite()); 
+=======
+    var serverVersion = new MySqlServerVersion(new Version(8, 0, 23)); // Thay thế bằng phiên bản MySQL Server bạn đang sử dụng
+    options.UseMySql(builder.Configuration.GetConnectionString("Project"), serverVersion);
+
+>>>>>>> main
 });
 builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(typeof(MappingProfile));
@@ -48,12 +63,26 @@ builder.Services.AddCors(policy =>
 builder.Services.AddScoped<BuildingDAO>();
 builder.Services.AddScoped<FacilityDAO>();
 builder.Services.AddScoped<MapDAO>();
+<<<<<<< HEAD
 builder.Services.AddScoped<MappointDAO>();
+=======
+builder.Services.AddScoped<FloorDAO>();
+>>>>>>> main
 
 builder.Services.AddScoped<IBuildingRepository, BuildingRepository>();
 builder.Services.AddScoped<IFacilityRepository, FacilityRepository>();
 builder.Services.AddScoped<IMapRepository, MapRepository>();
+<<<<<<< HEAD
 builder.Services.AddScoped<IMapPointRepository, MapPointRepository>();
+=======
+builder.Services.AddScoped<IFloorRepository, FloorRepository>();
+
+/*builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+    });*/
+>>>>>>> main
 
 var app = builder.Build();
 

@@ -16,7 +16,6 @@ namespace DataAccess.IRepository
         void UpdateMap(MapUpdateDTO map);
         void DeleteMap(int mapId);
 
-        /*  List<MapDTO> SearchMapsByName(string keyword);
-            Other methods can be added here based on specific requirements.*/
+        
     }
 }
