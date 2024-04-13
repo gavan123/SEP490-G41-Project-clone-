@@ -11,12 +11,17 @@ namespace DataAccess.DAO
     public class BuildingDAO
     {
         private readonly finsContext _context;
-
+       
         public BuildingDAO(finsContext context)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
+        public BuildingDAO()
+        {
+            _context = new finsContext(); // Initialize with a new instance for testing
+        }
+        
         // Thêm mới tòa nhà
         public void AddBuilding(Building building)
         {
