@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "/Bto0AnTLuS5TiqRBOSxhF31sUbPqnyz9z81956SrZyezeDEwIbFUKRYe+tgYEbC+0avxL3xS5Yc+uHRXL5D2Q==",
+  "dgSpecHash": "7zpIi45PjbyQuiCOvMTAa3I5IIqECch/h0hah9BmWEA34Rq9+nbGKhv+vh6no5RZF5Dk3T/fFkFQeK6xbd9lLg==",
   "success": true,
   "projectFilePath": "C:\\Users\\TGDD'\\Dropbox\\PC\\Documents\\SEP490_G41\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj",
   "expectedPackageFiles": [
@@ -16,6 +16,7 @@
     "C:\\Users\\TGDD'\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\6.0.28\\microsoft.entityframeworkcore.abstractions.6.0.28.nupkg.sha512",
     "C:\\Users\\TGDD'\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\6.0.28\\microsoft.entityframeworkcore.analyzers.6.0.28.nupkg.sha512",
     "C:\\Users\\TGDD'\\.nuget\\packages\\microsoft.entityframeworkcore.design\\6.0.28\\microsoft.entityframeworkcore.design.6.0.28.nupkg.sha512",
+    "C:\\Users\\TGDD'\\.nuget\\packages\\microsoft.entityframeworkcore.inmemory\\6.0.28\\microsoft.entityframeworkcore.inmemory.6.0.28.nupkg.sha512",
     "C:\\Users\\TGDD'\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\6.0.28\\microsoft.entityframeworkcore.relational.6.0.28.nupkg.sha512",
     "C:\\Users\\TGDD'\\.nuget\\packages\\microsoft.entityframeworkcore.relational.design\\1.1.1\\microsoft.entityframeworkcore.relational.design.1.1.1.nupkg.sha512",
     "C:\\Users\\TGDD'\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\6.0.0\\microsoft.extensions.caching.abstractions.6.0.0.nupkg.sha512",

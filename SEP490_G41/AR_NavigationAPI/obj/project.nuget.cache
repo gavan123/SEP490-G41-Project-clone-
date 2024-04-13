@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "a6IR5CAT+xzmJVqSfqybBgjgS9Dh9xI5QyxpGrHjEJScqmfkcmAMqYITS9pd9anJ9VMwo/q1I93tzm+9hJzL6Q==",
+  "dgSpecHash": "U6Uvy6Jjj7xs6wMN75B+Xmu9Stj9YcrZ1rx+N52TAzWaszQHkyz8XI0iKQ51z3Ex4oP/To6HDK3kMj2VJHeSYg==",
   "success": true,
   "projectFilePath": "C:\\Users\\TGDD'\\Dropbox\\PC\\Documents\\SEP490_G41\\sep490-g41-project\\SEP490_G41\\AR_NavigationAPI\\AR_NavigationAPI.csproj",
   "expectedPackageFiles": [
@@ -16,6 +16,7 @@
     "C:\\Users\\TGDD'\\.nuget\\packages\\microsoft.entityframeworkcore\\6.0.28\\microsoft.entityframeworkcore.6.0.28.nupkg.sha512",
     "C:\\Users\\TGDD'\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\6.0.28\\microsoft.entityframeworkcore.abstractions.6.0.28.nupkg.sha512",
     "C:\\Users\\TGDD'\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\6.0.28\\microsoft.entityframeworkcore.analyzers.6.0.28.nupkg.sha512",
+    "C:\\Users\\TGDD'\\.nuget\\packages\\microsoft.entityframeworkcore.inmemory\\6.0.28\\microsoft.entityframeworkcore.inmemory.6.0.28.nupkg.sha512",
     "C:\\Users\\TGDD'\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\6.0.28\\microsoft.entityframeworkcore.relational.6.0.28.nupkg.sha512",
     "C:\\Users\\TGDD'\\.nuget\\packages\\microsoft.entityframeworkcore.relational.design\\1.1.1\\microsoft.entityframeworkcore.relational.design.1.1.1.nupkg.sha512",
     "C:\\Users\\TGDD'\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",

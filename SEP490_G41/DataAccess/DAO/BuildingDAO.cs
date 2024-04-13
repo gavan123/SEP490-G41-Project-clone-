@@ -14,12 +14,17 @@ namespace DataAccess.DAO
 
         public BuildingDAO(finsContext context)
         {
-            _context = context;
+            _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
         // Thêm mới tòa nhà
         public void AddBuilding(Building building)
         {
+            if (building == null)
+            {
+                throw new ArgumentNullException(nameof(building));
+            }
+
             _context.Buildings.Add(building);
             _context.SaveChanges();
         }
@@ -27,12 +32,22 @@ namespace DataAccess.DAO
         // Đọc thông tin tòa nhà bằng Id
         public Building GetBuildingById(int buildingId)
         {
+            if (buildingId <= 0)
+            {
+                throw new ArgumentException("Invalid building ID", nameof(buildingId));
+            }
+
             return _context.Buildings.FirstOrDefault(b => b.BuildingId == buildingId);
         }
 
         // Cập nhật thông tin tòa nhà
         public void UpdateBuilding(Building building)
         {
+            if (building == null)
+            {
+                throw new ArgumentNullException(nameof(building));
+            }
+
             var existingBuilding = _context.Buildings.FirstOrDefault(b => b.BuildingId == building.BuildingId);
 
             if (existingBuilding != null)
@@ -44,11 +59,20 @@ namespace DataAccess.DAO
 
                 _context.SaveChanges();
             }
+            else
+            {
+                throw new ArgumentException("Building not found", nameof(building));
+            }
         }
 
         // Xóa tòa nhà bằng Id
         public void DeleteBuilding(int buildingId)
         {
+            if (buildingId <= 0)
+            {
+                throw new ArgumentException("Invalid building ID", nameof(buildingId));
+            }
+
             try
             {
                 var floors = _context.Floors.Where(f => f.BuildingId == buildingId).ToList();
@@ -64,7 +88,11 @@ namespace DataAccess.DAO
                 if (building != null)
                 {
                     _context.Buildings.Remove(building);
-                    _context.SaveChanges(); 
+                    _context.SaveChanges();
+                }
+                else
+                {
+                    throw new ArgumentException("Building not found", nameof(buildingId));
                 }
             }
             catch (Exception ex)
@@ -78,7 +106,7 @@ namespace DataAccess.DAO
         public List<Building> GetAllBuildings()
         {
             return _context.Buildings
-                   .Include(b => b.Facility)  
+                   .Include(b => b.Facility)
                    .ToList();
         }
 

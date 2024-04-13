@@ -58,13 +58,5 @@ namespace DataAccess.DAO
             return _context.Facilities.ToList();
         }
 
-        public List<Facility> SearchFacilitiesByName(string keyword)
-        {
-            var facilities = _context.Facilities
-                .Where(f => f.FacilityName.Contains(keyword))
-                .ToList();
-
-            return facilities;
-        }
     }
 }
