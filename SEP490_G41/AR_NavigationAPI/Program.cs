@@ -48,20 +48,20 @@ builder.Services.AddCors(policy =>
 builder.Services.AddScoped<BuildingDAO>();
 builder.Services.AddScoped<FacilityDAO>();
 builder.Services.AddScoped<MapDAO>();
-<<<<<<< HEAD
+
 builder.Services.AddScoped<ProfileDAO>();
-=======
+
 builder.Services.AddScoped<FloorDAO>();
->>>>>>> main
+
 
 builder.Services.AddScoped<IBuildingRepository, BuildingRepository>();
 builder.Services.AddScoped<IFacilityRepository, FacilityRepository>();
 builder.Services.AddScoped<IMapRepository, MapRepository>();
-<<<<<<< HEAD
+
 builder.Services.AddScoped<IProfileRepository, ProfileRepository>();
-=======
+
 builder.Services.AddScoped<IFloorRepository, FloorRepository>();
->>>>>>> main
+
 
 /*builder.Services.AddControllers()
     .AddJsonOptions(options =>
