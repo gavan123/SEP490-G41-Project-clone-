@@ -2984,37 +2984,19 @@
     ]
   },
   "packageFolders": {
-<<<<<<< HEAD
     "C:\\Users\\ADMIN\\.nuget\\packages\\": {}
-=======
-    "C:\\Users\\theon\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
->>>>>>> minhpc
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-<<<<<<< HEAD
-      "projectUniqueName": "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj",
+      "projectUniqueName": "D:\\DO-AN\\sep490-g41-project2\\SEP490_G41\\BusinessObject\\BusinessObject.csproj",
       "projectName": "BusinessObject",
-      "projectPath": "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj",
+      "projectPath": "D:\\DO-AN\\sep490-g41-project2\\SEP490_G41\\BusinessObject\\BusinessObject.csproj",
       "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-      "outputPath": "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\BusinessObject\\obj\\",
-=======
-      "projectUniqueName": "F:\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj",
-      "projectName": "BusinessObject",
-      "projectPath": "F:\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj",
-      "packagesPath": "C:\\Users\\theon\\.nuget\\packages\\",
-      "outputPath": "F:\\sep490-g41-project\\SEP490_G41\\BusinessObject\\obj\\",
->>>>>>> minhpc
+      "outputPath": "D:\\DO-AN\\sep490-g41-project2\\SEP490_G41\\BusinessObject\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-<<<<<<< HEAD
         "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
-=======
-        "C:\\Users\\theon\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
->>>>>>> minhpc
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -3107,11 +3089,7 @@
             "privateAssets": "all"
           }
         },
-<<<<<<< HEAD
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101\\RuntimeIdentifierGraph.json"
-=======
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202\\RuntimeIdentifierGraph.json"
->>>>>>> minhpc
       }
     }
   }

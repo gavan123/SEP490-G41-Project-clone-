@@ -1,11 +1,7 @@
-<<<<<<< HEAD
 ﻿using BusinessObject.Models;
-=======
 ﻿using AutoMapper;
 using BusinessObject.DTO;
-using BusinessObject.Models;
 using DataAccess.DAO;
->>>>>>> minhpc
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,36 +12,6 @@ namespace DataAccess.IRepository.Repository
 {
     public class MemberRepository : IMemberRepository
     {
-<<<<<<< HEAD
-        public bool AddNewMember()
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool DeleteMember(string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<Member> GetAllMembers()
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Login(string username, string password)
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<Member> SearchMemberByName(string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool UpdateMember(Member member)
-        {
-            throw new NotImplementedException();
-=======
         private readonly IMapper _mapper;
         private readonly MemberDAO _memberDAO;
 
@@ -147,7 +113,6 @@ namespace DataAccess.IRepository.Repository
             {
                 throw new Exception("Something has wrong!");
             }
->>>>>>> minhpc
         }
     }
 }

@@ -31,11 +31,8 @@ namespace BusinessObject.MappingProfile
                .ForMember(dest => dest.FloorName, opt => opt.MapFrom(src => src.Floor.FloorName)).ReverseMap();
             CreateMap<Map, MapAddDTO>().ReverseMap();
             CreateMap<Map, MapUpdateDTO>().ReverseMap();
-<<<<<<< HEAD
-=======
 
             CreateMap<Member, MemberDTO>().ReverseMap();
->>>>>>> minhpc
 
         }
     }

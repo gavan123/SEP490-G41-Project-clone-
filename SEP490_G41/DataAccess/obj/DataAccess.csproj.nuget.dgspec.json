@@ -1,39 +1,20 @@
 {
   "format": 1,
   "restore": {
-<<<<<<< HEAD
-    "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\DataAccess\\DataAccess.csproj": {}
+    "D:\\DO-AN\\sep490-g41-project2\\SEP490_G41\\DataAccess\\DataAccess.csproj": {}
   },
   "projects": {
-    "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj": {
+    "D:\\DO-AN\\sep490-g41-project2\\SEP490_G41\\BusinessObject\\BusinessObject.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj",
+        "projectUniqueName": "D:\\DO-AN\\sep490-g41-project2\\SEP490_G41\\BusinessObject\\BusinessObject.csproj",
         "projectName": "BusinessObject",
-        "projectPath": "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj",
+        "projectPath": "D:\\DO-AN\\sep490-g41-project2\\SEP490_G41\\BusinessObject\\BusinessObject.csproj",
         "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\BusinessObject\\obj\\",
-=======
-    "F:\\sep490-g41-project\\SEP490_G41\\DataAccess\\DataAccess.csproj": {}
-  },
-  "projects": {
-    "F:\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "F:\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj",
-        "projectName": "BusinessObject",
-        "projectPath": "F:\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj",
-        "packagesPath": "C:\\Users\\theon\\.nuget\\packages\\",
-        "outputPath": "F:\\sep490-g41-project\\SEP490_G41\\BusinessObject\\obj\\",
->>>>>>> minhpc
+        "outputPath": "D:\\DO-AN\\sep490-g41-project2\\SEP490_G41\\BusinessObject\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-<<<<<<< HEAD
           "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
-=======
-          "C:\\Users\\theon\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
->>>>>>> minhpc
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -105,23 +86,6 @@
               "target": "Package",
               "version": "[6.0.3, )"
             },
-<<<<<<< HEAD
-            "Pomelo.EntityFrameworkCore.MySql.Design": {
-<<<<<<< HEAD
-              "target": "Package",
-              "version": "[1.1.2, )"
-            },
-            "Pomelo.EntityFrameworkCore.MySql.NetTopologySuite": {
-              "target": "Package",
-              "version": "[6.0.3, )"
-            }
-          },
-=======
-              "target": "Package",
-              "version": "[1.1.2, )"
-            },
-=======
->>>>>>> Anhnh
             "Pomelo.EntityFrameworkCore.MySql.NetTopologySuite": {
               "target": "Package",
               "version": "[6.0.3, )"
@@ -143,89 +107,18 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202\\RuntimeIdentifierGraph.json"
-        }
-      }
-    },
-    "F:\\sep490-g41-project\\SEP490_G41\\DataAccess\\DataAccess.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "F:\\sep490-g41-project\\SEP490_G41\\DataAccess\\DataAccess.csproj",
-        "projectName": "DataAccess",
-        "projectPath": "F:\\sep490-g41-project\\SEP490_G41\\DataAccess\\DataAccess.csproj",
-        "packagesPath": "C:\\Users\\theon\\.nuget\\packages\\",
-        "outputPath": "F:\\sep490-g41-project\\SEP490_G41\\DataAccess\\obj\\",
-        "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
-        "configFilePaths": [
-          "C:\\Users\\theon\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
-        ],
-        "originalTargetFrameworks": [
-          "net6.0"
-        ],
-        "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
-          "https://api.nuget.org/v3/index.json": {}
-        },
-        "frameworks": {
-          "net6.0": {
-            "targetAlias": "net6.0",
-            "projectReferences": {
-              "F:\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj": {
-                "projectPath": "F:\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj"
-              }
-            }
-          }
-        },
-        "warningProperties": {
-          "warnAsError": [
-            "NU1605"
-          ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
-        }
-      },
-      "frameworks": {
-        "net6.0": {
-          "targetAlias": "net6.0",
->>>>>>> minhpc
-          "imports": [
-            "net461",
-            "net462",
-            "net47",
-            "net471",
-            "net472",
-            "net48",
-            "net481"
-          ],
-          "assetTargetFallback": true,
-          "warn": true,
-          "frameworkReferences": {
-            "Microsoft.NETCore.App": {
-              "privateAssets": "all"
-            }
-          },
-<<<<<<< HEAD
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\DataAccess\\DataAccess.csproj": {
+    "D:\\DO-AN\\sep490-g41-project2\\SEP490_G41\\DataAccess\\DataAccess.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\DataAccess\\DataAccess.csproj",
+        "projectUniqueName": "D:\\DO-AN\\sep490-g41-project2\\SEP490_G41\\DataAccess\\DataAccess.csproj",
         "projectName": "DataAccess",
-        "projectPath": "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\DataAccess\\DataAccess.csproj",
+        "projectPath": "D:\\DO-AN\\sep490-g41-project2\\SEP490_G41\\DataAccess\\DataAccess.csproj",
         "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\DataAccess\\obj\\",
+        "outputPath": "D:\\DO-AN\\sep490-g41-project2\\SEP490_G41\\DataAccess\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -242,8 +135,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj": {
-                "projectPath": "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj"
+              "D:\\DO-AN\\sep490-g41-project2\\SEP490_G41\\BusinessObject\\BusinessObject.csproj": {
+                "projectPath": "D:\\DO-AN\\sep490-g41-project2\\SEP490_G41\\BusinessObject\\BusinessObject.csproj"
               }
             }
           }
@@ -274,9 +167,6 @@
             }
           },
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101\\RuntimeIdentifierGraph.json"
-=======
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202\\RuntimeIdentifierGraph.json"
->>>>>>> minhpc
         }
       }
     }
