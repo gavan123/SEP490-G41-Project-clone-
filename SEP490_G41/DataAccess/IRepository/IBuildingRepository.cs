@@ -15,7 +15,6 @@ namespace DataAccess.IRepository
         void UpdateBuilding(BuildingUpdateDTO building);
         void DeleteBuilding(int buildingId);
 
-        /*  List<BuildingDTO> SearchBuildingsByName(string keyword);
-          List<BuildingDTO> SearchBuildingsByStatus(string status);*/
+        
     }
 }

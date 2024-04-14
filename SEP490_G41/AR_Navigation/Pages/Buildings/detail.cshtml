@@ -1,0 +1,163 @@
+﻿@page "{id:int}"
+@model AR_Navigation.Pages.Buildings.DetailModel
+@{
+    Layout = "_Layout1";
+}
+<style>
+    .selected-image-container {
+        width: 1200px;
+        height: 400px;
+        border: 2px solid #ced4da;
+        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 10px;
+    }
+
+        .selected-image-container img {
+            width: 50%;
+            height: 250px; 
+            display: block;
+            margin-bottom: 10px; 
+        }
+
+</style>
+<div class="page-header no-gutters">
+    <h1>Building Detail</h1>
+    <div class="row align-items-md-center">
+        <div class="col-md-12">
+            <div class="text-md-right m-v-10">
+                <button class="btn btn-primary" data-toggle="modal" data-target="#create-new-building">
+                    <i class="anticon anticon-plus"></i>
+                    <span class="m-l-5">New Building</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <!-- Building Name -->
+    <div class="building-name">
+        <h2 id="building-name"></h2>
+    </div>
+
+    <!-- Floor Name -->
+    <div class="form-group">
+        <label for="floor-select">Floor :</label>
+        <select class="form-control" id="floor-select">
+            <!-- Dynamically populated floor options will go here -->
+        </select>
+    </div>
+
+    <!-- Map Image -->
+    <div class="selected-image-container" id="map-images-container">
+        <img id="map-image" src="~/assets/images/others/img-13.jpg" alt="Map Image">
+    </div>
+</div>
+<div class="row align-items-md-center">
+    <div class="col-md-12">
+        <div class="text-md-right m-v-10">
+            <button class="btn btn-primary">
+                <i class="anticon anticon-plus"></i>
+                <span class="m-l-5">New Building</span>
+            </button>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        // Lấy buildingId từ URL
+        var buildingId = window.location.pathname.split("/").pop();
+
+        //Get data builind Detail
+        $.ajax({
+            url: `https://localhost:7186/api/buildings/${buildingId}`,
+            type: 'GET',
+            success: function (building) {
+                // Cập nhật tên tòa nhà
+                $('#building-name').text(building.buildingName);
+
+                // Gửi AJAX request để lấy thông tin về các tầng của tòa nhà
+                $.ajax({
+                    url: `https://localhost:7186/api/floors?$filter=buildingId eq ${buildingId}`,
+                    type: 'GET',
+                    success: function (floors) {
+                        // Tạo danh sách các tầng
+                        var floorOptions = '';
+                        floors.forEach(function (floor) {
+                            floorOptions += `<option value="${floor.floorId}">${floor.floorName}</option>`;
+                        });
+                        $('#floor-select').html(floorOptions);
+
+                        // Chọn tầng đầu tiên mặc định
+                        if (floors.length > 0) {
+                            var defaultFloorId = floors[0].floorId;
+                            updateMapImage(defaultFloorId);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error fetching floors:', error);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'An error occurred while loading floors.'
+                        });
+                    }
+                });
+            },
+            error: function (xhr, status, error) {
+                console.error(xhr.responseText);
+                // Xử lý lỗi nếu có
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'An error occurred while loading building details.'
+                });
+            }
+        });
+
+        // Event that listens when the user selects a new floor
+        $('#floor-select').change(function () {
+            var selectedFloorId = $(this).val();
+            updateMapImage(selectedFloorId);
+        });
+
+        //update map image by floor
+        function updateMapImage(floorId) {
+            $.ajax({
+                url: `https://localhost:7186/api/maps?$filter=floorId eq ${floorId}`,
+                type: 'GET',
+                success: function (maps) {
+                    if (maps.length > 0) {
+                        // Tạo danh sách các hình ảnh bản đồ
+                        var mapImages = '';
+                        maps.forEach(function (map) {
+                            mapImages += `<img src="/Images/${map.image2D}" alt="Map Image">`;
+                        });
+                        // Hiển thị danh sách hình ảnh bản đồ trên trang
+                        $('#map-images-container').html(mapImages);
+                    } else {
+                        console.log('No map found for the specified floor.');
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error fetching map details:', error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'An error occurred while loading map details.'
+                    });
+                }
+            });
+        }
+
+        //open image in new tab
+        $(document).on('click', '#map-images-container img', function () {
+            var imageUrl = $(this).attr('src');
+            window.open(imageUrl, '_blank');
+        });
+    });
+
+
+</script>

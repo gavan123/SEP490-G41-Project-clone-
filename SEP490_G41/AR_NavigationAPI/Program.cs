@@ -1,26 +1,15 @@
-<<<<<<< HEAD
-using BusinessObject.DTO;
 using BusinessObject.MappingProfile;
 using BusinessObject.Models;
 using DataAccess.DAO;
 using DataAccess.IRepository;
 using DataAccess.IRepository.Repository;
-=======
-﻿using BusinessObject.MappingProfile;
-using BusinessObject.Models;
-using DataAccess.DAO;
-using DataAccess.IRepository.Repository;
-using DataAccess.IRepository;
->>>>>>> hieunh
 using Microsoft.AspNetCore.OData;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OData.Edm;
 using Microsoft.OData.ModelBuilder;
-<<<<<<< HEAD
-using System.Security.Policy;
+using System.Text.Json.Serialization;
 
-=======
->>>>>>> hieunh
+
 
 static IEdmModel GetEdmModel()
 {
@@ -28,6 +17,8 @@ static IEdmModel GetEdmModel()
 
     builder.EntitySet<Building>("building");
     builder.EntitySet<Facility>("facilities");
+    builder.EntitySet<Floor>("floor");
+    builder.EntitySet<Map>("map");
 
 
     return builder.GetEdmModel();
@@ -45,6 +36,7 @@ builder.Services.AddDbContext<finsContext>((serviceProvider, options) =>
 {
     var serverVersion = new MySqlServerVersion(new Version(8, 0, 23)); // Thay thế bằng phiên bản MySQL Server bạn đang sử dụng
     options.UseMySql(builder.Configuration.GetConnectionString("Project"), serverVersion);
+
 });
 builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(typeof(MappingProfile));
@@ -53,20 +45,22 @@ builder.Services.AddCors(policy =>
     policy.AddPolicy("AllowAll", builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 });
 
-<<<<<<< HEAD
 builder.Services.AddScoped<BuildingDAO>();
 builder.Services.AddScoped<FacilityDAO>();
+builder.Services.AddScoped<MapDAO>();
+builder.Services.AddScoped<FloorDAO>();
+builder.Services.AddScoped<MemberDAO>();
 
 builder.Services.AddScoped<IBuildingRepository, BuildingRepository>();
 builder.Services.AddScoped<IFacilityRepository, FacilityRepository>();
-=======
-builder.Services.AddScoped<MapDAO>();
-
 builder.Services.AddScoped<IMapRepository, MapRepository>();
-
-
->>>>>>> hieunh
-
+builder.Services.AddScoped<IFloorRepository, FloorRepository>();
+builder.Services.AddScoped<IMemberRepository, MemberRepository>();
+/*builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+    });*/
 
 var app = builder.Build();
 
