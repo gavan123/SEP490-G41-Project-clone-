@@ -165,11 +165,6 @@ namespace BusinessObject.Models
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Map_MapPoint");
 
-                entity.Property(e => e.Location)
-       .HasColumnType("point")
-       .HasConversion(
-           v => new WKTWriter().Write(v),
-           v => (Point)new WKTReader().Read(v));
             });
 
             modelBuilder.Entity<Member>(entity =>
