@@ -7,7 +7,7 @@ namespace BusinessObject.Models
     {
         public int RoomId { get; set; }
         public string RoomName { get; set; } = null!;
-        public string Image { get; set; } = null!;
+        public string? Image { get; set; }
         public string Status { get; set; } = null!;
         public int FloorId { get; set; }
         public int MapPointId { get; set; }

@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.Configuration;
-using MySqlConnector;
-using NetTopologySuite.Geometries;
-using NetTopologySuite.IO;
 
 namespace BusinessObject.Models
 {
@@ -45,21 +42,16 @@ namespace BusinessObject.Models
                     mysqlOptions => mysqlOptions.UseNetTopologySuite()); // Enable NetTopologySuite for MySQL
             }
         }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.UseCollation("utf8mb4_0900_ai_ci")
-                .HasCharSet("utf8mb4");
-
             modelBuilder.Entity<Building>(entity =>
             {
                 entity.ToTable("building");
 
                 entity.HasIndex(e => e.FacilityId, "FK_Facility_Building_idx");
 
-                entity.Property(e => e.BuildingName)
-                    .HasMaxLength(50)
-                    .UseCollation("utf8mb3_general_ci")
-                    .HasCharSet("utf8mb3");
+                entity.Property(e => e.BuildingName).HasMaxLength(50);
 
                 entity.Property(e => e.Status).HasColumnType("enum('active','deactive')");
 
@@ -74,15 +66,9 @@ namespace BusinessObject.Models
             {
                 entity.ToTable("facilities");
 
-                entity.Property(e => e.Address)
-                    .HasMaxLength(100)
-                    .UseCollation("utf8mb3_general_ci")
-                    .HasCharSet("utf8mb3");
+                entity.Property(e => e.Address).HasMaxLength(100);
 
-                entity.Property(e => e.FacilityName)
-                    .HasMaxLength(100)
-                    .UseCollation("utf8mb3_general_ci")
-                    .HasCharSet("utf8mb3");
+                entity.Property(e => e.FacilityName).HasMaxLength(100);
 
                 entity.Property(e => e.Status).HasColumnType("enum('active','deactive')");
             });
@@ -93,10 +79,7 @@ namespace BusinessObject.Models
 
                 entity.HasIndex(e => e.BuildingId, "FK_Building_Floor_idx");
 
-                entity.Property(e => e.FloorName)
-                    .HasMaxLength(50)
-                    .UseCollation("utf8mb3_general_ci")
-                    .HasCharSet("utf8mb3");
+                entity.Property(e => e.FloorName).HasMaxLength(50);
 
                 entity.Property(e => e.Greeting).HasMaxLength(100);
 
@@ -127,8 +110,7 @@ namespace BusinessObject.Models
             modelBuilder.Entity<Mapmanage>(entity =>
             {
                 entity.HasKey(e => new { e.MapId, e.MemberId })
-                    .HasName("PRIMARY")
-                    .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
+                    .HasName("PRIMARY");
 
                 entity.ToTable("mapmanage");
 
@@ -159,12 +141,13 @@ namespace BusinessObject.Models
 
                 entity.HasIndex(e => e.MapId, "FK_Map_MapPoint_idx");
 
+                entity.Property(e => e.MappointName).HasMaxLength(50);
+
                 entity.HasOne(d => d.Map)
                     .WithMany(p => p.Mappoints)
                     .HasForeignKey(d => d.MapId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Map_MapPoint");
-
             });
 
             modelBuilder.Entity<Member>(entity =>
@@ -175,19 +158,21 @@ namespace BusinessObject.Models
 
                 entity.Property(e => e.Address).HasMaxLength(100);
 
+                entity.Property(e => e.Avatar).HasMaxLength(45);
+
+                entity.Property(e => e.Country).HasMaxLength(45);
+
+                entity.Property(e => e.DoB).HasColumnType("datetime");
+
                 entity.Property(e => e.Email).HasMaxLength(50);
 
                 entity.Property(e => e.FullName).HasMaxLength(50);
 
-                entity.Property(e => e.Password).HasMaxLength(50);
-
-                entity.Property(e => e.DoB).HasColumnType("date");
+                entity.Property(e => e.Password).HasMaxLength(1000);
 
                 entity.Property(e => e.Phone)
                     .HasMaxLength(10)
-                    .IsFixedLength()
-                    .UseCollation("utf8mb3_general_ci")
-                    .HasCharSet("utf8mb3");
+                    .IsFixedLength();
 
                 entity.Property(e => e.Status).HasColumnType("enum('active','deactive')");
 
@@ -243,6 +228,8 @@ namespace BusinessObject.Models
                 entity.HasIndex(e => e.StartPoint, "FK_MapPoint_Routes_idx");
 
                 entity.Property(e => e.EndTime).HasColumnType("datetime");
+
+                entity.Property(e => e.ListMapPoint).HasColumnType("json");
 
                 entity.Property(e => e.StartTime).HasColumnType("datetime");
 
