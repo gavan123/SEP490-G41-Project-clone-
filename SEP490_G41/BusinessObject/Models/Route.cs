@@ -8,8 +8,10 @@ namespace BusinessObject.Models
         public int RouteId { get; set; }
         public int StartPoint { get; set; }
         public int EndPoint { get; set; }
-        public DateTime StartTime { get; set; }
-        public DateTime EndTime { get; set; }
+        public DateTime? StartTime { get; set; }
+        public DateTime? EndTime { get; set; }
+        public double? Distance { get; set; }
+        public string? ListMapPoint { get; set; }
 
         public virtual Mappoint EndPointNavigation { get; set; } = null!;
         public virtual Mappoint StartPointNavigation { get; set; } = null!;

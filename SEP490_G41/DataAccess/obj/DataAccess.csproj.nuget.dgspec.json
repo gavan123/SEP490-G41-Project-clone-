@@ -89,6 +89,10 @@
               "target": "Package",
               "version": "[8.3.0, )"
             },
+            "MySql.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.25, )"
+            },
             "MySqlConnector": {
               "target": "Package",
               "version": "[2.3.5, )"
@@ -101,6 +105,7 @@
               "target": "Package",
               "version": "[6.0.3, )"
             },
+<<<<<<< HEAD
             "Pomelo.EntityFrameworkCore.MySql.Design": {
 <<<<<<< HEAD
               "target": "Package",
@@ -115,6 +120,8 @@
               "target": "Package",
               "version": "[1.1.2, )"
             },
+=======
+>>>>>>> Anhnh
             "Pomelo.EntityFrameworkCore.MySql.NetTopologySuite": {
               "target": "Package",
               "version": "[6.0.3, )"

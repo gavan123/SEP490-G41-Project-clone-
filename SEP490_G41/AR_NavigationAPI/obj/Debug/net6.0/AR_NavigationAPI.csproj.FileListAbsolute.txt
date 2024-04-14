@@ -81,6 +81,7 @@ D:\sep490-g41-project\SEP490_G41\AR_NavigationAPI\obj\Debug\net6.0\refint\AR_Nav
 D:\sep490-g41-project\SEP490_G41\AR_NavigationAPI\obj\Debug\net6.0\AR_NavigationAPI.pdb
 D:\sep490-g41-project\SEP490_G41\AR_NavigationAPI\obj\Debug\net6.0\AR_NavigationAPI.genruntimeconfig.cache
 D:\sep490-g41-project\SEP490_G41\AR_NavigationAPI\obj\Debug\net6.0\ref\AR_NavigationAPI.dll
+<<<<<<< HEAD
 D:\DO-AN\sep490-g41-project\SEP490_G41\AR_NavigationAPI\bin\Debug\net6.0\appsettings.Development.json
 D:\DO-AN\sep490-g41-project\SEP490_G41\AR_NavigationAPI\bin\Debug\net6.0\AR_NavigationAPI.exe
 D:\DO-AN\sep490-g41-project\SEP490_G41\AR_NavigationAPI\bin\Debug\net6.0\appsettings.json
@@ -255,3 +256,5 @@ F:\sep490-g41-project\SEP490_G41\AR_NavigationAPI\obj\Debug\net6.0\AR_Navigation
 F:\sep490-g41-project\SEP490_G41\AR_NavigationAPI\obj\Debug\net6.0\AR_NavigationAPI.genruntimeconfig.cache
 F:\sep490-g41-project\SEP490_G41\AR_NavigationAPI\obj\Debug\net6.0\ref\AR_NavigationAPI.dll
 >>>>>>> minhpc
+=======
+>>>>>>> Anhnh

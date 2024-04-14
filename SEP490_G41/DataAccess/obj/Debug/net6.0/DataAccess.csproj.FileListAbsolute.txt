@@ -14,6 +14,7 @@ D:\sep490-g41-project\SEP490_G41\DataAccess\obj\Debug\net6.0\DataAccess.dll
 D:\sep490-g41-project\SEP490_G41\DataAccess\obj\Debug\net6.0\refint\DataAccess.dll
 D:\sep490-g41-project\SEP490_G41\DataAccess\obj\Debug\net6.0\DataAccess.pdb
 D:\sep490-g41-project\SEP490_G41\DataAccess\obj\Debug\net6.0\ref\DataAccess.dll
+<<<<<<< HEAD
 D:\DO-AN\sep490-g41-project\SEP490_G41\DataAccess\bin\Debug\net6.0\DataAccess.deps.json
 D:\DO-AN\sep490-g41-project\SEP490_G41\DataAccess\bin\Debug\net6.0\DataAccess.dll
 D:\DO-AN\sep490-g41-project\SEP490_G41\DataAccess\bin\Debug\net6.0\DataAccess.pdb
@@ -48,3 +49,5 @@ F:\sep490-g41-project\SEP490_G41\DataAccess\obj\Debug\net6.0\refint\DataAccess.d
 F:\sep490-g41-project\SEP490_G41\DataAccess\obj\Debug\net6.0\DataAccess.pdb
 F:\sep490-g41-project\SEP490_G41\DataAccess\obj\Debug\net6.0\ref\DataAccess.dll
 >>>>>>> minhpc
+=======
+>>>>>>> Anhnh

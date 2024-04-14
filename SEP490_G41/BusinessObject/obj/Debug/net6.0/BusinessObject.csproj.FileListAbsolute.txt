@@ -12,6 +12,7 @@ D:\sep490-g41-project\SEP490_G41\BusinessObject\obj\Debug\net6.0\BusinessObject.
 D:\sep490-g41-project\SEP490_G41\BusinessObject\obj\Debug\net6.0\refint\BusinessObject.dll
 D:\sep490-g41-project\SEP490_G41\BusinessObject\obj\Debug\net6.0\BusinessObject.pdb
 D:\sep490-g41-project\SEP490_G41\BusinessObject\obj\Debug\net6.0\ref\BusinessObject.dll
+<<<<<<< HEAD
 D:\DO-AN\sep490-g41-project\SEP490_G41\BusinessObject\bin\Debug\net6.0\BusinessObject.deps.json
 D:\DO-AN\sep490-g41-project\SEP490_G41\BusinessObject\bin\Debug\net6.0\BusinessObject.runtimeconfig.json
 D:\DO-AN\sep490-g41-project\SEP490_G41\BusinessObject\bin\Debug\net6.0\BusinessObject.dll
@@ -46,3 +47,5 @@ F:\sep490-g41-project\SEP490_G41\BusinessObject\obj\Debug\net6.0\BusinessObject.
 F:\sep490-g41-project\SEP490_G41\BusinessObject\obj\Debug\net6.0\BusinessObject.genruntimeconfig.cache
 F:\sep490-g41-project\SEP490_G41\BusinessObject\obj\Debug\net6.0\ref\BusinessObject.dll
 >>>>>>> minhpc
+=======
+>>>>>>> Anhnh
