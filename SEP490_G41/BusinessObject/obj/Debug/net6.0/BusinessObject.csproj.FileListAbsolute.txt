@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 D:\sep490-g41-project\SEP490_G41\BusinessObject\bin\Debug\net6.0\BusinessObject.deps.json
 D:\sep490-g41-project\SEP490_G41\BusinessObject\bin\Debug\net6.0\BusinessObject.dll
 D:\sep490-g41-project\SEP490_G41\BusinessObject\bin\Debug\net6.0\BusinessObject.pdb
@@ -27,3 +28,21 @@ D:\DO-AN\sep490-g41-project\SEP490_G41\BusinessObject\obj\Debug\net6.0\refint\Bu
 D:\DO-AN\sep490-g41-project\SEP490_G41\BusinessObject\obj\Debug\net6.0\BusinessObject.pdb
 D:\DO-AN\sep490-g41-project\SEP490_G41\BusinessObject\obj\Debug\net6.0\BusinessObject.genruntimeconfig.cache
 D:\DO-AN\sep490-g41-project\SEP490_G41\BusinessObject\obj\Debug\net6.0\ref\BusinessObject.dll
+=======
+F:\sep490-g41-project\SEP490_G41\BusinessObject\bin\Debug\net6.0\BusinessObject.deps.json
+F:\sep490-g41-project\SEP490_G41\BusinessObject\bin\Debug\net6.0\BusinessObject.runtimeconfig.json
+F:\sep490-g41-project\SEP490_G41\BusinessObject\bin\Debug\net6.0\BusinessObject.dll
+F:\sep490-g41-project\SEP490_G41\BusinessObject\bin\Debug\net6.0\BusinessObject.pdb
+F:\sep490-g41-project\SEP490_G41\BusinessObject\obj\Debug\net6.0\BusinessObject.csproj.AssemblyReference.cache
+F:\sep490-g41-project\SEP490_G41\BusinessObject\obj\Debug\net6.0\BusinessObject.GeneratedMSBuildEditorConfig.editorconfig
+F:\sep490-g41-project\SEP490_G41\BusinessObject\obj\Debug\net6.0\BusinessObject.AssemblyInfoInputs.cache
+F:\sep490-g41-project\SEP490_G41\BusinessObject\obj\Debug\net6.0\BusinessObject.AssemblyInfo.cs
+F:\sep490-g41-project\SEP490_G41\BusinessObject\obj\Debug\net6.0\BusinessObject.csproj.CoreCompileInputs.cache
+F:\sep490-g41-project\SEP490_G41\BusinessObject\obj\Debug\net6.0\EFCoreMySqlNetTopologySuite.cs
+F:\sep490-g41-project\SEP490_G41\BusinessObject\obj\Debug\net6.0\BusinessObject.sourcelink.json
+F:\sep490-g41-project\SEP490_G41\BusinessObject\obj\Debug\net6.0\BusinessObject.dll
+F:\sep490-g41-project\SEP490_G41\BusinessObject\obj\Debug\net6.0\refint\BusinessObject.dll
+F:\sep490-g41-project\SEP490_G41\BusinessObject\obj\Debug\net6.0\BusinessObject.pdb
+F:\sep490-g41-project\SEP490_G41\BusinessObject\obj\Debug\net6.0\BusinessObject.genruntimeconfig.cache
+F:\sep490-g41-project\SEP490_G41\BusinessObject\obj\Debug\net6.0\ref\BusinessObject.dll
+>>>>>>> minhpc

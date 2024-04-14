@@ -49,12 +49,20 @@ builder.Services.AddScoped<BuildingDAO>();
 builder.Services.AddScoped<FacilityDAO>();
 builder.Services.AddScoped<MapDAO>();
 builder.Services.AddScoped<FloorDAO>();
+<<<<<<< HEAD
+=======
+builder.Services.AddScoped<MemberDAO>();
+>>>>>>> minhpc
 
 builder.Services.AddScoped<IBuildingRepository, BuildingRepository>();
 builder.Services.AddScoped<IFacilityRepository, FacilityRepository>();
 builder.Services.AddScoped<IMapRepository, MapRepository>();
 builder.Services.AddScoped<IFloorRepository, FloorRepository>();
+<<<<<<< HEAD
 
+=======
+builder.Services.AddScoped<IMemberRepository, MemberRepository>();
+>>>>>>> minhpc
 /*builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {

@@ -9,6 +9,7 @@
     <!-- page css -->
     <!-- Core css -->
     <link href="/assets/css/app.min.css" rel="stylesheet">
+<<<<<<< HEAD
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/regular.min.css" integrity="sha512-xoH1XswqKtP+8/1k4kM9LvfrhA2I0s8Pz4Z0bTDcwr2eESQFmyFqVxD5nB+9IgG+E6sjq0VaxOuSJzrHkK98Sg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -22,6 +23,12 @@
         max-height: 70px;
     }
 </style>
+=======
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- SweetAlert CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+>>>>>>> minhpc
 <body>
     <div class="app">
         <div class="layout">
@@ -29,14 +36,23 @@
             <div class="header">
                 <div class="logo logo-dark">
                     <a href="#">
+<<<<<<< HEAD
                         <img src="/Images/Logo.jpg" alt="Logo">
                         <img class="logo-fold" src="/Images/Logo.jpg" alt="Logo">
+=======
+                        <img src="/assets/images/logo/logo.png" alt="Logo">
+                        <img class="logo-fold" src="/assets/images/logo/logo-fold.png" alt="Logo">
+>>>>>>> minhpc
                     </a>
                 </div>
                 <div class="logo logo-white">
                     <a href="#">
                         <img src="/assets/images/logo/logo-white.png" alt="Logo">
+<<<<<<< HEAD
                         <img class="logo-fold" src="/Images/Logo.jpg" alt="Logo">
+=======
+                        <img class="logo-fold" src="/assets/images/logo/logo-fold-white.png" alt="Logo">
+>>>>>>> minhpc
                     </a>
                 </div>
                 <div class="nav-wrap">
@@ -51,9 +67,84 @@
                                 <i class="anticon"></i>
                             </a>
                         </li>
+<<<<<<< HEAD
                     </ul>
                     <ul class="nav-right">
                         <li class="dropdown dropdown-animated scale-left">
+=======
+                        <li>
+                            <a href="javascript:void(0);" data-toggle="modal" data-target="#search-drawer">
+                                <i class="anticon anticon-search"></i>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="nav-right">
+                        <li class="dropdown dropdown-animated scale-left">
+                            <a href="javascript:void(0);" data-toggle="dropdown">
+                                <i class="anticon anticon-bell notification-badge"></i>
+                            </a>
+                            <div class="dropdown-menu pop-notification">
+                                <div class="p-v-15 p-h-25 border-bottom d-flex justify-content-between align-items-center">
+                                    <p class="text-dark font-weight-semibold m-b-0">
+                                        <i class="anticon anticon-bell"></i>
+                                        <span class="m-l-10">Notification</span>
+                                    </p>
+                                    <a class="btn-sm btn-default btn" href="javascript:void(0);">
+                                        <small>View All</small>
+                                    </a>
+                                </div>
+                                <div class="relative">
+                                    <div class="overflow-y-auto relative scrollable" style="max-height: 300px">
+                                        <a href="javascript:void(0);" class="dropdown-item d-block p-15 border-bottom">
+                                            <div class="d-flex">
+                                                <div class="avatar avatar-blue avatar-icon">
+                                                    <i class="anticon anticon-mail"></i>
+                                                </div>
+                                                <div class="m-l-15">
+                                                    <p class="m-b-0 text-dark">You received a new message</p>
+                                                    <p class="m-b-0"><small>8 min ago</small></p>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <a href="javascript:void(0);" class="dropdown-item d-block p-15 border-bottom">
+                                            <div class="d-flex">
+                                                <div class="avatar avatar-cyan avatar-icon">
+                                                    <i class="anticon anticon-user-add"></i>
+                                                </div>
+                                                <div class="m-l-15">
+                                                    <p class="m-b-0 text-dark">New user registered</p>
+                                                    <p class="m-b-0"><small>7 hours ago</small></p>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <a href="javascript:void(0);" class="dropdown-item d-block p-15 border-bottom">
+                                            <div class="d-flex">
+                                                <div class="avatar avatar-red avatar-icon">
+                                                    <i class="anticon anticon-user-add"></i>
+                                                </div>
+                                                <div class="m-l-15">
+                                                    <p class="m-b-0 text-dark">System Alert</p>
+                                                    <p class="m-b-0"><small>8 hours ago</small></p>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <a href="javascript:void(0);" class="dropdown-item d-block p-15 ">
+                                            <div class="d-flex">
+                                                <div class="avatar avatar-gold avatar-icon">
+                                                    <i class="anticon anticon-user-add"></i>
+                                                </div>
+                                                <div class="m-l-15">
+                                                    <p class="m-b-0 text-dark">You have a new update</p>
+                                                    <p class="m-b-0"><small>2 days ago</small></p>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="dropdown dropdown-animated scale-left">
+>>>>>>> minhpc
                             <div class="pointer" data-toggle="dropdown">
                                 <div class="avatar avatar-image  m-h-10 m-r-15">
                                     <img src="/assets/images/avatars/thumb-3.jpg" alt="">
@@ -122,12 +213,18 @@
             <div class="side-nav">
                 <div class="side-nav-inner">
                     <ul class="side-nav-menu scrollable">
+<<<<<<< HEAD
                         <li class="nav-item">
                             <a href="/Dashboard" class="nav-link">
+=======
+                        <li class="nav-item dropdown open">
+                            <a class="dropdown-toggle" href="javascript:void(0);">
+>>>>>>> minhpc
                                 <span class="icon-holder">
                                     <i class="anticon anticon-dashboard"></i>
                                 </span>
                                 <span class="title">Dashboard</span>
+<<<<<<< HEAD
                             </a>
                         </li>
                         <li class="nav-item">
@@ -145,6 +242,273 @@
                                 </span>
                                 <span class="title">E-commerce</span>
                             </a>
+=======
+                                <span class="arrow">
+                                    <i class="arrow-icon"></i>
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="active">
+                                    <a href="#">Default</a>
+                                </li>
+                                <li>
+                                    <a href="/Buildings/list">CRM</a>
+                                </li>
+                                <li>
+                                    <a href="/Buildings/Detail">E-commerce</a>
+                                </li>
+                                <li>
+                                    <a href="#">Projects</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="dropdown-toggle" href="javascript:void(0);">
+                                <span class="icon-holder">
+                                    <i class="anticon anticon-appstore"></i>
+                                </span>
+                                <span class="title">Apps</span>
+                                <span class="arrow">
+                                    <i class="arrow-icon"></i>
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="#">Chat</a>
+                                </li>
+                                <li>
+                                    <a href="#">File Manager</a>
+                                </li>
+                                <li>
+                                    <a href="#">Mail</a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a href="javascript:void(0);">
+                                        <span>Projects</span>
+                                        <span class="arrow">
+                                            <i class="arrow-icon"></i>
+                                        </span>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a href="#">Project List</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Project Details</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a href="javascript:void(0);">
+                                        <span>E-commerce</span>
+                                        <span class="arrow">
+                                            <i class="arrow-icon"></i>
+                                        </span>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a href="#">Orders List</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Products</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Products List</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Products Edit</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="dropdown-toggle" href="javascript:void(0);">
+                                <span class="icon-holder">
+                                    <i class="anticon anticon-build"></i>
+                                </span>
+                                <span class="title">UI Elements</span>
+                                <span class="arrow">
+                                    <i class="arrow-icon"></i>
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="#">Avatar</a>
+                                </li>
+                                <li>
+                                    <a href="#">Alert</a>
+                                </li>
+                                <li>
+                                    <a href="#">Badge</a>
+                                </li>
+                                <li>
+                                    <a href="#">Buttons</a>
+                                </li>
+                                <li>
+                                    <a href="#">Cards</a>
+                                </li>
+                                <li>
+                                    <a href="#">Icons</a>
+                                </li>
+                                <li>
+                                    <a href="#">Lists</a>
+                                </li>
+                                <li>
+                                    <a href="#">Typography</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="dropdown-toggle" href="javascript:void(0);">
+                                <span class="icon-holder">
+                                    <i class="anticon anticon-hdd"></i>
+                                </span>
+                                <span class="title">Components</span>
+                                <span class="arrow">
+                                    <i class="arrow-icon"></i>
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="#">Accordion</a>
+                                </li>
+                                <li>
+                                    <a href="#">Carousel</a>
+                                </li>
+                                <li>
+                                    <a href="#">Dropdown</a>
+                                </li>
+                                <li>
+                                    <a href="#">Modals</a>
+                                </li>
+                                <li>
+                                    <a href="#">Toasts</a>
+                                </li>
+                                <li>
+                                    <a href="#">Popover</a>
+                                </li>
+                                <li>
+                                    <a href="#">Slider & Progress</a>
+                                </li>
+                                <li>
+                                    <a href="#">Tabs</a>
+                                </li>
+                                <li>
+                                    <a href="#">Tooltips</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="dropdown-toggle" href="javascript:void(0);">
+                                <span class="icon-holder">
+                                    <i class="anticon anticon-form"></i>
+                                </span>
+                                <span class="title">Forms</span>
+                                <span class="arrow">
+                                    <i class="arrow-icon"></i>
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="#">Form Elements</a>
+                                </li>
+                                <li>
+                                    <a href="#">Form Layouts</a>
+                                </li>
+                                <li>
+                                    <a href="#">Form Validation</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="dropdown-toggle" href="javascript:void(0);">
+                                <span class="icon-holder">
+                                    <i class="anticon anticon-table"></i>
+                                </span>
+                                <span class="title">Tables</span>
+                                <span class="arrow">
+                                    <i class="arrow-icon"></i>
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="#">Basic Table</a>
+                                </li>
+                                <li>
+                                    <a href="#">Data Table</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="dropdown-toggle" href="javascript:void(0);">
+                                <span class="icon-holder">
+                                    <i class="anticon anticon-pie-chart"></i>
+                                </span>
+                                <span class="title">Charts</span>
+                                <span class="arrow">
+                                    <i class="arrow-icon"></i>
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="#">Chartist</a>
+                                </li>
+                                <li>
+                                    <a href="#">ChartJs</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="dropdown-toggle" href="javascript:void(0);">
+                                <span class="icon-holder">
+                                    <i class="anticon anticon-file"></i>
+                                </span>
+                                <span class="title">Pages</span>
+                                <span class="arrow">
+                                    <i class="arrow-icon"></i>
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="#">Profile</a>
+                                </li>
+                                <li>
+                                    <a href="#">Invoice</a>
+                                </li>
+                                <li>
+                                    <a href="#">Members</a>
+                                </li>
+                                <li>
+                                    <a href="#">Pricing</a>
+                                </li>
+                                <li>
+                                    <a href="#">Setting</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="dropdown-toggle" href="javascript:void(0);">
+                                <span class="icon-holder">
+                                    <i class="anticon anticon-lock"></i>
+                                </span>
+                                <span class="title">Authentication</span>
+                                <span class="arrow">
+                                    <i class="arrow-icon"></i>
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="#">Login 1</a>
+                                </li>
+                                <li>
+                                    <a href="#">Sign Up 1</a>
+                                </li>
+                                <li>
+                                    <a href="#">Error 1</a>
+                                </li>
+                            </ul>
+>>>>>>> minhpc
                         </li>
                     </ul>
                 </div>
@@ -173,7 +537,114 @@
 
             </div>
             <!-- Page Container END -->
+<<<<<<< HEAD
            
+=======
+            <!-- Search Start-->
+            <div class="modal modal-left fade search" id="search-drawer">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header justify-content-between align-items-center">
+                            <h5 class="modal-title">Search</h5>
+                            <button type="button" class="close" data-dismiss="modal">
+                                <i class="anticon anticon-close"></i>
+                            </button>
+                        </div>
+                        <div class="modal-body scrollable">
+                            <div class="input-affix">
+                                <i class="prefix-icon anticon anticon-search"></i>
+                                <input type="text" class="form-control" placeholder="Search">
+                            </div>
+                            <div class="m-t-30">
+                                <h5 class="m-b-20">Files</h5>
+                                <div class="d-flex m-b-30">
+                                    <div class="avatar avatar-cyan avatar-icon">
+                                        <i class="anticon anticon-file-excel"></i>
+                                    </div>
+                                    <div class="m-l-15">
+                                        <a href="javascript:void(0);" class="text-dark m-b-0 font-weight-semibold">Quater Report.exl</a>
+                                        <p class="m-b-0 text-muted font-size-13">by Finance</p>
+                                    </div>
+                                </div>
+                                <div class="d-flex m-b-30">
+                                    <div class="avatar avatar-blue avatar-icon">
+                                        <i class="anticon anticon-file-word"></i>
+                                    </div>
+                                    <div class="m-l-15">
+                                        <a href="javascript:void(0);" class="text-dark m-b-0 font-weight-semibold">Documentaion.docx</a>
+                                        <p class="m-b-0 text-muted font-size-13">by Developers</p>
+                                    </div>
+                                </div>
+                                <div class="d-flex m-b-30">
+                                    <div class="avatar avatar-purple avatar-icon">
+                                        <i class="anticon anticon-file-text"></i>
+                                    </div>
+                                    <div class="m-l-15">
+                                        <a href="javascript:void(0);" class="text-dark m-b-0 font-weight-semibold">Recipe.txt</a>
+                                        <p class="m-b-0 text-muted font-size-13">by The Chef</p>
+                                    </div>
+                                </div>
+                                <div class="d-flex m-b-30">
+                                    <div class="avatar avatar-red avatar-icon">
+                                        <i class="anticon anticon-file-pdf"></i>
+                                    </div>
+                                    <div class="m-l-15">
+                                        <a href="javascript:void(0);" class="text-dark m-b-0 font-weight-semibold">Project Requirement.pdf</a>
+                                        <p class="m-b-0 text-muted font-size-13">by Project Manager</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="m-t-30">
+                                <h5 class="m-b-20">Members</h5>
+                                <div class="d-flex m-b-30">
+                                    <div class="avatar avatar-image">
+                                        <img src="/assets/images/avatars/thumb-1.jpg" alt="">
+                                    </div>
+                                    <div class="m-l-15">
+                                        <a href="javascript:void(0);" class="text-dark m-b-0 font-weight-semibold">Erin Gonzales</a>
+                                        <p class="m-b-0 text-muted font-size-13">UI/UX Designer</p>
+                                    </div>
+                                </div>
+                                <div class="d-flex m-b-30">
+                                    <div class="avatar avatar-image">
+                                        <img src="/assets/images/avatars/thumb-2.jpg" alt="">
+                                    </div>
+                                    <div class="m-l-15">
+                                        <a href="javascript:void(0);" class="text-dark m-b-0 font-weight-semibold">Darryl Day</a>
+                                        <p class="m-b-0 text-muted font-size-13">Software Engineer</p>
+                                    </div>
+                                </div>
+                                <div class="d-flex m-b-30">
+                                    <div class="avatar avatar-image">
+                                        <img src="/assets/images/avatars/thumb-3.jpg" alt="">
+                                    </div>
+                                    <div class="m-l-15">
+                                        <a href="javascript:void(0);" class="text-dark m-b-0 font-weight-semibold">Marshall Nichols</a>
+                                        <p class="m-b-0 text-muted font-size-13">Data Analyst</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="m-t-30">
+                                <h5 class="m-b-20">News</h5>
+                                <div class="d-flex m-b-30">
+                                    <div class="avatar avatar-image">
+                                        <img src="/assets/images/others/img-1.jpg" alt="">
+                                    </div>
+                                    <div class="m-l-15">
+                                        <a href="javascript:void(0);" class="text-dark m-b-0 font-weight-semibold">5 Best Handwriting Fonts</a>
+                                        <p class="m-b-0 text-muted font-size-13">
+                                            <i class="anticon anticon-clock-circle"></i>
+                                            <span class="m-l-5">25 Nov 2018</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Search End-->
+>>>>>>> minhpc
             <!-- Quick View START -->
             <div class="modal modal-right fade quick-view" id="quick-view">
                 <div class="modal-dialog">
