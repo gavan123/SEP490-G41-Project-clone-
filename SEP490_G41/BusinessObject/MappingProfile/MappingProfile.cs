@@ -32,6 +32,8 @@ namespace BusinessObject.MappingProfile
             CreateMap<Map, MapAddDTO>().ReverseMap();
             CreateMap<Map, MapUpdateDTO>().ReverseMap();
 
+            CreateMap<Member, MemberDTO>().ReverseMap();
+
         }
     }
 }
