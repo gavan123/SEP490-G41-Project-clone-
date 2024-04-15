@@ -65,6 +65,7 @@
         </div>
     </div>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script>
     $(document).ready(function () {
         // Lấy buildingId từ URL
@@ -151,11 +152,12 @@
                 }
             });
         }
-
-        //open image in new tab
-        $(document).on('click', '#map-images-container img', function () {
-            var imageUrl = $(this).attr('src');
-            window.open(imageUrl, '_blank');
+        $(document).on("click", "#map-images-container img", function (event) {
+            var imageWidth = $(this).width();
+            var imageHeight = $(this).height();
+            var x = (event.pageX - $(this).offset().left - (imageWidth / 2)).toFixed(5);
+            var y = (event.pageY - $(this).offset().top - (imageHeight / 2)).toFixed(5);
+            alert("X Coordinate: " + x + " Y Coordinate: " + y);
         });
     });
 
