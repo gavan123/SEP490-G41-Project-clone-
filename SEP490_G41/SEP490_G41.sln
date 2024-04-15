@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "DataAccess\Da
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AR_Navigation", "AR_Navigation\AR_Navigation.csproj", "{62041469-4581-4B9B-BCA4-851570BA5C34}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectTest", "ProjectTest\ProjectTest.csproj", "{F0622203-09DA-4134-819A-261FE1860396}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectTest", "ProjectTest\ProjectTest.csproj", "{F0622203-09DA-4134-819A-261FE1860396}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
