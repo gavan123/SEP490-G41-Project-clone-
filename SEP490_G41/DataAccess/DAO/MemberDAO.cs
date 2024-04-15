@@ -64,17 +64,17 @@ namespace DataAccess.DAO
         //Login
         public bool Login(string username, string password)
         {
-            var member = _context.Members.FirstOrDefault(m => m.Username.Equals(username) && m.Password.Equals(password));
+            var member = _context.Members.FirstOrDefault(m => m.Username.Equals(username) && m.Password.Equals(validate.EncodePassword(password)));
             if (member != null)
             {
                 return true;
             }
             return false;
         }
-        public List<Member> SearchMemberByDoB(string date)
+        public List<Member> SearchMemberByDoB(DateTime date)
         {
-            var list = _context.Members.Where(m => m.DoB.ToString() == date).ToList();
-            return null;
+            var list = _context.Members.Where(m => m.DoB == date).ToList();
+            return list;
         }
         public List<Member> SearchMemberByName(string name)
         {
@@ -115,6 +115,17 @@ namespace DataAccess.DAO
                 Console.WriteLine(ex.StackTrace);
                 return false;
             }
+        }
+        public bool ChangePassword(string oldPass, string newPass)
+        {
+            var mem = _context.Members.FirstOrDefault(m => m.Password.Equals(validate.EncodePassword(oldPass)));
+            if (mem != null)
+            {
+                mem.Password = validate.EncodePassword(newPass);
+                _context.SaveChanges();
+                return true;
+            }
+            return false;
         }
     }
 }

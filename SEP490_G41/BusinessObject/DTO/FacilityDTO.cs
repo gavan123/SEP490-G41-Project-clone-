@@ -23,6 +23,7 @@ namespace BusinessObject.DTO
 
     public class FacilityUpdateDTO
     {
+        public int FacilityId { get; set; }
         public string FacilityName { get; set; } = null!;
         public string Address { get; set; } = null!;
         public string Status { get; set; } = null!;

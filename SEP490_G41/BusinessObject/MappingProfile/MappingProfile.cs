@@ -31,12 +31,16 @@ namespace BusinessObject.MappingProfile
             CreateMap<Map, MapAddDTO>().ReverseMap();
             CreateMap<Map, MapUpdateDTO>().ReverseMap();
 
+<<<<<<< HEAD
             CreateMap<MapPointAddDTO, Mappoint>()
            .ForMember(dest => dest.Location, opt => opt.ConvertUsing(new PointConverter(), src => src.Location));
             CreateMap<Mappoint, MapPointDTO>().ReverseMap();
             CreateMap<MapPointUpdateDTO, Mappoint>()
            .ForMember(dest => dest.Location, opt => opt.ConvertUsing(new PointConverter(), src => src.Location));
 
+=======
+            CreateMap<Member, MemberDTO>().ReverseMap();
+>>>>>>> main
 
         }
 
