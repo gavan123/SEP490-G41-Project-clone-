@@ -31,12 +31,12 @@ namespace AR_NavigationAPI.Controllers
         [HttpGet("{id}")]
         public IActionResult GetMapPointById(int id)
         {
-            var mapPoint = _mapPointRepository.GetMapPointById(id);
+            if (id <= 0)
+                return BadRequest("MapPoint ID must be a positive integer.");
 
+            var mapPoint = _mapPointRepository.GetMapPointById(id);
             if (mapPoint == null)
-            {
                 return NotFound();
-            }
 
             return Ok(mapPoint);
         }
@@ -45,6 +45,12 @@ namespace AR_NavigationAPI.Controllers
         [HttpPost]
         public ActionResult<MapPointAddDTO> AddMapPoint(MapPointAddDTO mapPoint)
         {
+            if (mapPoint == null)
+                return BadRequest("MapPoint cannot be null.");
+
+            if (string.IsNullOrWhiteSpace(mapPoint.Location))
+                return BadRequest("Location cannot be null or empty.");
+
             _mapPointRepository.AddMapPoint(mapPoint);
             return Ok(mapPoint);
         }
@@ -53,13 +59,20 @@ namespace AR_NavigationAPI.Controllers
         [HttpPut("{id}")]
         public IActionResult UpdateMapPointById(int id, MapPointUpdateDTO mapPoint)
         {
+            if (id <= 0)
+                return BadRequest("MapPoint ID must be a positive integer.");
+
+            if (mapPoint == null)
+                return BadRequest("MapPoint cannot be null.");
+
+            if (string.IsNullOrWhiteSpace(mapPoint.Location))
+                return BadRequest("Location cannot be null or empty.");
+
             var tmpMapPoint = _mapPointRepository.GetMapPointById(id);
             if (tmpMapPoint == null)
-            {
                 return NotFound();
-            }
-            _mapPointRepository.UpdateMapPoint(mapPoint);
 
+            _mapPointRepository.UpdateMapPoint(mapPoint);
             return Ok();
         }
 
@@ -67,15 +80,14 @@ namespace AR_NavigationAPI.Controllers
         [HttpDelete("{id}")]
         public IActionResult DeleteMapPointById(int id)
         {
-            var mapPoint = _mapPointRepository.GetMapPointById(id);
+            if (id <= 0)
+                return BadRequest("MapPoint ID must be a positive integer.");
 
+            var mapPoint = _mapPointRepository.GetMapPointById(id);
             if (mapPoint == null)
-            {
                 return NotFound();
-            }
 
             _mapPointRepository.DeleteMapPoint(id);
-
             return Ok();
         }
     }

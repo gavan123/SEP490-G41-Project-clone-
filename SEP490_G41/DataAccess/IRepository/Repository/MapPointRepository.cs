@@ -19,7 +19,6 @@ namespace DataAccess.IRepository.Repository
             _mappointDAO = mappointDAO;
             _mapper = mapper;
         }
-
         public MapPointDTO GetMapPointById(int mapPointId)
         {
             var mapPoint = _mappointDAO.GetMappointById(mapPointId);
@@ -29,8 +28,6 @@ namespace DataAccess.IRepository.Repository
             }
             return _mapper.Map<MapPointDTO>(mapPoint);
         }
-
-       
 
         public List<MapPointDTO> GetAllMapPoints()
         {
@@ -76,6 +73,11 @@ namespace DataAccess.IRepository.Repository
         }
         public void AddMapPoint(MapPointAddDTO mapPoint)
         {
+            if (mapPoint == null)
+            {
+                throw new ArgumentNullException(nameof(mapPoint), "MapPoint DTO cannot be null.");
+            }
+
             try
             {
                 // Parse the location string to extract the coordinates
@@ -90,6 +92,10 @@ namespace DataAccess.IRepository.Repository
 
                 _mappointDAO.AddMappoint(mapPointEntity);
             }
+            catch (MySqlConnector.MySqlException ex)
+            {
+                throw new Exception($"Error occurred while adding map point. Message: {ex.Message}", ex);
+            }
             catch (Exception ex)
             {
                 throw new Exception("Error occurred while adding map point.", ex);
@@ -98,6 +104,16 @@ namespace DataAccess.IRepository.Repository
 
         public void UpdateMapPoint(MapPointUpdateDTO mapPoint)
         {
+            if (mapPoint == null)
+            {
+                throw new ArgumentNullException(nameof(mapPoint), "MapPointUpdateDTO cannot be null.");
+            }
+
+            if (mapPoint.MapPointId <= 0)
+            {
+                throw new ArgumentException("Mappoint ID must be a positive integer.");
+            }
+
             try
             {
                 // Get the existing Mappoint entity
@@ -122,10 +138,13 @@ namespace DataAccess.IRepository.Repository
                 throw new Exception("Error occurred while updating map point.", ex);
             }
         }
-
-
         public void DeleteMapPoint(int mapPointId)
         {
+            if (mapPointId <= 0)
+            {
+                throw new ArgumentException("Mappoint ID must be a positive integer.");
+            }
+
             try
             {
                 _mappointDAO.DeleteMappoint(mapPointId);

@@ -12,6 +12,5 @@ namespace DataAccess.IRepository
         void UpdateMapPoint(MapPointUpdateDTO mapPoint);
         void DeleteMapPoint(int mapPointId);
 
-        // Các phương thức tìm kiếm và các phương thức khác có thể được thêm ở đây tùy thuộc vào yêu cầu cụ thể.
     }
 }

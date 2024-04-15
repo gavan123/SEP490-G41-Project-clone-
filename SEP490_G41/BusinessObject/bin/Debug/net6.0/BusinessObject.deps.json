@@ -9,8 +9,10 @@
       "BusinessObject/1.0.0": {
         "dependencies": {
           "AutoMapper": "13.0.1",
+          "Microsoft.AspNetCore.Http.Features": "5.0.17",
           "Microsoft.EntityFrameworkCore": "6.0.28",
           "Microsoft.EntityFrameworkCore.Design": "6.0.28",
+          "Microsoft.EntityFrameworkCore.InMemory": "6.0.28",
           "Microsoft.Extensions.Configuration": "6.0.1",
           "Microsoft.Extensions.Configuration.Json": "6.0.0",
           "MySql.Data": "8.3.0",
@@ -91,6 +93,18 @@
           }
         }
       },
+      "Microsoft.AspNetCore.Http.Features/5.0.17": {
+        "dependencies": {
+          "Microsoft.Extensions.Primitives": "6.0.0",
+          "System.IO.Pipelines": "6.0.3"
+        },
+        "runtime": {
+          "lib/net5.0/Microsoft.AspNetCore.Http.Features.dll": {
+            "assemblyVersion": "5.0.0.0",
+            "fileVersion": "5.0.1722.21507"
+          }
+        }
+      },
       "Microsoft.EntityFrameworkCore/6.0.28": {
         "dependencies": {
           "Microsoft.EntityFrameworkCore.Abstractions": "6.0.28",
@@ -124,6 +138,17 @@
         },
         "runtime": {
           "lib/net6.0/Microsoft.EntityFrameworkCore.Design.dll": {
+            "assemblyVersion": "6.0.28.0",
+            "fileVersion": "6.0.2824.11604"
+          }
+        }
+      },
+      "Microsoft.EntityFrameworkCore.InMemory/6.0.28": {
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore": "6.0.28"
+        },
+        "runtime": {
+          "lib/net6.0/Microsoft.EntityFrameworkCore.InMemory.dll": {
             "assemblyVersion": "6.0.28.0",
             "fileVersion": "6.0.2824.11604"
           }
@@ -1404,6 +1429,13 @@
       "path": "k4os.hash.xxhash/1.0.8",
       "hashPath": "k4os.hash.xxhash.1.0.8.nupkg.sha512"
     },
+    "Microsoft.AspNetCore.Http.Features/5.0.17": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-3jG2xS+dx8DDCGV/F+STdPTg89lX3ao3dF/VEPvJaz3wzBIjuadipTtYNEXDIVuOPZwb6jdmhrX9jkzOIBm5cw==",
+      "path": "microsoft.aspnetcore.http.features/5.0.17",
+      "hashPath": "microsoft.aspnetcore.http.features.5.0.17.nupkg.sha512"
+    },
     "Microsoft.EntityFrameworkCore/6.0.28": {
       "type": "package",
       "serviceable": true,
@@ -1431,6 +1463,13 @@
       "sha512": "sha512-jTWhwaLuLnt9K7aEZqp1objkK6xNHx2iYi2vqqyDNigw4u1mo1udy76MJMAsPPf9lDB5ZJQQrrRe+Tery4HDwQ==",
       "path": "microsoft.entityframeworkcore.design/6.0.28",
       "hashPath": "microsoft.entityframeworkcore.design.6.0.28.nupkg.sha512"
+    },
+    "Microsoft.EntityFrameworkCore.InMemory/6.0.28": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-s0UR0xf/ynIju27HgQepB4WsG3VL/aNsTQEo8XZZcXfTFWweReZdV+3z0c6NCEqnHc0H7pvYtbbyROkxrapncw==",
+      "path": "microsoft.entityframeworkcore.inmemory/6.0.28",
+      "hashPath": "microsoft.entityframeworkcore.inmemory.6.0.28.nupkg.sha512"
     },
     "Microsoft.EntityFrameworkCore.Relational/6.0.28": {
       "type": "package",
