@@ -14,10 +14,11 @@ namespace BusinessObject.Models
 
         public int MapPointId { get; set; }
         public int MapId { get; set; }
+        public string? MappointName { get; set; }
         public Point LocationWeb { get; set; }
         public Point LocationApp { get; set; }
         public Point LocationGps { get; set; }
-        public string? MappointName { get; set; }
+        
         public int? FloorId { get; set; }
         public int? BuildingId { get; set; }
         public string? Image { get; set; }

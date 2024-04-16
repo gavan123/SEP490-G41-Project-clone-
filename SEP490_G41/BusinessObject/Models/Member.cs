@@ -20,14 +20,11 @@ namespace BusinessObject.Models
         public string Password { get; set; }
         public string Status { get; set; }
         public int RoleId { get; set; }
-<<<<<<< HEAD
-        public string Country { get; set; }
-        public string Avatar { get; set; }
-=======
-        public string Country { get; set; } = null!;
-        public string? Avatar { get; set; }
->>>>>>> main
 
+        public string Country { get; set; } = null!;
+        public string Avatar { get; set; }
+
+     
         public virtual Role Role { get; set; }
         public virtual ICollection<Mapmanage> Mapmanages { get; set; }
     }

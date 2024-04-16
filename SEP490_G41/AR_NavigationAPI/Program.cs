@@ -62,7 +62,7 @@ builder.Services.AddScoped<IMapRepository, MapRepository>();
 builder.Services.AddScoped<IProfileRepository, ProfileRepository>();
 
 builder.Services.AddScoped<IFloorRepository, FloorRepository>();
-<<<<<<< HEAD
+
 
 
 /*builder.Services.AddControllers()
@@ -70,9 +70,9 @@ builder.Services.AddScoped<IFloorRepository, FloorRepository>();
     {
         options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
     });*/
-=======
+
 builder.Services.AddScoped<IMemberRepository, MemberRepository>();
->>>>>>> main
+
 
 var app = builder.Build();
 
