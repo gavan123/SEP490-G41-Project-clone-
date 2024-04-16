@@ -16,6 +16,7 @@ namespace BusinessObject.Models
         {
         }
 
+<<<<<<< HEAD
         public virtual DbSet<Building> Buildings { get; set; }
         public virtual DbSet<Facility> Facilities { get; set; }
         public virtual DbSet<Floor> Floors { get; set; }
@@ -26,32 +27,49 @@ namespace BusinessObject.Models
         public virtual DbSet<Member> Members { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Route> Routes { get; set; }
+=======
+        public virtual DbSet<Building> Buildings { get; set; } = null!;
+        public virtual DbSet<Facility> Facilities { get; set; } = null!;
+        public virtual DbSet<Floor> Floors { get; set; } = null!;
+        public virtual DbSet<Map> Maps { get; set; } = null!;
+        public virtual DbSet<Mapmanage> Mapmanages { get; set; } = null!;
+        public virtual DbSet<Mappoint> Mappoints { get; set; } = null!;
+        public virtual DbSet<Mappointroute> Mappointroutes { get; set; } = null!;
+        public virtual DbSet<Member> Members { get; set; } = null!;
+        public virtual DbSet<Role> Roles { get; set; } = null!;
+        public virtual DbSet<Route> Routes { get; set; } = null!;
+>>>>>>> main
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+<<<<<<< HEAD
                 optionsBuilder.UseMySql("server=localhost;database=fins;uid=root;pwd=12345", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.33-mysql"), x => x.UseNetTopologySuite());
+=======
+                optionsBuilder.UseMySQL("Server=localhost;Database=fins;User=root;Password=Klmnop123#;");
+>>>>>>> main
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.UseCollation("utf8mb4_0900_ai_ci")
-                .HasCharSet("utf8mb4");
-
             modelBuilder.Entity<Building>(entity =>
             {
                 entity.ToTable("building");
 
                 entity.HasIndex(e => e.FacilityId, "FK_Facility_Building_idx");
 
+<<<<<<< HEAD
                 entity.Property(e => e.BuildingName)
                     .IsRequired()
                     .HasMaxLength(50)
                     .UseCollation("utf8mb3_general_ci")
                     .HasCharSet("utf8mb3");
+=======
+                entity.Property(e => e.BuildingName).HasMaxLength(50);
+>>>>>>> main
 
                 entity.Property(e => e.Image).IsRequired();
 
@@ -70,6 +88,7 @@ namespace BusinessObject.Models
             {
                 entity.ToTable("facilities");
 
+<<<<<<< HEAD
                 entity.Property(e => e.Address)
                     .IsRequired()
                     .HasMaxLength(100)
@@ -81,6 +100,11 @@ namespace BusinessObject.Models
                     .HasMaxLength(100)
                     .UseCollation("utf8mb3_general_ci")
                     .HasCharSet("utf8mb3");
+=======
+                entity.Property(e => e.Address).HasMaxLength(100);
+
+                entity.Property(e => e.FacilityName).HasMaxLength(100);
+>>>>>>> main
 
                 entity.Property(e => e.Status)
                     .IsRequired()
@@ -93,11 +117,15 @@ namespace BusinessObject.Models
 
                 entity.HasIndex(e => e.BuildingId, "FK_Building_Floor_idx");
 
+<<<<<<< HEAD
                 entity.Property(e => e.FloorName)
                     .IsRequired()
                     .HasMaxLength(50)
                     .UseCollation("utf8mb3_general_ci")
                     .HasCharSet("utf8mb3");
+=======
+                entity.Property(e => e.FloorName).HasMaxLength(50);
+>>>>>>> main
 
                 entity.Property(e => e.Greeting)
                     .IsRequired()
@@ -136,8 +164,7 @@ namespace BusinessObject.Models
             modelBuilder.Entity<Mapmanage>(entity =>
             {
                 entity.HasKey(e => new { e.MapId, e.MemberId })
-                    .HasName("PRIMARY")
-                    .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
+                    .HasName("PRIMARY");
 
                 entity.ToTable("mapmanage");
 
@@ -176,6 +203,7 @@ namespace BusinessObject.Models
 
                 entity.Property(e => e.Image).HasMaxLength(100);
 
+<<<<<<< HEAD
                 entity.Property(e => e.LocationGps).HasColumnName("LocationGPS");
 
                 entity.Property(e => e.LocationWeb).IsRequired();
@@ -184,6 +212,9 @@ namespace BusinessObject.Models
                     .HasMaxLength(50)
                     .UseCollation("utf8mb3_general_ci")
                     .HasCharSet("utf8mb3");
+=======
+                entity.Property(e => e.MappointName).HasMaxLength(50);
+>>>>>>> main
 
                 entity.HasOne(d => d.Map)
                     .WithMany(p => p.Mappoints)
@@ -233,11 +264,21 @@ namespace BusinessObject.Models
                     .HasMaxLength(100);
 
                 entity.Property(e => e.Avatar).HasMaxLength(45);
+<<<<<<< HEAD
+=======
+
+                entity.Property(e => e.Country).HasMaxLength(45);
+
+                entity.Property(e => e.DoB).HasColumnType("datetime");
+
+                entity.Property(e => e.Email).HasMaxLength(50);
+>>>>>>> main
 
                 entity.Property(e => e.Country)
                     .IsRequired()
                     .HasMaxLength(45);
 
+<<<<<<< HEAD
                 entity.Property(e => e.DoB).HasColumnType("datetime");
 
                 entity.Property(e => e.Email)
@@ -251,13 +292,14 @@ namespace BusinessObject.Models
                 entity.Property(e => e.Password)
                     .IsRequired()
                     .HasMaxLength(1000);
+=======
+                entity.Property(e => e.Password).HasMaxLength(1000);
+>>>>>>> main
 
                 entity.Property(e => e.Phone)
                     .IsRequired()
                     .HasMaxLength(10)
-                    .IsFixedLength()
-                    .UseCollation("utf8mb3_general_ci")
-                    .HasCharSet("utf8mb3");
+                    .IsFixedLength();
 
                 entity.Property(e => e.Status)
                     .IsRequired()
@@ -282,9 +324,13 @@ namespace BusinessObject.Models
                     .IsRequired()
                     .HasColumnType("mediumtext");
 
+<<<<<<< HEAD
                 entity.Property(e => e.RoleName)
                     .IsRequired()
                     .HasMaxLength(45);
+=======
+                entity.Property(e => e.RoleName).HasMaxLength(45);
+>>>>>>> main
             });
 
             modelBuilder.Entity<Route>(entity =>
@@ -293,9 +339,13 @@ namespace BusinessObject.Models
 
                 entity.Property(e => e.EndTime).HasColumnType("datetime");
 
+<<<<<<< HEAD
                 entity.Property(e => e.RouteName)
                     .IsRequired()
                     .HasMaxLength(45);
+=======
+                entity.Property(e => e.RouteName).HasMaxLength(45);
+>>>>>>> main
 
                 entity.Property(e => e.StartTime).HasColumnType("datetime");
             });

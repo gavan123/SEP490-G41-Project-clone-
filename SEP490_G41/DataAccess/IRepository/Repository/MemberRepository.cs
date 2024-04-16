@@ -1,4 +1,7 @@
 ﻿using BusinessObject.Models;
+﻿using AutoMapper;
+using BusinessObject.DTO;
+using DataAccess.DAO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,34 +12,107 @@ namespace DataAccess.IRepository.Repository
 {
     public class MemberRepository : IMemberRepository
     {
-        public bool AddNewMember()
+        private readonly IMapper _mapper;
+        private readonly MemberDAO _memberDAO;
+
+        public MemberRepository(IMapper mapper, MemberDAO memberDAO)
         {
-            throw new NotImplementedException();
+            _mapper = mapper;
+            _memberDAO = memberDAO;
+        }
+        public void AddNewMember(AddMemberDTO member)
+        {
+            try
+            {
+                var memberModel = new Member
+                {
+                    FullName = member.FullName,
+                    DoB = member.DoB,
+                    Address = member.Address,
+                    Phone = member.Phone,
+                    Email = member.Email,
+                    Username = member.Username,
+                    Password = member.Password,
+                    Status = member.Status,
+                    RoleId = member.RoleId
+                };
+                _memberDAO.AddNewMember(memberModel);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Can't add new member");
+            }
+        }
+        public bool ChangePassword(string oldPass, string newPass)
+        {
+            try
+            {
+                return _memberDAO.ChangePassword(oldPass, newPass);
+            }catch (Exception ex)
+            {
+                throw new Exception("Error");
+            }
+            
         }
 
-        public bool DeleteMember(string name)
+        public bool DeleteMember(int id) => _memberDAO.DeleteMember(id);
+
+        public List<MemberDTO> GetAllMembers()
         {
-            throw new NotImplementedException();
+            try
+            {
+                var members = _memberDAO.GetAllMembers();
+                var memberDTOs = members.Select(m => _mapper.Map<MemberDTO>(m)).ToList();
+                return memberDTOs;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Something has wrong!");
+            }
         }
 
-        public List<Member> GetAllMembers()
+        public bool Login(string username, string password) => _memberDAO.Login(username, password);
+
+        public List<MemberDTO> SearchMemberByDoB(DateTime date)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var members = _memberDAO.SearchMemberByDoB(date);
+                var memberDTOs = members.Select(m => _mapper.Map<MemberDTO>(m)).ToList();
+                return memberDTOs;
+            }catch (Exception ex)
+            {
+                throw new Exception("Something has wrong!");
+            }
+            
         }
 
-        public bool Login(string username, string password)
+        public List<MemberDTO> SearchMemberByName(string name)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var members = _memberDAO.SearchMemberByName(name);
+                var memberDTOs = members.Select(m => _mapper.Map<MemberDTO>(m)).ToList();
+                return memberDTOs;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Something has wrong!");
+            }
         }
 
-        public List<Member> SearchMemberByName(string name)
+        public List<MemberDTO> SearchMemberByStatus(string status)
         {
-            throw new NotImplementedException();
-        }
-
-        public bool UpdateMember(Member member)
-        {
-            throw new NotImplementedException();
+            try
+            {
+                var members = _memberDAO.SearchMemberByStatus(status);
+                var memberDTOs = members.Select(m => _mapper.Map<MemberDTO>(m)).ToList();
+                return memberDTOs;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Something has wrong!");
+            }
         }
     }
 }

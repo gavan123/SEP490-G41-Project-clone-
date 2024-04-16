@@ -13,24 +13,39 @@ namespace DataAccess.DAO
 
         public FloorDAO(finsContext context)
         {
-            _context = context;
+            _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
         // Thêm mới tầng
         public void AddFloor(Floor floor)
         {
+            if (floor == null)
+            {
+                throw new ArgumentNullException(nameof(floor));
+            }
+
             _context.Floors.Add(floor);
             _context.SaveChanges();
         }
-
         // Đọc thông tin tầng bằng Id
         public Floor GetFloorById(int floorId)
         {
+            if (floorId <= 0)
+            {
+                throw new ArgumentException("Invalid floor ID", nameof(floorId));
+            }
+
             return _context.Floors.FirstOrDefault(f => f.FloorId == floorId);
         }
 
+
         public void UpdateFloor(Floor floor)
         {
+            if (floor == null)
+            {
+                throw new ArgumentNullException(nameof(floor));
+            }
+
             var existingFloor = _context.Floors.FirstOrDefault(f => f.FloorId == floor.FloorId);
 
             if (existingFloor != null)
@@ -46,6 +61,11 @@ namespace DataAccess.DAO
 
         public void DeleteFloor(int floorId)
         {
+            if (floorId <= 0)
+            {
+                throw new ArgumentException("Invalid floor ID", nameof(floorId));
+            }
+
             var floor = _context.Floors.FirstOrDefault(f => f.FloorId == floorId);
             if (floor != null)
             {
@@ -53,19 +73,10 @@ namespace DataAccess.DAO
                 _context.SaveChanges();
             }
         }
-
         public List<Floor> GetAllFloors()
         {
             return _context.Floors.ToList();
         }
 
-        public List<Floor> SearchFloorsByName(string keyword)
-        {
-            var floors = _context.Floors
-                .Where(f => f.FloorName.Contains(keyword))
-                .ToList();
-
-            return floors;
-        }
     }
 }

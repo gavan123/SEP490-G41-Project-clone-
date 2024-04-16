@@ -1,4 +1,5 @@
-﻿using BusinessObject.Models;
+﻿using BusinessObject.DTO;
+using BusinessObject.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +10,13 @@ namespace DataAccess.IRepository
 {
     public interface IMemberRepository
     {
-        List<Member> GetAllMembers();
-        List<Member> SearchMemberByName(string name);
-        bool Login(string username,string password);
-        bool AddNewMember();
-        bool UpdateMember(Member member);
-        bool DeleteMember(string name);
+        public List<MemberDTO> GetAllMembers();
+        public void AddNewMember(AddMemberDTO member);
+        public bool DeleteMember(int id);
+        public List<MemberDTO> SearchMemberByName(string name);
+        public List<MemberDTO> SearchMemberByDoB(DateTime date);
+        public List<MemberDTO> SearchMemberByStatus(string status);
+        public bool Login(string username, string password);
+        public bool ChangePassword(string oldPass, string newPass);
     }
 }

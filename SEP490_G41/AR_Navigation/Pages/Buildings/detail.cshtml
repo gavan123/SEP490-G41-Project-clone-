@@ -1,7 +1,7 @@
 ﻿@page "{id:int}"
 @model AR_Navigation.Pages.Buildings.DetailModel
 @{
-    Layout = "_Layout1";
+    Layout = "_AdminLayout";
 }
 <style>
     .selected-image-container {
@@ -30,7 +30,7 @@
             <div class="text-md-right m-v-10">
                 <button class="btn btn-primary" data-toggle="modal" data-target="#create-new-building">
                     <i class="anticon anticon-plus"></i>
-                    <span class="m-l-5">New Building</span>
+                    <span class="m-l-5">Edit Map</span>
                 </button>
             </div>
         </div>
@@ -53,16 +53,6 @@
     <!-- Map Image -->
     <div class="selected-image-container" id="map-images-container">
         <img id="map-image" src="~/assets/images/others/img-13.jpg" alt="Map Image">
-    </div>
-</div>
-<div class="row align-items-md-center">
-    <div class="col-md-12">
-        <div class="text-md-right m-v-10">
-            <button class="btn btn-primary">
-                <i class="anticon anticon-plus"></i>
-                <span class="m-l-5">New Building</span>
-            </button>
-        </div>
     </div>
 </div>
 <script>
@@ -151,11 +141,12 @@
                 }
             });
         }
-
-        //open image in new tab
-        $(document).on('click', '#map-images-container img', function () {
-            var imageUrl = $(this).attr('src');
-            window.open(imageUrl, '_blank');
+        $(document).on("click", "#map-images-container img", function (event) {
+            var imageWidth = $(this).width();
+            var imageHeight = $(this).height();
+            var x = (event.pageX - $(this).offset().left - (imageWidth / 2)).toFixed(5);
+            var y = (event.pageY - $(this).offset().top - (imageHeight / 2)).toFixed(5);
+            alert("X Coordinate: " + x + " Y Coordinate: " + y);
         });
     });
 

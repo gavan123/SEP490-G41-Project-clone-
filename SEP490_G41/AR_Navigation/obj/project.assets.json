@@ -55,12 +55,17 @@
     ]
   },
   "packageFolders": {
+<<<<<<< HEAD
     "C:\\Users\\TGDD'\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+=======
+    "C:\\Users\\ADMIN\\.nuget\\packages\\": {}
+>>>>>>> main
   },
   "project": {
     "version": "1.0.0",
     "restore": {
+<<<<<<< HEAD
       "projectUniqueName": "D:\\SEP490_G41_FinNS\\sep490-g41-project\\SEP490_G41\\AR_Navigation\\AR_Navigation.csproj",
       "projectName": "AR_Navigation",
       "projectPath": "D:\\SEP490_G41_FinNS\\sep490-g41-project\\SEP490_G41\\AR_Navigation\\AR_Navigation.csproj",
@@ -73,6 +78,16 @@
       "configFilePaths": [
         "C:\\Users\\TGDD'\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+=======
+      "projectUniqueName": "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\AR_Navigation\\AR_Navigation.csproj",
+      "projectName": "AR_Navigation",
+      "projectPath": "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\AR_Navigation\\AR_Navigation.csproj",
+      "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
+      "outputPath": "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\AR_Navigation\\obj\\",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
+>>>>>>> main
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -122,7 +137,11 @@
             "privateAssets": "all"
           }
         },
+<<<<<<< HEAD
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
+=======
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101\\RuntimeIdentifierGraph.json"
+>>>>>>> main
       }
     }
   }

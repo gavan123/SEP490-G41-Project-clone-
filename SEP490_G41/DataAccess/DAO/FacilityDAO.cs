@@ -13,12 +13,17 @@ namespace DataAccess.DAO
 
         public FacilityDAO(finsContext context)
         {
-            _context = context;
+            _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
         // Thêm mới tòa nhà
         public void AddFacility(Facility facility)
         {
+            if (facility == null)
+            {
+                throw new ArgumentNullException(nameof(facility));
+            }
+
             _context.Facilities.Add(facility);
             _context.SaveChanges();
         }
@@ -26,31 +31,49 @@ namespace DataAccess.DAO
         // Đọc thông tin tòa nhà bằng Id
         public Facility GetFacilityById(int facilityId)
         {
+            if (facilityId <= 0)
+            {
+                throw new ArgumentException("Invalid facility ID", nameof(facilityId));
+            }
+
             return _context.Facilities.FirstOrDefault(f => f.FacilityId == facilityId);
         }
 
         public void UpdateFacility(Facility facility)
         {
-            var existingFacility = _context.Facilities.FirstOrDefault(f => f.FacilityId == facility.FacilityId);
-
-            if (existingFacility != null)
+            if (facility == null)
             {
-                existingFacility.FacilityName = facility.FacilityName;
-                existingFacility.Address = facility.Address;
-                existingFacility.Status = facility.Status;
-
-                _context.SaveChanges();
+                throw new ArgumentNullException(nameof(facility));
             }
+
+            var existingFacility = _context.Facilities.FirstOrDefault(f => f.FacilityId == facility.FacilityId);
+            if (existingFacility == null)
+            {
+                throw new ArgumentException("Facility not found", nameof(facility));
+            }
+
+            existingFacility.FacilityName = facility.FacilityName;
+            existingFacility.Address = facility.Address;
+            existingFacility.Status = facility.Status;
+
+            _context.SaveChanges();
         }
 
         public void DeleteFacility(int facilityId)
         {
-            var facility = _context.Facilities.FirstOrDefault(f => f.FacilityId == facilityId);
-            if (facility != null)
+            if (facilityId <= 0)
             {
-                _context.Facilities.Remove(facility);
-                _context.SaveChanges();
+                throw new ArgumentException("Invalid facility ID", nameof(facilityId));
             }
+
+            var facility = _context.Facilities.FirstOrDefault(f => f.FacilityId == facilityId);
+            if (facility == null)
+            {
+                throw new ArgumentException("Facility not found", nameof(facilityId));
+            }
+
+            _context.Facilities.Remove(facility);
+            _context.SaveChanges();
         }
 
         public List<Facility> GetAllFacilities()

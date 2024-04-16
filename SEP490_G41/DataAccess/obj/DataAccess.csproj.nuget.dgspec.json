@@ -1,6 +1,7 @@
 {
   "format": 1,
   "restore": {
+<<<<<<< HEAD
     "D:\\SEP490_G41_FinNS\\sep490-g41-project\\SEP490_G41\\DataAccess\\DataAccess.csproj": {}
   },
   "projects": {
@@ -12,13 +13,22 @@
         "projectPath": "D:\\SEP490_G41_FinNS\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj",
         "packagesPath": "C:\\Users\\TGDD'\\.nuget\\packages\\",
         "outputPath": "D:\\SEP490_G41_FinNS\\sep490-g41-project\\SEP490_G41\\BusinessObject\\obj\\",
+=======
+    "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\DataAccess\\DataAccess.csproj": {}
+  },
+  "projects": {
+    "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj",
+        "projectName": "BusinessObject",
+        "projectPath": "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj",
+        "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
+        "outputPath": "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\BusinessObject\\obj\\",
+>>>>>>> main
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\TGDD'\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -74,6 +84,10 @@
               "target": "Package",
               "version": "[8.3.0, )"
             },
+            "MySql.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.25, )"
+            },
             "MySqlConnector": {
               "target": "Package",
               "version": "[2.3.5, )"
@@ -85,10 +99,6 @@
             "Pomelo.EntityFrameworkCore.MySql": {
               "target": "Package",
               "version": "[6.0.3, )"
-            },
-            "Pomelo.EntityFrameworkCore.MySql.Design": {
-              "target": "Package",
-              "version": "[1.1.2, )"
             },
             "Pomelo.EntityFrameworkCore.MySql.NetTopologySuite": {
               "target": "Package",
@@ -111,10 +121,11 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     },
+<<<<<<< HEAD
     "D:\\SEP490_G41_FinNS\\sep490-g41-project\\SEP490_G41\\DataAccess\\DataAccess.csproj": {
       "version": "1.0.0",
       "restore": {
@@ -123,13 +134,19 @@
         "projectPath": "D:\\SEP490_G41_FinNS\\sep490-g41-project\\SEP490_G41\\DataAccess\\DataAccess.csproj",
         "packagesPath": "C:\\Users\\TGDD'\\.nuget\\packages\\",
         "outputPath": "D:\\SEP490_G41_FinNS\\sep490-g41-project\\SEP490_G41\\DataAccess\\obj\\",
+=======
+    "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\DataAccess\\DataAccess.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\DataAccess\\DataAccess.csproj",
+        "projectName": "DataAccess",
+        "projectPath": "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\DataAccess\\DataAccess.csproj",
+        "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
+        "outputPath": "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\DataAccess\\obj\\",
+>>>>>>> main
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\TGDD'\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -143,8 +160,13 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
+<<<<<<< HEAD
               "D:\\SEP490_G41_FinNS\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj": {
                 "projectPath": "D:\\SEP490_G41_FinNS\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj"
+=======
+              "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj": {
+                "projectPath": "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj"
+>>>>>>> main
               }
             }
           }
@@ -174,7 +196,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     }

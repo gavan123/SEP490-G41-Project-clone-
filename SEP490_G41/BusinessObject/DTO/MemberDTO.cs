@@ -11,6 +11,22 @@ namespace BusinessObject.DTO
         public int MemberId { get; set; }
         public string FullName { get; set; } = null!;
         public DateTime DoB { get; set; }
+<<<<<<< HEAD
+=======
+        public string Address { get; set; } = null!;
+        public string Phone { get; set; } = null!;
+        public string Email { get; set; } = null!;
+        public string Username { get; set; } = null!;
+        public string Password { get; set; } = null!;
+        public string Status { get; set; } = null!;
+        public int RoleId { get; set; }
+    }
+
+    public class AddMemberDTO
+    {
+        public string FullName { get; set; } = null!;
+        public DateTime DoB { get; set; }
+>>>>>>> main
         public string Address { get; set; } = null!;
         public string Phone { get; set; } = null!;
         public string Email { get; set; } = null!;
