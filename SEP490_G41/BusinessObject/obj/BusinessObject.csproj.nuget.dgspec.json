@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\TGDD'\\Dropbox\\PC\\Documents\\SEP490_G41\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj": {}
+    "D:\\SEP490_G41_FinNS\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj": {}
   },
   "projects": {
-    "C:\\Users\\TGDD'\\Dropbox\\PC\\Documents\\SEP490_G41\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj": {
+    "D:\\SEP490_G41_FinNS\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\TGDD'\\Dropbox\\PC\\Documents\\SEP490_G41\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj",
+        "projectUniqueName": "D:\\SEP490_G41_FinNS\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj",
         "projectName": "BusinessObject",
-        "projectPath": "C:\\Users\\TGDD'\\Dropbox\\PC\\Documents\\SEP490_G41\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj",
+        "projectPath": "D:\\SEP490_G41_FinNS\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj",
         "packagesPath": "C:\\Users\\TGDD'\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\TGDD'\\Dropbox\\PC\\Documents\\SEP490_G41\\sep490-g41-project\\SEP490_G41\\BusinessObject\\obj\\",
+        "outputPath": "D:\\SEP490_G41_FinNS\\sep490-g41-project\\SEP490_G41\\BusinessObject\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
