@@ -5,13 +5,17 @@ namespace BusinessObject.Models
 {
     public partial class Route
     {
-        public int RouteId { get; set; }
-        public int StartPoint { get; set; }
-        public int EndPoint { get; set; }
-        public DateTime StartTime { get; set; }
-        public DateTime EndTime { get; set; }
+        public Route()
+        {
+            Mappointroutes = new HashSet<Mappointroute>();
+        }
 
-        public virtual Mappoint EndPointNavigation { get; set; } = null!;
-        public virtual Mappoint StartPointNavigation { get; set; } = null!;
+        public int RouteId { get; set; }
+        public string RouteName { get; set; }
+        public DateTime? StartTime { get; set; }
+        public DateTime? EndTime { get; set; }
+        public double? Distance { get; set; }
+
+        public virtual ICollection<Mappointroute> Mappointroutes { get; set; }
     }
 }

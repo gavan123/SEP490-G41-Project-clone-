@@ -11,12 +11,12 @@ namespace BusinessObject.Models
         }
 
         public int BuildingId { get; set; }
-        public string BuildingName { get; set; } = null!;
-        public string Image { get; set; } = null!;
-        public string Status { get; set; } = null!;
+        public string BuildingName { get; set; }
+        public string Image { get; set; }
+        public string Status { get; set; }
         public int FacilityId { get; set; }
 
-        public virtual Facility Facility { get; set; } = null!;
+        public virtual Facility Facility { get; set; }
         public virtual ICollection<Floor> Floors { get; set; }
     }
 }
