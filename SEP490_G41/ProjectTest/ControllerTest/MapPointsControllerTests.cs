@@ -27,10 +27,32 @@ namespace ProjectTest.ControllerTest
         {
             // Arrange
             var expectedMapPoints = new List<MapPointDTO>
-            {
-                new MapPointDTO { MapPointId = 1, Location = "[10, 20]" },
-                new MapPointDTO { MapPointId = 2, Location = "[30, 40]" }
-            };
+    {
+        new MapPointDTO
+        {
+            MapPointId = 1,
+            MapId = 1,
+            MappointName = "Point 1",
+            LocationWeb = "[10, 20]",
+            LocationApp = "[11, 21]",
+            LocationGps = "[12, 22]",
+            FloorId = 1,
+            BuildingId = 101,
+            Image = "point1.jpg"
+        },
+        new MapPointDTO
+        {
+            MapPointId = 2,
+            MapId = 1,
+            MappointName = "Point 2",
+            LocationWeb = "[30, 40]",
+            LocationApp = "[31, 41]",
+            LocationGps = "[32, 42]",
+            FloorId = 2,
+            BuildingId = 102,
+            Image = "point2.jpg"
+        }
+    };
             _mockMapPointRepository.Setup(repo => repo.GetAllMapPoints()).Returns(expectedMapPoints);
 
             // Act
@@ -40,6 +62,12 @@ namespace ProjectTest.ControllerTest
             Assert.IsType<OkObjectResult>(result);
             var okResult = (OkObjectResult)result;
             Assert.Equal(expectedMapPoints, okResult.Value);
+            Assert.Equal(2, ((List<MapPointDTO>)okResult.Value).Count);
+            Assert.Equal("Point 1", ((List<MapPointDTO>)okResult.Value)[0].MappointName);
+            Assert.Equal("[11, 21]", ((List<MapPointDTO>)okResult.Value)[0].LocationApp);
+            Assert.Equal(1, ((List<MapPointDTO>)okResult.Value)[0].FloorId);
+            Assert.Equal(101, ((List<MapPointDTO>)okResult.Value)[0].BuildingId);
+            Assert.Equal("point1.jpg", ((List<MapPointDTO>)okResult.Value)[0].Image);
         }
 
         [Fact]
@@ -47,7 +75,18 @@ namespace ProjectTest.ControllerTest
         {
             // Arrange
             int validId = 1;
-            var expectedMapPoint = new MapPointDTO { MapPointId = validId, Location = "[10, 20]" };
+            var expectedMapPoint = new MapPointDTO
+            {
+                MapPointId = 1,
+                MapId = 1,
+                MappointName = "Point 1",
+                LocationWeb = "[10, 20]",
+                LocationApp = "[11, 21]",
+                LocationGps = "[12, 22]",
+                FloorId = 1,
+                BuildingId = 101,
+                Image = "point1.jpg"
+            };
             _mockMapPointRepository.Setup(repo => repo.GetMapPointById(validId)).Returns(expectedMapPoint);
 
             // Act
@@ -80,7 +119,16 @@ namespace ProjectTest.ControllerTest
         public void AddMapPoint_WhenMapPointIsValid_ReturnsOkObjectResult()
         {
             // Arrange
-            var newMapPoint = new MapPointAddDTO { Location = "[10, 20]" };
+            var newMapPoint = new MapPointAddDTO {
+                MapId = 1,
+                MappointName = "Point 1",
+                LocationWeb = "[10, 20]",
+                LocationApp = "[11, 21]",
+                LocationGps = "[12, 22]",
+                FloorId = 1,
+                BuildingId = 101,
+                Image = "point1.jpg"
+            };
 
             // Act
             var result = _controller.AddMapPoint(newMapPoint);
@@ -100,7 +148,16 @@ namespace ProjectTest.ControllerTest
         {
             // Arrange
             int validId = 1;
-            var mapPoint = new MapPointUpdateDTO { MapPointId = validId, Location = "[20, 30]" };
+            var mapPoint = new MapPointUpdateDTO {
+                MapId = 1,
+                MappointName = "Point 1",
+                LocationWeb = "[10, 20]",
+                LocationApp = "[11, 21]",
+                LocationGps = "[12, 22]",
+                FloorId = 1,
+                BuildingId = 101,
+                Image = "point1.jpg"
+            };
             _mockMapPointRepository.Setup(repo => repo.GetMapPointById(validId)).Returns((MapPointDTO)null);
 
             // Act
@@ -115,8 +172,26 @@ namespace ProjectTest.ControllerTest
         {
             // Arrange
             int validId = 1;
-            var mapPoint = new MapPointUpdateDTO { MapPointId = validId, Location = "[20, 30]" };
-            var expectedMapPoint = new MapPointDTO { MapPointId = validId, Location = "[20, 30]" };
+            var mapPoint = new MapPointUpdateDTO { MapPointId = validId,
+                MapId = 1,
+                MappointName = "Point 1",
+                LocationWeb = "[10, 20]",
+                LocationApp = "[11, 21]",
+                LocationGps = "[12, 22]",
+                FloorId = 1,
+                BuildingId = 101,
+                Image = "point1.jpg"
+            };
+            var expectedMapPoint = new MapPointDTO { MapPointId = validId,
+                MapId = 1,
+                MappointName = "Point 1",
+                LocationWeb = "[10, 20]",
+                LocationApp = "[11, 21]",
+                LocationGps = "[12, 22]",
+                FloorId = 1,
+                BuildingId = 101,
+                Image = "point1.jpg"
+            };
             _mockMapPointRepository.Setup(repo => repo.GetMapPointById(validId)).Returns(expectedMapPoint);
 
             // Act
@@ -147,7 +222,16 @@ namespace ProjectTest.ControllerTest
         {
             // Arrange
             int validId = 1;
-            var expectedMapPoint = new MapPointDTO { MapPointId = validId, Location = "[10, 20]" };
+            var expectedMapPoint = new MapPointDTO { MapPointId = validId,
+                MapId = 1,
+                MappointName = "Point 1",
+                LocationWeb = "[10, 20]",
+                LocationApp = "[11, 21]",
+                LocationGps = "[12, 22]",
+                FloorId = 1,
+                BuildingId = 101,
+                Image = "point1.jpg"
+            };
             _mockMapPointRepository.Setup(repo => repo.GetMapPointById(validId)).Returns(expectedMapPoint);
 
             // Act
