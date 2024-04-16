@@ -105,11 +105,9 @@
     $(document).ready(function () {
         // Gửi yêu cầu AJAX để lấy thông tin profile từ API
         $.ajax({
-<<<<<<< HEAD
+
             url: 'https://localhost:7186/api/profiles/1',
-=======
-            url: 'https://localhost:7186/api/profiles/1.val(),
->>>>>>> main
+
             //url: 'https://localhost:7186/api/profiles/' + $('#MemberId').val(), // Thay đổi số 1 thành memberId thực tế của bạn
             type: 'GET',
             success: function (data) {
@@ -157,11 +155,8 @@
 
             // Gửi yêu cầu PUT để cập nhật thông tin profile qua API
             $.ajax({
-<<<<<<< HEAD
+
                 url: 'https://localhost:7186/api/profiles/1',
-=======
-                url: 'https://localhost:7186/api/profiles/1.val(),
->>>>>>> main
                 //url: 'https://localhost:7186/api/profiles/' + $('#MemberId').val(), // Thay đổi số 1 thành memberId thực tế của bạn
                 type: 'PUT',
                 contentType: false, // Set content type to JSON
@@ -188,11 +183,8 @@
         $('.edit-profile').click(function () {
             // Lấy và hiển thị thông tin profile trong form chỉnh sửa
             $.ajax({
-<<<<<<< HEAD
+
                 url: 'https://localhost:7186/api/profiles/1',
-=======
-                url: 'https://localhost:7186/api/profiles/1.val(),
->>>>>>> main
                 //url: 'https://localhost:7186/api/profiles/' + $('#MemberId').val(), // Thay đổi số 1 thành memberId thực tế của bạn
                 type: 'GET',
                 success: function (data) {

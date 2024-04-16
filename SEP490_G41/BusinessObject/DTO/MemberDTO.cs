@@ -11,8 +11,7 @@ namespace BusinessObject.DTO
         public int MemberId { get; set; }
         public string FullName { get; set; } = null!;
         public DateTime DoB { get; set; }
-<<<<<<< HEAD
-=======
+
         public string Address { get; set; } = null!;
         public string Phone { get; set; } = null!;
         public string Email { get; set; } = null!;
@@ -26,7 +25,7 @@ namespace BusinessObject.DTO
     {
         public string FullName { get; set; } = null!;
         public DateTime DoB { get; set; }
->>>>>>> main
+
         public string Address { get; set; } = null!;
         public string Phone { get; set; } = null!;
         public string Email { get; set; } = null!;
