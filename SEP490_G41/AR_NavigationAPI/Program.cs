@@ -60,16 +60,13 @@ builder.Services.AddScoped<IFacilityRepository, FacilityRepository>();
 builder.Services.AddScoped<IMapRepository, MapRepository>();
 builder.Services.AddScoped<IMapPointRepository, MapPointRepository>();
 builder.Services.AddScoped<IFloorRepository, FloorRepository>();
-<<<<<<< HEAD
 
 //builder.Services.AddControllers()
 //    .AddJsonOptions(options =>
 //    {
 //        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
 //    });
-=======
 builder.Services.AddScoped<IMemberRepository, MemberRepository>();
->>>>>>> main
 
 var app = builder.Build();
 

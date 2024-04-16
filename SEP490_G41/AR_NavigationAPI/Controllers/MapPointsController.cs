@@ -48,7 +48,7 @@ namespace AR_NavigationAPI.Controllers
             if (mapPoint == null)
                 return BadRequest("MapPoint cannot be null.");
 
-            if (string.IsNullOrWhiteSpace(mapPoint.Location))
+            if (string.IsNullOrWhiteSpace(mapPoint.LocationWeb))
                 return BadRequest("Location cannot be null or empty.");
 
             _mapPointRepository.AddMapPoint(mapPoint);
@@ -65,7 +65,7 @@ namespace AR_NavigationAPI.Controllers
             if (mapPoint == null)
                 return BadRequest("MapPoint cannot be null.");
 
-            if (string.IsNullOrWhiteSpace(mapPoint.Location))
+            if (string.IsNullOrWhiteSpace(mapPoint.LocationWeb))
                 return BadRequest("Location cannot be null or empty.");
 
             var tmpMapPoint = _mapPointRepository.GetMapPointById(id);

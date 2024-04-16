@@ -1,7 +1,6 @@
 {
   "format": 1,
   "restore": {
-<<<<<<< HEAD
     "D:\\sep490-g41-project\\SEP490_G41\\DataAccess\\DataAccess.csproj": {}
   },
   "projects": {
@@ -13,19 +12,6 @@
         "projectPath": "D:\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj",
         "packagesPath": "C:\\Users\\hieud\\.nuget\\packages\\",
         "outputPath": "D:\\sep490-g41-project\\SEP490_G41\\BusinessObject\\obj\\",
-=======
-    "D:\\DO-AN\\sep490-g41-project2\\SEP490_G41\\DataAccess\\DataAccess.csproj": {}
-  },
-  "projects": {
-    "D:\\DO-AN\\sep490-g41-project2\\SEP490_G41\\BusinessObject\\BusinessObject.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "D:\\DO-AN\\sep490-g41-project2\\SEP490_G41\\BusinessObject\\BusinessObject.csproj",
-        "projectName": "BusinessObject",
-        "projectPath": "D:\\DO-AN\\sep490-g41-project2\\SEP490_G41\\BusinessObject\\BusinessObject.csproj",
-        "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "D:\\DO-AN\\sep490-g41-project2\\SEP490_G41\\BusinessObject\\obj\\",
->>>>>>> main
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -92,13 +78,10 @@
               "target": "Package",
               "version": "[8.3.0, )"
             },
-<<<<<<< HEAD
             "MySql.Data.EntityFrameworkCore": {
               "target": "Package",
               "version": "[6.10.9, )"
             },
-=======
->>>>>>> main
             "MySql.EntityFrameworkCore": {
               "target": "Package",
               "version": "[6.0.25, )"
@@ -144,7 +127,6 @@
         }
       }
     },
-<<<<<<< HEAD
     "D:\\sep490-g41-project\\SEP490_G41\\DataAccess\\DataAccess.csproj": {
       "version": "1.0.0",
       "restore": {
@@ -153,16 +135,6 @@
         "projectPath": "D:\\sep490-g41-project\\SEP490_G41\\DataAccess\\DataAccess.csproj",
         "packagesPath": "C:\\Users\\hieud\\.nuget\\packages\\",
         "outputPath": "D:\\sep490-g41-project\\SEP490_G41\\DataAccess\\obj\\",
-=======
-    "D:\\DO-AN\\sep490-g41-project2\\SEP490_G41\\DataAccess\\DataAccess.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "D:\\DO-AN\\sep490-g41-project2\\SEP490_G41\\DataAccess\\DataAccess.csproj",
-        "projectName": "DataAccess",
-        "projectPath": "D:\\DO-AN\\sep490-g41-project2\\SEP490_G41\\DataAccess\\DataAccess.csproj",
-        "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "D:\\DO-AN\\sep490-g41-project2\\SEP490_G41\\DataAccess\\obj\\",
->>>>>>> main
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -183,13 +155,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-<<<<<<< HEAD
               "D:\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj": {
                 "projectPath": "D:\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj"
-=======
-              "D:\\DO-AN\\sep490-g41-project2\\SEP490_G41\\BusinessObject\\BusinessObject.csproj": {
-                "projectPath": "D:\\DO-AN\\sep490-g41-project2\\SEP490_G41\\BusinessObject\\BusinessObject.csproj"
->>>>>>> main
               }
             }
           }

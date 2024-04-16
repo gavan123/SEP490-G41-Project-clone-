@@ -548,7 +548,6 @@
           }
         }
       },
-<<<<<<< HEAD
       "MySql.Data.EntityFrameworkCore/6.10.9": {
         "type": "package",
         "dependencies": {
@@ -566,8 +565,6 @@
           }
         }
       },
-=======
->>>>>>> main
       "MySql.EntityFrameworkCore/6.0.25": {
         "type": "package",
         "dependencies": {
@@ -1127,10 +1124,7 @@
           "Microsoft.Extensions.Configuration": "6.0.1",
           "Microsoft.Extensions.Configuration.Json": "6.0.0",
           "MySql.Data": "8.3.0",
-<<<<<<< HEAD
           "MySql.Data.EntityFrameworkCore": "6.10.9",
-=======
->>>>>>> main
           "MySql.EntityFrameworkCore": "6.0.25",
           "MySqlConnector": "2.3.5",
           "NetTopologySuite": "2.5.0",
@@ -1824,7 +1818,6 @@
         "runtimes/win-x64/native/krbcc64.dll"
       ]
     },
-<<<<<<< HEAD
     "MySql.Data.EntityFrameworkCore/6.10.9": {
       "sha512": "XNtxOOita2Mg3Db21mrDDPnIfHYPLRtdiQWz9TkXLGclZBTeWLv8EFWAcLl41ceZefCDYGAsgbiw8/8IBlQ2jw==",
       "type": "package",
@@ -1844,8 +1837,6 @@
         "mysql.data.entityframeworkcore.nuspec"
       ]
     },
-=======
->>>>>>> main
     "MySql.EntityFrameworkCore/6.0.25": {
       "sha512": "EdTxVN7BfZyjtbkYQPb07MWaI2wDZx9Li646Jjn2JiVikSBdTs1iQwpl2Kjxo+wIuwqVaDne/mny6tpZqDaQVQ==",
       "type": "package",
@@ -3093,19 +3084,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-<<<<<<< HEAD
       "projectUniqueName": "D:\\sep490-g41-project\\SEP490_G41\\DataAccess\\DataAccess.csproj",
       "projectName": "DataAccess",
       "projectPath": "D:\\sep490-g41-project\\SEP490_G41\\DataAccess\\DataAccess.csproj",
       "packagesPath": "C:\\Users\\hieud\\.nuget\\packages\\",
       "outputPath": "D:\\sep490-g41-project\\SEP490_G41\\DataAccess\\obj\\",
-=======
-      "projectUniqueName": "D:\\DO-AN\\sep490-g41-project2\\SEP490_G41\\DataAccess\\DataAccess.csproj",
-      "projectName": "DataAccess",
-      "projectPath": "D:\\DO-AN\\sep490-g41-project2\\SEP490_G41\\DataAccess\\DataAccess.csproj",
-      "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-      "outputPath": "D:\\DO-AN\\sep490-g41-project2\\SEP490_G41\\DataAccess\\obj\\",
->>>>>>> main
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -3126,13 +3109,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-<<<<<<< HEAD
             "D:\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj": {
               "projectPath": "D:\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj"
-=======
-            "D:\\DO-AN\\sep490-g41-project2\\SEP490_G41\\BusinessObject\\BusinessObject.csproj": {
-              "projectPath": "D:\\DO-AN\\sep490-g41-project2\\SEP490_G41\\BusinessObject\\BusinessObject.csproj"
->>>>>>> main
             }
           }
         }

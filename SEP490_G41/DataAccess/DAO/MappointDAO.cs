@@ -1,9 +1,5 @@
-﻿using AutoMapper.Configuration.Conventions;
-using BusinessObject.Models;
+﻿using BusinessObject.Models;
 using Microsoft.EntityFrameworkCore;
-using NetTopologySuite;
-using NetTopologySuite.Geometries;
-using NetTopologySuite.IO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,8 +29,11 @@ namespace DataAccess.DAO
             if (mappoint.MapId <= 0)
                 throw new ArgumentException("Map ID must be a positive integer.");
 
-            if (mappoint.Location == null)
-                throw new ArgumentException("Location cannot be null.");
+            if (mappoint.LocationWeb == null)
+                throw new ArgumentException("LocationWeb cannot be null.");
+
+            if (mappoint.LocationApp == null)
+                throw new ArgumentException("LocationWeb cannot be null.");
 
             _context.Mappoints.Add(mappoint);
             _context.SaveChanges();
@@ -61,14 +60,23 @@ namespace DataAccess.DAO
             if (mappoint.MapId <= 0)
                 throw new ArgumentException("Map ID must be a positive integer.");
 
-            if (mappoint.Location == null)
-                throw new ArgumentException("Location cannot be null.");
+            if (mappoint.LocationWeb == null)
+                throw new ArgumentException("LocationWeb cannot be null.");
+
+            if (mappoint.LocationApp == null)
+                throw new ArgumentException("LocationWeb cannot be null.");
 
             var existingMappoint = _context.Mappoints.FirstOrDefault(mp => mp.MapPointId == mappoint.MapPointId);
             if (existingMappoint != null)
             {
                 existingMappoint.MapId = mappoint.MapId;
-                existingMappoint.Location = mappoint.Location;
+                existingMappoint.MappointName = mappoint.MappointName;
+                existingMappoint.LocationWeb = mappoint.LocationWeb;
+                existingMappoint.LocationApp = mappoint.LocationApp;
+                existingMappoint.LocationGps = mappoint.LocationGps;
+                existingMappoint.FloorId = mappoint.FloorId;
+                existingMappoint.BuildingId = mappoint.BuildingId;
+                existingMappoint.Image = mappoint.Image;
                 _context.SaveChanges();
             }
             else
@@ -78,7 +86,6 @@ namespace DataAccess.DAO
         }
 
         // Xóa mappoint bằng Id
-       
         public void DeleteMappoint(int mappointId)
         {
             if (mappointId <= 0)
@@ -96,12 +103,12 @@ namespace DataAccess.DAO
             }
         }
 
-
+        // Lấy tất cả các mappoint
         public List<Mappoint> GetAllMappoints()
         {
             try
             {
-                return _context.Mappoints.Include(mp => mp.Map).ToList();
+                return _context.Mappoints.ToList();
             }
             catch (Exception ex)
             {

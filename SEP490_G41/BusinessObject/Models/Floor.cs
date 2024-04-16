@@ -8,8 +8,6 @@ namespace BusinessObject.Models
         public Floor()
         {
             Maps = new HashSet<Map>();
-            Rooms = new HashSet<Room>();
-            Sections = new HashSet<Section>();
         }
 
         public int FloorId { get; set; }
@@ -20,7 +18,5 @@ namespace BusinessObject.Models
 
         public virtual Building Building { get; set; } = null!;
         public virtual ICollection<Map> Maps { get; set; }
-        public virtual ICollection<Room> Rooms { get; set; }
-        public virtual ICollection<Section> Sections { get; set; }
     }
 }

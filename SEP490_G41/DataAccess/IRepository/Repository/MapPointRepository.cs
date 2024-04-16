@@ -39,9 +39,23 @@ namespace DataAccess.IRepository.Repository
                     var mapPointDTO = new MapPointDTO();
                     mapPointDTO.MapPointId = mapPoint.MapPointId;
                     mapPointDTO.MapId = mapPoint.MapId;
-                    var geoJson = ConvertPointToGeoJson(mapPoint.Location);
+                    mapPointDTO.MappointName = mapPoint.MappointName;
+                    var geoJson = ConvertPointToGeoJson(mapPoint.LocationWeb);
                     var coordinatesJson = ExtractCoordinatesFromGeoJson(geoJson);
-                    mapPointDTO.Location = coordinatesJson;
+                    mapPointDTO.LocationWeb = coordinatesJson;
+
+                    var geoJson1 = ConvertPointToGeoJson(mapPoint.LocationGps);
+                    var LocationGps = ExtractCoordinatesFromGeoJson(geoJson1);
+                    mapPointDTO.LocationGps = coordinatesJson;
+
+                    var geoJson2 = ConvertPointToGeoJson(mapPoint.LocationApp);
+                    var LocationApp = ExtractCoordinatesFromGeoJson(geoJson2);
+                    mapPointDTO.LocationApp = coordinatesJson;
+
+                    mapPointDTO.FloorId = mapPoint.FloorId;
+                    mapPointDTO.BuildingId = mapPoint.BuildingId;
+                    mapPointDTO.Image = mapPoint.Image;
+
                     return mapPointDTO;
                 }).ToList();
 
@@ -81,14 +95,32 @@ namespace DataAccess.IRepository.Repository
             try
             {
                 // Parse the location string to extract the coordinates
-                string[] coordinates = mapPoint.Location.Trim('[', ']').Split(',');
+                string[] coordinates = mapPoint.LocationWeb.Trim('[', ']').Split(',');
                 double latitude = double.Parse(coordinates[0].Trim());
                 double longitude = double.Parse(coordinates[1].Trim());
 
+                string[] coordinates1 = mapPoint.LocationApp.Trim('[', ']').Split(',');
+                double latitude1 = double.Parse(coordinates1[0].Trim());
+                double longitude1 = double.Parse(coordinates1[1].Trim());
+
+                string[] coordinates2 = mapPoint.LocationGps.Trim('[', ']').Split(',');
+                double latitude2 = double.Parse(coordinates2[0].Trim());
+                double longitude2 = double.Parse(coordinates2[1].Trim());
+
                 // Create a new Point object and map the DTO to the entity
-                Point location = new Point(latitude, longitude);
+                Point location = new Point(longitude,latitude);
                 var mapPointEntity = _mapper.Map<Mappoint>(mapPoint);
-                mapPointEntity.Location = location;
+
+                Point location1 = new Point(longitude, latitude);
+                var mapPointEntity1 = _mapper.Map<Mappoint>(mapPoint);
+
+                Point location2 = new Point(longitude, latitude);
+                var mapPointEntity2 = _mapper.Map<Mappoint>(mapPoint);
+
+
+                mapPointEntity.LocationWeb = location;
+                mapPointEntity.LocationApp = location1;
+                mapPointEntity.LocationGps = location2;
 
                 _mappointDAO.AddMappoint(mapPointEntity);
             }
@@ -124,10 +156,25 @@ namespace DataAccess.IRepository.Repository
                 }
 
                 // Update the properties of the existing entity
-                string[] coordinates = mapPoint.Location.Trim('[', ']').Split(',');
+                string[] coordinates = mapPoint.LocationWeb.Trim('[', ']').Split(',');
                 double latitude = double.Parse(coordinates[0].Trim());
                 double longitude = double.Parse(coordinates[1].Trim());
-                existingMapPoint.Location = new Point(longitude, latitude);
+                existingMapPoint.LocationWeb = new Point(longitude, latitude);
+
+                string[] coordinates1 = mapPoint.LocationApp.Trim('[', ']').Split(',');
+                double latitude1 = double.Parse(coordinates1[0].Trim());
+                double longitude1 = double.Parse(coordinates1[1].Trim());
+                existingMapPoint.LocationApp = new Point(longitude1, latitude1);
+
+                string[] coordinates2 = mapPoint.LocationGps.Trim('[', ']').Split(',');
+                double latitude2 = double.Parse(coordinates2[0].Trim());
+                double longitude2 = double.Parse(coordinates2[1].Trim());
+                existingMapPoint.LocationGps = new Point(longitude2, latitude2);
+
+                existingMapPoint.MappointName = mapPoint.MappointName;
+                existingMapPoint.FloorId = mapPoint.FloorId;
+                existingMapPoint.BuildingId = mapPoint.BuildingId;
+                existingMapPoint.Image = mapPoint.Image;
                 existingMapPoint.MapId = mapPoint.MapId;
 
                 // Update the entity in the database
