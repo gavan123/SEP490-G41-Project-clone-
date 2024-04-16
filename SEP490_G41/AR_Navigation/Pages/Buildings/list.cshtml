@@ -230,52 +230,52 @@
                     const count = floors.length;
                     const countText = count > 0 ? `${count} Floor` : `${count} Floor <span class="btn btn-sm btn-info addFloor" data-id="${building.buildingId}"><i class="fa fa-plus"></i></span> `;
                     const buildingRow = `
-                        <tr>
-                            <td>
-                                <div class="media align-items-center">
-                                    <div class="avatar avatar-image rounded">
-                                        <img src="/Images/${building.image}" alt="">
+                            <tr>
+                                <td>
+                                    <div class="media align-items-center">
+                                        <div class="avatar avatar-image rounded">
+                                            <img src="/Images/${building.image}" alt="">
+                                        </div>
+                                        <div class="m-l-10">
+                                            <h5 class="m-b-0">${building.buildingName}</h5>
+                                        </div>
                                     </div>
-                                    <div class="m-l-10">
-                                        <h5 class="m-b-0">${building.buildingName}</h5>
+                                </td>
+                                <td>
+                                       <span id="floorCount">${countText}</span>
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="badge badge-${building.status === 'active' ? 'success' : 'danger'} badge-dot m-r-10"></div>
+                                        <div>${building.status}</div>
                                     </div>
-                                </div>
-                            </td>
-                            <td>
-                                   <span id="floorCount">${countText}</span>
-                            </td>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <div class="badge badge-${building.status === 'active' ? 'success' : 'danger'} badge-dot m-r-10"></div>
-                                    <div>${building.status}</div>
-                                </div>
-                            </td>
-                            <td>
-                                <span>${building.facilityName}</span>
-                            </td>
-                            <td class="text-right">
-                                    <div class="dropdown dropdown-animated scale-left">
-                        <a class="text-gray font-size-18" href="javascript:void(0);" data-toggle="dropdown">
-                            <i class="anticon anticon-ellipsis"></i>
-                        </a>
-                           <div class="dropdown-menu">
-                <button class="dropdown-item btn btn-info btn-tone viewBuilding" type="button" data-id="${building.buildingId}">
-                    <i class="anticon anticon-eye"></i>
-                    <span class="m-l-10">View</span>
-                </button>
-                    <button class="dropdown-item btn btn-warning btn-tone editBuilding" type="button" data-id="${building.buildingId}">
-                    <i class="anticon anticon-edit"></i>
-                    <span class="m-l-10">Edit</span>
-                </button>
-                    <button class="dropdown-item btn btn-danger btn-tone deleteBuilding" type="button" data-id="${building.buildingId}">
-                    <i class="anticon anticon-delete"></i>
-                    <span class="m-l-10">Delete</span>
-                </button>
-            </div>
-                    </div>
-                            </td>
-                        </tr>
-                    `;
+                                </td>
+                                <td>
+                                    <span>${building.facilityName}</span>
+                                </td>
+                                <td class="text-right">
+                                        <div class="dropdown dropdown-animated scale-left">
+                            <a class="text-gray font-size-18" href="javascript:void(0);" data-toggle="dropdown">
+                                <i class="anticon anticon-ellipsis"></i>
+                            </a>
+                               <div class="dropdown-menu">
+                    <button class="dropdown-item btn btn-info btn-tone viewBuilding" type="button" data-id="${building.buildingId}">
+                        <i class="anticon anticon-eye"></i>
+                        <span class="m-l-10">View</span>
+                    </button>
+                        <button class="dropdown-item btn btn-warning btn-tone editBuilding" type="button" data-id="${building.buildingId}">
+                        <i class="anticon anticon-edit"></i>
+                        <span class="m-l-10">Edit</span>
+                    </button>
+                        <button class="dropdown-item btn btn-danger btn-tone deleteBuilding" type="button" data-id="${building.buildingId}">
+                        <i class="anticon anticon-delete"></i>
+                        <span class="m-l-10">Delete</span>
+                    </button>
+                </div>
+                        </div>
+                                </td>
+                            </tr>
+                        `;
 
                     $('#building-list').append(buildingRow);
                 } catch (error) {
@@ -337,7 +337,7 @@
                 });
                 const totalPages = Math.ceil(response.length / itemsPerPage);
                 await updateBuildingList(response, 1, itemsPerPage, totalPages);
-                createPagination(totalPages, response); 
+                createPagination(totalPages, response);
             } catch (error) {
                 console.error('Error:', error);
             }
@@ -599,6 +599,7 @@
             var buildingId = $(this).data('id');
             window.location.href = `Detail/${buildingId}`;
         });
+
     });
 
 
@@ -619,6 +620,7 @@
 
         reader.readAsDataURL(file);
     }
+
 
 </script>
 
