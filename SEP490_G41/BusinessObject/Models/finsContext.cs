@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.Extensions.Configuration;
 
 namespace BusinessObject.Models
 {
@@ -23,23 +22,17 @@ namespace BusinessObject.Models
         public virtual DbSet<Map> Maps { get; set; } = null!;
         public virtual DbSet<Mapmanage> Mapmanages { get; set; } = null!;
         public virtual DbSet<Mappoint> Mappoints { get; set; } = null!;
+        public virtual DbSet<Mappointroute> Mappointroutes { get; set; } = null!;
         public virtual DbSet<Member> Members { get; set; } = null!;
         public virtual DbSet<Role> Roles { get; set; } = null!;
-        public virtual DbSet<Room> Rooms { get; set; } = null!;
         public virtual DbSet<Route> Routes { get; set; } = null!;
-        public virtual DbSet<Section> Sections { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-                var builder = new ConfigurationBuilder()
-                                    .SetBasePath(Directory.GetCurrentDirectory())
-                                    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
-                IConfigurationRoot configuration = builder.Build();
-
-                optionsBuilder.UseMySql(configuration.GetConnectionString("Project"), ServerVersion.AutoDetect(configuration.GetConnectionString("Project")),
-                    mysqlOptions => mysqlOptions.UseNetTopologySuite()); // Enable NetTopologySuite for MySQL
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseMySQL("Server=localhost;Database=fins;User=root;Password=Klmnop123#;");
             }
         }
 
@@ -139,7 +132,15 @@ namespace BusinessObject.Models
             {
                 entity.ToTable("mappoint");
 
-                entity.HasIndex(e => e.MapId, "FK_Map_MapPoint_idx");
+                entity.HasIndex(e => e.BuildingId, "FK_Building_BuildingId_idx");
+
+                entity.HasIndex(e => e.FloorId, "FK_Floor_FloorId_idx");
+
+                entity.HasIndex(e => e.MapId, "FK_Map_MapPoint");
+
+                entity.HasIndex(e => e.MapPointId, "FK_Map_MapPoint_idx");
+
+                entity.Property(e => e.Image).HasMaxLength(100);
 
                 entity.Property(e => e.MappointName).HasMaxLength(50);
 
@@ -148,6 +149,36 @@ namespace BusinessObject.Models
                     .HasForeignKey(d => d.MapId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Map_MapPoint");
+            });
+
+            modelBuilder.Entity<Mappointroute>(entity =>
+            {
+                entity.HasKey(e => e.MprId)
+                    .HasName("PRIMARY");
+
+                entity.ToTable("mappointroute");
+
+                entity.HasIndex(e => e.MapPointId, "FK_MapPoint_MR_idx");
+
+                entity.HasIndex(e => e.RouteId, "FK_Route_MPR_idx");
+
+                entity.Property(e => e.MprId).HasColumnName("MPR_ID");
+
+                entity.Property(e => e.MapPointId).HasColumnName("MapPointID");
+
+                entity.Property(e => e.RouteId).HasColumnName("RouteID");
+
+                entity.HasOne(d => d.MapPoint)
+                    .WithMany(p => p.Mappointroutes)
+                    .HasForeignKey(d => d.MapPointId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_MapPoint_MR");
+
+                entity.HasOne(d => d.Route)
+                    .WithMany(p => p.Mappointroutes)
+                    .HasForeignKey(d => d.RouteId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Route_MR");
             });
 
             modelBuilder.Entity<Member>(entity =>
@@ -194,71 +225,15 @@ namespace BusinessObject.Models
                 entity.Property(e => e.RoleName).HasMaxLength(45);
             });
 
-            modelBuilder.Entity<Room>(entity =>
-            {
-                entity.ToTable("room");
-
-                entity.HasIndex(e => e.MapPointId, "FK_Floor_MapPoint_idx");
-
-                entity.HasIndex(e => e.FloorId, "FK_Floor_Room_idx");
-
-                entity.Property(e => e.RoomName).HasMaxLength(100);
-
-                entity.Property(e => e.Status).HasColumnType("enum('active','deactive')");
-
-                entity.HasOne(d => d.Floor)
-                    .WithMany(p => p.Rooms)
-                    .HasForeignKey(d => d.FloorId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Floor_Room");
-
-                entity.HasOne(d => d.MapPoint)
-                    .WithMany(p => p.Rooms)
-                    .HasForeignKey(d => d.MapPointId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Floor_MapPoint");
-            });
-
             modelBuilder.Entity<Route>(entity =>
             {
                 entity.ToTable("routes");
 
-                entity.HasIndex(e => e.EndPoint, "FK_MapPoint_Routes 1_idx");
-
-                entity.HasIndex(e => e.StartPoint, "FK_MapPoint_Routes_idx");
-
                 entity.Property(e => e.EndTime).HasColumnType("datetime");
 
-                entity.Property(e => e.ListMapPoint).HasColumnType("json");
+                entity.Property(e => e.RouteName).HasMaxLength(45);
 
                 entity.Property(e => e.StartTime).HasColumnType("datetime");
-
-                entity.HasOne(d => d.EndPointNavigation)
-                    .WithMany(p => p.RouteEndPointNavigations)
-                    .HasForeignKey(d => d.EndPoint)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_MapPoint_Routes 1");
-
-                entity.HasOne(d => d.StartPointNavigation)
-                    .WithMany(p => p.RouteStartPointNavigations)
-                    .HasForeignKey(d => d.StartPoint)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_MapPoint_Routes");
-            });
-
-            modelBuilder.Entity<Section>(entity =>
-            {
-                entity.ToTable("section");
-
-                entity.HasIndex(e => e.FloorId, "FK_Section_Floor_idx");
-
-                entity.Property(e => e.SectionName).HasMaxLength(50);
-
-                entity.HasOne(d => d.Floor)
-                    .WithMany(p => p.Sections)
-                    .HasForeignKey(d => d.FloorId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Section_Floor");
             });
 
             OnModelCreatingPartial(modelBuilder);

@@ -7,18 +7,17 @@ namespace BusinessObject.Models
     {
         public Mappoint()
         {
-            Rooms = new HashSet<Room>();
-            RouteEndPointNavigations = new HashSet<Route>();
-            RouteStartPointNavigations = new HashSet<Route>();
+            Mappointroutes = new HashSet<Mappointroute>();
         }
 
         public int MapPointId { get; set; }
         public int MapId { get; set; }
         public string? MappointName { get; set; }
+        public int? FloorId { get; set; }
+        public int? BuildingId { get; set; }
+        public string? Image { get; set; }
 
         public virtual Map Map { get; set; } = null!;
-        public virtual ICollection<Room> Rooms { get; set; }
-        public virtual ICollection<Route> RouteEndPointNavigations { get; set; }
-        public virtual ICollection<Route> RouteStartPointNavigations { get; set; }
+        public virtual ICollection<Mappointroute> Mappointroutes { get; set; }
     }
 }
