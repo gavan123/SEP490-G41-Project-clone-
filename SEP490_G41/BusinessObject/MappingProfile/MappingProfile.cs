@@ -1,24 +1,21 @@
 ﻿using AutoMapper;
 using BusinessObject.DTO;
 using BusinessObject.Models;
-<<<<<<< HEAD
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-=======
 using NetTopologySuite.Geometries;
 using System.Drawing;
->>>>>>> hieunh
 using Point = NetTopologySuite.Geometries.Point;
 
 namespace BusinessObject.MappingProfile
 {
     public class MappingProfile : Profile
     {
-        
+
         public MappingProfile()
         {
 
@@ -62,7 +59,6 @@ namespace BusinessObject.MappingProfile
            .ForMember(dest => dest.LocationGps, opt => opt.ConvertUsing(new PointConverter(), src => src.LocationGps));
         }
 
-<<<<<<< HEAD
         public class PointConverter : IValueConverter<string, Point>
         {
             public Point Convert(string source, ResolutionContext context)
@@ -75,25 +71,8 @@ namespace BusinessObject.MappingProfile
                 // Create a new Point object
                 return new Point(latitude, longitude);
             }
-=======
 
->>>>>>> hieunh
+
         }
-
-        public class PointConverter : IValueConverter<string, Point>
-        {
-            public Point Convert(string source, ResolutionContext context)
-            {
-                // Parse the location string to extract the coordinates
-                string[] coordinates = source.Trim('[', ']').Split(',');
-                double latitude = double.Parse(coordinates[0].Trim());
-                double longitude = double.Parse(coordinates[1].Trim());
-
-                // Create a new Point object
-                return new Point(latitude,longitude );
-            }
-        }
-
-
     }
 }

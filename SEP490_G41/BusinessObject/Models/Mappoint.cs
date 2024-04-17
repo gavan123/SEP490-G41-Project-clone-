@@ -1,11 +1,8 @@
 ﻿using NetTopologySuite.Geometries;
 using System;
 using System.Collections.Generic;
-<<<<<<< HEAD
 using System.ComponentModel.DataAnnotations.Schema;
-=======
 using NetTopologySuite.Geometries;
->>>>>>> hieunh
 
 namespace BusinessObject.Models
 {

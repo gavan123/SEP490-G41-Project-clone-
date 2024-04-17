@@ -8,11 +8,8 @@
 
 	<ItemGroup>
 	  <PackageReference Include="NetTopologySuite.IO.GeoJSON" Version="4.0.0" />
-<<<<<<< HEAD
 	  <PackageReference Include="NetTopologySuite.IO.GeoJSON4STJ" Version="4.0.0" />
 	  <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-=======
->>>>>>> hieunh
 	</ItemGroup>
 
 	<ItemGroup>
