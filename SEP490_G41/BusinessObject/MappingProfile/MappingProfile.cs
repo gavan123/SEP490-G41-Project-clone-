@@ -3,14 +3,19 @@ using BusinessObject.DTO;
 using BusinessObject.Models;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NetTopologySuite.Geometries;
+using System.Drawing;
+using Point = NetTopologySuite.Geometries.Point;
 
 namespace BusinessObject.MappingProfile
 {
     public class MappingProfile : Profile
     {
+
         public MappingProfile()
         {
 
@@ -32,7 +37,41 @@ namespace BusinessObject.MappingProfile
             CreateMap<Map, MapAddDTO>().ReverseMap();
             CreateMap<Map, MapUpdateDTO>().ReverseMap();
 
+            CreateMap<MapPointAddDTO, Mappoint>()
+           .ForMember(dest => dest.LocationWeb, opt => opt.ConvertUsing(new PointConverter(), src => src.LocationWeb))
+           .ForMember(dest => dest.LocationApp, opt => opt.ConvertUsing(new PointConverter(), src => src.LocationApp))
+           .ForMember(dest => dest.LocationGps, opt => opt.ConvertUsing(new PointConverter(), src => src.LocationGps));
+            CreateMap<Mappoint, MapPointDTO>().ReverseMap();
+            CreateMap<MapPointUpdateDTO, Mappoint>()
+           .ForMember(dest => dest.LocationWeb, opt => opt.ConvertUsing(new PointConverter(), src => src.LocationWeb))
+           .ForMember(dest => dest.LocationApp, opt => opt.ConvertUsing(new PointConverter(), src => src.LocationApp))
+           .ForMember(dest => dest.LocationGps, opt => opt.ConvertUsing(new PointConverter(), src => src.LocationGps));
+
             CreateMap<Member, MemberDTO>().ReverseMap();
+            CreateMap<MapPointAddDTO, Mappoint>()
+           .ForMember(dest => dest.LocationWeb, opt => opt.ConvertUsing(new PointConverter(), src => src.LocationWeb))
+           .ForMember(dest => dest.LocationApp, opt => opt.ConvertUsing(new PointConverter(), src => src.LocationApp))
+           .ForMember(dest => dest.LocationGps, opt => opt.ConvertUsing(new PointConverter(), src => src.LocationGps));
+            CreateMap<Mappoint, MapPointDTO>().ReverseMap();
+            CreateMap<MapPointUpdateDTO, Mappoint>()
+           .ForMember(dest => dest.LocationWeb, opt => opt.ConvertUsing(new PointConverter(), src => src.LocationWeb))
+           .ForMember(dest => dest.LocationApp, opt => opt.ConvertUsing(new PointConverter(), src => src.LocationApp))
+           .ForMember(dest => dest.LocationGps, opt => opt.ConvertUsing(new PointConverter(), src => src.LocationGps));
+        }
+
+        public class PointConverter : IValueConverter<string, Point>
+        {
+            public Point Convert(string source, ResolutionContext context)
+            {
+                // Parse the location string to extract the coordinates
+                string[] coordinates = source.Trim('[', ']').Split(',');
+                double latitude = double.Parse(coordinates[0].Trim());
+                double longitude = double.Parse(coordinates[1].Trim());
+
+                // Create a new Point object
+                return new Point(latitude, longitude);
+            }
+
 
         }
     }

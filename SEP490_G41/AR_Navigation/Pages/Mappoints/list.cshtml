@@ -1,0 +1,407 @@
+﻿@page
+@model AR_Navigation.Pages.Mappoints.listModel
+@{
+    Layout = "_AdminLayout";
+}
+
+<div class="page-header no-gutters">
+    <h1>MapPoint List</h1>
+    <div class="row align-items-md-center">
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="input-affix m-v-10">
+                        <select class="form-control" id="map-building">
+                            <option value="0">All</option>
+                            <!-- Options for buildings will be created by JavaScript -->
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="text-md-right m-v-10">
+                <button class="btn btn-primary" data-toggle="modal" data-target="#create-new-map">
+                    <i class="anticon anticon-plus"></i>
+                    <span class="m-l-5">New MapPoint</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="card" id="list-view">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Map Point Name</th>
+                            <th>Location (Web)</th>
+                            <th>Location (App)</th>
+                            <th>Location (GPS)</th>
+                            <th>Floor ID</th>
+                            <th>Building ID</th>
+                            <th>Image</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="map-list">
+                        <tr>
+                            <td>Map Point 1</td>
+                            <td>{ X: 100, Y: 200 }</td>
+                            <td>{ X: 150, Y: 250 }</td>
+                            <td>{ X: 50, Y: 100 }</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>image1.jpg</td>
+                            <td><button class="btn btn-primary">Edit</button></td>
+                        </tr>
+                        <tr>
+                            <td>Map Point 2</td>
+                            <td>{ X: 200, Y: 300 }</td>
+                            <td>null</td>
+                            <td>null</td>
+                            <td>2</td>
+                            <td>2</td>
+                            <td>image2.jpg</td>
+                            <td><button class="btn btn-primary">Edit</button></td>
+                        </tr>
+                        <!-- Add more rows as needed -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<nav aria-label="Page navigation">
+    <ul class="pagination" id="pagination">
+        <!-- Pagination buttons will be created by JavaScript -->
+    </ul>
+</nav>
+
+@* Modal Create Map *@
+<div class="modal fade" id="create-new-map">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Create New Map Point</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <i class="anticon anticon-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form asp-page="/Mappoints/List" asp-page-handler="CreateMapPoint" id="form-add-map-point" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="new-map-point-name">Map Point Name</label>
+                        <input type="text" class="form-control" id="new-map-point-name" placeholder="Please input map point name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="new-map-point-location-web">Location (Web)</label>
+                        <input type="text" class="form-control" id="new-map-point-location-web" placeholder="Please input web location">
+                    </div>
+                    <div class="form-group">
+                        <label for="new-map-point-location-app">Location (App)</label>
+                        <input type="text" class="form-control" id="new-map-point-location-app" placeholder="Please input app location">
+                    </div>
+                    <div class="form-group">
+                        <label for="new-map-point-location-gps">Location (GPS)</label>
+                        <input type="text" class="form-control" id="new-map-point-location-gps" placeholder="Please input GPS location">
+                    </div>
+                    <div class="form-group">
+                        <label for="new-map-point-floor">Floor ID</label>
+                        <input type="text" class="form-control" id="new-map-point-floor" placeholder="Please input floor ID">
+                    </div>
+                    <div class="form-group">
+                        <label for="new-map-point-building">Building ID</label>
+                        <input type="text" class="form-control" id="new-map-point-building" placeholder="Please input building ID">
+                    </div>
+                    <div class="form-group">
+                        <label for="new-map-point-image">Image</label>
+                        <input type="file" class="form-control-file" id="new-map-point-image">
+                    </div>
+                    <button type="button" class="btn btn-primary" id="create-map-point-btn">Create Map Point</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@* Modal Edit Map *@
+<div class="modal fade" id="edit-map">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Map Point</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <i class="anticon anticon-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form asp-page="/Mappoints/List" asp-page-handler="EditMapPoint" id="form-edit-map-point" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="MapPointId" id="map-point-id" value="">
+                    <div class="form-group">
+                        <label for="edit-map-point-name">Map Point Name</label>
+                        <input type="text" class="form-control" id="edit-map-point-name" placeholder="Please input map point name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-map-point-location-web">Location (Web)</label>
+                        <input type="text" class="form-control" id="edit-map-point-location-web" placeholder="Please input web location">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-map-point-location-app">Location (App)</label>
+                        <input type="text" class="form-control" id="edit-map-point-location-app" placeholder="Please input app location">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-map-point-location-gps">Location (GPS)</label>
+                        <input type="text" class="form-control" id="edit-map-point-location-gps" placeholder="Please input GPS location">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-map-point-floor">Floor ID</label>
+                        <input type="text" class="form-control" id="edit-map-point-floor" placeholder="Please input floor ID">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-map-point-building">Building ID</label>
+                        <input type="text" class="form-control" id="edit-map-point-building" placeholder="Please input building ID">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-map-point-image">Image</label>
+                        <input type="file" class="form-control-file" id="edit-map-point-image">
+                    </div>
+                    <button type="button" class="btn btn-primary" id="edit-map-point-btn">Save Changes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    $(document).ready(function () {
+        var itemsPerPage = 5;
+
+        // Get map list from API
+        function updateMapList(maps, currentPage, itemsPerPage) {
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const mapsToShow = maps.slice(startIndex, endIndex);
+
+            // Sort the map list by name (mapName)
+            maps.sort((a, b) => a.mapName.localeCompare(b.mapName));
+
+            $('#map-list').empty();
+
+            for (const map of mapsToShow) {
+                const mapRow = `
+                        <tr>
+                            <td>
+                                <div class="media align-items-center">
+                                    <div class="m-l-10">
+                                        <h5 class="m-b-0">${map.mapName}</h5>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <span>${map.buildingName}</span>
+                            </td>
+                            <td>
+                                <span>${map.floorName}</span>
+                            </td>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <div class="badge badge-${map.status === 'active' ? 'success' : 'danger'} badge-dot m-r-10"></div>
+                                    <div>${map.status}</div>
+                                </div>
+                            </td>
+                            <td class="text-right">
+                                <div class="dropdown dropdown-animated scale-left">
+                                    <a class="text-gray font-size-18" href="javascript:void(0);" data-toggle="dropdown">
+                                        <i class="anticon anticon-ellipsis"></i>
+                                    </a>
+                                    <div class="dropdown-menu">
+                                        <button class="dropdown-item btn btn-warning btn-tone editMap" type="button" data-id="${map.mapId}">
+                                            <i class="anticon anticon-edit"></i>
+                                            <span class="m-l-10">Edit</span>
+                                        </button>
+                                        <button class="dropdown-item btn btn-danger btn-tone deleteMap" type="button" data-id="${map.mapId}">
+                                            <i class="anticon anticon-delete"></i>
+                                            <span class="m-l-10">Delete</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+
+                $('#map-list').append(mapRow);
+            }
+        }
+
+        function createPagination(totalPages, maps) {
+            var pagination = $('#pagination');
+            if (totalPages > 0) {
+                pagination.empty();
+                for (var i = 1; i <= totalPages; i++) {
+                    var li = $('<li class="page-item"><a class="page-link" href="#">' + i + '</a></li>');
+                    li.data('page', i);
+                    pagination.append(li);
+                }
+                pagination.show();
+            } else {
+                pagination.hide();
+            }
+
+            pagination.off('click').on('click', 'a', function (event) {
+                event.preventDefault();
+                var page = $(this).parent().data('page');
+                updateMapList(maps, page, itemsPerPage);
+            });
+        }
+
+        // Get map list from API
+        $.ajax({
+            url: 'https://localhost:7186/api/maps',
+            type: 'GET',
+            dataType: 'json',
+            success: function (maps) {
+                const totalPages = Math.ceil(maps.length / itemsPerPage);
+                updateMapList(maps, 1, itemsPerPage);
+                createPagination(totalPages, maps);
+            },
+            error: function (xhr, status, error) {
+                console.log('Error loading maps from API: ' + error);
+            }
+        });
+
+        // Filter maps by building
+        $('#map-building').on('change', function () {
+            const selectedBuildingId = $(this).val(); // Get the selected buildingId
+
+            let url = 'https://localhost:7186/api/maps';
+            if (selectedBuildingId !== '0' && selectedBuildingId) {
+                url += '?filter=buildingId eq ' + selectedBuildingId;
+            }
+
+            $.ajax({
+                url: url,
+                type: 'GET',
+                dataType: 'json',
+                success: function (maps) {
+                    const totalPages = Math.ceil(maps.length / itemsPerPage);
+                    updateMapList(maps, 1, itemsPerPage);
+                    createPagination(totalPages, maps);
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error:', error);
+                }
+            });
+        });
+
+        // API to get buildings
+        $.ajax({
+            url: 'https://localhost:7186/api/buildings',
+            type: 'GET',
+            success: function (response) {
+                response.forEach(function (building) {
+                    $('#new-map-building').append('<option value="' + building.buildingId + '">' + building.buildingName + '</option>');
+                    $('#edit-map-building').append('<option value="' + building.buildingId + '">' + building.buildingName + '</option>');
+                    $('#map-building').append('<option value="' + building.buildingId + '">' + building.buildingName + '</option>');
+                });
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+
+        // Create Map API
+        $('#create-map-btn').click(function () {
+            var mapName = $('#new-map-name').val();
+            var buildingId = $('#new-map-building').val();
+            var floorId = $('#new-map-floor').val();
+            var status = $('input[name="statusRadios"]:checked').val();
+
+            var formData = {
+                MapName: mapName,
+                BuildingId: buildingId,
+                FloorId: floorId,
+                Status: status
+            };
+
+            $.ajax({
+                url: 'https://localhost:7186/api/maps',
+                type: 'POST',
+                data: JSON.stringify(formData),
+                contentType: 'application/json',
+                success: function (response) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Map added successfully!',
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then(() => {
+                        $('#form-add-map').submit();
+                    });
+                    $('#create-new-map').modal('hide');
+                },
+                error: function (xhr, status, error) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Failed to add map. Please try again later.',
+                    });
+                }
+            });
+        });
+
+        // Delete Map API
+        $(document).on('click', '.deleteMap', function () {
+            var mapId = $(this).data('id');
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'You will not be able to recover this map!',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: 'https://localhost:7186/api/maps/' + mapId,
+                        type: 'DELETE',
+                        success: function (response) {
+                            Swal.fire(
+                                'Deleted!',
+                                'Map has been deleted.',
+                                'success'
+                            ).then(() => {
+                                location.reload();
+                            });
+                        },
+                        error: function (xhr, status, error) {
+                            Swal.fire(
+                                'Error!',
+                                'Failed to delete map. Please try again later.',
+                                'error'
+                            );
+                        }
+                    });
+                }
+            });
+        });
+
+        // Show edit modal with data by mapId
+        $(document).on('click', '.editMap', function () {
+            var mapId = $(this).data('id');
+            showEditModal(mapId);
+        });
+
+
+
+</script>
