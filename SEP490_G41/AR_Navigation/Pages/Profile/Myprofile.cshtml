@@ -1,14 +1,14 @@
 ﻿@page
 @model AR_Navigation.Pages.Profile.MyprofileModel
 @{
-    Layout = "_Layout1";
+    Layout = "_AdminLayout";
 }
 <div class="container rounded bg-white mt-5 mb-5">
-    <h1 class="text-left">View Profile</h1>
+    <h1 class="text-left">Profile</h1>
     <div class="row" id="view-profile">
         <div class="col-md-3 border-right">
             <div class="d-flex flex-column align-items-center text-center p-3 py-5">
-                <img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">
+                <img class="rounded-circle mt-5" width="150px" src="/Images/Tuyen.jpg">
                 <span class="font-weight-bold" id="profile-name"></span>
                 <span class="text-black-50" id="profile-email"></span>
             </div>
@@ -72,23 +72,23 @@
                 <form id="form-edit-profile">
                     <div class="form-group">
                         <label for="edit-profile-name">Name</label>
-                        <input type="text" class="form-control" id="edit-profile-name" placeholder="Enter your name" >
+                        <input type="text" class="form-control" id="edit-profile-name" placeholder="Enter your name">
                     </div>
                     <div class="form-group">
                         <label for="edit-profile-email">Email</label>
-                        <input type="text" class="form-control" id="edit-profile-email" placeholder="Enter your email" >
+                        <input type="text" class="form-control" id="edit-profile-email" placeholder="Enter your email">
                     </div>
                     <div class="form-group">
                         <label for="edit-profile-mobile">Mobile Number</label>
-                        <input type="text" class="form-control" id="edit-profile-mobile" placeholder="Enter your mobile number" >
+                        <input type="text" class="form-control" id="edit-profile-mobile" placeholder="Enter your mobile number">
                     </div>
                     <div class="form-group">
                         <label for="edit-profile-address">Address</label>
-                        <input type="text" class="form-control" id="edit-profile-address" placeholder="Enter your address" >
+                        <input type="text" class="form-control" id="edit-profile-address" placeholder="Enter your address">
                     </div>
                     <div class="form-group">
                         <label for="edit-profile-dob">Date of Birth</label>
-                        <input type="date" class="form-control" id="edit-profile-dob" >
+                        <input type="date" class="form-control" id="edit-profile-dob">
                     </div>
                 </form>
             </div>
@@ -105,7 +105,7 @@
     $(document).ready(function () {
         // Gửi yêu cầu AJAX để lấy thông tin profile từ API
         $.ajax({
-            url: 'https://localhost:7186/api/profiles/1.val(),
+            url: 'https://localhost:7186/api/profiles/1',
             //url: 'https://localhost:7186/api/profiles/' + $('#MemberId').val(), // Thay đổi số 1 thành memberId thực tế của bạn
             type: 'GET',
             success: function (data) {
@@ -120,11 +120,11 @@
                 $('#profile-dob').val(data.doB.substring(0, 10));// Cắt chuỗi để lấy ngày tháng năm
 
                 // Hiển thị thông tin profile trong form chỉnh sửa
-               // $('#edit-profile-name').val(data.fullName);
+                // $('#edit-profile-name').val(data.fullName);
                 //$('#edit-profile-email').val(data.email);
-               // $('#edit-profile-mobile').val(data.phone);
+                // $('#edit-profile-mobile').val(data.phone);
                 //$('#edit-profile-address').val(data.address);
-               // $('#edit-profile-dob').val(data.doB.substring(0, 10)); // Cắt chuỗi để lấy ngày tháng năm
+                // $('#edit-profile-dob').val(data.doB.substring(0, 10)); // Cắt chuỗi để lấy ngày tháng năm
             },
             error: function (xhr, status, error) {
                 console.error('Error fetching profile:', error);
@@ -141,19 +141,18 @@
             var newDOB = new Date($('#edit-profile-dob').val()).toISOString().slice(0, 10); // Format date to 'yyyy-MM-dd'
 
             // Tạo đối tượng chứa dữ liệu cần lưu
-         
+
             var formData = new FormData();
             formData.append('MemberId', 1);
             formData.append('FullName', newName);
-            formData.append('DoB', newDOB);
             formData.append('Email', newEmail);
             formData.append('Phone', newMobile);
             formData.append('Address', newAddress);
-         
+            formData.append('DoB', newDOB);
 
             // Gửi yêu cầu PUT để cập nhật thông tin profile qua API
             $.ajax({
-                url: 'https://localhost:7186/api/profiles/1.val(),
+                url: 'https://localhost:7186/api/profiles/1',
                 //url: 'https://localhost:7186/api/profiles/' + $('#MemberId').val(), // Thay đổi số 1 thành memberId thực tế của bạn
                 type: 'PUT',
                 contentType: false, // Set content type to JSON
@@ -180,7 +179,7 @@
         $('.edit-profile').click(function () {
             // Lấy và hiển thị thông tin profile trong form chỉnh sửa
             $.ajax({
-                url: 'https://localhost:7186/api/profiles/1.val(),
+                url: 'https://localhost:7186/api/profiles/1',
                 //url: 'https://localhost:7186/api/profiles/' + $('#MemberId').val(), // Thay đổi số 1 thành memberId thực tế của bạn
                 type: 'GET',
                 success: function (data) {

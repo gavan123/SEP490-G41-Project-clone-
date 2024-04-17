@@ -18,6 +18,8 @@ namespace BusinessObject.DTO
         public string Password { get; set; } = null!;
         public string Status { get; set; } = null!;
         public int RoleId { get; set; }
+        public string Country { get; set; } = null!;
+        public string? Avatar { get; set; }
     }
 
     public class AddMemberDTO
@@ -33,15 +35,13 @@ namespace BusinessObject.DTO
         public int RoleId { get; set; }
     }
     public class MemberUpdateDTO
-    {   
+    {
+        public int MemberId { get; set; }
         public string FullName { get; set; } = null!;
-        public DateOnly DoB { get; set; }
+        public DateTime DoB { get; set; }
         public string Address { get; set; } = null!;
         public string Phone { get; set; } = null!;
         public string Email { get; set; } = null!;
-        public string Username { get; set; } = null!;
-        public string Password { get; set; } = null!;
-        public string Status { get; set; } = null!;
  
     }
 }

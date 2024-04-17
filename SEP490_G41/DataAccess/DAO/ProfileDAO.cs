@@ -32,17 +32,16 @@ namespace DataAccess.DAO
 
             if (existingMember != null)
             {
+                existingMember.MemberId = member.MemberId;
                 existingMember.FullName = member.FullName;
                 existingMember.DoB = member.DoB;
                 existingMember.Address = member.Address;
                 existingMember.Phone = member.Phone;
                 existingMember.Email = member.Email;
-                existingMember.Username = member.Username;
-                existingMember.Password = member.Password;
-                existingMember.Status = member.Phone;      
-
+                
                 _context.SaveChanges();
             }
         }
+
     }
 }
