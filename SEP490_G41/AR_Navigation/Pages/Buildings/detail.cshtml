@@ -63,9 +63,7 @@
     <h1>Building Detail</h1>
     <div class="row align-items-md-center">
         <div class="col-md-12">
-            <div class="text-md-right m-v-10">
-                <button class="btn btn-primary" id="edit-map-button" data-toggle="modal" data-target="#add-edit-MapImage">
-                </button>
+            <div class="text-md-right m-v-10" id="button-change">
             </div>
         </div>
     </div>
@@ -105,7 +103,11 @@
             </div>
             <div class="modal-body">
                 <form asp-page="/Buildings/List" asp-page-handler="AddOrEditMap" id="form-add-edit-mapImage" method="post" enctype="multipart/form-data">
-                    <input type="hidden" name="FloorId" id="add-map-floor-id" value="">
+                    <input type="hidden" name="FloorId" id="floor-id" value="">
+                    <div class="form-group">
+                        <label for="new-map-name">Map Name</label>
+                        <input type="text" class="form-control" id="new-map-name" placeholder="Please input Map name" required>
+                    </div>
                     <div class="form-group">
                         <label for="edit-mapp-image">Image</label>
                         <div class="input-group">
@@ -175,7 +177,7 @@
             }
         });
 
-        $('#edit-map-button').on('click', function () {
+        $('#button-change').on('click', function () {
             // Open the modal
             $('#add-edit-MapImage-modal').modal('show');
         });
@@ -199,16 +201,27 @@
                         // });
                         var mapImages = `<img id="map-image" src="/Images/${maps[0].image2D}" alt="Map Image">`;
                         $('#map-images-container').html(mapImages);
-                        $('#edit-map-button').html(`
-                                <i class="anticon anticon-edit"></i>
-                                <span class="m-l-5">Edit Map</span>
-                            `);
+                        $('#button-change').html(`
+                                 <button class="btn btn-primary" id="edit-map-button" data-toggle="modal" data-target="#add-edit-MapImage">
+                            <i class="anticon anticon-edit"></i>
+                            <span class="m-l-5">Edit Map</span>
+                                         </button>
+                                `);
+                        $('#add-edit-map-btn').click(function () {
+                            var mapId = maps[0].mapId; 
+                            editMap(mapId);
+                        });
                     } else {
-                        $('#edit-map-button').html(`
-                                <i class="anticon anticon-plus"></i>
-                                <span class="m-l-5">Add Map</span>
-                            `);
+                        $('#button-change').html(`
+                              <button class="btn btn-primary" id="add-map-button" data-toggle="modal" data-target="#add-edit-MapImage">
+                                    <i class="anticon anticon-plus"></i>
+                                    <span class="m-l-5">Add Map</span>
+                            </button>
+                                `);
                         console.log('No map found for the specified floor.');
+                        $('#add-edit-map-btn').click(function () {
+                            addNewMap();
+                        });
                     }
                 },
                 error: function (xhr, status, error) {
@@ -221,6 +234,89 @@
                 }
             });
         }
+
+        function addNewMap() {
+            var mapName = $('#new-map-name').val(); 
+            var floorId = $('#floor-select').val();
+            var imageInput = $('#add-edit-mapImage');
+
+            var formData = new FormData();
+
+            formData.append('MapName', mapName);
+            formData.append('FloorId', floorId);
+            if (imageInput[0].files.length > 0) {
+                var imageFile = imageInput[0].files[0];
+                formData.append('Image2D', imageFile);
+            }
+            $.ajax({
+                url: 'https://localhost:7186/api/maps', 
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    console.log('Map added successfully:', response);
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Map added successfully!',
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then(() => {
+                        $('#form-add-edit-mapImage').submit();
+                    });
+                    $('#add-edit-MapImage-modal').modal('hide');
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error adding map:', error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'An error occurred while adding the map.'
+                    });
+                }
+            });
+        }
+
+        function editMap(mapId) {
+            var mapName = $('#new-map-name').val();
+            var floorId = $('#floor-select').val();
+            var imageInput = $('#add-edit-mapImage');
+
+            var formData = new FormData();
+            formData.append('MapName', mapName);
+            formData.append('FloorId', floorId);
+            formData.append('MapId', mapId);
+            if (imageInput[0].files.length > 0) {
+                var imageFile = imageInput[0].files[0];
+                formData.append('Image2D', imageFile);
+            }
+
+            $.ajax({
+                url: `https://localhost:7186/api/maps/${mapId}`, // Replace with your API endpoint for fetching map details
+                type: 'PUT',
+                success: function (mapDetails) {
+                    console.log('Map update successfully:', response);
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Map update successfully!',
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then(() => {
+                        $('#form-add-edit-mapImage').submit();
+                    });
+                    $('#add-edit-MapImage-modal').modal('hide');
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error fetching map details for editing:', error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'An error occurred while loading map details for editing.'
+                    });
+                }
+            });
+        }
+
 
         //Update size image
         function updateImageSize(factor) {
@@ -271,5 +367,5 @@
 
         reader.readAsDataURL(file);
     }
-    
+
 </script>

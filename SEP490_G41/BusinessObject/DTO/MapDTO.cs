@@ -20,7 +20,6 @@ namespace BusinessObject.DTO
     {
         public string MapName { get; set; } = null!;
         public string Image2D { get; set; } = null!;
-        public string? Image3D { get; set; }
         public int FloorId { get; set; }
     }
 
@@ -29,7 +28,6 @@ namespace BusinessObject.DTO
         public int MapId { get; set; }
         public string MapName { get; set; } = null!;
         public string Image2D { get; set; } = null!;
-        public string? Image3D { get; set; }
         public int FloorId { get; set; }
     }
 }
