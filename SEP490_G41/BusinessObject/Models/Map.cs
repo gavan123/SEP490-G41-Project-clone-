@@ -20,5 +20,6 @@ namespace BusinessObject.Models
         public virtual Floor Floor { get; set; } = null!;
         public virtual ICollection<Mapmanage> Mapmanages { get; set; }
         public virtual ICollection<Mappoint> Mappoints { get; set; }
+
     }
 }

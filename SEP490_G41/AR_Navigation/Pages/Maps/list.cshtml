@@ -4,6 +4,25 @@
     Layout = "_AdminLayout";
 }
 
+<style>
+    /* Đặt kích thước cho container chứa ảnh */
+    .selected-image-container {
+        width: 200px;
+        height: 200px;
+        border: 2px solid #ced4da;
+        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 10px;
+    }
+
+        .selected-image-container img {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 8px;
+        }
+</style>
 <div class="page-header no-gutters">
     <h1>Map List</h1>
     <div class="row align-items-md-center">
@@ -38,41 +57,15 @@
                     <thead>
                         <tr>
                             <th style="width: 30%;">Map Name</th>
-                            <th>Building</th>
-                            <th>Floor</th>
-                            <th>Status</th>
+                            <th>Building Name</th>
+                            <th>Floor Name</th>
+                            <th>Map Manager Name</th>
+                            <th>Image</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody id="map-list">
-                        <tr>
-                            <td>Map 1</td>
-                            <td>Building A</td>
-                            <td>1st Floor</td>
-                            <td>Active</td>
-                            <td><button class="btn btn-primary">Edit</button></td>
-                        </tr>
-                        <tr>
-                            <td>Map 2</td>
-                            <td>Building B</td>
-                            <td>2nd Floor</td>
-                            <td>Inactive</td>
-                            <td><button class="btn btn-primary">Edit</button></td>
-                        </tr>
-                        <tr>
-                            <td>Map 3</td>
-                            <td>Building C</td>
-                            <td>3rd Floor</td>
-                            <td>Active</td>
-                            <td><button class="btn btn-primary">Edit</button></td>
-                        </tr>
-                        <tr>
-                            <td>Map 4</td>
-                            <td>Building D</td>
-                            <td>4th Floor</td>
-                            <td>Inactive</td>
-                            <td><button class="btn btn-primary">Edit</button></td>
-                        </tr>
+                        
 
                     </tbody>
                 </table>
@@ -103,12 +96,15 @@
                         <label for="new-map-name">Map Name</label>
                         <input type="text" class="form-control" id="new-map-name" placeholder="Please input map name" required>
                     </div>
-                    <label for="new-building-image">Image</label>
-                    <div class="input-group">
-                        <div class="custom-file">
-                            <input type="file" name="ImageFile" class="custom-file-input" id="new-building-image" aria-describedby="inputGroupFileAddon" onchange="displaySelectedImage(this, 'add-selected-image-container')">
-                            <label class="custom-file-label" for="new-building-image">Choose file</label>
+                    <div class="form-group">
+                        <label for="new-building-image">Image</label>
+                        <div class="input-group">
+                            <div class="custom-file">
+                                <input type="file" name="ImageFile" class="custom-file-input" id="new-building-image" aria-describedby="inputGroupFileAddon" onchange="displaySelectedImage(this, 'add-selected-image-container')">
+                                <label class="custom-file-label" for="new-building-image">Choose file</label>
+                            </div>
                         </div>
+                        <div id="add-selected-image-container" class="selected-image-container" style="margin-top: 10px;"></div>
                     </div>
                     <div class="form-group">
                         <label for="new-map-building">Building</label>
@@ -121,17 +117,6 @@
                         <select class="form-control" id="new-map-floor">
                             <!-- Options will be created by JavaScript -->
                         </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Status</label>
-                        <div class="custom-control custom-radio">
-                            <input type="radio" id="statusActive" name="statusRadios" class="custom-control-input" value="active" checked>
-                            <label class="custom-control-label" for="statusActive">Active</label>
-                        </div>
-                        <div class="custom-control custom-radio">
-                            <input type="radio" id="statusDeactive" name="statusRadios" class="custom-control-input" value="deactive">
-                            <label class="custom-control-label" for="statusDeactive">Deactive</label>
-                        </div>
                     </div>
                     <button type="button" class="btn btn-primary" id="create-map-btn">Create Map</button>
                 </form>
@@ -213,16 +198,25 @@
                             </div>
                         </td>
                         <td>
-                            <span>${map.buildingName}</span>
+                            <div class="media align-items-center">
+                                        <div class="avatar avatar-image rounded">
+                                                <img src="/Images/${map.buildingImg}" alt="">
+                                        </div>
+                                        <div class="m-l-10">
+                                            <h5 class="m-b-0">${map.buildingName}</h5>
+                                        </div>
+                                    </div>
                         </td>
                         <td>
                             <span>${map.floorName}</span>
                         </td>
+                            <td>
+                                    <span>${map.managerFullName}</span>
+                            </td>
                         <td>
-                            <div class="d-flex align-items-center">
-                                <div class="badge badge-${map.status === 'active' ? 'success' : 'danger'} badge-dot m-r-10"></div>
-                                <div>${map.status}</div>
-                            </div>
+                                <div class="avatar avatar-image rounded">
+                                                    <img src="/Images/${map.image2D}" alt="">
+                                </div>  
                         </td>
                         <td class="text-right">
                             <div class="dropdown dropdown-animated scale-left">
@@ -324,18 +318,35 @@
             }
         });
 
+        $('#new-map-building').change(function () {
+            var buildingId = $(this).val();
+            $.ajax({
+                url: 'https://localhost:7186/api/floors/building/' + buildingId,
+                type: 'GET',
+                success: function (response) {
+                    $('#new-map-floor').empty(); // Clear existing options
+                    response.forEach(function (floor) {
+                        $('#new-map-floor').append('<option value="' + floor.floorId + '">' + floor.floorName + '</option>');
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
+
+
+
         // Create Map API
         $('#create-map-btn').click(function () {
             var mapName = $('#new-map-name').val();
-            var buildingId = $('#new-map-building').val();
             var floorId = $('#new-map-floor').val();
             var status = $('input[name="statusRadios"]:checked').val();
-
+            var imageInput = $('new-building-image');
             var formData = {
                 MapName: mapName,
-                BuildingId: buildingId,
                 FloorId: floorId,
-                Status: status
+
             };
 
             $.ajax({
@@ -408,6 +419,23 @@
             showEditModal(mapId);
         });
 
+        
 
+    });
+    function displaySelectedImage(input, containerId) {
+        var file = input.files[0];
+        var reader = new FileReader();
 
+        reader.onload = function (e) {
+            var imgElement = document.createElement('img');
+            imgElement.src = e.target.result;
+            imgElement.className = "img-fluid rounded";
+
+            var selectedImageContainer = document.getElementById(containerId);
+            selectedImageContainer.innerHTML = '';
+            selectedImageContainer.appendChild(imgElement);
+        }
+
+        reader.readAsDataURL(file);
+    }
 </script>

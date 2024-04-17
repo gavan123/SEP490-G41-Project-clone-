@@ -2,6 +2,7 @@
 using BusinessObject.DTO;
 using BusinessObject.Models;
 using DataAccess.DAO;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,11 +13,21 @@ namespace DataAccess.IRepository.Repository
     {
         private readonly MapDAO _mapDAO;
         private readonly IMapper _mapper;
+        private readonly FloorDAO _floorDAO;
+        private readonly BuildingDAO _buildingDAO;
+        private readonly MemberDAO _memberDAO;
+        private readonly MapManageDAO _mapmanageDAO;
 
-        public MapRepository(MapDAO mapDAO, IMapper mapper)
+
+
+        public MapRepository(MapDAO mapDAO, IMapper mapper, FloorDAO floorDAO, BuildingDAO buildingDAO, MemberDAO memberDAO,MapManageDAO mapManageDAO)
         {
             _mapDAO = mapDAO;
             _mapper = mapper;
+            _floorDAO = floorDAO;
+            _buildingDAO = buildingDAO;
+            _memberDAO = memberDAO;
+            _mapmanageDAO = mapManageDAO;
         }
 
         public MapDTO GetMapById(int mapId)
@@ -36,7 +47,24 @@ namespace DataAccess.IRepository.Repository
             try
             {
                 var maps = _mapDAO.GetAllMaps();
-                var mapDTOs = maps.Select(map => _mapper.Map<MapDTO>(map)).ToList();
+                var mapDTOs = (from m in maps
+                               join mm in _mapmanageDAO.GetAllMapManages() on m.MapId equals mm.MapId
+                               join mem in _memberDAO.GetAllMembers() on mm.MemberId equals mem.MemberId
+                               join f in _floorDAO.GetAllFloors() on m.FloorId equals f.FloorId
+                               join b in _buildingDAO.GetAllBuildings() on f.BuildingId equals b.BuildingId
+                               select new MapDTO
+                               {
+                                   MapId = m.MapId,
+                                   MapName = m.MapName,
+                                   Image2D = m.Image2D,
+                                   Image3D = m.Image3D,
+                                   FloorId = m.FloorId,
+                                   FloorName = f.FloorName,
+                                   BuildingName = b.BuildingName,
+                                   ManagerFullName = mem.FullName,
+                                   BuildingImg = b.Image,
+                               }).ToList();
+
                 return mapDTOs;
             }
             catch (Exception ex)
@@ -44,6 +72,8 @@ namespace DataAccess.IRepository.Repository
                 throw new Exception("Error occurred while getting all maps.", ex);
             }
         }
+
+
 
         public void AddMap(MapAddDTO map)
         {
