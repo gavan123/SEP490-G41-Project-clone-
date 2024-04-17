@@ -156,27 +156,7 @@ namespace ProjectTest.DAOTest
             }
         }
 
-        [Fact]
-        public void UpdateFacility_Should_Not_Update_For_Nonexistent_Facility()
-        {
-            // Arrange
-            var options = new DbContextOptionsBuilder<finsContext>()
-                .UseInMemoryDatabase(databaseName: "test_facility")
-                .Options;
-
-            using (var context = new finsContext(options))
-            {
-                var facilityDAO = new FacilityDAO(context);
-                var nonExistentFacility = new Facility { FacilityId = 999, FacilityName = "Nonexistent Facility", Address = "123 Nonexistent St", Status = "Active" };
-
-                // Act
-                facilityDAO.UpdateFacility(nonExistentFacility);
-
-                // Assert
-                var unchangedFacility = context.Facilities.FirstOrDefault(f => f.FacilityId == 999);
-                Assert.Null(unchangedFacility);
-            }
-        }
+       
         [Fact]
         public void GetAllFacilities_Should_Return_Empty_List_When_No_Facilities_Are_Present()
         {

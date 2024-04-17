@@ -616,7 +616,11 @@
           }
         }
       },
+<<<<<<< HEAD
       "NetTopologySuite.Features/2.1.0": {
+=======
+      "NetTopologySuite.Features/2.0.0": {
+>>>>>>> hieunh
         "type": "package",
         "dependencies": {
           "NetTopologySuite": "[2.0.0, 3.0.0-A)"
@@ -650,6 +654,7 @@
           }
         }
       },
+<<<<<<< HEAD
       "NetTopologySuite.IO.GeoJSON4STJ/4.0.0": {
         "type": "package",
         "dependencies": {
@@ -659,10 +664,17 @@
         },
         "compile": {
           "lib/netstandard2.0/NetTopologySuite.IO.GeoJSON4STJ.dll": {
+=======
+      "Newtonsoft.Json/13.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {
+>>>>>>> hieunh
             "related": ".xml"
           }
         },
         "runtime": {
+<<<<<<< HEAD
           "lib/netstandard2.0/NetTopologySuite.IO.GeoJSON4STJ.dll": {
             "related": ".xml"
           }
@@ -677,6 +689,9 @@
         },
         "runtime": {
           "lib/net6.0/Newtonsoft.Json.dll": {
+=======
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {
+>>>>>>> hieunh
             "related": ".xml"
           }
         }
@@ -1913,6 +1928,7 @@
         "nettopologysuite.nuspec"
       ]
     },
+<<<<<<< HEAD
     "NetTopologySuite.Features/2.1.0": {
       "sha512": "Iq+Ie9WZJj8Pyu3asHZ/UwZLim786QzWC0DmLEzFK2u3BeLHDK7iWfsYBLDb/RCBUql8VBmW6LMlsJ+LKUHduA==",
       "type": "package",
@@ -1924,6 +1940,18 @@
         "lib/netstandard2.0/NetTopologySuite.Features.dll",
         "lib/netstandard2.0/NetTopologySuite.Features.xml",
         "nettopologysuite.features.2.1.0.nupkg.sha512",
+=======
+    "NetTopologySuite.Features/2.0.0": {
+      "sha512": "RDbEpujDL0bsAyTMHlbKj36KIPhUrtSGUaO/jUjMnsLcixrJFwoDJ8p717FdgMHpQDrcEJAKF+QsAlYsSULkew==",
+      "type": "package",
+      "path": "nettopologysuite.features/2.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/netstandard2.0/NetTopologySuite.Features.dll",
+        "lib/netstandard2.0/NetTopologySuite.Features.xml",
+        "nettopologysuite.features.2.0.0.nupkg.sha512",
+>>>>>>> hieunh
         "nettopologysuite.features.nuspec"
       ]
     },
@@ -1941,6 +1969,7 @@
         "nettopologysuite.io.geojson.nuspec"
       ]
     },
+<<<<<<< HEAD
     "NetTopologySuite.IO.GeoJSON4STJ/4.0.0": {
       "sha512": "Jdm9qBVDcHkrVn3fm3knw6pGu3Ggn31tGVRyIP1/5HSL+8EDPfUnEZF0+oVFBkOKR9tqu9aV2jmEX42Kq8F2Yw==",
       "type": "package",
@@ -1959,11 +1988,20 @@
       "sha512": "HrC5BXdl00IP9zeV+0Z848QWPAoCr9P3bDEZguI+gkLcBKAOxix/tLEAAHC+UvDNPv4a2d18lOReHMOagPa+zQ==",
       "type": "package",
       "path": "newtonsoft.json/13.0.3",
+=======
+    "Newtonsoft.Json/13.0.1": {
+      "sha512": "ppPFpBcvxdsfUonNcvITKqLl3bqxWbDCZIzDWHzjpdAHRFfZe0Dw9HmA0+za13IdyrgJwpkDTDA9fHaxOrt20A==",
+      "type": "package",
+      "path": "newtonsoft.json/13.0.1",
+>>>>>>> hieunh
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "LICENSE.md",
+<<<<<<< HEAD
         "README.md",
+=======
+>>>>>>> hieunh
         "lib/net20/Newtonsoft.Json.dll",
         "lib/net20/Newtonsoft.Json.xml",
         "lib/net35/Newtonsoft.Json.dll",
@@ -1972,15 +2010,22 @@
         "lib/net40/Newtonsoft.Json.xml",
         "lib/net45/Newtonsoft.Json.dll",
         "lib/net45/Newtonsoft.Json.xml",
+<<<<<<< HEAD
         "lib/net6.0/Newtonsoft.Json.dll",
         "lib/net6.0/Newtonsoft.Json.xml",
+=======
+>>>>>>> hieunh
         "lib/netstandard1.0/Newtonsoft.Json.dll",
         "lib/netstandard1.0/Newtonsoft.Json.xml",
         "lib/netstandard1.3/Newtonsoft.Json.dll",
         "lib/netstandard1.3/Newtonsoft.Json.xml",
         "lib/netstandard2.0/Newtonsoft.Json.dll",
         "lib/netstandard2.0/Newtonsoft.Json.xml",
+<<<<<<< HEAD
         "newtonsoft.json.13.0.3.nupkg.sha512",
+=======
+        "newtonsoft.json.13.0.1.nupkg.sha512",
+>>>>>>> hieunh
         "newtonsoft.json.nuspec",
         "packageIcon.png"
       ]
@@ -3110,25 +3155,42 @@
   "projectFileDependencyGroups": {
     "net6.0": [
       "BusinessObject >= 1.0.0",
+<<<<<<< HEAD
       "NetTopologySuite.IO.GeoJSON >= 4.0.0",
       "NetTopologySuite.IO.GeoJSON4STJ >= 4.0.0",
       "Newtonsoft.Json >= 13.0.3"
+=======
+      "NetTopologySuite.IO.GeoJSON >= 4.0.0"
+>>>>>>> hieunh
     ]
   },
   "packageFolders": {
-    "C:\\Users\\ADMIN\\.nuget\\packages\\": {}
+    "C:\\Users\\hieud\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
+<<<<<<< HEAD
       "projectUniqueName": "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\DataAccess\\DataAccess.csproj",
       "projectName": "DataAccess",
       "projectPath": "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\DataAccess\\DataAccess.csproj",
       "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
       "outputPath": "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\DataAccess\\obj\\",
+=======
+      "projectUniqueName": "D:\\sep490-g41-project\\SEP490_G41\\DataAccess\\DataAccess.csproj",
+      "projectName": "DataAccess",
+      "projectPath": "D:\\sep490-g41-project\\SEP490_G41\\DataAccess\\DataAccess.csproj",
+      "packagesPath": "C:\\Users\\hieud\\.nuget\\packages\\",
+      "outputPath": "D:\\sep490-g41-project\\SEP490_G41\\DataAccess\\obj\\",
+>>>>>>> hieunh
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\hieud\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -3142,8 +3204,13 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
+<<<<<<< HEAD
             "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj": {
               "projectPath": "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj"
+=======
+            "D:\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj": {
+              "projectPath": "D:\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj"
+>>>>>>> hieunh
             }
           }
         }
@@ -3161,6 +3228,7 @@
           "NetTopologySuite.IO.GeoJSON": {
             "target": "Package",
             "version": "[4.0.0, )"
+<<<<<<< HEAD
           },
           "NetTopologySuite.IO.GeoJSON4STJ": {
             "target": "Package",
@@ -3169,6 +3237,8 @@
           "Newtonsoft.Json": {
             "target": "Package",
             "version": "[13.0.3, )"
+=======
+>>>>>>> hieunh
           }
         },
         "imports": [
@@ -3187,7 +3257,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.403\\RuntimeIdentifierGraph.json"
       }
     }
   }

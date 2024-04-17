@@ -1,11 +1,11 @@
 ﻿@page
-@model AR_Navigation.Pages.Maps.listModel
+@model AR_Navigation.Pages.Mappoints.listModel
 @{
     Layout = "_AdminLayout";
 }
 
 <div class="page-header no-gutters">
-    <h1>Map List</h1>
+    <h1>MapPoint List</h1>
     <div class="row align-items-md-center">
         <div class="col-md-6">
             <div class="row">
@@ -23,7 +23,7 @@
             <div class="text-md-right m-v-10">
                 <button class="btn btn-primary" data-toggle="modal" data-target="#create-new-map">
                     <i class="anticon anticon-plus"></i>
-                    <span class="m-l-5">New Map</span>
+                    <span class="m-l-5">New MapPoint</span>
                 </button>
             </div>
         </div>
@@ -37,52 +37,45 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th style="width: 30%;">Map Name</th>
-                            <th>Building</th>
-                            <th>Floor</th>
-                            <th>Status</th>
+                            <th style="width: 30%;">Map Point Name</th>
+                            <th>Location (Web)</th>
+                            <th>Location (App)</th>
+                            <th>Location (GPS)</th>
+                            <th>Floor ID</th>
+                            <th>Building ID</th>
+                            <th>Image</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody id="map-list">
-<<<<<<< HEAD
-=======
                         <tr>
-                            <td>Map 1</td>
-                            <td>Building A</td>
-                            <td>1st Floor</td>
-                            <td>Active</td>
+                            <td>Map Point 1</td>
+                            <td>{ X: 100, Y: 200 }</td>
+                            <td>{ X: 150, Y: 250 }</td>
+                            <td>{ X: 50, Y: 100 }</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>image1.jpg</td>
                             <td><button class="btn btn-primary">Edit</button></td>
                         </tr>
                         <tr>
-                            <td>Map 2</td>
-                            <td>Building B</td>
-                            <td>2nd Floor</td>
-                            <td>Inactive</td>
+                            <td>Map Point 2</td>
+                            <td>{ X: 200, Y: 300 }</td>
+                            <td>null</td>
+                            <td>null</td>
+                            <td>2</td>
+                            <td>2</td>
+                            <td>image2.jpg</td>
                             <td><button class="btn btn-primary">Edit</button></td>
                         </tr>
-                        <tr>
-                            <td>Map 3</td>
-                            <td>Building C</td>
-                            <td>3rd Floor</td>
-                            <td>Active</td>
-                            <td><button class="btn btn-primary">Edit</button></td>
-                        </tr>
-                        <tr>
-                            <td>Map 4</td>
-                            <td>Building D</td>
-                            <td>4th Floor</td>
-                            <td>Inactive</td>
-                            <td><button class="btn btn-primary">Edit</button></td>
-                        </tr>
-
->>>>>>> hieunh
+                        <!-- Add more rows as needed -->
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 </div>
+
 
 <nav aria-label="Page navigation">
     <ul class="pagination" id="pagination">
@@ -95,103 +88,98 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Create New Map</h5>
+                <h5 class="modal-title">Create New Map Point</h5>
                 <button type="button" class="close" data-dismiss="modal">
                     <i class="anticon anticon-close"></i>
                 </button>
             </div>
             <div class="modal-body">
-                <form asp-page="/Maps/List" asp-page-handler="CreateMap" id="form-add-map" method="post" enctype="multipart/form-data">
+                <form asp-page="/Mappoints/List" asp-page-handler="CreateMapPoint" id="form-add-map-point" method="post" enctype="multipart/form-data">
                     <div class="form-group">
-                        <label for="new-map-name">Map Name</label>
-                        <input type="text" class="form-control" id="new-map-name" placeholder="Please input map name" required>
-                    </div>
-<<<<<<< HEAD
-=======
-                    <label for="new-building-image">Image</label>
-                    <div class="input-group">
-                        <div class="custom-file">
-                            <input type="file" name="ImageFile" class="custom-file-input" id="new-building-image" aria-describedby="inputGroupFileAddon" onchange="displaySelectedImage(this, 'add-selected-image-container')">
-                            <label class="custom-file-label" for="new-building-image">Choose file</label>
-                        </div>
-                    </div>
->>>>>>> hieunh
-                    <div class="form-group">
-                        <label for="new-map-building">Building</label>
-                        <select class="form-control" id="new-map-building">
-                            <!-- Options will be created by JavaScript -->
-                        </select>
+                        <label for="new-map-point-name">Map Point Name</label>
+                        <input type="text" class="form-control" id="new-map-point-name" placeholder="Please input map point name" required>
                     </div>
                     <div class="form-group">
-                        <label for="new-map-floor">Floor</label>
-                        <select class="form-control" id="new-map-floor">
-                            <!-- Options will be created by JavaScript -->
-                        </select>
+                        <label for="new-map-point-location-web">Location (Web)</label>
+                        <input type="text" class="form-control" id="new-map-point-location-web" placeholder="Please input web location">
                     </div>
                     <div class="form-group">
-                        <label>Status</label>
-                        <div class="custom-control custom-radio">
-                            <input type="radio" id="statusActive" name="statusRadios" class="custom-control-input" value="active" checked>
-                            <label class="custom-control-label" for="statusActive">Active</label>
-                        </div>
-                        <div class="custom-control custom-radio">
-                            <input type="radio" id="statusDeactive" name="statusRadios" class="custom-control-input" value="deactive">
-                            <label class="custom-control-label" for="statusDeactive">Deactive</label>
-                        </div>
+                        <label for="new-map-point-location-app">Location (App)</label>
+                        <input type="text" class="form-control" id="new-map-point-location-app" placeholder="Please input app location">
                     </div>
-                    <button type="button" class="btn btn-primary" id="create-map-btn">Create Map</button>
+                    <div class="form-group">
+                        <label for="new-map-point-location-gps">Location (GPS)</label>
+                        <input type="text" class="form-control" id="new-map-point-location-gps" placeholder="Please input GPS location">
+                    </div>
+                    <div class="form-group">
+                        <label for="new-map-point-floor">Floor ID</label>
+                        <input type="text" class="form-control" id="new-map-point-floor" placeholder="Please input floor ID">
+                    </div>
+                    <div class="form-group">
+                        <label for="new-map-point-building">Building ID</label>
+                        <input type="text" class="form-control" id="new-map-point-building" placeholder="Please input building ID">
+                    </div>
+                    <div class="form-group">
+                        <label for="new-map-point-image">Image</label>
+                        <input type="file" class="form-control-file" id="new-map-point-image">
+                    </div>
+                    <button type="button" class="btn btn-primary" id="create-map-point-btn">Create Map Point</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
 
+
 @* Modal Edit Map *@
 <div class="modal fade" id="edit-map">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Edit Map</h5>
+                <h5 class="modal-title">Edit Map Point</h5>
                 <button type="button" class="close" data-dismiss="modal">
                     <i class="anticon anticon-close"></i>
                 </button>
             </div>
             <div class="modal-body">
-                <form asp-page="/Maps/List" asp-page-handler="EditMap" id="form-edit-map" method="post" enctype="multipart/form-data">
-                    <input type="hidden" name="MapId" id="map-id" value="">
+                <form asp-page="/Mappoints/List" asp-page-handler="EditMapPoint" id="form-edit-map-point" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="MapPointId" id="map-point-id" value="">
                     <div class="form-group">
-                        <label for="edit-map-name">Map Name</label>
-                        <input type="text" class="form-control" id="edit-map-name" placeholder="Please input map name" required>
+                        <label for="edit-map-point-name">Map Point Name</label>
+                        <input type="text" class="form-control" id="edit-map-point-name" placeholder="Please input map point name" required>
                     </div>
                     <div class="form-group">
-                        <label for="edit-map-building">Building</label>
-                        <select class="form-control" id="edit-map-building">
-                            <!-- Options will be created by JavaScript -->
-                        </select>
+                        <label for="edit-map-point-location-web">Location (Web)</label>
+                        <input type="text" class="form-control" id="edit-map-point-location-web" placeholder="Please input web location">
                     </div>
                     <div class="form-group">
-                        <label for="edit-map-floor">Floor</label>
-                        <select class="form-control" id="edit-map-floor">
-                            <!-- Options will be created by JavaScript -->
-                        </select>
+                        <label for="edit-map-point-location-app">Location (App)</label>
+                        <input type="text" class="form-control" id="edit-map-point-location-app" placeholder="Please input app location">
                     </div>
                     <div class="form-group">
-                        <label>Status</label>
-                        <div class="custom-control custom-radio">
-                            <input type="radio" id="edit-statusActive" name="edit-statusRadios" class="custom-control-input" value="active" checked>
-                            <label class="custom-control-label" for="edit-statusActive">Active</label>
-                        </div>
-                        <div class="custom-control custom-radio">
-                            <input type="radio" id="edit-statusDeactive" name="edit-statusRadios" class="custom-control-input" value="deactive">
-                            <label class="custom-control-label" for="edit-statusDeactive">Deactive</label>
-                        </div>
+                        <label for="edit-map-point-location-gps">Location (GPS)</label>
+                        <input type="text" class="form-control" id="edit-map-point-location-gps" placeholder="Please input GPS location">
                     </div>
-                    <button type="button" class="btn btn-primary" id="edit-map-btn">Save Changes</button>
+                    <div class="form-group">
+                        <label for="edit-map-point-floor">Floor ID</label>
+                        <input type="text" class="form-control" id="edit-map-point-floor" placeholder="Please input floor ID">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-map-point-building">Building ID</label>
+                        <input type="text" class="form-control" id="edit-map-point-building" placeholder="Please input building ID">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-map-point-image">Image</label>
+                        <input type="file" class="form-control-file" id="edit-map-point-image">
+                    </div>
+                    <button type="button" class="btn btn-primary" id="edit-map-point-btn">Save Changes</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
+
 
 <script>
     $(document).ready(function () {
@@ -210,45 +198,45 @@
 
             for (const map of mapsToShow) {
                 const mapRow = `
-                    <tr>
-                        <td>
-                            <div class="media align-items-center">
-                                <div class="m-l-10">
-                                    <h5 class="m-b-0">${map.mapName}</h5>
+                        <tr>
+                            <td>
+                                <div class="media align-items-center">
+                                    <div class="m-l-10">
+                                        <h5 class="m-b-0">${map.mapName}</h5>
+                                    </div>
                                 </div>
-                            </div>
-                        </td>
-                        <td>
-                            <span>${map.buildingName}</span>
-                        </td>
-                        <td>
-                            <span>${map.floorName}</span>
-                        </td>
-                        <td>
-                            <div class="d-flex align-items-center">
-                                <div class="badge badge-${map.status === 'active' ? 'success' : 'danger'} badge-dot m-r-10"></div>
-                                <div>${map.status}</div>
-                            </div>
-                        </td>
-                        <td class="text-right">
-                            <div class="dropdown dropdown-animated scale-left">
-                                <a class="text-gray font-size-18" href="javascript:void(0);" data-toggle="dropdown">
-                                    <i class="anticon anticon-ellipsis"></i>
-                                </a>
-                                <div class="dropdown-menu">
-                                    <button class="dropdown-item btn btn-warning btn-tone editMap" type="button" data-id="${map.mapId}">
-                                        <i class="anticon anticon-edit"></i>
-                                        <span class="m-l-10">Edit</span>
-                                    </button>
-                                    <button class="dropdown-item btn btn-danger btn-tone deleteMap" type="button" data-id="${map.mapId}">
-                                        <i class="anticon anticon-delete"></i>
-                                        <span class="m-l-10">Delete</span>
-                                    </button>
+                            </td>
+                            <td>
+                                <span>${map.buildingName}</span>
+                            </td>
+                            <td>
+                                <span>${map.floorName}</span>
+                            </td>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <div class="badge badge-${map.status === 'active' ? 'success' : 'danger'} badge-dot m-r-10"></div>
+                                    <div>${map.status}</div>
                                 </div>
-                            </div>
-                        </td>
-                    </tr>
-                `;
+                            </td>
+                            <td class="text-right">
+                                <div class="dropdown dropdown-animated scale-left">
+                                    <a class="text-gray font-size-18" href="javascript:void(0);" data-toggle="dropdown">
+                                        <i class="anticon anticon-ellipsis"></i>
+                                    </a>
+                                    <div class="dropdown-menu">
+                                        <button class="dropdown-item btn btn-warning btn-tone editMap" type="button" data-id="${map.mapId}">
+                                            <i class="anticon anticon-edit"></i>
+                                            <span class="m-l-10">Edit</span>
+                                        </button>
+                                        <button class="dropdown-item btn btn-danger btn-tone deleteMap" type="button" data-id="${map.mapId}">
+                                            <i class="anticon anticon-delete"></i>
+                                            <span class="m-l-10">Delete</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    `;
 
                 $('#map-list').append(mapRow);
             }

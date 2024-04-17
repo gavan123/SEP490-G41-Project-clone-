@@ -21,11 +21,13 @@ namespace DataAccess.IRepository.Repository
 
         public MapDTO GetMapById(int mapId)
         {
+            if (mapId <= 0)
+                throw new ArgumentException("Map ID must be a positive integer.");
+
             var map = _mapDAO.GetMapById(mapId);
             if (map == null)
-            {
                 throw new Exception("Map not found");
-            }
+
             return _mapper.Map<MapDTO>(map);
         }
 
@@ -45,6 +47,9 @@ namespace DataAccess.IRepository.Repository
 
         public void AddMap(MapAddDTO map)
         {
+            if (map == null)
+                throw new ArgumentNullException(nameof(map));
+
             try
             {
                 _mapDAO.AddMap(_mapper.Map<Map>(map));
@@ -57,6 +62,12 @@ namespace DataAccess.IRepository.Repository
 
         public void UpdateMap(MapUpdateDTO map)
         {
+            if (map == null)
+                throw new ArgumentNullException(nameof(map));
+
+            if (map.MapId <= 0)
+                throw new ArgumentException("Map ID must be a positive integer.");
+
             try
             {
                 _mapDAO.UpdateMap(_mapper.Map<Map>(map));
@@ -69,6 +80,9 @@ namespace DataAccess.IRepository.Repository
 
         public void DeleteMap(int mapId)
         {
+            if (mapId <= 0)
+                throw new ArgumentException("Map ID must be a positive integer.");
+
             try
             {
                 _mapDAO.DeleteMap(mapId);
@@ -78,7 +92,5 @@ namespace DataAccess.IRepository.Repository
                 throw new Exception("Error occurred while deleting map.", ex);
             }
         }
-
-        // Các phương thức tìm kiếm và các phương thức khác có thể được thêm ở đây tùy thuộc vào yêu cầu cụ thể.
     }
 }

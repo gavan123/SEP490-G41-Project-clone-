@@ -11,12 +11,14 @@ using System.Text.Json.Serialization;
 
 
 
+
 static IEdmModel GetEdmModel()
 {
     ODataModelBuilder builder = new ODataConventionModelBuilder();
 
     builder.EntitySet<Building>("building");
     builder.EntitySet<Facility>("facilities");
+    builder.EntitySet<Mappoint>("mappoint");
     builder.EntitySet<Floor>("floor");
     builder.EntitySet<Map>("map");
 
@@ -34,8 +36,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddScoped<finsContext>();
 builder.Services.AddDbContext<finsContext>((serviceProvider, options) =>
 {
-    var serverVersion = new MySqlServerVersion(new Version(8, 0, 23)); // Thay thế bằng phiên bản MySQL Server bạn đang sử dụng
-    options.UseMySql(builder.Configuration.GetConnectionString("Project"), serverVersion);
+    var serverVersion = new MySqlServerVersion(new Version(10, 6, 10)); 
+    options.UseMySql(builder.Configuration.GetConnectionString("Project"), serverVersion,
+        mysqlOptions => mysqlOptions.UseNetTopologySuite()); 
 
 });
 builder.Services.AddSwaggerGen();
@@ -48,13 +51,21 @@ builder.Services.AddCors(policy =>
 builder.Services.AddScoped<BuildingDAO>();
 builder.Services.AddScoped<FacilityDAO>();
 builder.Services.AddScoped<MapDAO>();
+builder.Services.AddScoped<MappointDAO>();
 builder.Services.AddScoped<FloorDAO>();
 builder.Services.AddScoped<MemberDAO>();
 
 builder.Services.AddScoped<IBuildingRepository, BuildingRepository>();
 builder.Services.AddScoped<IFacilityRepository, FacilityRepository>();
 builder.Services.AddScoped<IMapRepository, MapRepository>();
+builder.Services.AddScoped<IMapPointRepository, MapPointRepository>();
 builder.Services.AddScoped<IFloorRepository, FloorRepository>();
+
+//builder.Services.AddControllers()
+//    .AddJsonOptions(options =>
+//    {
+//        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+//    });
 builder.Services.AddScoped<IMemberRepository, MemberRepository>();
 
 var app = builder.Build();
