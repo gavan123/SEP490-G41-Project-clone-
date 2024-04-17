@@ -100,94 +100,50 @@
     </div>
 </div>
 
-
 <script>
     $(document).ready(function () {
         // Gửi yêu cầu AJAX để lấy thông tin profile từ API
-        $.ajax({
-            url: 'https://localhost:7186/api/profiles/1',
-            //url: 'https://localhost:7186/api/profiles/' + $('#MemberId').val(), // Thay đổi số 1 thành memberId thực tế của bạn
-            type: 'GET',
-            success: function (data) {
-                // Hiển thị thông tin profile trên trang view profile
-                $('#profile-name').text(data.fullName);
-                $('#profile-email').text(data.email);
-                $('#profile-fullname').val(data.fullName);
-                $('#profile-username').val(data.username);
-                $('#profile-mobile').val(data.phone);
-                $('#profile-address').val(data.address);
-                $('#profile-emails').val(data.email);
-                $('#profile-dob').val(data.doB.substring(0, 10));// Cắt chuỗi để lấy ngày tháng năm
-
-                // Hiển thị thông tin profile trong form chỉnh sửa
-                // $('#edit-profile-name').val(data.fullName);
-                //$('#edit-profile-email').val(data.email);
-                // $('#edit-profile-mobile').val(data.phone);
-                //$('#edit-profile-address').val(data.address);
-                // $('#edit-profile-dob').val(data.doB.substring(0, 10)); // Cắt chuỗi để lấy ngày tháng năm
-            },
-            error: function (xhr, status, error) {
-                console.error('Error fetching profile:', error);
-                // Xử lý lỗi nếu có
-            }
-        });
-        // Xử lý sự kiện khi người dùng nhấn nút "Save Changes"
-        $('#save-profile-changes').click(function () {
-            // Lấy dữ liệu từ các trường nhập liệu
-            var newName = $('#edit-profile-name').val();
-            var newEmail = $('#edit-profile-email').val();
-            var newMobile = $('#edit-profile-mobile').val();
-            var newAddress = $('#edit-profile-address').val();
-            var newDOB = new Date($('#edit-profile-dob').val()).toISOString().slice(0, 10); // Format date to 'yyyy-MM-dd'
-
-            // Tạo đối tượng chứa dữ liệu cần lưu
-
-            var formData = new FormData();
-            formData.append('MemberId', 1);
-            formData.append('FullName', newName);
-            formData.append('Email', newEmail);
-            formData.append('Phone', newMobile);
-            formData.append('Address', newAddress);
-            formData.append('DoB', newDOB);
-
-            // Gửi yêu cầu PUT để cập nhật thông tin profile qua API
-            $.ajax({
+        $.ajax
+            ({
                 url: 'https://localhost:7186/api/profiles/1',
                 //url: 'https://localhost:7186/api/profiles/' + $('#MemberId').val(), // Thay đổi số 1 thành memberId thực tế của bạn
-                type: 'PUT',
-                contentType: false, // Set content type to JSON
-                data: formData, // Convert data to JSON string
-                processData: false,
-                success: function (response) {
-                    // Thông báo lưu thành công
-                    alert('Profile updated successfully!');
-                    // Đóng modal chỉnh sửa profile
-                    $('#edit-profile').modal('hide');
-                    // Cập nhật thông tin profile trên trang view profile
-                    $('#profile-name').text(newName);
-                    $('#profile-email').text(newEmail);
+                type: 'GET',
+                success: function (data) {
+                    // Hiển thị thông tin profile trên trang view profile
+                    $('#profile-name').text(data.fullName);
+                    $('#profile-email').text(data.email);
+                    $('#profile-fullname').val(data.fullName);
+                    $('#profile-username').val(data.username);
+                    $('#profile-mobile').val(data.phone);
+                    $('#profile-address').val(data.address);
+                    $('#profile-emails').val(data.email);
+                    $('#profile-dob').val(data.doB.substring(0, 10));// Cắt chuỗi để lấy ngày tháng năm
+
+                    // Hiển thị thông tin profile trong form chỉnh sửa
+                    // $('#edit-profile-name').val(data.fullName);
+                    //$('#edit-profile-email').val(data.email);
+                    // $('#edit-profile-mobile').val(data.phone);
+                    //$('#edit-profile-address').val(data.address);
+                    // $('#edit-profile-dob').val(data.doB.substring(0, 10)); // Cắt chuỗi để lấy ngày tháng năm
                 },
                 error: function (xhr, status, error) {
-                    console.error('Error updating profile:', error);
+                    console.error('Error fetching profile:', error);
                     // Xử lý lỗi nếu có
-                    alert('Failed to update profile. Please try again later.');
                 }
             });
-        });
 
-        // Xử lý sự kiện khi nút "Edit profile" được nhấn
+        // Xử lý sự kiện khi người dùng nhấn nút "Edit profile"
         $('.edit-profile').click(function () {
             // Lấy và hiển thị thông tin profile trong form chỉnh sửa
             $.ajax({
                 url: 'https://localhost:7186/api/profiles/1',
-                //url: 'https://localhost:7186/api/profiles/' + $('#MemberId').val(), // Thay đổi số 1 thành memberId thực tế của bạn
                 type: 'GET',
                 success: function (data) {
                     $('#edit-profile-name').val(data.fullName);
                     $('#edit-profile-email').val(data.email);
                     $('#edit-profile-mobile').val(data.phone);
                     $('#edit-profile-address').val(data.address);
-                    $('#edit-profile-dob').val(data.DoB.substring(0, 10)); // Cắt chuỗi để lấy ngày tháng năm
+                    $('#edit-profile-dob').val(data.doB.substring(0, 10)); // Cắt chuỗi để lấy ngày tháng năm
                 },
                 error: function (xhr, status, error) {
                     console.error('Error fetching profile for editing:', error);
@@ -198,6 +154,49 @@
             $('#edit-profile').modal('show');
         });
 
+        // Xử lý sự kiện khi người dùng nhấn nút "Save Changes"
+        $('#save-profile-changes').click(function () {
+            // Lấy dữ liệu từ các trường nhập liệu
+            var newName = $('#edit-profile-name').val();
+            var newEmail = $('#edit-profile-email').val();
+            var newMobile = $('#edit-profile-mobile').val();
+            var newAddress = $('#edit-profile-address').val();
+            var newDOB = new Date($('#edit-profile-dob').val()).toISOString().slice(0, 10); // Format date to 'yyyy-MM-dd'
 
-    });
+            // Tạo đối tượng chứa dữ liệu cần lưu
+            var newData = {
+                MemberId: 1,
+                FullName: newName,
+                Email: newEmail,
+                Phone: newMobile,
+                Address: newAddress,
+                DoB: newDOB
+            };
+
+            // Gửi yêu cầu PUT để cập nhật thông tin profile qua API
+            $.ajax
+            ({
+                url: 'https://localhost:7186/api/profiles/1',
+                type: 'PUT',
+                data: JSON.stringify(newData),
+                contentType: 'application/json',
+                success: function (response) {
+                    // Thông báo lưu thành công
+                    alert('Profile updated successfully!');
+                    // Đóng modal chỉnh sửa profile
+                    $('#edit-profile').modal('hide');
+                    // Cập nhật thông tin profile trên trang view profile
+                    $('#profile-name').text(newName);
+                    $('#profile-email').text(newEmail);
+                        location.reload();
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error updating profile:', error);
+                    // Xử lý lỗi nếu có
+                    alert('Failed to update profile. Please try again later.');
+                }
+            });
+        });
+   });
+
 </script>
