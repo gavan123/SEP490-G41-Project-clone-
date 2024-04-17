@@ -102,7 +102,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form asp-page="/Buildings/List" asp-page-handler="AddOrEditMap" id="form-add-edit-mapImage" method="post" enctype="multipart/form-data">
+                <form asp-page="/Buildings/Detail" asp-page-handler="AddOrEditMap" id="form-add-edit-mapImage" method="post" enctype="multipart/form-data">
                     <input type="hidden" name="FloorId" id="floor-id" value="">
                     <div class="form-group">
                         <label for="new-map-name">Map Name</label>
@@ -202,22 +202,22 @@
                         var mapImages = `<img id="map-image" src="/Images/${maps[0].image2D}" alt="Map Image">`;
                         $('#map-images-container').html(mapImages);
                         $('#button-change').html(`
-                                 <button class="btn btn-primary" id="edit-map-button" data-toggle="modal" data-target="#add-edit-MapImage">
-                            <i class="anticon anticon-edit"></i>
-                            <span class="m-l-5">Edit Map</span>
-                                         </button>
-                                `);
+                                                             <button class="btn btn-primary" id="edit-map-button" data-id="${maps[0].mapId}" data-toggle="modal" data-target="#add-edit-MapImage">
+                                                <i class="anticon anticon-edit"></i>
+                                                <span class="m-l-5">Edit Map</span>
+                                                             </button>
+                                                    `);
                         $('#add-edit-map-btn').click(function () {
-                            var mapId = maps[0].mapId; 
-                            editMap(mapId);
+                            var mapid = maps[0].mapid;
+                            editmap(mapid);
                         });
                     } else {
                         $('#button-change').html(`
-                              <button class="btn btn-primary" id="add-map-button" data-toggle="modal" data-target="#add-edit-MapImage">
-                                    <i class="anticon anticon-plus"></i>
-                                    <span class="m-l-5">Add Map</span>
-                            </button>
-                                `);
+                                                  <button class="btn btn-primary" id="add-map-button" data-toggle="modal" data-target="#add-edit-MapImage">
+                                                        <i class="anticon anticon-plus"></i>
+                                                        <span class="m-l-5">Add Map</span>
+                                                </button>
+                                                    `);
                         console.log('No map found for the specified floor.');
                         $('#add-edit-map-btn').click(function () {
                             addNewMap();
@@ -234,9 +234,9 @@
                 }
             });
         }
-
+        //Add new Map
         function addNewMap() {
-            var mapName = $('#new-map-name').val(); 
+            var mapName = $('#new-map-name').val();
             var floorId = $('#floor-select').val();
             var imageInput = $('#add-edit-mapImage');
 
@@ -249,7 +249,7 @@
                 formData.append('Image2D', imageFile);
             }
             $.ajax({
-                url: 'https://localhost:7186/api/maps', 
+                url: 'https://localhost:7186/api/maps',
                 type: 'POST',
                 data: formData,
                 contentType: false,
@@ -276,7 +276,12 @@
                 }
             });
         }
-
+        //Khi ấn save
+        $('#add-edit-map-btn').click(function () {
+            var mapId = $('#edit-map-button').data('id');
+            editMap(mapId);
+        });
+        //Edit Map
         function editMap(mapId) {
             var mapName = $('#new-map-name').val();
             var floorId = $('#floor-select').val();
@@ -292,10 +297,13 @@
             }
 
             $.ajax({
-                url: `https://localhost:7186/api/maps/${mapId}`, // Replace with your API endpoint for fetching map details
+                url: `https://localhost:7186/api/maps/${mapId}`,
                 type: 'PUT',
+                data: formData,
+                contentType: false,
+                processData: false,
                 success: function (mapDetails) {
-                    console.log('Map update successfully:', response);
+                    console.log('Map update successfully:', mapDetails);
                     Swal.fire({
                         icon: 'success',
                         title: 'Map update successfully!',
@@ -304,7 +312,6 @@
                     }).then(() => {
                         $('#form-add-edit-mapImage').submit();
                     });
-                    $('#add-edit-MapImage-modal').modal('hide');
                 },
                 error: function (xhr, status, error) {
                     console.error('Error fetching map details for editing:', error);
@@ -316,8 +323,24 @@
                 }
             });
         }
-
-
+        $(document).on('click', '#edit-map-button', function () {
+            var mapId = $(this).data('id');
+            showEdit(mapId);
+        });
+        //show map info
+        function showEdit(mapId) {
+            $.ajax({
+                url: `https://localhost:7186/api/maps/${mapId}`,
+                type: 'GET',
+                success: function (map) {
+                    $('#new-map-name').val(map.mapName);
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error fetching map details:', error);
+                    alert('An error occurred while fetching map details.');
+                }
+            });
+        }
         //Update size image
         function updateImageSize(factor) {
             var currentWidth = $('#map-image').width();

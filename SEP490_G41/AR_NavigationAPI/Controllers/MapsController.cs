@@ -43,7 +43,7 @@ namespace AR_NavigationAPI.Controllers
 
         // POST: api/maps
         [HttpPost]
-        public ActionResult<MapAddDTO> AddMap(MapAddDTO map)
+        public ActionResult<MapAddDTO> AddMap([FromForm] MapAddDTO map)
         {
             if (map == null)
                 return BadRequest("Map cannot be null.");
@@ -54,7 +54,7 @@ namespace AR_NavigationAPI.Controllers
 
         // PUT: api/maps/5
         [HttpPut("{id}")]
-        public IActionResult UpdateMapById(int id, MapUpdateDTO map)
+        public IActionResult UpdateMapById(int id, [FromForm] MapUpdateDTO map)
         {
             if (id <= 0)
                 return BadRequest("Map ID must be a positive integer.");

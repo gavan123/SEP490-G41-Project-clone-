@@ -17,6 +17,8 @@ namespace AR_Navigation.Pages.Buildings
             _logger = logger;
         }
         [BindProperty]
+        public int FloorId { get; set; }
+        [BindProperty]
         public IFormFile ImageFile { get; set; }
         public async Task<IActionResult> OnPostAddOrEditMapAsync()
         {
@@ -38,7 +40,14 @@ namespace AR_Navigation.Pages.Buildings
             _logger.LogInformation($"Images directory: {imagesDirectory}");
 
 
-            return Page();
+            if (FloorId != 0)
+            {
+                return RedirectToPage("/Building/detail/" + FloorId);
+            }
+            else
+            {
+                return Page();
+            }
         }
     }
 }
