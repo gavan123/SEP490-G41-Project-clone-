@@ -2942,11 +2942,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\DataAccess\\DataAccess.csproj",
+      "projectUniqueName": "D:\\DO-AN\\sep490-g41-project2\\SEP490_G41\\DataAccess\\DataAccess.csproj",
       "projectName": "DataAccess",
-      "projectPath": "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\DataAccess\\DataAccess.csproj",
+      "projectPath": "D:\\DO-AN\\sep490-g41-project2\\SEP490_G41\\DataAccess\\DataAccess.csproj",
       "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-      "outputPath": "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\DataAccess\\obj\\",
+      "outputPath": "D:\\DO-AN\\sep490-g41-project2\\SEP490_G41\\DataAccess\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -2963,8 +2963,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj": {
-              "projectPath": "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj"
+            "D:\\DO-AN\\sep490-g41-project2\\SEP490_G41\\BusinessObject\\BusinessObject.csproj": {
+              "projectPath": "D:\\DO-AN\\sep490-g41-project2\\SEP490_G41\\BusinessObject\\BusinessObject.csproj"
             }
           }
         }
