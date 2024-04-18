@@ -8,9 +8,11 @@ public class MapPointDTO
     public string LocationWeb { get; set; }
     public string LocationApp { get; set; }
     public string LocationGps { get; set; }
-    public int? FloorId { get; set; }
-    public int? BuildingId { get; set; }
+    public int FloorId { get; set; }
+    public int BuildingId { get; set; }
     public string Image { get; set; }
+    public bool Destination { get; set; }
+
 }
 
 public class MapPointAddDTO
@@ -20,9 +22,11 @@ public class MapPointAddDTO
     public string LocationWeb { get; set; }
     public string LocationApp { get; set; }
     public string LocationGps { get; set; }
-    public int? FloorId { get; set; }
-    public int? BuildingId { get; set; }
+    public int FloorId { get; set; }
+    public int BuildingId { get; set; }
     public string Image { get; set; }
+    public bool Destination { get; set; }
+
 }
 
 public class MapPointUpdateDTO
@@ -33,7 +37,9 @@ public class MapPointUpdateDTO
     public string LocationWeb { get; set; }
     public string LocationApp { get; set; }
     public string LocationGps { get; set; }
-    public int? FloorId { get; set; }
-    public int? BuildingId { get; set; }
+    public int FloorId { get; set; }
+    public int BuildingId { get; set; }
     public string Image { get; set; }
+    public bool Destination { get; set; }
+
 }

@@ -48,27 +48,7 @@
                         </tr>
                     </thead>
                     <tbody id="map-list">
-                        <tr>
-                            <td>Map Point 1</td>
-                            <td>{ X: 100, Y: 200 }</td>
-                            <td>{ X: 150, Y: 250 }</td>
-                            <td>{ X: 50, Y: 100 }</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>image1.jpg</td>
-                            <td><button class="btn btn-primary">Edit</button></td>
-                        </tr>
-                        <tr>
-                            <td>Map Point 2</td>
-                            <td>{ X: 200, Y: 300 }</td>
-                            <td>null</td>
-                            <td>null</td>
-                            <td>2</td>
-                            <td>2</td>
-                            <td>image2.jpg</td>
-                            <td><button class="btn btn-primary">Edit</button></td>
-                        </tr>
-                        <!-- Add more rows as needed -->
+                        
                     </tbody>
                 </table>
             </div>
@@ -185,64 +165,55 @@
     $(document).ready(function () {
         var itemsPerPage = 5;
 
-        // Get map list from API
-        function updateMapList(maps, currentPage, itemsPerPage) {
+        // Get map point list from API
+        function updateMapPointList(mapPoints, currentPage, itemsPerPage) {
             const startIndex = (currentPage - 1) * itemsPerPage;
             const endIndex = startIndex + itemsPerPage;
-            const mapsToShow = maps.slice(startIndex, endIndex);
+            const mapPointsToShow = mapPoints.slice(startIndex, endIndex);
 
-            // Sort the map list by name (mapName)
-            maps.sort((a, b) => a.mapName.localeCompare(b.mapName));
+           
 
             $('#map-list').empty();
 
-            for (const map of mapsToShow) {
-                const mapRow = `
-                        <tr>
-                            <td>
-                                <div class="media align-items-center">
-                                    <div class="m-l-10">
-                                        <h5 class="m-b-0">${map.mapName}</h5>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <span>${map.buildingName}</span>
-                            </td>
-                            <td>
-                                <span>${map.floorName}</span>
-                            </td>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <div class="badge badge-${map.status === 'active' ? 'success' : 'danger'} badge-dot m-r-10"></div>
-                                    <div>${map.status}</div>
-                                </div>
-                            </td>
+            for (const mapPoint of mapPointsToShow) {
+                const mapPointRow = `
+                    <tr>
+                        <td>${mapPoint.mappointName}</td>
+                        <td>${mapPoint.locationWeb}</td>
+                        <td>${mapPoint.locationApp}</td>
+                            <td>${mapPoint.locationGps}</td>
+                            <td>${mapPoint.floorId}</td>
+                            <td>${mapPoint.buildingId}</td>
+                            <td>${mapPoint.image}</td>
                             <td class="text-right">
-                                <div class="dropdown dropdown-animated scale-left">
-                                    <a class="text-gray font-size-18" href="javascript:void(0);" data-toggle="dropdown">
-                                        <i class="anticon anticon-ellipsis"></i>
-                                    </a>
-                                    <div class="dropdown-menu">
-                                        <button class="dropdown-item btn btn-warning btn-tone editMap" type="button" data-id="${map.mapId}">
-                                            <i class="anticon anticon-edit"></i>
-                                            <span class="m-l-10">Edit</span>
-                                        </button>
-                                        <button class="dropdown-item btn btn-danger btn-tone deleteMap" type="button" data-id="${map.mapId}">
-                                            <i class="anticon anticon-delete"></i>
-                                            <span class="m-l-10">Delete</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    `;
+                                        <div class="dropdown dropdown-animated scale-left">
+                            <a class="text-gray font-size-18" href="javascript:void(0);" data-toggle="dropdown">
+                                <i class="anticon anticon-ellipsis"></i>
+                            </a>
+                               <div class="dropdown-menu">
+                            <button class="dropdown-item btn btn-info btn-tone viewBuilding" type="button" data-id="${mapPoint.mapPointId}">
+                        <i class="anticon anticon-eye"></i>
+                        <span class="m-l-10">View</span>
+                    </button>
+                                <button class="dropdown-item btn btn-warning btn-tone editBuilding" type="button" data-id="${mapPoint.mapPointId}">
+                        <i class="anticon anticon-edit"></i>
+                        <span class="m-l-10">Edit</span>
+                    </button>
+                                <button class="dropdown-item btn btn-danger btn-tone deleteBuilding" type="button" data-id="${mapPoint.mapPointId}">
+                        <i class="anticon anticon-delete"></i>
+                        <span class="m-l-10">Delete</span>
+                    </button>
+                </div>
+                        </div>
+                                </td>
+                    </tr>
+                `;
 
-                $('#map-list').append(mapRow);
+                $('#map-list').append(mapPointRow);
             }
         }
 
-        function createPagination(totalPages, maps) {
+        function createPagination(totalPages, mapPoints) {
             var pagination = $('#pagination');
             if (totalPages > 0) {
                 pagination.empty();
@@ -259,42 +230,42 @@
             pagination.off('click').on('click', 'a', function (event) {
                 event.preventDefault();
                 var page = $(this).parent().data('page');
-                updateMapList(maps, page, itemsPerPage);
+                updateMapPointList(mapPoints, page, itemsPerPage);
             });
         }
 
-        // Get map list from API
+        // Get map point list from API
         $.ajax({
-            url: 'https://localhost:7186/api/maps',
+            url: 'https://localhost:7186/api/mappoints',
             type: 'GET',
             dataType: 'json',
-            success: function (maps) {
-                const totalPages = Math.ceil(maps.length / itemsPerPage);
-                updateMapList(maps, 1, itemsPerPage);
-                createPagination(totalPages, maps);
+            success: function (mapPoints) {
+                const totalPages = Math.ceil(mapPoints.length / itemsPerPage);
+                updateMapPointList(mapPoints, 1, itemsPerPage);
+                createPagination(totalPages, mapPoints);
             },
             error: function (xhr, status, error) {
-                console.log('Error loading maps from API: ' + error);
+                console.log('Error loading map points from API: ' + error);
             }
         });
 
-        // Filter maps by building
+        // Filter map points by building
         $('#map-building').on('change', function () {
             const selectedBuildingId = $(this).val(); // Get the selected buildingId
 
-            let url = 'https://localhost:7186/api/maps';
+            let url = 'https://localhost:7186/api/mappoints';
             if (selectedBuildingId !== '0' && selectedBuildingId) {
-                url += '?filter=buildingId eq ' + selectedBuildingId;
+                url += '?$filter=BuildingID eq ' + selectedBuildingId;
             }
 
             $.ajax({
                 url: url,
                 type: 'GET',
                 dataType: 'json',
-                success: function (maps) {
-                    const totalPages = Math.ceil(maps.length / itemsPerPage);
-                    updateMapList(maps, 1, itemsPerPage);
-                    createPagination(totalPages, maps);
+                success: function (mapPoints) {
+                    const totalPages = Math.ceil(mapPoints.length / itemsPerPage);
+                    updateMapPointList(mapPoints, 1, itemsPerPage);
+                    createPagination(totalPages, mapPoints);
                 },
                 error: function (xhr, status, error) {
                     console.error('Error:', error);
@@ -302,49 +273,48 @@
             });
         });
 
-        // API to get buildings
-        $.ajax({
-            url: 'https://localhost:7186/api/buildings',
-            type: 'GET',
-            success: function (response) {
-                response.forEach(function (building) {
-                    $('#new-map-building').append('<option value="' + building.buildingId + '">' + building.buildingName + '</option>');
-                    $('#edit-map-building').append('<option value="' + building.buildingId + '">' + building.buildingName + '</option>');
-                    $('#map-building').append('<option value="' + building.buildingId + '">' + building.buildingName + '</option>');
-                });
-            },
-            error: function (xhr, status, error) {
-                console.error(error);
-            }
-        });
-
-        // Create Map API
-        $('#create-map-btn').click(function () {
-            var mapName = $('#new-map-name').val();
-            var buildingId = $('#new-map-building').val();
-            var floorId = $('#new-map-floor').val();
-            var status = $('input[name="statusRadios"]:checked').val();
-
-            var formData = {
-                MapName: mapName,
-                BuildingId: buildingId,
-                FloorId: floorId,
-                Status: status
+        // Create MapPoint API
+        $('#create-map-point-btn').click(function () {
+            var mapPointName = $('#new-map-point-name').val();
+            var locationWeb = {
+                X: parseFloat($('#new-map-point-location-web').val().split(', ')[0]),
+                Y: parseFloat($('#new-map-point-location-web').val().split(', ')[1])
             };
+            var locationApp = {
+                X: parseFloat($('#new-map-point-location-app').val().split(', ')[0]),
+                Y: parseFloat($('#new-map-point-location-app').val().split(', ')[1])
+            };
+            var locationGPS = {
+                X: parseFloat($('#new-map-point-location-gps').val().split(', ')[0]),
+                Y: parseFloat($('#new-map-point-location-gps').val().split(', ')[1])
+            };
+            var floorID = $('#new-map-point-floor').val();
+            var buildingID = $('#new-map-point-building').val();
+            var image = $('#new-map-point-image')[0].files[0];
+
+            var formData = new FormData();
+            formData.append('MapPointName', mapPointName);
+            formData.append('LocationWeb', JSON.stringify(locationWeb));
+            formData.append('LocationApp', JSON.stringify(locationApp));
+            formData.append('LocationGPS', JSON.stringify(locationGPS));
+            formData.append('FloorID', floorID);
+            formData.append('BuildingID', buildingID);
+            formData.append('Image', image);
 
             $.ajax({
-                url: 'https://localhost:7186/api/maps',
+                url: 'https://localhost:7186/api/mappoints',
                 type: 'POST',
-                data: JSON.stringify(formData),
-                contentType: 'application/json',
+                data: formData,
+                contentType: false,
+                processData: false,
                 success: function (response) {
                     Swal.fire({
                         icon: 'success',
-                        title: 'Map added successfully!',
+                        title: 'MapPoint added successfully!',
                         showConfirmButton: false,
                         timer: 1500
                     }).then(() => {
-                        $('#form-add-map').submit();
+                        $('#form-add-map-point').submit();
                     });
                     $('#create-new-map').modal('hide');
                 },
@@ -352,19 +322,19 @@
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
-                        text: 'Failed to add map. Please try again later.',
+                        text: 'Failed to add MapPoint. Please try again later.',
                     });
                 }
             });
         });
 
-        // Delete Map API
-        $(document).on('click', '.deleteMap', function () {
-            var mapId = $(this).data('id');
+        // Delete MapPoint API
+        $(document).on('click', '.delete-map-point', function () {
+            var mapPointId = $(this).data('id');
 
             Swal.fire({
                 title: 'Are you sure?',
-                text: 'You will not be able to recover this map!',
+                text: 'You will not be able to recover this MapPoint!',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -373,12 +343,12 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: 'https://localhost:7186/api/maps/' + mapId,
+                        url: 'https://localhost:7186/api/mappoints/' + mapPointId,
                         type: 'DELETE',
                         success: function (response) {
                             Swal.fire(
                                 'Deleted!',
-                                'Map has been deleted.',
+                                'MapPoint has been deleted.',
                                 'success'
                             ).then(() => {
                                 location.reload();
@@ -387,7 +357,7 @@
                         error: function (xhr, status, error) {
                             Swal.fire(
                                 'Error!',
-                                'Failed to delete map. Please try again later.',
+                                'Failed to delete MapPoint. Please try again later.',
                                 'error'
                             );
                         }
@@ -396,12 +366,91 @@
             });
         });
 
-        // Show edit modal with data by mapId
-        $(document).on('click', '.editMap', function () {
-            var mapId = $(this).data('id');
-            showEditModal(mapId);
+        // Show edit modal with data by mapPointId
+        $(document).on('click', '.edit-map-point', function () {
+            var mapPointId = $(this).data('id');
+            showEditModal(mapPointId);
         });
 
+        function showEditModal(mapPointId) {
+            $.ajax({
+                url: 'https://localhost:7186/api/mappoints/' + mapPointId,
+                type: 'GET',
+                dataType: 'json',
+                success: function (mapPoint) {
+                    $('#map-point-id').val(mapPoint.ID);
+                    $('#edit-map-point-name').val(mapPoint.MapPointName);
+                    $('#edit-map-point-location-web').val(`${mapPoint.LocationWeb.X}, ${mapPoint.LocationWeb.Y}`);
+                    $('#edit-map-point-location-app').val(`${mapPoint.LocationApp.X}, ${mapPoint.LocationApp.Y}`);
+                    $('#edit-map-point-location-gps').val(`${mapPoint.LocationGPS.X}, ${mapPoint.LocationGPS.Y}`);
+                    $('#edit-map-point-floor').val(mapPoint.FloorID);
+                    $('#edit-map-point-building').val(mapPoint.BuildingID);
+                    $('#edit-map-point-image').val('');
 
+                    $('#edit-map').modal('show');
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error:', error);
+                }
+            });
+        }
+
+        // Save changes for MapPoint
+        $('#edit-map-point-btn').click(function () {
+            var mapPointId = $('#map-point-id').val();
+            var mapPointName = $('#edit-map-point-name').val();
+            var locationWeb = {
+                X: parseFloat($('#edit-map-point-location-web').val().split(', ')[0]),
+                Y: parseFloat($('#edit-map-point-location-web').val().split(', ')[1])
+            };
+            var locationApp = {
+                X: parseFloat($('#edit-map-point-location-app').val().split(', ')[0]),
+                Y: parseFloat($('#edit-map-point-location-app').val().split(', ')[1])
+            };
+            var locationGPS = {
+                X: parseFloat($('#edit-map-point-location-gps').val().split(', ')[0]),
+                Y: parseFloat($('#edit-map-point-location-gps').val().split(', ')[1])
+            };
+            var floorID = $('#edit-map-point-floor').val();
+            var buildingID = $('#edit-map-point-building').val();
+            var image = $('#edit-map-point-image')[0].files[0];
+
+            var formData = new FormData();
+            formData.append('ID', mapPointId);
+            formData.append('MapPointName', mapPointName);
+            formData.append('LocationWeb', JSON.stringify(locationWeb));
+            formData.append('LocationApp', JSON.stringify(locationApp));
+            formData.append('LocationGPS', JSON.stringify(locationGPS));
+            formData.append('FloorID', floorID);
+            formData.append('BuildingID', buildingID);
+            formData.append('Image', image);
+
+            $.ajax({
+                url: 'https://localhost:7186/api/mappoints/' + mapPointId,
+                type: 'PUT',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'MapPoint updated successfully!',
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then(() => {
+                        $('#form-edit-map-point').submit();
+                    });
+                    $('#edit-map').modal('hide');
+                },
+                error: function (xhr, status, error) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Failed to update MapPoint. Please try again later.',
+                    });
+                }
+            });
+        });
+    });
 
 </script>

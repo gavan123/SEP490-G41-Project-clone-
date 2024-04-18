@@ -6,6 +6,7 @@ using DataAccess.DAO;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.Linq;
 
 namespace DataAccess.IRepository.Repository
@@ -63,8 +64,8 @@ namespace DataAccess.IRepository.Repository
                                {
                                    MapId = m.MapId,
                                    MapName = m.MapName,
-                                   Image2D = m.Image2D,
-                                   Image3D = m.Image3D,
+                                   Image2D = m.MapImage2D,
+                                   Image3D = m.MapImage3D,
                                    FloorId = m.FloorId,
                                    FloorName = f.FloorName,
                                    BuildingName = b.BuildingName,
@@ -93,7 +94,7 @@ namespace DataAccess.IRepository.Repository
                 var map = new Map
                 {
                     MapName = mapAddDTO.MapName,
-                    Image2D = uniqueFileName,
+                    MapImage2D = uniqueFileName,
                     FloorId = mapAddDTO.FloorId
                 };
 
@@ -105,24 +106,33 @@ namespace DataAccess.IRepository.Repository
             }
         }
 
-        public void UpdateMap(MapUpdateDTO map)
+        public void UpdateMap(MapUpdateDTO mapUpdateDTO)
         {
-            if (map == null)
-                throw new ArgumentNullException(nameof(map));
+            if (mapUpdateDTO == null)
+                throw new ArgumentNullException(nameof(mapUpdateDTO));
 
-            if (map.MapId <= 0)
+            if (mapUpdateDTO.MapId <= 0)
                 throw new ArgumentException("Map ID must be a positive integer.");
 
             try
             {
-                _mapDAO.UpdateMap(_mapper.Map<Map>(map));
+                string uniqueFileName = mapUpdateDTO.Image2D.FileName;
+
+                var map = new Map
+                {
+                    MapId = mapUpdateDTO.MapId,
+                    MapName = mapUpdateDTO.MapName,
+                    MapImage2D = uniqueFileName,
+                    FloorId = mapUpdateDTO.FloorId
+                };
+
+                _mapDAO.UpdateMap(map);
             }
             catch (Exception ex)
             {
                 throw new Exception("Error occurred while updating map.", ex);
             }
         }
-
         public void DeleteMap(int mapId)
         {
             if (mapId <= 0)

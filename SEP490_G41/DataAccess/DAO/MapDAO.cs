@@ -29,7 +29,7 @@ namespace DataAccess.DAO
             if (string.IsNullOrWhiteSpace(map.MapName))
                 throw new ArgumentException("Map name cannot be null or empty.");
 
-            if (map.Image2D == null)
+            if (map.MapImage2D == null)
                 throw new ArgumentException("2D image cannot be null.");
 
             if (map.FloorId <= 0)
@@ -44,7 +44,7 @@ namespace DataAccess.DAO
             {
                 MapId = map.MapId,
                 MemberId = 2,
-                CreatedDate = DateTime.Now,
+                CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now
             };
 
@@ -75,7 +75,7 @@ namespace DataAccess.DAO
             if (string.IsNullOrWhiteSpace(map.MapName))
                 throw new ArgumentException("Map name cannot be null or empty.");
 
-            if (map.Image2D == null)
+            if (map.MapImage2D == null)
                 throw new ArgumentException("2D image cannot be null.");
 
             if (map.FloorId <= 0)
@@ -85,8 +85,8 @@ namespace DataAccess.DAO
             if (existingMap != null)
             {
                 existingMap.MapName = map.MapName;
-                existingMap.Image2D = map.Image2D;
-                existingMap.Image3D = map.Image3D;
+                existingMap.MapImage2D = map.MapImage2D;
+                existingMap.MapImage3D = map.MapImage3D;
                 existingMap.FloorId = map.FloorId;
                 _context.SaveChanges();
             }
@@ -105,7 +105,14 @@ namespace DataAccess.DAO
             var map = _context.Maps.FirstOrDefault(m => m.MapId == mapId);
             if (map != null)
             {
+                // Xóa thông tin trong bảng Mapmanage
+                var mapManages = _context.Mapmanages.Where(mm => mm.MapId == mapId);
+                _context.Mapmanages.RemoveRange(mapManages);
+
+                // Xóa bản đồ từ bảng Maps
                 _context.Maps.Remove(map);
+
+                // Lưu thay đổi
                 _context.SaveChanges();
             }
             else
@@ -113,6 +120,7 @@ namespace DataAccess.DAO
                 throw new ArgumentException($"Map with ID {mapId} does not exist.");
             }
         }
+
 
         // Lấy danh sách tất cả các bản đồ
         public virtual List<Map> GetAllMaps()

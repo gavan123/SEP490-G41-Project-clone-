@@ -1,0 +1,79 @@
+﻿@page "{id:int}"
+@model AR_Navigation.Pages.Maps.detailModel
+@{
+    Layout = "_AdminLayout";
+}
+<style>
+    .selected-image-container {
+        width: 1200px;
+        height: 400px;
+        border: 2px solid #ced4da;
+        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 10px;
+    }
+
+        .selected-image-container img {
+            width: 50%;
+            height: 250px;
+            display: block;
+            margin-bottom: 10px;
+        }
+</style>
+<div class="page-header no-gutters">
+    <h1>Map Detail</h1>
+</div>
+<div class="container">
+    <!-- Map Name -->
+    <div class="map-name">
+        <h2 style="display: inline;">Map Name:</h2>
+        <h2 id="map-name" style="display: inline;"></h2>
+    </div>
+
+
+    <!-- Floor Name -->
+    <div class="form-group">
+        <h2 style="display: inline;">Floor Name:</h2>
+        <h2 style="display: inline;" id="floor-name"></h2>
+    </div>
+
+    <!-- Map Image -->
+    <div class="selected-image-container" id="map-images-container">
+        <!-- Dynamically populated map images will go here -->
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        // Lấy mapId từ URL
+        var mapId = window.location.pathname.split("/").pop();
+
+        //Get map data by mapId
+        $.ajax({
+            url: `https://localhost:7186/api/maps/${mapId}`,
+            type: 'GET',
+            success: function (map) {
+                // Cập nhật tên bản đồ
+                $('#map-name').text(map.mapName);
+                $('#floor-name').text(map.floorName);
+                var mapImages = `<img src="/Images/${map.image2D}" alt="Map Image">`;
+                $('#map-images-container').html(mapImages);
+            },
+            error: function (xhr, status, error) {
+                console.error(xhr.responseText);
+                // Xử lý lỗi nếu có
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'An error occurred while loading map details.'
+                });
+            }
+        });
+        $(document).on('click', '#map-images-container img', function () {
+            var imageUrl = $(this).attr('src');
+            window.open(imageUrl, '_blank');
+        });
+      
+    });
+</script>

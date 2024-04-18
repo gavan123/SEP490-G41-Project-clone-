@@ -143,6 +143,16 @@
                         <input type="text" class="form-control" id="edit-map-name" placeholder="Please input map name" required>
                     </div>
                     <div class="form-group">
+                        <label for="new-building-image">Image</label>
+                        <div class="input-group">
+                            <div class="custom-file">
+                                <input type="file" name="ImageFile" class="custom-file-input" id="edit-map-image" aria-describedby="inputGroupFileAddon" onchange="displaySelectedImage(this, 'add-selected-image-container')">
+                                <label class="custom-file-label" for="new-building-image">Choose file</label>
+                            </div>
+                        </div>
+                        <div id="add-selected-image-container" class="selected-image-container" style="margin-top: 10px;"></div>
+                    </div>
+                    <div class="form-group">
                         <label for="edit-map-building">Building</label>
                         <select class="form-control" id="edit-map-building">
                             <!-- Options will be created by JavaScript -->
@@ -153,17 +163,6 @@
                         <select class="form-control" id="edit-map-floor">
                             <!-- Options will be created by JavaScript -->
                         </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Status</label>
-                        <div class="custom-control custom-radio">
-                            <input type="radio" id="edit-statusActive" name="edit-statusRadios" class="custom-control-input" value="active" checked>
-                            <label class="custom-control-label" for="edit-statusActive">Active</label>
-                        </div>
-                        <div class="custom-control custom-radio">
-                            <input type="radio" id="edit-statusDeactive" name="edit-statusRadios" class="custom-control-input" value="deactive">
-                            <label class="custom-control-label" for="edit-statusDeactive">Deactive</label>
-                        </div>
                     </div>
                     <button type="button" class="btn btn-primary" id="edit-map-btn">Save Changes</button>
                 </form>
@@ -224,6 +223,10 @@
                                     <i class="anticon anticon-ellipsis"></i>
                                 </a>
                                 <div class="dropdown-menu">
+                                        <button class="dropdown-item btn btn-info btn-tone viewMap" type="button" data-id="${map.mapId}">
+                                        <i class="anticon anticon-eye"></i>
+                                        <span class="m-l-10">View</span>
+                                    </button>
                                     <button class="dropdown-item btn btn-warning btn-tone editMap" type="button" data-id="${map.mapId}">
                                         <i class="anticon anticon-edit"></i>
                                         <span class="m-l-10">Edit</span>
@@ -334,6 +337,22 @@
                 }
             });
         });
+        $('#edit-map-building').change(function () {
+            var buildingId = $(this).val();
+            $.ajax({
+                url: 'https://localhost:7186/api/floors/building/' + buildingId,
+                type: 'GET',
+                success: function (response) {
+                    $('#edit-map-floor').empty(); // Clear existing options
+                    response.forEach(function (floor) {
+                        $('#edit-map-floor').append('<option value="' + floor.floorId + '">' + floor.floorName + '</option>');
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
 
 
 
@@ -422,7 +441,74 @@
             showEditModal(mapId);
         });
 
-        
+        function showEditModal(mapId) {
+            $.ajax({
+                url: 'https://localhost:7186/api/maps/' + mapId,
+                type: 'GET',
+                success: function (response) {
+                    $('#map-id').val(response.mapId);
+                    $('#edit-map-name').val(response.mapName);
+                    // Hiển thị modal chỉnh sửa
+                    $('#edit-map').modal('show');
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error fetching map details:', error);
+                }
+            });
+        }
+
+        $('#edit-map-btn').click(function () {
+            var mapId = $('#map-id').val();
+            var mapName = $('#edit-map-name').val();
+            var floorId = $('#edit-map-floor').val();
+            var imageInput = $('#edit-map-image');
+
+            var formData = new FormData();
+            formData.append('MapId', mapId);
+            formData.append('MapName', mapName);
+            formData.append('FloorId', floorId);
+            if (imageInput[0].files.length > 0) {
+                var imageFile = imageInput[0].files[0];
+                formData.append('Image2D', imageFile);
+            }
+
+            $.ajax({
+                url: 'https://localhost:7186/api/maps/' + $('#map-id').val(),
+                type: 'PUT',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Map Updated',
+                        text: 'Map information has been updated successfully!',
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then(() => {
+                        $('#form-edit-map').submit();
+                    });
+                    $('#edit-map').modal('hide');
+                    console.log('Map updated successfully:', response);
+                },
+                error: function (xhr, status, error) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'An error occurred while updating map information.',
+                    });
+                    console.error('Error updating map:', error);
+                }
+            });
+        });
+
+
+        //Redirect building detail
+        $(document).on('click', '.viewMap', function () {
+            var mapId = $(this).data('id');
+            window.location.href = `Detail/${mapId}`;
+        });
+
 
     });
 

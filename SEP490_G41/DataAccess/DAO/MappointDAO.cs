@@ -70,13 +70,14 @@ namespace DataAccess.DAO
             if (existingMappoint != null)
             {
                 existingMappoint.MapId = mappoint.MapId;
-                existingMappoint.MappointName = mappoint.MappointName;
+                existingMappoint.MapPointName = mappoint.MapPointName;
                 existingMappoint.LocationWeb = mappoint.LocationWeb;
                 existingMappoint.LocationApp = mappoint.LocationApp;
                 existingMappoint.LocationGps = mappoint.LocationGps;
                 existingMappoint.FloorId = mappoint.FloorId;
                 existingMappoint.BuildingId = mappoint.BuildingId;
                 existingMappoint.Image = mappoint.Image;
+                existingMappoint.Destination = mappoint.Destination;
                 _context.SaveChanges();
             }
             else
