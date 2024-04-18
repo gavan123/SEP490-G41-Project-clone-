@@ -6,6 +6,7 @@
 <head>
     <script src="/assets/vendors/datatables/jquery.dataTables.min.js"></script>
     <script src="/assets/vendors/datatables/dataTables.bootstrap.min.js"></script>
+    <script src="/js/MappointDraw.js"></script>
 </head>
 <style>
     .selected-image-container {
@@ -62,6 +63,15 @@
             max-height: 100%;
             border-radius: 8px;
         }
+
+    canvas {
+        width:100%;
+        background-image: url("/Images/Alpha_tang1.jpg");
+        background-position: center;
+        background-size: 100%;
+        background-clip: border-box;
+        background-repeat: no-repeat;
+    }
 </style>
 <div class="page-header no-gutters">
     <h1>Building Detail</h1>
@@ -85,14 +95,15 @@
             <!-- Dynamically populated floor options will go here -->
         </select>
     </div>
-    <div class="image-controls">
-        <button class="zoom-btn" id="zoom-in-btn"><i class="fas fa-plus"></i></button>
-        <button class="zoom-btn" id="zoom-out-btn"><i class="fas fa-minus"></i></button>
-    </div>
+
     <!-- Map Image -->
     <div class="selected-image-container" id="map-images-container">
-        <img id="map-image" src="/assets/images/others/img-13.jpg" alt="Map Image">
+        @* <img id="map-image" src="/assets/images/others/img-13.jpg" alt="Map Image"> *@
+        <canvas id="canvas_data" width="1065%"
+                onclick="drawLine(event,this),renderPoints(event,this),pixelLocation(event), databaseLocation(event), count()">
+        </canvas>
     </div>
+    <div id="demo"></div>
 </div>
 <!-- Content Wrapper START -->
 <div class="main-content">
@@ -188,6 +199,17 @@
     $('#data-table').DataTable();
 
     $(document).ready(function () {
+
+        // $(document).on("click", "#map-images-container img", function (event) {
+        //     // Tọa độ x và y của sự kiện
+        //     var eventX = event.pageX - $(this).offset().left;
+        //     var eventY = event.pageY - $(this).offset().top - 23;
+        //     // Tọa độ x và y của điểm được chọn trên hình ảnh
+        //     var x = eventX.toFixed(0);
+        //     var y = eventY.toFixed(0);
+        //     alert("X Coordinate: " + x + " Y Coordinate: " + y);
+        // });
+
         // Lấy buildingId từ URL
         var buildingId = window.location.pathname.split("/").pop();
 
@@ -260,25 +282,32 @@
                         // maps.forEach(function (map) {
                         //     mapImages += `<img src="/Images/${map.image2D}" alt="Map Image">`;
                         // });
-                        var mapImages = `<img id="map-image" src="/Images/${maps[0].image2D}" alt="Map Image">`;
-                        $('#map-images-container').html(mapImages);
+
+                        // var mapImages = `<img id="map-image" src="/Images/${maps[0].image2D}" alt="Map Image">`;
+
+                        var mapImageUrl = `/Images/${maps[0].image2D}`;
+                        var canvas = document.getElementById('canvas_data');
+                        canvas.style.backgroundImage = `url(${mapImageUrl})`;
+
+                        // $('#map-images-container').html(mapImages);
+
                         $('#button-change').html(`
-                                <button class="btn btn-primary" id="edit-map-button" data-id="${maps[0].mapId}" data-toggle="modal" data-target="#add-edit-MapImage">
-                                        <i class="anticon anticon-edit"></i>
-                                         <span class="m-l-5">Edit Map</span>
-                                </button>
-                                               `);
+                                        <button class="btn btn-primary" id="edit-map-button" data-id="${maps[0].mapId}" data-toggle="modal" data-target="#add-edit-MapImage">
+                                                <i class="anticon anticon-edit"></i>
+                                                 <span class="m-l-5">Edit Map</span>
+                                        </button>
+                                                       `);
                         $('#add-edit-map-btn').click(function () {
                             var mapid = maps[0].mapid;
                             editmap(mapid);
                         });
                     } else {
                         $('#button-change').html(`
-                           <button class="btn btn-primary" id="add-map-button" data-toggle="modal" data-target="#add-edit-MapImage">
-                                  <i class="anticon anticon-plus"></i>
-                                    <span class="m-l-5">Add Map</span>
-                           </button>
-                                `);
+                                   <button class="btn btn-primary" id="add-map-button" data-toggle="modal" data-target="#add-edit-MapImage">
+                                          <i class="anticon anticon-plus"></i>
+                                            <span class="m-l-5">Add Map</span>
+                                   </button>
+                                        `);
                         console.log('No map found for the specified floor.');
                         $('#add-edit-map-btn').click(function () {
                             addNewMap();
@@ -404,88 +433,61 @@
                 }
             });
         }
-        //Update size image
-        function updateImageSize(factor) {
-            var currentWidth = $('#map-image').width();
-            var currentHeight = $('#map-image').height();
-            var newWidth = currentWidth * factor;
-            var newHeight = currentHeight * factor;
-            $('#map-image').css({
-                'width': newWidth,
-                'height': newHeight
-            });
-        }
 
-        // Sự kiện click cho nút Zoom In
-        $('#zoom-in-btn').click(function () {
-            updateImageSize(1.2); // Tăng kích thước lên 20%
-        });
 
-        // Sự kiện click cho nút Zoom Out
-        $('#zoom-out-btn').click(function () {
-            updateImageSize(0.8); // Giảm kích thước đi 20%
-        });
 
-        $(document).on("click", "#map-images-container img", function (event) {
-            var imageWidth = $(this).width();
-            var imageHeight = $(this).height();
-            // Điều chỉnh cách tính toán tọa độ y bằng cách lấy độ cao thực tế của hình ảnh trừ cho tọa độ y của sự kiện
-            var y = (imageHeight - (event.pageY - $(this).offset().top) - (imageHeight / 2)).toFixed(5);
-            var x = (event.pageX - $(this).offset().left - (imageWidth / 2)).toFixed(5);
-            alert("X Coordinate: " + x + " Y Coordinate: " + y);
-        });
 
-        //get mapppoint list
-        $.ajax({
-            url: 'https://localhost:7186/api/mappoints',
-            method: "GET",
-            dataType: 'json'
-        }).then(function (mappointData) {
-            $('#map-list').empty();
+        // //get mapppoint list
+        // $.ajax({
+        //     url: 'https://localhost:7186/api/mappoints',
+        //     method: "GET",
+        //     dataType: 'json'
+        // }).then(function (mappointData) {
+        //     $('#map-list').empty();
 
-            mappointData.forEach(function (mappoint) {
-                $.ajax({
-                    url: `https://localhost:7186/api/floors?$filter=buildingId eq 1`,
-                    type: 'GET',
-                    dataType: 'json'
-                }).then(function (floors) {
-                    const count = floors.length;
-                    const mappointRow = `
-                     <tr>
-                         <td><input type="checkbox" class="checkbox"></td>
-                         <td>#${mappoint.mapPointId}</td>
-                         <td>
-                             <div class="d-flex align-items-center">
-                                 <div class="avatar avatar-image avatar-sm m-r-10">
-                                     <img src="${mappoint.image}" alt="">
-                                 </div>
-                                 <h6 class="m-b-0">${mappoint.mappointName}</h6>
-                             </div>
-                         </td>
-                         <td>${mappoint.locationWeb}</td>
-                         <td>${count}</td>
-                         <td class="text-right">
-                             <button class="btn btn-icon btn-warning btn-hover btn-sm btn-rounded pull-right">
-                                 <i class="anticon anticon-edit"></i>
-                             </button>
-                             <button class="btn btn-icon btn-danger btn-hover btn-sm btn-rounded">
-                                 <i class="anticon anticon-delete"></i>
-                             </button>
-                         </td>
-                     </tr>
-                 `;
+        //     mappointData.forEach(function (mappoint) {
+        //         $.ajax({
+        //             url: `https://localhost:7186/api/floors?$filter=buildingId eq 1`,
+        //             type: 'GET',
+        //             dataType: 'json'
+        //         }).then(function (floors) {
+        //             const count = floors.length;
+        //             const mappointRow = `
+        //                  <tr>
+        //                      <td><input type="checkbox" class="checkbox"></td>
+        //                      <td>#${mappoint.mapPointId}</td>
+        //                      <td>
+        //                          <div class="d-flex align-items-center">
+        //                              <div class="avatar avatar-image avatar-sm m-r-10">
+        //                                  <img src="${mappoint.image}" alt="">
+        //                              </div>
+        //                              <h6 class="m-b-0">${mappoint.mappointName}</h6>
+        //                          </div>
+        //                      </td>
+        //                      <td>${mappoint.locationWeb}</td>
+        //                      <td>${count}</td>
+        //                      <td class="text-right">
+        //                          <button class="btn btn-icon btn-warning btn-hover btn-sm btn-rounded pull-right">
+        //                              <i class="anticon anticon-edit"></i>
+        //                          </button>
+        //                          <button class="btn btn-icon btn-danger btn-hover btn-sm btn-rounded">
+        //                              <i class="anticon anticon-delete"></i>
+        //                          </button>
+        //                      </td>
+        //                  </tr>
+        //              `;
 
-                    // Thêm hàng mới vào tbody
-                    $('#map-list').append(mappointRow);
-                }).catch(function (error) {
-                    console.error('Error loading route count from API: ' + error);
-                });
-            });
-        }).catch(function (error) {
-            console.error("Error occurred while fetching mappoint data:", error);
-        });
+        //             // Thêm hàng mới vào tbody
+        //             $('#map-list').append(mappointRow);
+        //         }).catch(function (error) {
+        //             console.error('Error loading route count from API: ' + error);
+        //         });
+        //     });
+        // }).catch(function (error) {
+        //     console.error("Error occurred while fetching mappoint data:", error);
+        // });
     });
-    
+
     //get image when selected
     function displaySelectedImage(input, containerId) {
         var file = input.files[0];
