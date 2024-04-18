@@ -18,6 +18,14 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = F:\sep490-g41-project\SEP490_G41\AR_Navigation
 build_property._RazorSourceGeneratorDebug = 
 
+[F:/sep490-g41-project/SEP490_G41/AR_Navigation/Pages/Authentication/Home.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXV0aGVudGljYXRpb25cSG9tZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/sep490-g41-project/SEP490_G41/AR_Navigation/Pages/Authentication/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXV0aGVudGljYXRpb25cTG9naW4uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [F:/sep490-g41-project/SEP490_G41/AR_Navigation/Pages/Buildings/detail.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQnVpbGRpbmdzXGRldGFpbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 

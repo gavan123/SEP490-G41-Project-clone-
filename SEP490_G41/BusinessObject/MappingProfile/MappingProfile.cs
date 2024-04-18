@@ -33,6 +33,10 @@ namespace BusinessObject.MappingProfile
             CreateMap<Map, MapUpdateDTO>().ReverseMap();
 
             CreateMap<Member, MemberDTO>().ReverseMap();
+<<<<<<< Updated upstream
+=======
+            CreateMap<Member, AddMemberDTO>().ReverseMap();
+>>>>>>> Stashed changes
 
         }
     }

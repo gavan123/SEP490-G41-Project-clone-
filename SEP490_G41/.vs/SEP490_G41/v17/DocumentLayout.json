@@ -11,12 +11,8 @@
       "RelativeMoniker": "D:0:0:{C2F6DC70-90DB-4145-A2B9-0843F3E10A8E}|DataAccess\\DataAccess.csproj|solutionrelative:dataaccess\\irepository\\repository\\memberrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B2F66E64-7938-4CC9-B95C-135C12B6B9F0}|AR_NavigationAPI\\AR_NavigationAPI.csproj|f:\\sep490-g41-project\\sep490_g41\\ar_navigationapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B2F66E64-7938-4CC9-B95C-135C12B6B9F0}|AR_NavigationAPI\\AR_NavigationAPI.csproj|solutionrelative:ar_navigationapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B2F66E64-7938-4CC9-B95C-135C12B6B9F0}|AR_NavigationAPI\\AR_NavigationAPI.csproj|f:\\sep490-g41-project\\sep490_g41\\ar_navigationapi\\controllers\\membercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B2F66E64-7938-4CC9-B95C-135C12B6B9F0}|AR_NavigationAPI\\AR_NavigationAPI.csproj|solutionrelative:ar_navigationapi\\controllers\\membercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{C2F6DC70-90DB-4145-A2B9-0843F3E10A8E}|DataAccess\\DataAccess.csproj|f:\\sep490-g41-project\\sep490_g41\\dataaccess\\irepository\\imemberrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C2F6DC70-90DB-4145-A2B9-0843F3E10A8E}|DataAccess\\DataAccess.csproj|solutionrelative:dataaccess\\irepository\\imemberrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,7 +22,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -38,16 +34,28 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Program.cs",
-              "DocumentMoniker": "F:\\sep490-g41-project\\SEP490_G41\\AR_NavigationAPI\\Program.cs",
-              "RelativeDocumentMoniker": "AR_NavigationAPI\\Program.cs",
-              "ToolTip": "F:\\sep490-g41-project\\SEP490_G41\\AR_NavigationAPI\\Program.cs",
-              "RelativeToolTip": "AR_NavigationAPI\\Program.cs",
-              "ViewState": "AQIAADIAAAAAAAAAAAAAwEwAAAACAAAA",
+              "DocumentIndex": 0,
+              "Title": "MemberDAO.cs",
+              "DocumentMoniker": "F:\\sep490-g41-project\\SEP490_G41\\DataAccess\\DAO\\MemberDAO.cs",
+              "RelativeDocumentMoniker": "DataAccess\\DAO\\MemberDAO.cs",
+              "ToolTip": "F:\\sep490-g41-project\\SEP490_G41\\DataAccess\\DAO\\MemberDAO.cs",
+              "RelativeToolTip": "DataAccess\\DAO\\MemberDAO.cs",
+              "ViewState": "AQIAAEsAAAAAAAAAAAAQwAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-14T14:10:07.717Z",
+              "WhenOpened": "2024-04-17T05:17:46.838Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "IMemberRepository.cs",
+              "DocumentMoniker": "F:\\sep490-g41-project\\SEP490_G41\\DataAccess\\IRepository\\IMemberRepository.cs",
+              "RelativeDocumentMoniker": "DataAccess\\IRepository\\IMemberRepository.cs",
+              "ToolTip": "F:\\sep490-g41-project\\SEP490_G41\\DataAccess\\IRepository\\IMemberRepository.cs",
+              "RelativeToolTip": "DataAccess\\IRepository\\IMemberRepository.cs",
+              "ViewState": "AQIAAAsAAAAAAAAAAAAAwAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-16T23:48:01.57Z"
             },
             {
               "$type": "Document",
@@ -57,35 +65,9 @@
               "RelativeDocumentMoniker": "DataAccess\\IRepository\\Repository\\MemberRepository.cs",
               "ToolTip": "F:\\sep490-g41-project\\SEP490_G41\\DataAccess\\IRepository\\Repository\\MemberRepository.cs",
               "RelativeToolTip": "DataAccess\\IRepository\\Repository\\MemberRepository.cs",
-              "ViewState": "AQIAACcAAAAAAAAAAAAYwDQAAAAqAAAA",
+              "ViewState": "AQIAAG4AAAAAAAAAAADgvw0AAAA1AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-14T14:03:29.375Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "MemberDAO.cs",
-              "DocumentMoniker": "F:\\sep490-g41-project\\SEP490_G41\\DataAccess\\DAO\\MemberDAO.cs",
-              "RelativeDocumentMoniker": "DataAccess\\DAO\\MemberDAO.cs",
-              "ToolTip": "F:\\sep490-g41-project\\SEP490_G41\\DataAccess\\DAO\\MemberDAO.cs",
-              "RelativeToolTip": "DataAccess\\DAO\\MemberDAO.cs",
-              "ViewState": "AQIAAGwAAAAAAAAAAIAwwEIAAACPAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-14T13:58:48.898Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "MemberController.cs",
-              "DocumentMoniker": "F:\\sep490-g41-project\\SEP490_G41\\AR_NavigationAPI\\Controllers\\MemberController.cs",
-              "RelativeDocumentMoniker": "AR_NavigationAPI\\Controllers\\MemberController.cs",
-              "ToolTip": "F:\\sep490-g41-project\\SEP490_G41\\AR_NavigationAPI\\Controllers\\MemberController.cs",
-              "RelativeToolTip": "AR_NavigationAPI\\Controllers\\MemberController.cs",
-              "ViewState": "AQIAADgAAAAAAAAAAAAywEcAAAANAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-14T13:57:43.493Z",
+              "WhenOpened": "2024-04-16T22:41:32.19Z",
               "EditorCaption": ""
             }
           ]

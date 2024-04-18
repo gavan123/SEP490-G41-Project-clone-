@@ -49,13 +49,26 @@ builder.Services.AddScoped<BuildingDAO>();
 builder.Services.AddScoped<FacilityDAO>();
 builder.Services.AddScoped<MapDAO>();
 builder.Services.AddScoped<FloorDAO>();
+<<<<<<< Updated upstream
 builder.Services.AddScoped<MemberDAO>();
+=======
+
+builder.Services.AddScoped<MemberDAO>();
+
+>>>>>>> Stashed changes
 
 builder.Services.AddScoped<IBuildingRepository, BuildingRepository>();
 builder.Services.AddScoped<IFacilityRepository, FacilityRepository>();
 builder.Services.AddScoped<IMapRepository, MapRepository>();
 builder.Services.AddScoped<IFloorRepository, FloorRepository>();
+<<<<<<< Updated upstream
 builder.Services.AddScoped<IMemberRepository, MemberRepository>();
+=======
+
+
+builder.Services.AddScoped<IMemberRepository, MemberRepository>();
+
+>>>>>>> Stashed changes
 /*builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {

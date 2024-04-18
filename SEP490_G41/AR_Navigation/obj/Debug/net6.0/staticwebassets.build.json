@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "9lu2Q0I3LTZSZUCNltbuUcmR5etTjw5YSDeFQNPxWRg=",
+  "Hash": "JOwcKXoQfYsF2EYZ1F8Trd/DxsvQVzvHjyyVoE88C1g=",
   "Source": "AR_Navigation",
   "BasePath": "_content/AR_Navigation",
   "Mode": "Default",
@@ -15500,6 +15500,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Images\\gabriel-lopes-silence-ok.jpg"
+    },
+    {
+      "Identity": "F:\\sep490-g41-project\\SEP490_G41\\AR_Navigation\\wwwroot\\Images\\Logo.jpg",
+      "SourceId": "AR_Navigation",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\sep490-g41-project\\SEP490_G41\\AR_Navigation\\wwwroot\\",
+      "BasePath": "_content/AR_Navigation",
+      "RelativePath": "Images/Logo.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Images\\Logo.jpg"
     },
     {
       "Identity": "F:\\sep490-g41-project\\SEP490_G41\\AR_Navigation\\wwwroot\\Images\\que-es-el-hyperthreading.jpg",

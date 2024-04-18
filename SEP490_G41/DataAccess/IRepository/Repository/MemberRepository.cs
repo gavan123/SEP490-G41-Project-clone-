@@ -1,17 +1,25 @@
+<<<<<<< Updated upstream
+=======
+﻿using BusinessObject.Models;
+>>>>>>> Stashed changes
 ﻿using AutoMapper;
 using BusinessObject.DTO;
-using BusinessObject.Models;
 using DataAccess.DAO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper.Execution;
 
 namespace DataAccess.IRepository.Repository
 {
     public class MemberRepository : IMemberRepository
     {
+<<<<<<< Updated upstream
+=======
+        
+>>>>>>> Stashed changes
         private readonly IMapper _mapper;
         private readonly MemberDAO _memberDAO;
 
@@ -24,7 +32,8 @@ namespace DataAccess.IRepository.Repository
         {
             try
             {
-                var memberModel = new Member
+
+                /*var memberModel = new Member
                 {
                     FullName = member.FullName,
                     DoB = member.DoB,
@@ -36,18 +45,19 @@ namespace DataAccess.IRepository.Repository
                     Status = member.Status,
                     RoleId = member.RoleId
                 };
-                _memberDAO.AddNewMember(memberModel);
+                _memberDAO.AddNewMember(memberModel);*/
             }
             catch (Exception ex)
             {
                 throw new Exception("Can't add new member");
             }
         }
-        public bool ChangePassword(string oldPass, string newPass)
+        public string ChangePassword(int id, string oldpass, string newpass, string re_newpass)
         {
             try
             {
-                return _memberDAO.ChangePassword(oldPass, newPass);
+                var result = _memberDAO.ChangePassword(id, oldpass, newpass, re_newpass);
+                return result;
             }catch (Exception ex)
             {
                 throw new Exception("Error");
@@ -55,7 +65,10 @@ namespace DataAccess.IRepository.Repository
             
         }
 
-        public bool DeleteMember(int id) => _memberDAO.DeleteMember(id);
+        public bool DeleteMember(int id)
+        {
+            throw new Exception();
+        } 
 
         public List<MemberDTO> GetAllMembers()
         {
@@ -71,7 +84,18 @@ namespace DataAccess.IRepository.Repository
             }
         }
 
-        public bool Login(string username, string password) => _memberDAO.Login(username, password);
+        public MemberDTO Login(string username, string password)
+        {
+            try
+            {
+                var member = _memberDAO.Login(username, password);
+                return _mapper.Map<MemberDTO>(member);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception();
+            }
+        }
 
         public List<MemberDTO> SearchMemberByDoB(DateTime date)
         {
@@ -82,7 +106,7 @@ namespace DataAccess.IRepository.Repository
                 return memberDTOs;
             }catch (Exception ex)
             {
-                throw new Exception("Something has wrong!");
+                throw ex;
             }
             
         }
@@ -103,6 +127,7 @@ namespace DataAccess.IRepository.Repository
 
         public List<MemberDTO> SearchMemberByStatus(string status)
         {
+<<<<<<< Updated upstream
             try
             {
                 var members = _memberDAO.SearchMemberByStatus(status);
@@ -113,6 +138,9 @@ namespace DataAccess.IRepository.Repository
             {
                 throw new Exception("Something has wrong!");
             }
+=======
+            throw new NotImplementedException();
+>>>>>>> Stashed changes
         }
     }
 }
