@@ -3,6 +3,10 @@
 @{
     Layout = "_AdminLayout";
 }
+<head>
+    <script src="/assets/vendors/datatables/jquery.dataTables.min.js"></script>
+    <script src="/assets/vendors/datatables/dataTables.bootstrap.min.js"></script>
+</head>
 <style>
     .selected-image-container {
         width: 1300px;
@@ -87,10 +91,65 @@
     </div>
     <!-- Map Image -->
     <div class="selected-image-container" id="map-images-container">
-        <img id="map-image" src="~/assets/images/others/img-13.jpg" alt="Map Image">
+        <img id="map-image" src="/assets/images/others/img-13.jpg" alt="Map Image">
     </div>
 </div>
-
+<!-- Content Wrapper START -->
+<div class="main-content">
+    <div class="card">
+        <div class="card-body">
+            <div class="row m-b-30">
+                <div class="col-lg-12 text-right">
+                    <button class="btn btn-danger" id="delete-selected">
+                        <i class="anticon anticon-delete"></i>
+                        <span>Delete</span>
+                    </button>
+                </div>
+                <div class="table-responsive">
+                    <table id="data-table" class="table  ">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>ID</th>
+                                <th>Mappoint Name</th>
+                                <th>Location Web</th>
+                                <th>Route Count</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="map-list">
+                            <tr>
+                                <td><input type="checkbox" class="checkbox"></td>
+                                <td>
+                                    #5375
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar avatar-image avatar-sm m-r-10">
+                                            <img src="assets/images/avatars/thumb-2.jpg" alt="">
+                                        </div>
+                                        <h6 class="m-b-0">Darryl Day</h6>
+                                    </div>
+                                </td>
+                                <td>6 May 2019</td>
+                                <td>$322.00</td>
+                                <td class="text-right">
+                                    <button class="btn btn-icon btn-warning btn-hover btn-sm btn-rounded pull-right">
+                                        <i class="anticon anticon-edit"></i>
+                                    </button>
+                                    <button class="btn btn-icon btn-danger btn-hover btn-sm btn-rounded">
+                                        <i class="anticon anticon-delete"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Content Wrapper END -->
 @* Modal Map Image*@
 <div class="modal fade" id="add-edit-MapImage-modal">
     <div class="modal-dialog">
@@ -126,6 +185,8 @@
 </div>
 
 <script>
+    $('#data-table').DataTable();
+
     $(document).ready(function () {
         // Lấy buildingId từ URL
         var buildingId = window.location.pathname.split("/").pop();
@@ -202,22 +263,22 @@
                         var mapImages = `<img id="map-image" src="/Images/${maps[0].image2D}" alt="Map Image">`;
                         $('#map-images-container').html(mapImages);
                         $('#button-change').html(`
-                                                             <button class="btn btn-primary" id="edit-map-button" data-id="${maps[0].mapId}" data-toggle="modal" data-target="#add-edit-MapImage">
-                                                <i class="anticon anticon-edit"></i>
-                                                <span class="m-l-5">Edit Map</span>
-                                                             </button>
-                                                    `);
+                                <button class="btn btn-primary" id="edit-map-button" data-id="${maps[0].mapId}" data-toggle="modal" data-target="#add-edit-MapImage">
+                                        <i class="anticon anticon-edit"></i>
+                                         <span class="m-l-5">Edit Map</span>
+                                </button>
+                                               `);
                         $('#add-edit-map-btn').click(function () {
                             var mapid = maps[0].mapid;
                             editmap(mapid);
                         });
                     } else {
                         $('#button-change').html(`
-                                                  <button class="btn btn-primary" id="add-map-button" data-toggle="modal" data-target="#add-edit-MapImage">
-                                                        <i class="anticon anticon-plus"></i>
-                                                        <span class="m-l-5">Add Map</span>
-                                                </button>
-                                                    `);
+                           <button class="btn btn-primary" id="add-map-button" data-toggle="modal" data-target="#add-edit-MapImage">
+                                  <i class="anticon anticon-plus"></i>
+                                    <span class="m-l-5">Add Map</span>
+                           </button>
+                                `);
                         console.log('No map found for the specified floor.');
                         $('#add-edit-map-btn').click(function () {
                             addNewMap();
@@ -323,6 +384,8 @@
                 }
             });
         }
+
+        //open Edit
         $(document).on('click', '#edit-map-button', function () {
             var mapId = $(this).data('id');
             showEdit(mapId);
@@ -372,7 +435,57 @@
             alert("X Coordinate: " + x + " Y Coordinate: " + y);
         });
 
+        //get mapppoint list
+        $.ajax({
+            url: 'https://localhost:7186/api/mappoints',
+            method: "GET",
+            dataType: 'json'
+        }).then(function (mappointData) {
+            $('#map-list').empty();
+
+            mappointData.forEach(function (mappoint) {
+                $.ajax({
+                    url: `https://localhost:7186/api/floors?$filter=buildingId eq 1`,
+                    type: 'GET',
+                    dataType: 'json'
+                }).then(function (floors) {
+                    const count = floors.length;
+                    const mappointRow = `
+                     <tr>
+                         <td><input type="checkbox" class="checkbox"></td>
+                         <td>#${mappoint.mapPointId}</td>
+                         <td>
+                             <div class="d-flex align-items-center">
+                                 <div class="avatar avatar-image avatar-sm m-r-10">
+                                     <img src="${mappoint.image}" alt="">
+                                 </div>
+                                 <h6 class="m-b-0">${mappoint.mappointName}</h6>
+                             </div>
+                         </td>
+                         <td>${mappoint.locationWeb}</td>
+                         <td>${count}</td>
+                         <td class="text-right">
+                             <button class="btn btn-icon btn-warning btn-hover btn-sm btn-rounded pull-right">
+                                 <i class="anticon anticon-edit"></i>
+                             </button>
+                             <button class="btn btn-icon btn-danger btn-hover btn-sm btn-rounded">
+                                 <i class="anticon anticon-delete"></i>
+                             </button>
+                         </td>
+                     </tr>
+                 `;
+
+                    // Thêm hàng mới vào tbody
+                    $('#map-list').append(mappointRow);
+                }).catch(function (error) {
+                    console.error('Error loading route count from API: ' + error);
+                });
+            });
+        }).catch(function (error) {
+            console.error("Error occurred while fetching mappoint data:", error);
+        });
     });
+    
     //get image when selected
     function displaySelectedImage(input, containerId) {
         var file = input.files[0];
