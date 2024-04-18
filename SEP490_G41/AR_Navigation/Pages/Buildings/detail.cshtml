@@ -6,7 +6,6 @@
 <head>
     <script src="/assets/vendors/datatables/jquery.dataTables.min.js"></script>
     <script src="/assets/vendors/datatables/dataTables.bootstrap.min.js"></script>
-    <script src="/assets/js/pages/e-commerce-order-list.js"></script>
 </head>
 <style>
     .selected-image-container {
@@ -92,7 +91,7 @@
     </div>
     <!-- Map Image -->
     <div class="selected-image-container" id="map-images-container">
-        <img id="map-image" src="~/assets/images/others/img-13.jpg" alt="Map Image">
+        <img id="map-image" src="/assets/images/others/img-13.jpg" alt="Map Image">
     </div>
 </div>
 <!-- Content Wrapper START -->
@@ -110,7 +109,7 @@
                     <table id="data-table" class="table  ">
                         <thead>
                             <tr>
-                                <th></th> <!-- Ô kiểm -->
+                                <th></th>
                                 <th>ID</th>
                                 <th>Mappoint Name</th>
                                 <th>Location Web</th>
@@ -118,9 +117,9 @@
                                 <th></th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="map-list">
                             <tr>
-                                <td><input type="checkbox" class="checkbox"></td> 
+                                <td><input type="checkbox" class="checkbox"></td>
                                 <td>
                                     #5375
                                 </td>
@@ -143,337 +142,366 @@
                                     </button>
                                 </td>
                             </tr>
-                            <tr>
-                                <td><input type="checkbox" class="checkbox"></td>
-                                <td>
-                                    #5362
-                                </td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="avatar avatar-image avatar-sm m-r-10">
-                                            <img src="assets/images/avatars/thumb-3.jpg" alt="">
-                                        </div>
-                                        <h6 class="m-b-0">Marshall Nichols</h6>
-                                    </div>
-                                </td>
-                                <td>1 May 2019</td>
-                                <td>$543.00</td>
-                                <td class="text-right">
-                                    <button class="btn btn-icon btn-warning btn-hover btn-sm btn-rounded pull-right">
-                                        <i class="anticon anticon-edit"></i>
-                                    </button>
-                                    <button class="btn btn-icon btn-danger btn-hover btn-sm btn-rounded">
-                                        <i class="anticon anticon-delete"></i>
-                                    </button>
-                                </td>
-                            </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Content Wrapper END -->
-    @* Modal Map Image*@
-    <div class="modal fade" id="add-edit-MapImage-modal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Map Image</h5>
-                    <button type="button" class="close" data-dismiss="modal">
-                        <i class="anticon anticon-close"></i>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form asp-page="/Buildings/Detail" asp-page-handler="AddOrEditMap" id="form-add-edit-mapImage" method="post" enctype="multipart/form-data">
-                        <input type="hidden" name="FloorId" id="floor-id" value="">
-                        <div class="form-group">
-                            <label for="new-map-name">Map Name</label>
-                            <input type="text" class="form-control" id="new-map-name" placeholder="Please input Map name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="edit-mapp-image">Image</label>
-                            <div class="input-group">
-                                <div class="custom-file">
-                                    <input type="file" name="ImageFile" class="custom-file-input" id="add-edit-mapImage" aria-describedby="inputGroupFileAddon" onchange="displaySelectedImage(this, 'edit-selected-image-container')">
-                                    <label class="custom-file-label" for="edit-mapp-image">Choose file</label>
-                                </div>
+</div>
+<!-- Content Wrapper END -->
+@* Modal Map Image*@
+<div class="modal fade" id="add-edit-MapImage-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Map Image</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <i class="anticon anticon-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form asp-page="/Buildings/Detail" asp-page-handler="AddOrEditMap" id="form-add-edit-mapImage" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="FloorId" id="floor-id" value="">
+                    <div class="form-group">
+                        <label for="new-map-name">Map Name</label>
+                        <input type="text" class="form-control" id="new-map-name" placeholder="Please input Map name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-mapp-image">Image</label>
+                        <div class="input-group">
+                            <div class="custom-file">
+                                <input type="file" name="ImageFile" class="custom-file-input" id="add-edit-mapImage" aria-describedby="inputGroupFileAddon" onchange="displaySelectedImage(this, 'edit-selected-image-container')">
+                                <label class="custom-file-label" for="edit-mapp-image">Choose file</label>
                             </div>
-                            <div id="edit-selected-image-container" class="selected-image-container2" style="margin-top: 10px;"></div>
                         </div>
-                        <button type="button" class="btn btn-primary" id="add-edit-map-btn">Save</button>
-                    </form>
-                </div>
+                        <div id="edit-selected-image-container" class="selected-image-container2" style="margin-top: 10px;"></div>
+                    </div>
+                    <button type="button" class="btn btn-primary" id="add-edit-map-btn">Save</button>
+                </form>
             </div>
         </div>
     </div>
+</div>
 
-    <script>
-        $('#data-table').DataTable();
+<script>
+    $('#data-table').DataTable();
 
-        $(document).ready(function () {
-            // Lấy buildingId từ URL
-            var buildingId = window.location.pathname.split("/").pop();
+    $(document).ready(function () {
+        // Lấy buildingId từ URL
+        var buildingId = window.location.pathname.split("/").pop();
 
-            //Get data builind Detail
-            $.ajax({
-                url: `https://localhost:7186/api/buildings/${buildingId}`,
-                type: 'GET',
-                success: function (building) {
-                    // Cập nhật tên tòa nhà
-                    $('#building-name').text(building.buildingName);
+        //Get data builind Detail
+        $.ajax({
+            url: `https://localhost:7186/api/buildings/${buildingId}`,
+            type: 'GET',
+            success: function (building) {
+                // Cập nhật tên tòa nhà
+                $('#building-name').text(building.buildingName);
 
-                    // Gửi AJAX request để lấy thông tin về các tầng của tòa nhà
-                    $.ajax({
-                        url: `https://localhost:7186/api/floors?$filter=buildingId eq ${buildingId}`,
-                        type: 'GET',
-                        success: function (floors) {
-                            // Tạo danh sách các tầng
-                            var floorOptions = '';
-                            floors.forEach(function (floor) {
-                                floorOptions += `<option value="${floor.floorId}">${floor.floorName}</option>`;
-                            });
-                            $('#floor-select').html(floorOptions);
+                // Gửi AJAX request để lấy thông tin về các tầng của tòa nhà
+                $.ajax({
+                    url: `https://localhost:7186/api/floors?$filter=buildingId eq ${buildingId}`,
+                    type: 'GET',
+                    success: function (floors) {
+                        // Tạo danh sách các tầng
+                        var floorOptions = '';
+                        floors.forEach(function (floor) {
+                            floorOptions += `<option value="${floor.floorId}">${floor.floorName}</option>`;
+                        });
+                        $('#floor-select').html(floorOptions);
 
-                            // Chọn tầng đầu tiên mặc định
-                            if (floors.length > 0) {
-                                var defaultFloorId = floors[0].floorId;
-                                updateMapImage(defaultFloorId);
-                            }
-                        },
-                        error: function (xhr, status, error) {
-                            console.error('Error fetching floors:', error);
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Error',
-                                text: 'An error occurred while loading floors.'
-                            });
+                        // Chọn tầng đầu tiên mặc định
+                        if (floors.length > 0) {
+                            var defaultFloorId = floors[0].floorId;
+                            updateMapImage(defaultFloorId);
                         }
-                    });
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error fetching floors:', error);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'An error occurred while loading floors.'
+                        });
+                    }
+                });
+            },
+            error: function (xhr, status, error) {
+                console.error(xhr.responseText);
+                // Xử lý lỗi nếu có
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'An error occurred while loading building details.'
+                });
+            }
+        });
+
+        $('#button-change').on('click', function () {
+            // Open the modal
+            $('#add-edit-MapImage-modal').modal('show');
+        });
+
+        // Event that listens when the user selects a new floor
+        $('#floor-select').change(function () {
+            var selectedFloorId = $(this).val();
+            updateMapImage(selectedFloorId);
+        });
+
+        //update map image by floor
+        function updateMapImage(floorId) {
+            $.ajax({
+                url: `https://localhost:7186/api/maps?$filter=floorId eq ${floorId}`,
+                type: 'GET',
+                success: function (maps) {
+                    if (maps.length > 0) {
+                        // var mapImages = '';
+                        // maps.forEach(function (map) {
+                        //     mapImages += `<img src="/Images/${map.image2D}" alt="Map Image">`;
+                        // });
+                        var mapImages = `<img id="map-image" src="/Images/${maps[0].image2D}" alt="Map Image">`;
+                        $('#map-images-container').html(mapImages);
+                        $('#button-change').html(`
+                                <button class="btn btn-primary" id="edit-map-button" data-id="${maps[0].mapId}" data-toggle="modal" data-target="#add-edit-MapImage">
+                                        <i class="anticon anticon-edit"></i>
+                                         <span class="m-l-5">Edit Map</span>
+                                </button>
+                                               `);
+                        $('#add-edit-map-btn').click(function () {
+                            var mapid = maps[0].mapid;
+                            editmap(mapid);
+                        });
+                    } else {
+                        $('#button-change').html(`
+                           <button class="btn btn-primary" id="add-map-button" data-toggle="modal" data-target="#add-edit-MapImage">
+                                  <i class="anticon anticon-plus"></i>
+                                    <span class="m-l-5">Add Map</span>
+                           </button>
+                                `);
+                        console.log('No map found for the specified floor.');
+                        $('#add-edit-map-btn').click(function () {
+                            addNewMap();
+                        });
+                    }
                 },
                 error: function (xhr, status, error) {
-                    console.error(xhr.responseText);
-                    // Xử lý lỗi nếu có
+                    console.error('Error fetching map details:', error);
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
-                        text: 'An error occurred while loading building details.'
+                        text: 'An error occurred while loading map details.'
                     });
                 }
             });
+        }
+        //Add new Map
+        function addNewMap() {
+            var mapName = $('#new-map-name').val();
+            var floorId = $('#floor-select').val();
+            var imageInput = $('#add-edit-mapImage');
 
-            $('#button-change').on('click', function () {
-                // Open the modal
-                $('#add-edit-MapImage-modal').modal('show');
-            });
+            var formData = new FormData();
 
-            // Event that listens when the user selects a new floor
-            $('#floor-select').change(function () {
-                var selectedFloorId = $(this).val();
-                updateMapImage(selectedFloorId);
-            });
-
-            //update map image by floor
-            function updateMapImage(floorId) {
-                $.ajax({
-                    url: `https://localhost:7186/api/maps?$filter=floorId eq ${floorId}`,
-                    type: 'GET',
-                    success: function (maps) {
-                        if (maps.length > 0) {
-                            // var mapImages = '';
-                            // maps.forEach(function (map) {
-                            //     mapImages += `<img src="/Images/${map.image2D}" alt="Map Image">`;
-                            // });
-                            var mapImages = `<img id="map-image" src="/Images/${maps[0].image2D}" alt="Map Image">`;
-                            $('#map-images-container').html(mapImages);
-                            $('#button-change').html(`
-                                                                                                                                 <button class="btn btn-primary" id="edit-map-button" data-id="${maps[0].mapId}" data-toggle="modal" data-target="#add-edit-MapImage">
-                                                                                                                    <i class="anticon anticon-edit"></i>
-                                                                                                                    <span class="m-l-5">Edit Map</span>
-                                                                                                                                 </button>
-                                                                                                                        `);
-                            $('#add-edit-map-btn').click(function () {
-                                var mapid = maps[0].mapid;
-                                editmap(mapid);
-                            });
-                        } else {
-                            $('#button-change').html(`
-                                                                                                                      <button class="btn btn-primary" id="add-map-button" data-toggle="modal" data-target="#add-edit-MapImage">
-                                                                                                                            <i class="anticon anticon-plus"></i>
-                                                                                                                            <span class="m-l-5">Add Map</span>
-                                                                                                                    </button>
-                                                                                                                        `);
-                            console.log('No map found for the specified floor.');
-                            $('#add-edit-map-btn').click(function () {
-                                addNewMap();
-                            });
-                        }
-                    },
-                    error: function (xhr, status, error) {
-                        console.error('Error fetching map details:', error);
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error',
-                            text: 'An error occurred while loading map details.'
-                        });
-                    }
-                });
+            formData.append('MapName', mapName);
+            formData.append('FloorId', floorId);
+            if (imageInput[0].files.length > 0) {
+                var imageFile = imageInput[0].files[0];
+                formData.append('Image2D', imageFile);
             }
-            //Add new Map
-            function addNewMap() {
-                var mapName = $('#new-map-name').val();
-                var floorId = $('#floor-select').val();
-                var imageInput = $('#add-edit-mapImage');
-
-                var formData = new FormData();
-
-                formData.append('MapName', mapName);
-                formData.append('FloorId', floorId);
-                if (imageInput[0].files.length > 0) {
-                    var imageFile = imageInput[0].files[0];
-                    formData.append('Image2D', imageFile);
+            $.ajax({
+                url: 'https://localhost:7186/api/maps',
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    console.log('Map added successfully:', response);
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Map added successfully!',
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then(() => {
+                        $('#form-add-edit-mapImage').submit();
+                    });
+                    $('#add-edit-MapImage-modal').modal('hide');
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error adding map:', error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'An error occurred while adding the map.'
+                    });
                 }
-                $.ajax({
-                    url: 'https://localhost:7186/api/maps',
-                    type: 'POST',
-                    data: formData,
-                    contentType: false,
-                    processData: false,
-                    success: function (response) {
-                        console.log('Map added successfully:', response);
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Map added successfully!',
-                            showConfirmButton: false,
-                            timer: 1500
-                        }).then(() => {
-                            $('#form-add-edit-mapImage').submit();
-                        });
-                        $('#add-edit-MapImage-modal').modal('hide');
-                    },
-                    error: function (xhr, status, error) {
-                        console.error('Error adding map:', error);
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error',
-                            text: 'An error occurred while adding the map.'
-                        });
-                    }
-                });
-            }
-            //Khi ấn save
-            $('#add-edit-map-btn').click(function () {
-                var mapId = $('#edit-map-button').data('id');
-                editMap(mapId);
             });
-            //Edit Map
-            function editMap(mapId) {
-                var mapName = $('#new-map-name').val();
-                var floorId = $('#floor-select').val();
-                var imageInput = $('#add-edit-mapImage');
-
-                var formData = new FormData();
-                formData.append('MapName', mapName);
-                formData.append('FloorId', floorId);
-                formData.append('MapId', mapId);
-                if (imageInput[0].files.length > 0) {
-                    var imageFile = imageInput[0].files[0];
-                    formData.append('Image2D', imageFile);
-                }
-
-                $.ajax({
-                    url: `https://localhost:7186/api/maps/${mapId}`,
-                    type: 'PUT',
-                    data: formData,
-                    contentType: false,
-                    processData: false,
-                    success: function (mapDetails) {
-                        console.log('Map update successfully:', mapDetails);
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Map update successfully!',
-                            showConfirmButton: false,
-                            timer: 1500
-                        }).then(() => {
-                            $('#form-add-edit-mapImage').submit();
-                        });
-                    },
-                    error: function (xhr, status, error) {
-                        console.error('Error fetching map details for editing:', error);
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error',
-                            text: 'An error occurred while loading map details for editing.'
-                        });
-                    }
-                });
-            }
-            $(document).on('click', '#edit-map-button', function () {
-                var mapId = $(this).data('id');
-                showEdit(mapId);
-            });
-            //show map info
-            function showEdit(mapId) {
-                $.ajax({
-                    url: `https://localhost:7186/api/maps/${mapId}`,
-                    type: 'GET',
-                    success: function (map) {
-                        $('#new-map-name').val(map.mapName);
-                    },
-                    error: function (xhr, status, error) {
-                        console.error('Error fetching map details:', error);
-                        alert('An error occurred while fetching map details.');
-                    }
-                });
-            }
-            //Update size image
-            function updateImageSize(factor) {
-                var currentWidth = $('#map-image').width();
-                var currentHeight = $('#map-image').height();
-                var newWidth = currentWidth * factor;
-                var newHeight = currentHeight * factor;
-                $('#map-image').css({
-                    'width': newWidth,
-                    'height': newHeight
-                });
-            }
-
-            // Sự kiện click cho nút Zoom In
-            $('#zoom-in-btn').click(function () {
-                updateImageSize(1.2); // Tăng kích thước lên 20%
-            });
-
-            // Sự kiện click cho nút Zoom Out
-            $('#zoom-out-btn').click(function () {
-                updateImageSize(0.8); // Giảm kích thước đi 20%
-            });
-
-            $(document).on("click", "#map-images-container img", function (event) {
-                var imageWidth = $(this).width();
-                var imageHeight = $(this).height();
-                // Điều chỉnh cách tính toán tọa độ y bằng cách lấy độ cao thực tế của hình ảnh trừ cho tọa độ y của sự kiện
-                var y = (imageHeight - (event.pageY - $(this).offset().top) - (imageHeight / 2)).toFixed(5);
-                var x = (event.pageX - $(this).offset().left - (imageWidth / 2)).toFixed(5);
-                alert("X Coordinate: " + x + " Y Coordinate: " + y);
-            });
-
+        }
+        //Khi ấn save
+        $('#add-edit-map-btn').click(function () {
+            var mapId = $('#edit-map-button').data('id');
+            editMap(mapId);
         });
-        //get image when selected
-        function displaySelectedImage(input, containerId) {
-            var file = input.files[0];
-            var reader = new FileReader();
+        //Edit Map
+        function editMap(mapId) {
+            var mapName = $('#new-map-name').val();
+            var floorId = $('#floor-select').val();
+            var imageInput = $('#add-edit-mapImage');
 
-            reader.onload = function (e) {
-                var imgElement = document.createElement('img');
-                imgElement.src = e.target.result;
-                imgElement.className = "img-fluid rounded";
-
-                var selectedImageContainer = document.getElementById(containerId);
-                selectedImageContainer.innerHTML = '';
-                selectedImageContainer.appendChild(imgElement);
+            var formData = new FormData();
+            formData.append('MapName', mapName);
+            formData.append('FloorId', floorId);
+            formData.append('MapId', mapId);
+            if (imageInput[0].files.length > 0) {
+                var imageFile = imageInput[0].files[0];
+                formData.append('Image2D', imageFile);
             }
 
-            reader.readAsDataURL(file);
+            $.ajax({
+                url: `https://localhost:7186/api/maps/${mapId}`,
+                type: 'PUT',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (mapDetails) {
+                    console.log('Map update successfully:', mapDetails);
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Map update successfully!',
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then(() => {
+                        $('#form-add-edit-mapImage').submit();
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error fetching map details for editing:', error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'An error occurred while loading map details for editing.'
+                    });
+                }
+            });
         }
 
-    </script>
+        //open Edit
+        $(document).on('click', '#edit-map-button', function () {
+            var mapId = $(this).data('id');
+            showEdit(mapId);
+        });
+        //show map info
+        function showEdit(mapId) {
+            $.ajax({
+                url: `https://localhost:7186/api/maps/${mapId}`,
+                type: 'GET',
+                success: function (map) {
+                    $('#new-map-name').val(map.mapName);
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error fetching map details:', error);
+                    alert('An error occurred while fetching map details.');
+                }
+            });
+        }
+        //Update size image
+        function updateImageSize(factor) {
+            var currentWidth = $('#map-image').width();
+            var currentHeight = $('#map-image').height();
+            var newWidth = currentWidth * factor;
+            var newHeight = currentHeight * factor;
+            $('#map-image').css({
+                'width': newWidth,
+                'height': newHeight
+            });
+        }
+
+        // Sự kiện click cho nút Zoom In
+        $('#zoom-in-btn').click(function () {
+            updateImageSize(1.2); // Tăng kích thước lên 20%
+        });
+
+        // Sự kiện click cho nút Zoom Out
+        $('#zoom-out-btn').click(function () {
+            updateImageSize(0.8); // Giảm kích thước đi 20%
+        });
+
+        $(document).on("click", "#map-images-container img", function (event) {
+            var imageWidth = $(this).width();
+            var imageHeight = $(this).height();
+            // Điều chỉnh cách tính toán tọa độ y bằng cách lấy độ cao thực tế của hình ảnh trừ cho tọa độ y của sự kiện
+            var y = (imageHeight - (event.pageY - $(this).offset().top) - (imageHeight / 2)).toFixed(5);
+            var x = (event.pageX - $(this).offset().left - (imageWidth / 2)).toFixed(5);
+            alert("X Coordinate: " + x + " Y Coordinate: " + y);
+        });
+
+        //get mapppoint list
+        $.ajax({
+            url: 'https://localhost:7186/api/mappoints',
+            method: "GET",
+            dataType: 'json'
+        }).then(function (mappointData) {
+            $('#map-list').empty();
+
+            mappointData.forEach(function (mappoint) {
+                $.ajax({
+                    url: `https://localhost:7186/api/floors?$filter=buildingId eq 1`,
+                    type: 'GET',
+                    dataType: 'json'
+                }).then(function (floors) {
+                    const count = floors.length;
+                    const mappointRow = `
+                     <tr>
+                         <td><input type="checkbox" class="checkbox"></td>
+                         <td>#${mappoint.mapPointId}</td>
+                         <td>
+                             <div class="d-flex align-items-center">
+                                 <div class="avatar avatar-image avatar-sm m-r-10">
+                                     <img src="${mappoint.image}" alt="">
+                                 </div>
+                                 <h6 class="m-b-0">${mappoint.mappointName}</h6>
+                             </div>
+                         </td>
+                         <td>${mappoint.locationWeb}</td>
+                         <td>${count}</td>
+                         <td class="text-right">
+                             <button class="btn btn-icon btn-warning btn-hover btn-sm btn-rounded pull-right">
+                                 <i class="anticon anticon-edit"></i>
+                             </button>
+                             <button class="btn btn-icon btn-danger btn-hover btn-sm btn-rounded">
+                                 <i class="anticon anticon-delete"></i>
+                             </button>
+                         </td>
+                     </tr>
+                 `;
+
+                    // Thêm hàng mới vào tbody
+                    $('#map-list').append(mappointRow);
+                }).catch(function (error) {
+                    console.error('Error loading route count from API: ' + error);
+                });
+            });
+        }).catch(function (error) {
+            console.error("Error occurred while fetching mappoint data:", error);
+        });
+    });
+    
+    //get image when selected
+    function displaySelectedImage(input, containerId) {
+        var file = input.files[0];
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            var imgElement = document.createElement('img');
+            imgElement.src = e.target.result;
+            imgElement.className = "img-fluid rounded";
+
+            var selectedImageContainer = document.getElementById(containerId);
+            selectedImageContainer.innerHTML = '';
+            selectedImageContainer.appendChild(imgElement);
+        }
+
+        reader.readAsDataURL(file);
+    }
+
+</script>
