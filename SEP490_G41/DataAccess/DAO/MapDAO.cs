@@ -21,7 +21,7 @@ namespace DataAccess.DAO
 
 
         // Thêm mới bản đồ
-        public void AddMap(Map map)
+        public void AddMap(Map map, Member member)
         {
             if (map == null)
                 throw new ArgumentNullException(nameof(map));
@@ -32,14 +32,26 @@ namespace DataAccess.DAO
             if (map.Image2D == null)
                 throw new ArgumentException("2D image cannot be null.");
 
-            if (map.Image3D == null)
-                throw new ArgumentException("3D image cannot be null.");
-
             if (map.FloorId <= 0)
                 throw new ArgumentException("Floor ID must be a positive integer.");
 
+            // Thêm mới bản đồ
             _context.Maps.Add(map);
-            _context.SaveChanges(); // Ensure that changes are saved to the database
+            _context.SaveChanges();
+
+            // Thêm mới bản đồ quản lý (Mapmanage)
+            var mapManage = new Mapmanage
+            {
+                MapId = map.MapId,
+                MemberId = 2,
+                CreatedDate = DateTime.Now,
+                UpdateDate = DateTime.Now
+            };
+
+            _context.Mapmanages.Add(mapManage);
+
+            // Lưu thay đổi
+            _context.SaveChanges();
         }
 
         // Đọc thông tin bản đồ bằng Id

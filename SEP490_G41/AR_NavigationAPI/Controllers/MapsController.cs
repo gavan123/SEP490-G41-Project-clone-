@@ -1,4 +1,5 @@
-﻿using BusinessObject.DTO;
+﻿using AutoMapper.Execution;
+using BusinessObject.DTO;
 using DataAccess.IRepository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Query;
@@ -43,18 +44,17 @@ namespace AR_NavigationAPI.Controllers
 
         // POST: api/maps
         [HttpPost]
-        public ActionResult<MapAddDTO> AddMap(MapAddDTO map)
+        public ActionResult<MapAddDTO> AddMap([FromForm] MapAddDTO map)
         {
             if (map == null)
                 return BadRequest("Map cannot be null.");
-
-            _mapRepository.AddMap(map);
+            _mapRepository.AddMap(map, null);
             return Ok(map);
         }
 
         // PUT: api/maps/5
         [HttpPut("{id}")]
-        public IActionResult UpdateMapById(int id, MapUpdateDTO map)
+        public IActionResult UpdateMapById(int id, [FromForm] MapUpdateDTO map)
         {
             if (id <= 0)
                 return BadRequest("Map ID must be a positive integer.");

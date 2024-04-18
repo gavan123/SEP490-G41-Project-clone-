@@ -337,23 +337,26 @@
 
 
 
-        // Create Map API
         $('#create-map-btn').click(function () {
             var mapName = $('#new-map-name').val();
             var floorId = $('#new-map-floor').val();
-            var status = $('input[name="statusRadios"]:checked').val();
-            var imageInput = $('new-building-image');
-            var formData = {
-                MapName: mapName,
-                FloorId: floorId,
+            var imageInput = $('#new-building-image');
+      
+            var formData = new FormData();
+            formData.append('MapName', mapName);
+            formData.append('FloorId', floorId);
+            if (imageInput[0].files.length > 0) {
+                var imageFile = imageInput[0].files[0];
+                formData.append('Image2D', imageFile);
+            }
 
-            };
-
+            // Send an AJAX POST request to the API
             $.ajax({
                 url: 'https://localhost:7186/api/maps',
                 type: 'POST',
-                data: JSON.stringify(formData),
-                contentType: 'application/json',
+                data: formData,
+                processData: false,
+                contentType: false,
                 success: function (response) {
                     Swal.fire({
                         icon: 'success',
@@ -422,6 +425,7 @@
         
 
     });
+
     function displaySelectedImage(input, containerId) {
         var file = input.files[0];
         var reader = new FileReader();

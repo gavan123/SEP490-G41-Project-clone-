@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.Execution;
 using BusinessObject.DTO;
 using BusinessObject.Models;
 using DataAccess.DAO;
@@ -28,6 +29,12 @@ namespace DataAccess.IRepository.Repository
             _buildingDAO = buildingDAO;
             _memberDAO = memberDAO;
             _mapmanageDAO = mapManageDAO;
+        }
+
+        public MapRepository(MapDAO mapDAO, IMapper mapper)
+        {
+            _mapDAO = mapDAO;
+            _mapper = mapper;
         }
 
         public MapDTO GetMapById(int mapId)
@@ -75,18 +82,26 @@ namespace DataAccess.IRepository.Repository
 
 
 
-        public void AddMap(MapAddDTO map)
+        public void AddMap(MapAddDTO mapAddDTO, BusinessObject.Models.Member member)
         {
-            if (map == null)
-                throw new ArgumentNullException(nameof(map));
-
+            if (mapAddDTO == null)
+                throw new ArgumentNullException(nameof(mapAddDTO));
             try
             {
-                _mapDAO.AddMap(_mapper.Map<Map>(map));
+                string uniqueFileName = mapAddDTO.Image2D.FileName;
+
+                var map = new Map
+                {
+                    MapName = mapAddDTO.MapName,
+                    Image2D = uniqueFileName,
+                    FloorId = mapAddDTO.FloorId
+                };
+
+                _mapDAO.AddMap(map, member);
             }
             catch (Exception ex)
             {
-                throw new Exception("Error occurred while adding map.", ex);
+                throw new Exception("Error occurred while adding map and map management.", ex);
             }
         }
 
@@ -121,6 +136,11 @@ namespace DataAccess.IRepository.Repository
             {
                 throw new Exception("Error occurred while deleting map.", ex);
             }
+        }
+
+        public void AddMap(MapAddDTO map)
+        {
+            
         }
     }
 }
