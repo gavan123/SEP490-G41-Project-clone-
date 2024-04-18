@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 D:\DO-AN\sep490-g41-project2\SEP490_G41\AR_NavigationAPI\bin\Debug\net6.0\appsettings.Development.json
 D:\DO-AN\sep490-g41-project2\SEP490_G41\AR_NavigationAPI\bin\Debug\net6.0\AR_NavigationAPI.exe
 D:\DO-AN\sep490-g41-project2\SEP490_G41\AR_NavigationAPI\bin\Debug\net6.0\appsettings.json
@@ -29,9 +28,14 @@ D:\DO-AN\sep490-g41-project2\SEP490_G41\AR_NavigationAPI\bin\Debug\net6.0\Micros
 D:\DO-AN\sep490-g41-project2\SEP490_G41\AR_NavigationAPI\bin\Debug\net6.0\Microsoft.Spatial.dll
 D:\DO-AN\sep490-g41-project2\SEP490_G41\AR_NavigationAPI\bin\Debug\net6.0\Microsoft.Win32.SystemEvents.dll
 D:\DO-AN\sep490-g41-project2\SEP490_G41\AR_NavigationAPI\bin\Debug\net6.0\MySql.Data.dll
+D:\DO-AN\sep490-g41-project2\SEP490_G41\AR_NavigationAPI\bin\Debug\net6.0\MySql.Data.EntityFrameworkCore.dll
 D:\DO-AN\sep490-g41-project2\SEP490_G41\AR_NavigationAPI\bin\Debug\net6.0\MySql.EntityFrameworkCore.dll
 D:\DO-AN\sep490-g41-project2\SEP490_G41\AR_NavigationAPI\bin\Debug\net6.0\MySqlConnector.dll
 D:\DO-AN\sep490-g41-project2\SEP490_G41\AR_NavigationAPI\bin\Debug\net6.0\NetTopologySuite.dll
+D:\DO-AN\sep490-g41-project2\SEP490_G41\AR_NavigationAPI\bin\Debug\net6.0\NetTopologySuite.Features.dll
+D:\DO-AN\sep490-g41-project2\SEP490_G41\AR_NavigationAPI\bin\Debug\net6.0\NetTopologySuite.IO.GeoJSON.dll
+D:\DO-AN\sep490-g41-project2\SEP490_G41\AR_NavigationAPI\bin\Debug\net6.0\NetTopologySuite.IO.GeoJSON4STJ.dll
+D:\DO-AN\sep490-g41-project2\SEP490_G41\AR_NavigationAPI\bin\Debug\net6.0\Newtonsoft.Json.dll
 D:\DO-AN\sep490-g41-project2\SEP490_G41\AR_NavigationAPI\bin\Debug\net6.0\Pomelo.EntityFrameworkCore.MySql.dll
 D:\DO-AN\sep490-g41-project2\SEP490_G41\AR_NavigationAPI\bin\Debug\net6.0\Pomelo.EntityFrameworkCore.MySql.NetTopologySuite.dll
 D:\DO-AN\sep490-g41-project2\SEP490_G41\AR_NavigationAPI\bin\Debug\net6.0\Swashbuckle.AspNetCore.Swagger.dll
@@ -84,5 +88,3 @@ D:\DO-AN\sep490-g41-project2\SEP490_G41\AR_NavigationAPI\obj\Debug\net6.0\refint
 D:\DO-AN\sep490-g41-project2\SEP490_G41\AR_NavigationAPI\obj\Debug\net6.0\AR_NavigationAPI.pdb
 D:\DO-AN\sep490-g41-project2\SEP490_G41\AR_NavigationAPI\obj\Debug\net6.0\AR_NavigationAPI.genruntimeconfig.cache
 D:\DO-AN\sep490-g41-project2\SEP490_G41\AR_NavigationAPI\obj\Debug\net6.0\ref\AR_NavigationAPI.dll
-=======
->>>>>>> Anhnh

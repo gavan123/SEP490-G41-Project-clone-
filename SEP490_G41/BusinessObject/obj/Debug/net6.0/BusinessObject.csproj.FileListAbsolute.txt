@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 D:\DO-AN\sep490-g41-project2\SEP490_G41\BusinessObject\bin\Debug\net6.0\BusinessObject.deps.json
 D:\DO-AN\sep490-g41-project2\SEP490_G41\BusinessObject\bin\Debug\net6.0\BusinessObject.runtimeconfig.json
 D:\DO-AN\sep490-g41-project2\SEP490_G41\BusinessObject\bin\Debug\net6.0\BusinessObject.dll
@@ -15,5 +14,3 @@ D:\DO-AN\sep490-g41-project2\SEP490_G41\BusinessObject\obj\Debug\net6.0\refint\B
 D:\DO-AN\sep490-g41-project2\SEP490_G41\BusinessObject\obj\Debug\net6.0\BusinessObject.pdb
 D:\DO-AN\sep490-g41-project2\SEP490_G41\BusinessObject\obj\Debug\net6.0\BusinessObject.genruntimeconfig.cache
 D:\DO-AN\sep490-g41-project2\SEP490_G41\BusinessObject\obj\Debug\net6.0\ref\BusinessObject.dll
-=======
->>>>>>> Anhnh
