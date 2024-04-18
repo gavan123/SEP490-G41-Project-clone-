@@ -48,6 +48,7 @@ namespace BusinessObject.MappingProfile
            .ForMember(dest => dest.LocationGps, opt => opt.ConvertUsing(new PointConverter(), src => src.LocationGps));
 
             CreateMap<Member, MemberDTO>().ReverseMap();
+<<<<<<< HEAD
             CreateMap<MapPointAddDTO, Mappoint>()
            .ForMember(dest => dest.LocationWeb, opt => opt.ConvertUsing(new PointConverter(), src => src.LocationWeb))
            .ForMember(dest => dest.LocationApp, opt => opt.ConvertUsing(new PointConverter(), src => src.LocationApp))
@@ -72,6 +73,12 @@ namespace BusinessObject.MappingProfile
                 return new Point(latitude, longitude);
             }
 
+=======
+<<<<<<< Updated upstream
+=======
+            CreateMap<Member, AddMemberDTO>().ReverseMap();
+>>>>>>> Stashed changes
+>>>>>>> minhpc
 
         }
     }

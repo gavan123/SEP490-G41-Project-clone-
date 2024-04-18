@@ -53,13 +53,20 @@ builder.Services.AddScoped<FacilityDAO>();
 builder.Services.AddScoped<MapDAO>();
 builder.Services.AddScoped<MappointDAO>();
 builder.Services.AddScoped<FloorDAO>();
+<<<<<<< Updated upstream
 builder.Services.AddScoped<MemberDAO>();
+=======
+
+builder.Services.AddScoped<MemberDAO>();
+
+>>>>>>> Stashed changes
 
 builder.Services.AddScoped<IBuildingRepository, BuildingRepository>();
 builder.Services.AddScoped<IFacilityRepository, FacilityRepository>();
 builder.Services.AddScoped<IMapRepository, MapRepository>();
 builder.Services.AddScoped<IMapPointRepository, MapPointRepository>();
 builder.Services.AddScoped<IFloorRepository, FloorRepository>();
+<<<<<<< HEAD
 
 //builder.Services.AddControllers()
 //    .AddJsonOptions(options =>
@@ -67,6 +74,21 @@ builder.Services.AddScoped<IFloorRepository, FloorRepository>();
 //        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
 //    });
 builder.Services.AddScoped<IMemberRepository, MemberRepository>();
+=======
+<<<<<<< Updated upstream
+builder.Services.AddScoped<IMemberRepository, MemberRepository>();
+=======
+
+
+builder.Services.AddScoped<IMemberRepository, MemberRepository>();
+
+>>>>>>> Stashed changes
+/*builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+    });*/
+>>>>>>> minhpc
 
 var app = builder.Build();
 

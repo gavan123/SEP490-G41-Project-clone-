@@ -13,7 +13,7 @@ using System.Xml.Linq;
 
 namespace DataAccess.DAO
 {
-    public class MemberDAO 
+    public class MemberDAO
     {
         private readonly finsContext _context;
         Validate validate = new Validate();
@@ -22,32 +22,23 @@ namespace DataAccess.DAO
         {
             _context = context;
         }
-
+        #region Get all members
         public List<Member> GetAllMembers()
         {
             var list = _context.Members.ToList();
             return list;
         }
+        #endregion
 
-        //Thêm nhân viên mới
+        #region Add new member
         public void AddNewMember(Member member)
         {
             _context.Members.Add(member);
             _context.SaveChanges();
         }
+        #endregion
 
-        //Sửa thông tin cá nhân
-        public void UpdateProfile(Member member)
-        {
-            var mem = _context.Members.FirstOrDefault(m => m.MemberId == member.MemberId);
-            if (mem != null)
-            {
-                mem.FullName = member.FullName;
-                mem.DoB = member.DoB;
-
-            }
-        }
-        //Xóa bỏ 1 member
+        #region Delete member
         public bool DeleteMember(int id)
         {
             bool result = false;
@@ -60,32 +51,45 @@ namespace DataAccess.DAO
             }
             return result;
         }
+        #endregion
 
-        //Login
-        public bool Login(string username, string password)
+        #region Login
+        public Member Login(string username, string password)
         {
             var member = _context.Members.FirstOrDefault(m => m.Username.Equals(username) && m.Password.Equals(validate.EncodePassword(password)));
             if (member != null)
             {
-                return true;
+                return member;
             }
-            return false;
+            return null;
         }
+        #endregion
+
+        #region Search member by DoB
         public List<Member> SearchMemberByDoB(DateTime date)
         {
             var list = _context.Members.Where(m => m.DoB == date).ToList();
             return list;
         }
+        #endregion
+
+        #region Search member by name
         public List<Member> SearchMemberByName(string name)
         {
+            if (name == null)
+            {
+                return _context.Members.ToList();
+            }
             var list = _context.Members.Where(m => m.FullName.Contains(name)).ToList();
             return list;
         }
-        public List<Member> SearchMemberByStatus(string status)
+        #endregion
+
+        public string SetMemberStatus()
         {
-            var list = _context.Members.Where(m => m.Status.Equals(status)).ToList();
-            return list;
+            return null;
         }
+        #region Send email
         public bool SendEmail(string email)
         {
             // Thông tin tài khoản email gửi
@@ -116,17 +120,29 @@ namespace DataAccess.DAO
                 return false;
             }
         }
-        public bool ChangePassword(string oldPass, string newPass)
+        #endregion
+
+        #region Change password
+        public string ChangePassword(int id, string oldpass, string newpass, string re_newpass)
         {
-            var mem = _context.Members.FirstOrDefault(m => m.Password.Equals(validate.EncodePassword(oldPass)));
+            var mem = _context.Members.FirstOrDefault(m => m.MemberId == id && m.Password.Equals(validate.EncodePassword(oldpass)));
             if (mem != null)
             {
-                mem.Password = validate.EncodePassword(newPass);
-                _context.SaveChanges();
-                return true;
+                if (oldpass != newpass)
+                {
+                    if (newpass == re_newpass)
+                    {
+                        mem.Password = validate.EncodePassword(newpass);
+                        _context.SaveChanges();
+                        return "Success";
+                    }
+                    return "NotEqual";
+                }
+                return "Same";
             }
-            return false;
+            return "Incorrect";
         }
+        #endregion
     }
 }
 
