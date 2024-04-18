@@ -48,15 +48,8 @@ namespace BusinessObject.MappingProfile
            .ForMember(dest => dest.LocationGps, opt => opt.ConvertUsing(new PointConverter(), src => src.LocationGps));
 
             CreateMap<Member, MemberDTO>().ReverseMap();
-            CreateMap<MapPointAddDTO, Mappoint>()
-           .ForMember(dest => dest.LocationWeb, opt => opt.ConvertUsing(new PointConverter(), src => src.LocationWeb))
-           .ForMember(dest => dest.LocationApp, opt => opt.ConvertUsing(new PointConverter(), src => src.LocationApp))
-           .ForMember(dest => dest.LocationGps, opt => opt.ConvertUsing(new PointConverter(), src => src.LocationGps));
-            CreateMap<Mappoint, MapPointDTO>().ReverseMap();
-            CreateMap<MapPointUpdateDTO, Mappoint>()
-           .ForMember(dest => dest.LocationWeb, opt => opt.ConvertUsing(new PointConverter(), src => src.LocationWeb))
-           .ForMember(dest => dest.LocationApp, opt => opt.ConvertUsing(new PointConverter(), src => src.LocationApp))
-           .ForMember(dest => dest.LocationGps, opt => opt.ConvertUsing(new PointConverter(), src => src.LocationGps));
+
+
         }
 
         public class PointConverter : IValueConverter<string, Point>
@@ -71,8 +64,6 @@ namespace BusinessObject.MappingProfile
                 // Create a new Point object
                 return new Point(latitude, longitude);
             }
-
-
         }
     }
 }

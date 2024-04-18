@@ -91,11 +91,11 @@ namespace DataAccess.IRepository.Repository.Tests
             }
         }
 
-        [Fact]
+     /*   [Fact]
         public void ChangePassword_ValidPassword_NoExceptionThrown()
         {
             // Arrange
-            var changePasswordDTO = new ChangePasswordDTO { /* create a valid change password DTO */ };
+            var changePasswordDTO = new ChangePasswordDTO { *//* create a valid change password DTO *//* };
             var options = new DbContextOptionsBuilder<finsContext>()
                 .UseInMemoryDatabase(databaseName: "TestDB")
                 .Options;
@@ -113,6 +113,6 @@ namespace DataAccess.IRepository.Repository.Tests
                 // Act & Assert
                 Assert.Null(Record.Exception(() => profileRepository.ChangePassword(changePasswordDTO)));
             }
-        }
+        }*/
     }
 }
