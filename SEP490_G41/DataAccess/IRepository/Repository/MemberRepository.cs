@@ -1,11 +1,4 @@
-<<<<<<< HEAD
 ﻿using BusinessObject.Models;
-=======
-<<<<<<< Updated upstream
-=======
-﻿using BusinessObject.Models;
->>>>>>> Stashed changes
->>>>>>> minhpc
 ﻿using AutoMapper;
 using BusinessObject.DTO;
 using DataAccess.DAO;
@@ -20,10 +13,7 @@ namespace DataAccess.IRepository.Repository
 {
     public class MemberRepository : IMemberRepository
     {
-<<<<<<< Updated upstream
-=======
         
->>>>>>> Stashed changes
         private readonly IMapper _mapper;
         private readonly MemberDAO _memberDAO;
 
@@ -129,9 +119,8 @@ namespace DataAccess.IRepository.Repository
             }
         }
 
-        public List<MemberDTO> SearchMemberByStatus(string status)
+        /*public List<MemberDTO> SearchMemberByStatus(string status)
         {
-<<<<<<< Updated upstream
             try
             {
                 var members = _memberDAO.SearchMemberByStatus(status);
@@ -142,9 +131,7 @@ namespace DataAccess.IRepository.Repository
             {
                 throw new Exception("Something has wrong!");
             }
-=======
             throw new NotImplementedException();
->>>>>>> Stashed changes
-        }
+        }*/
     }
 }

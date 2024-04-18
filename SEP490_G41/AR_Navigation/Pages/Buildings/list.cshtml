@@ -321,7 +321,6 @@
             }
         });
 
-<<<<<<< HEAD
         //Filter building by facility
         $('#building-facility').on('change', async function () {
             const selectedFacilityId = $(this).val(); // Lấy facilityId của tùy chọn đã chọn
@@ -343,43 +342,7 @@
                 console.error('Error:', error);
             }
         });
-=======
-<<<<<<< Updated upstream
-=======
-        $('#building-facility').on('change', function () {
-            const selectedFacilityId = $(this).val(); // Lấy facilityId của tùy chọn đã chọn
 
-            if (selectedFacilityId === '0' || !selectedFacilityId) {
-                const url = 'https://localhost:7186/api/buildings';
-
-                $.ajax({
-                    url: url,
-                    type: 'GET',
-                    success: async function (response) {
-                        await updateBuildingList(response);
-                    },
-                    error: function (xhr, status, error) {
-                        console.error('Error:', error);
-                    }
-                });
-            } else {
-                const url = 'https://localhost:7186/api/buildings?filter=facilityId eq ' + selectedFacilityId;
-
-                // Gửi yêu cầu AJAX
-                $.ajax({
-                    url: url,
-                    type: 'GET',
-                    success: async function (response) {
-                        await updateBuildingList(response);
-                    },
-                    error: function (xhr, status, error) {
-                        console.error('Error:', error);
-                    }
-                });
-            }
-        });
->>>>>>> Stashed changes
->>>>>>> minhpc
 
         //API get facility
         $.ajax({
