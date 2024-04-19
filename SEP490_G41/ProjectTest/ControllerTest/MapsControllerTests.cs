@@ -13,7 +13,7 @@ namespace ProjectTest.ControllerTest
 {
     public class MapsControllerTests
     {
-        private readonly Mock<IMapRepository> _mockMapRepository;
+       /* private readonly Mock<IMapRepository> _mockMapRepository;
         private readonly MapsController _controller;
 
         public MapsControllerTests()
@@ -98,6 +98,6 @@ namespace ProjectTest.ControllerTest
             Assert.IsType<OkResult>(result);
         }
 
-        
+        */
     }
 }

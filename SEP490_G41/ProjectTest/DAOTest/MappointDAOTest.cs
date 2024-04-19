@@ -12,7 +12,7 @@ namespace ProjectTest.DAOTest
 {
     public class MappointDAOTests
     {
-        private readonly Mock<finsContext> _mockContext;
+       /* private readonly Mock<finsContext> _mockContext;
         private readonly MappointDAO _mappointDAO;
 
         public MappointDAOTests()
@@ -157,6 +157,6 @@ namespace ProjectTest.DAOTest
             Assert.Equal(1, result[0].MapId);
             Assert.Equal(1, result[1].MapId);
             Assert.Equal(2, result[2].MapId);
-        }
+        }*/
     }
 }

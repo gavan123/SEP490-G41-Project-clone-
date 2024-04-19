@@ -69,7 +69,7 @@
                         text: 'You have successfully logged in!',
                     });
                     console.log('User information:', response.username);
-                    var user = { username: response.username, role: response.roleId };
+                    var user = { userid: response.userid, username: response.username, role: response.roleId };
                     sessionStorage.setItem('user', JSON.stringify(user));
                     console.log(sessionStorage.getItem('user'));
 
