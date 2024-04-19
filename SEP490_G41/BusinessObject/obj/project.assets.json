@@ -3129,19 +3129,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-<<<<<<< HEAD
       "projectUniqueName": "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj",
       "projectName": "BusinessObject",
       "projectPath": "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj",
       "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
       "outputPath": "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\BusinessObject\\obj\\",
-=======
-      "projectUniqueName": "D:\\FPT\\SEP\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj",
-      "projectName": "BusinessObject",
-      "projectPath": "D:\\FPT\\SEP\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj",
-      "packagesPath": "C:\\Users\\hieud\\.nuget\\packages\\",
-      "outputPath": "D:\\FPT\\SEP\\sep490-g41-project\\SEP490_G41\\BusinessObject\\obj\\",
->>>>>>> origin/hieunh
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -3249,11 +3241,7 @@
             "privateAssets": "all"
           }
         },
-<<<<<<< HEAD
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101\\RuntimeIdentifierGraph.json"
-=======
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.302\\RuntimeIdentifierGraph.json"
->>>>>>> origin/hieunh
       }
     }
   }

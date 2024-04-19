@@ -64,8 +64,8 @@ namespace DataAccess.IRepository.Repository
                                {
                                    MapId = m.MapId,
                                    MapName = m.MapName,
-                                   Image2D = m.MapImage2D,
-                                   Image3D = m.MapImage3D,
+                                   MapImage2D = m.MapImage2D,
+                                   MapImage3D = m.MapImage3D,
                                    FloorId = m.FloorId,
                                    FloorName = f.FloorName,
                                    BuildingName = b.BuildingName,
@@ -81,26 +81,6 @@ namespace DataAccess.IRepository.Repository
             }
         }
 
-<<<<<<< HEAD
-        public void AddMap(MapAddDTO map)
-        {
-            if (map == null)
-                throw new ArgumentNullException(nameof(map));
-            string uniqueFileName = map.Image2D.FileName;
-            try
-            {
-                // Map DTO properties to entity properties manually
-                var newMap = new Map
-                {
-                    MapName = map.MapName,
-                    Image2D = uniqueFileName,
-                    Image3D = "Alpha.jpg",
-                    FloorId = map.FloorId
-                };
-
-                _mapDAO.AddMap(newMap);
-=======
-
 
         public void AddMap(MapAddDTO mapAddDTO, BusinessObject.Models.Member member)
         {
@@ -108,7 +88,7 @@ namespace DataAccess.IRepository.Repository
                 throw new ArgumentNullException(nameof(mapAddDTO));
             try
             {
-                string uniqueFileName = mapAddDTO.Image2D.FileName;
+                string uniqueFileName = mapAddDTO.MapImage2D.FileName;
 
                 var map = new Map
                 {
@@ -118,7 +98,6 @@ namespace DataAccess.IRepository.Repository
                 };
 
                 _mapDAO.AddMap(map, member);
->>>>>>> origin/hieunh
             }
             catch (Exception ex)
             {
@@ -133,23 +112,10 @@ namespace DataAccess.IRepository.Repository
 
             if (mapUpdateDTO.MapId <= 0)
                 throw new ArgumentException("Map ID must be a positive integer.");
-            string uniqueFileName = map.Image2D.FileName;
             try
             {
-<<<<<<< HEAD
-                // Map DTO properties to entity properties manually
-                var updatedMap = new Map
-                {
-                    MapId = map.MapId,
-                    MapName = map.MapName,
-                    Image2D = uniqueFileName,
-                    Image3D = "Alpha.jpg",
-                    FloorId = map.FloorId
-                };
 
-                _mapDAO.UpdateMap(updatedMap);
-=======
-                string uniqueFileName = mapUpdateDTO.Image2D.FileName;
+                string uniqueFileName = mapUpdateDTO.MapImage2D.FileName;
 
                 var map = new Map
                 {
@@ -160,7 +126,6 @@ namespace DataAccess.IRepository.Repository
                 };
 
                 _mapDAO.UpdateMap(map);
->>>>>>> origin/hieunh
             }
             catch (Exception ex)
             {

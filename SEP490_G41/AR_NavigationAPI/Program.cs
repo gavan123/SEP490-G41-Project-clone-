@@ -65,16 +65,8 @@ builder.Services.AddScoped<IFacilityRepository, FacilityRepository>();
 builder.Services.AddScoped<IMapRepository, MapRepository>();
 builder.Services.AddScoped<IMapPointRepository, MapPointRepository>();
 builder.Services.AddScoped<IFloorRepository, FloorRepository>();
-<<<<<<< HEAD
-=======
 builder.Services.AddScoped<IEdgeRepository, EdgeRepository>();
 
-//builder.Services.AddControllers()
-//    .AddJsonOptions(options =>
-//    {
-//        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
-//    });
->>>>>>> origin/hieunh
 builder.Services.AddScoped<IMemberRepository, MemberRepository>();
 
 builder.Services.AddDistributedMemoryCache();
