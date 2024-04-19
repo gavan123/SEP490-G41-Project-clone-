@@ -45,7 +45,6 @@ function getMapPointsByMapId(mapId) {
         });
         renderPoints(mappointList);
         console.log("mappoint legh:", mappointList);
-        console.log("mappoint legh:", allPoints);
     }).catch(function (error) {
         console.error("error occurred while fetching mappoint data:", error);
     });
@@ -63,37 +62,11 @@ function parseLocation(locationWebString) {
 
     return { x: x, y: y };
 }
-//pre-define map-points that represent data from database
-var mapPoint0 = { id: "p.R102", x: 19.13, y: -7.61 };
-var mapPoint1 = { id: "p.R104", x: 30.74, y: -7.61 };
-var mapPoint2 = { id: "p.R106", x: 35.74, y: -7.61 };
-var mapPoint3 = { id: "p.R103", x: 28, y: -10.15 };
-var mapPoint4 = { id: "p.R105", x: 33.65, y: -10.15 };
-var mapPoint5 = { id: "p.TS", x: 16.8, y: -11.65 };
-var mapPoint6 = { id: "p.R107", x: 40, y: -11.44 };
-var mapPoint7 = { id: "p.kt", x: 40.575, y: -7.61 };
-var mapPoint8 = { id: "Tuong Coc", x: 5.58, y: -13.5 };
-var mapPoint9 = { id: "WC", x: 10.5, y: -1.2 };
-var mapPoint10 = { id: "Cau Thang 1", x: 3.7, y: -1.16 };
-var mapPoint11 = { id: "p.L108", x: -69.2, y: -7.4 };
-var mapPoint12 = { id: "p.L106", x: -60, y: -7.4 };
-var mapPoint13 = { id: "p.L104", x: -55.23, y: -7.4 };
-var mapPoint14 = { id: "p.L102", x: -44.75, y: -7.4 };
-var mapPoint15 = { id: "p.L107", x: -68, y: -10 };
-var mapPoint16 = { id: "p.L105", x: -62, y: -10 };
-var mapPoint17 = { id: "p.L103", x: -53, y: -10 };
-var mapPoint18 = { id: "p.L101", x: -37.84, y: -13.83 };
-var mapPoint19 = { id: "Ngoi Sao", x: -7.2, y: -11 };
 
-var allPoints = [
-    mapPoint0, mapPoint1, mapPoint2, mapPoint3, mapPoint4, mapPoint5,
-    mapPoint6, mapPoint7, mapPoint8, mapPoint9, mapPoint10, mapPoint11,
-    mapPoint12, mapPoint13, mapPoint14, mapPoint15, mapPoint16, mapPoint17,
-    mapPoint18, mapPoint19
-];
 const sampleEdge = {
     edgeId: "", pointId1: "", pointId2: "", direction: 2, edgeLength: 0
 }
+
 const canvas = document.getElementById("canvas_data");
 const context = canvas.getContext("2d");
 
@@ -118,7 +91,7 @@ var numberOfClicks = 0;
 //toa do trong anh tinh theo goc toa do cua database
 function pixelLocation(event) {
     document.getElementById("demo").innerHTML = "LocationWeb1: (" + (event.offsetX) + ", " + (event.offsetY) + ")" +
-        "LocationWeb2: (" + (event.offsetX - root.x) + ", " + -(event.offsetY - root.y) + ")";
+        "LocationWebRoot: (" + (event.offsetX - root.x) + ", " + -(event.offsetY - root.y) + ")";
 }
 //toa do cua diem trong database
 function databaseLocation(event) {
@@ -131,6 +104,7 @@ function setEdge() {
     console.log("SETTING EDGE");
     canvas.setAttribute("onclick", "drawLine(event), count(event)");
 }
+window.setEdge = setEdge;
 
 //function duoc goi khi bam Get Mappoints
 function renderPoints(points) {
@@ -156,12 +130,14 @@ function count() {
 }
 
 function drawLine(event) {
-    // if it is the 2nd click then it is beginPoint
+    // Nếu là lần click thứ 2 thì đây là điểm bắt đầu
     if (numberOfClicks == 0) {
         beginPoint.x = event.offsetX;
         beginPoint.y = event.offsetY;
         console.log(beginPoint.x + ", " + beginPoint.y);
-        if (inButtonRange(allPoints, beginPoint) == false) {
+
+        // Kiểm tra xem điểm bắt đầu có nằm trong phạm vi map point không
+        if (inButtonRange(mappointList, beginPoint) == false) {
             console.log("1");
             numberOfClicks = -1;
             nearbyPoint = { id: "", x: 0, y: 0 };
@@ -169,11 +145,11 @@ function drawLine(event) {
             return;
         }
         else {
-            //khi xac nhan bam dung vao pham vi map point
-            inButtonRange(allPoints, beginPoint);
+            // Khi xác nhận bấm đúng vào phạm vi map point
+            inButtonRange(mappointList, beginPoint);
             beginPoint = nearbyPoint;
             console.log("a");
-            //ve hinh tron mau xanh 
+            // Vẽ hình tròn màu xanh 
             context.beginPath();
             context.arc(beginPoint.x * ratio + root.x, -beginPoint.y * ratio + root.y, radius, 0, 2 * Math.PI, false);
             context.closePath();
@@ -182,18 +158,18 @@ function drawLine(event) {
             nearbyPoint = { id: "", x: 0, y: 0 };
         }
     }
-    //3r click will be endPoint
+    // Lần click thứ 3 sẽ là điểm kết thúc
     if (numberOfClicks == 1) {
         endPoint.x = event.offsetX;
         endPoint.y = event.offsetY;
-        //ve hinh tron mau do
+        // Vẽ hình tròn màu đỏ
         context.beginPath();
         context.arc(beginPoint.x * ratio + root.x, -beginPoint.y * ratio + root.y, radius, 0, 2 * Math.PI, false);
         context.closePath();
         context.fillStyle = 'red';
         context.fill();
-        //truong hop chon khong dung trong pham vi map point
-        if (inButtonRange(allPoints, endPoint) == false) {
+        // Trường hợp chọn không đúng trong phạm vi map point
+        if (inButtonRange(mappointList, endPoint) == false) {
             numberOfClicks = -1;
             nearbyPoint = { id: "", x: 0, y: 0 };
             beginPoint = nearbyPoint;
@@ -201,14 +177,14 @@ function drawLine(event) {
             return;
         }
         else {
-            //lay toa do cua map point (button)
-            inButtonRange(allPoints, endPoint);
+            // Lấy tọa độ của map point (button)
+            inButtonRange(mappointList, endPoint);
             endPoint = nearbyPoint;
             nearbyPoint = { id: "", x: 0, y: 0 };
-            //bat dau ve 1 duong thang giua beginPoint va endPoint
+            // Bắt đầu vẽ một đường thẳng giữa beginPoint và endPoint
             context.lineWidth = 1;
             context.beginPath();
-            //toa do trong hinh anh di tu trai - phai, tren - duoi nhu ma tran nen phai doi dau toa do Y
+            // Tọa độ trong hình ảnh đi từ trái - phải, từ trên - dưới như một ma trận nên phải đảo đầu tọa độ Y
             let bX = beginPoint.x * ratio + root.x;
             let bY = -beginPoint.y * ratio + root.y;
             let eX = endPoint.x * ratio + root.x;
@@ -217,10 +193,10 @@ function drawLine(event) {
             context.moveTo(bX, bY);
             context.lineTo(eX, eY);
             context.stroke();
-            //luu gia tri
+            // Lưu giá trị
             saveEdge(beginPoint, endPoint);
 
-            //tra cac bien ve gia tri ban dau de chuan bi cho luot thuc thi tiep theo
+            // Trả các biến về giá trị ban đầu để chuẩn bị cho lượt thực thi tiếp theo
             numberOfClicks = -1;
             beginPoint = { id: "", x: 0, y: 0 };
             endPoint = { id: "", x: 0, y: 0 };
@@ -232,7 +208,7 @@ function drawLine(event) {
 
 function saveEdge(point1, point2) {
     var edge = {
-        edgeId: "1", pointId1: point1.id, pointId2: point2.id, direction: 2, edgeLength: getDistance(point1, point2)
+        edgeId: "1", pointId1: point1.mappointName, pointId2: point2.mappointName, direction: 2, edgeLength: getDistance(point1, point2)
     }
     allEdges.push(edge);
     edge = sampleEdge;
@@ -255,14 +231,14 @@ function showEdges(list) {
 //nearbyPoint se lay gia tri cua diem gan nhat neu co
 //gia tri se giong trong database
 
-function inButtonRange(allPoints, point) {
+function inButtonRange(mappointList, point) {
     returnPoint = { id: "", x: 0, y: 0 };
     var minDistance = 0.8;
-    allPoints.forEach(a => {
+    mappointList.forEach(a => {
         //toa do trong hinh anh di tu trai - phai, tren - duoi nhu ma tran nen phai doi dau toa do 
-        let x1 = a.x;
+        let x1 = a.locationAppX;
         let x2 = (point.x - root.x) / ratio;
-        let y1 = a.y;
+        let y1 = a.locationAppY;
         let y2 = -(point.y - root.y) / ratio;
 
         let distance = Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
@@ -317,7 +293,7 @@ function redrawCanvas() {
 
 //this function only support mappoints with coordinates in database, not image
 function getDistance(point1, point2) {
-    return Math.sqrt((point1.x - point2.x) * (point1.x - point2.x) + (point1.y - point2.y) * (point1.y - point2.y));
+    return Math.sqrt((point1.locationAppX - point2.locationAppX) * (point1.locationAppX - point2.locationAppX) + (point1.locationAppY - point2.locationAppY) * (point1.locationAppY - point2.locationAppY));
 }
 
 function drawCircle(event) {

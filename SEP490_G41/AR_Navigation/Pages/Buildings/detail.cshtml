@@ -28,22 +28,6 @@
 
 
 
-    .zoom-btn {
-        background-color: #fff;
-        border: 1px solid #ddd;
-        padding: 5px;
-        margin-right: 5px;
-        cursor: pointer;
-    }
-
-    .img-magnifier-glass {
-        position: absolute;
-        border: 3px solid #000;
-        border-radius: 50%;
-        cursor: none;
-        width: 100px;
-        height: 100px;
-    }
 
     .selected-image-container2 {
         width: 400px;
@@ -95,18 +79,18 @@
     </div>
 
     <!-- Map Image -->
-    <button type="button" id="setRootButton" onclick="setRoot()">Set Root</button>
-    <button type="button" id="getMPButton" >Get Mappoints</button>
-    <button type="button" id="connectEdgeButton" onclick="setEdge()">Connect Edge</button>
-    <button type="button" id="undoButton" onclick="undo()">Undo</button>
+    <button type="button" id="setRootButton" class="btn btn-light" onclick="setRoot()">Set Root</button>
+    <button type="button" id="getMPButton" class="btn btn-light">Get Mappoints</button>
+    <button type="button" id="connectEdgeButton" class="btn btn-light" >Connect Edge</button>
+    <button type="button" id="undoButton" class="btn btn-light" onclick="undo()">Undo</button>
     <div class="selected-image-container" id="map-images-container">
         <canvas id="canvas_data" width="1065%"
-                onclick="drawLine(event,this),pixelLocation(event), databaseLocation(event), count()">
+                onclick="pixelLocation(event), databaseLocation(event), count()">
         </canvas>
     </div>
     <div id="demo"></div>
     <div id="demo1"></div>
-    <button id="clear-canvas-btn">Delete draw</button>
+    <button id="clear-canvas-btn" class="btn btn-light">Delete draw</button>
 </div>
 <!-- Content Wrapper START -->
 <div class="main-content">
@@ -173,11 +157,14 @@
         </div>
     </div>
 </div>
-<script src="/js/MappointDraw.js"></script>
+
 <script>
     document.getElementById('getMPButton').addEventListener('click', function () {
         // Gọi hàm renderPoints từ tệp JavaScript MappointDraw.js và truyền vào mappointList
         renderPoints(mappointList);
+    });
+    document.getElementById('connectEdgeButton').addEventListener('click', function () {
+        setEdge();
     });
     // Delete draw line
     document.getElementById("clear-canvas-btn").addEventListener("click", function () {
@@ -439,4 +426,4 @@
     }
 
 </script>
-
+<script src="/js/MappointDraw.js"></script>
