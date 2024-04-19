@@ -1,11 +1,7 @@
 {
   "format": 1,
   "restore": {
-<<<<<<< HEAD
     "D:\\DO-AN\\sep490-g41-project2\\SEP490_G41\\BusinessObject\\BusinessObject.csproj": {}
-=======
-    "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj": {}
->>>>>>> Anhnh
   },
   "projects": {
     "D:\\DO-AN\\sep490-g41-project2\\SEP490_G41\\BusinessObject\\BusinessObject.csproj": {
@@ -15,11 +11,7 @@
         "projectName": "BusinessObject",
         "projectPath": "D:\\DO-AN\\sep490-g41-project2\\SEP490_G41\\BusinessObject\\BusinessObject.csproj",
         "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-<<<<<<< HEAD
         "outputPath": "D:\\DO-AN\\sep490-g41-project2\\SEP490_G41\\BusinessObject\\obj\\",
-=======
-        "outputPath": "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\BusinessObject\\obj\\",
->>>>>>> Anhnh
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
