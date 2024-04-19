@@ -68,6 +68,11 @@
 <canvas class="chart" id="line-chart"></canvas>
 <script>
     $(document).ready(function () {
+        var userJson = sessionStorage.getItem('user');
+        if (!userJson) {
+            window.location.href = '/Authen/Login';
+            return; 
+        }
         // Gọi API để lấy dữ liệu của Facility
         $.ajax({
             url: 'https://localhost:7186/api/facilities',

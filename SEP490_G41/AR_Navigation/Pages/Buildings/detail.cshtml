@@ -124,7 +124,7 @@
                                 <th>ID</th>
                                 <th>Mappoint Name</th>
                                 <th>Location Web</th>
-                                <th>Route Count</th>
+                                <th>Location App</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -199,6 +199,12 @@
     $('#data-table').DataTable();
 
     $(document).ready(function () {
+        //session
+        var userJson = sessionStorage.getItem('user');
+        if (!userJson) {
+            window.location.href = '/Authen/Login';
+            return;
+        }
 
         // $(document).on("click", "#map-images-container img", function (event) {
         //     // Tọa độ x và y của sự kiện
@@ -437,56 +443,46 @@
 
 
 
-        // //get mapppoint list
-        // $.ajax({
-        //     url: 'https://localhost:7186/api/mappoints',
-        //     method: "GET",
-        //     dataType: 'json'
-        // }).then(function (mappointData) {
-        //     $('#map-list').empty();
+        //get mapppoint list
+    //     $.ajax({
+    //         url: 'https://localhost:7186/api/mappoints',
+    //         method: "get",
+    //         datatype: 'json'
+    //     }).then(function (mappointdata) {
+    //         $('#map-list').empty();
 
-        //     mappointData.forEach(function (mappoint) {
-        //         $.ajax({
-        //             url: `https://localhost:7186/api/floors?$filter=buildingId eq 1`,
-        //             type: 'GET',
-        //             dataType: 'json'
-        //         }).then(function (floors) {
-        //             const count = floors.length;
-        //             const mappointRow = `
-        //                  <tr>
-        //                      <td><input type="checkbox" class="checkbox"></td>
-        //                      <td>#${mappoint.mapPointId}</td>
-        //                      <td>
-        //                          <div class="d-flex align-items-center">
-        //                              <div class="avatar avatar-image avatar-sm m-r-10">
-        //                                  <img src="${mappoint.image}" alt="">
-        //                              </div>
-        //                              <h6 class="m-b-0">${mappoint.mappointName}</h6>
-        //                          </div>
-        //                      </td>
-        //                      <td>${mappoint.locationWeb}</td>
-        //                      <td>${count}</td>
-        //                      <td class="text-right">
-        //                          <button class="btn btn-icon btn-warning btn-hover btn-sm btn-rounded pull-right">
-        //                              <i class="anticon anticon-edit"></i>
-        //                          </button>
-        //                          <button class="btn btn-icon btn-danger btn-hover btn-sm btn-rounded">
-        //                              <i class="anticon anticon-delete"></i>
-        //                          </button>
-        //                      </td>
-        //                  </tr>
-        //              `;
-
-        //             // Thêm hàng mới vào tbody
-        //             $('#map-list').append(mappointRow);
-        //         }).catch(function (error) {
-        //             console.error('Error loading route count from API: ' + error);
-        //         });
-        //     });
-        // }).catch(function (error) {
-        //     console.error("Error occurred while fetching mappoint data:", error);
-        // });
-    });
+    //         mappointdata.foreach(function (mappoint) {
+    //                 const mappointrow = `
+    //                      <tr>
+    //                          <td><input type="checkbox" class="checkbox"></td>
+    //                          <td>#${mappoint.mappointid}</td>
+    //                          <td>
+    //                              <div class="d-flex align-items-center">
+    //                                  <div class="avatar avatar-image avatar-sm m-r-10">
+    //                                      <img src="${mappoint.image}" alt="">
+    //                                  </div>
+    //                               <h6 class="m-b-0">${mappoint.mappointName}</h6>
+    //                              </div>
+    //                          </td>
+    //                          <td>${mappoint.locationWeb}</td>
+    //                          <td>${mappoint.locationApp}</td>
+    //                          <td class="text-right">
+    //                              <button class="btn btn-icon btn-warning btn-hover btn-sm btn-rounded pull-right">
+    //                                  <i class="anticon anticon-edit"></i>
+    //                              </button>
+    //                              <button class="btn btn-icon btn-danger btn-hover btn-sm btn-rounded">
+    //                                  <i class="anticon anticon-delete"></i>
+    //                              </button>
+    //                          </td>
+    //                      </tr>
+    //                  `;
+    //                 // thêm hàng mới vào tbody
+    //                 $('#map-list').append(mappointrow);
+    //         });
+    //     }).catch(function (error) {
+    //         console.error("error occurred while fetching mappoint data:", error);
+    //     });
+    // });
 
     //get image when selected
     function displaySelectedImage(input, containerId) {

@@ -204,6 +204,10 @@
 <script>
 
     $(document).ready(function () {
+        var userJson = sessionStorage.getItem('user');
+        if (!userJson) {
+            window.location.href = '/Authen/Login';
+        }
         var itemsPerPage = 5;
         //Buiding table
         async function updateBuildingList(buildings, currentPage, itemsPerPage) {
