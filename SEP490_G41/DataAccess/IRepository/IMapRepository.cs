@@ -1,4 +1,5 @@
 ﻿using BusinessObject.DTO;
+using BusinessObject.Models;
 using DataAccess.DAO;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ namespace DataAccess.IRepository
     {
         MapDTO GetMapById(int mapId);
         List<MapDTO> GetAllMaps();
-        void AddMap(MapAddDTO map);
+        void AddMap(MapAddDTO map, Member member);
         void UpdateMap(MapUpdateDTO map);
         void DeleteMap(int mapId);
 

@@ -21,7 +21,7 @@ namespace DataAccess.DAO
 
 
         // Thêm mới bản đồ
-        public void AddMap(Map map)
+        public void AddMap(Map map, Member member)
         {
             if (map == null)
                 throw new ArgumentNullException(nameof(map));
@@ -29,17 +29,29 @@ namespace DataAccess.DAO
             if (string.IsNullOrWhiteSpace(map.MapName))
                 throw new ArgumentException("Map name cannot be null or empty.");
 
-            if (map.Image2D == null)
+            if (map.MapImage2D == null)
                 throw new ArgumentException("2D image cannot be null.");
-
-            if (map.Image3D == null)
-                throw new ArgumentException("3D image cannot be null.");
 
             if (map.FloorId <= 0)
                 throw new ArgumentException("Floor ID must be a positive integer.");
 
+            // Thêm mới bản đồ
             _context.Maps.Add(map);
-            _context.SaveChanges(); // Ensure that changes are saved to the database
+            _context.SaveChanges();
+
+            // Thêm mới bản đồ quản lý (Mapmanage)
+            var mapManage = new Mapmanage
+            {
+                MapId = map.MapId,
+                MemberId = 2,
+                CreateDate = DateTime.Now,
+                UpdateDate = DateTime.Now
+            };
+
+            _context.Mapmanages.Add(mapManage);
+
+            // Lưu thay đổi
+            _context.SaveChanges();
         }
 
         // Đọc thông tin bản đồ bằng Id
@@ -63,7 +75,7 @@ namespace DataAccess.DAO
             if (string.IsNullOrWhiteSpace(map.MapName))
                 throw new ArgumentException("Map name cannot be null or empty.");
 
-            if (map.Image2D == null)
+            if (map.MapImage2D == null)
                 throw new ArgumentException("2D image cannot be null.");
 
             if (map.FloorId <= 0)
@@ -73,8 +85,8 @@ namespace DataAccess.DAO
             if (existingMap != null)
             {
                 existingMap.MapName = map.MapName;
-                existingMap.Image2D = map.Image2D;
-                existingMap.Image3D = map.Image3D;
+                existingMap.MapImage2D = map.MapImage2D;
+                existingMap.MapImage3D = map.MapImage3D;
                 existingMap.FloorId = map.FloorId;
                 _context.SaveChanges();
             }
@@ -93,7 +105,14 @@ namespace DataAccess.DAO
             var map = _context.Maps.FirstOrDefault(m => m.MapId == mapId);
             if (map != null)
             {
+                // Xóa thông tin trong bảng Mapmanage
+                var mapManages = _context.Mapmanages.Where(mm => mm.MapId == mapId);
+                _context.Mapmanages.RemoveRange(mapManages);
+
+                // Xóa bản đồ từ bảng Maps
                 _context.Maps.Remove(map);
+
+                // Lưu thay đổi
                 _context.SaveChanges();
             }
             else
@@ -101,6 +120,7 @@ namespace DataAccess.DAO
                 throw new ArgumentException($"Map with ID {mapId} does not exist.");
             }
         }
+
 
         // Lấy danh sách tất cả các bản đồ
         public virtual List<Map> GetAllMaps()

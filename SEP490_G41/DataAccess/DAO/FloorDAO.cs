@@ -38,6 +38,16 @@ namespace DataAccess.DAO
             return _context.Floors.FirstOrDefault(f => f.FloorId == floorId);
         }
 
+        public List<Floor> GetAllFloorsByBuildingId(int buildingId)
+        {
+            if (buildingId <= 0)
+            {
+                throw new ArgumentException("Invalid building ID", nameof(buildingId));
+            }
+
+            return _context.Floors.Where(f => f.BuildingId == buildingId).ToList();
+        }
+
 
         public void UpdateFloor(Floor floor)
         {

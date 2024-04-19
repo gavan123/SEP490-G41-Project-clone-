@@ -4,6 +4,25 @@
     Layout = "_AdminLayout";
 }
 
+<style>
+    /* Đặt kích thước cho container chứa ảnh */
+    .selected-image-container {
+        width: 200px;
+        height: 200px;
+        border: 2px solid #ced4da;
+        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 10px;
+    }
+
+        .selected-image-container img {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 8px;
+        }
+</style>
 <div class="page-header no-gutters">
     <h1>Map List</h1>
     <div class="row align-items-md-center">
@@ -38,14 +57,20 @@
                     <thead>
                         <tr>
                             <th style="width: 30%;">Map Name</th>
-                            <th>Building</th>
-                            <th>Floor</th>
-                            <th>Status</th>
+                            <th>Building Name</th>
+                            <th>Floor Name</th>
+                            <th>Map Manager Name</th>
+                            <th>Image</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody id="map-list">
+<<<<<<< HEAD
                        
+=======
+                        
+
+>>>>>>> origin/hieunh
                     </tbody>
                 </table>
             </div>
@@ -75,12 +100,15 @@
                         <label for="new-map-name">Map Name</label>
                         <input type="text" class="form-control" id="new-map-name" placeholder="Please input map name" required>
                     </div>
-                    <label for="new-building-image">Image</label>
-                    <div class="input-group">
-                        <div class="custom-file">
-                            <input type="file" name="ImageFile" class="custom-file-input" id="new-building-image" aria-describedby="inputGroupFileAddon" onchange="displaySelectedImage(this, 'add-selected-image-container')">
-                            <label class="custom-file-label" for="new-building-image">Choose file</label>
+                    <div class="form-group">
+                        <label for="new-building-image">Image</label>
+                        <div class="input-group">
+                            <div class="custom-file">
+                                <input type="file" name="ImageFile" class="custom-file-input" id="new-building-image" aria-describedby="inputGroupFileAddon" onchange="displaySelectedImage(this, 'add-selected-image-container')">
+                                <label class="custom-file-label" for="new-building-image">Choose file</label>
+                            </div>
                         </div>
+                        <div id="add-selected-image-container" class="selected-image-container" style="margin-top: 10px;"></div>
                     </div>
                     <div class="form-group">
                         <label for="new-map-building">Building</label>
@@ -93,17 +121,6 @@
                         <select class="form-control" id="new-map-floor">
                             <!-- Options will be created by JavaScript -->
                         </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Status</label>
-                        <div class="custom-control custom-radio">
-                            <input type="radio" id="statusActive" name="statusRadios" class="custom-control-input" value="active" checked>
-                            <label class="custom-control-label" for="statusActive">Active</label>
-                        </div>
-                        <div class="custom-control custom-radio">
-                            <input type="radio" id="statusDeactive" name="statusRadios" class="custom-control-input" value="deactive">
-                            <label class="custom-control-label" for="statusDeactive">Deactive</label>
-                        </div>
                     </div>
                     <button type="button" class="btn btn-primary" id="create-map-btn">Create Map</button>
                 </form>
@@ -130,6 +147,16 @@
                         <input type="text" class="form-control" id="edit-map-name" placeholder="Please input map name" required>
                     </div>
                     <div class="form-group">
+                        <label for="new-building-image">Image</label>
+                        <div class="input-group">
+                            <div class="custom-file">
+                                <input type="file" name="ImageFile" class="custom-file-input" id="edit-map-image" aria-describedby="inputGroupFileAddon" onchange="displaySelectedImage(this, 'add-selected-image-container')">
+                                <label class="custom-file-label" for="new-building-image">Choose file</label>
+                            </div>
+                        </div>
+                        <div id="add-selected-image-container" class="selected-image-container" style="margin-top: 10px;"></div>
+                    </div>
+                    <div class="form-group">
                         <label for="edit-map-building">Building</label>
                         <select class="form-control" id="edit-map-building">
                             <!-- Options will be created by JavaScript -->
@@ -140,17 +167,6 @@
                         <select class="form-control" id="edit-map-floor">
                             <!-- Options will be created by JavaScript -->
                         </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Status</label>
-                        <div class="custom-control custom-radio">
-                            <input type="radio" id="edit-statusActive" name="edit-statusRadios" class="custom-control-input" value="active" checked>
-                            <label class="custom-control-label" for="edit-statusActive">Active</label>
-                        </div>
-                        <div class="custom-control custom-radio">
-                            <input type="radio" id="edit-statusDeactive" name="edit-statusRadios" class="custom-control-input" value="deactive">
-                            <label class="custom-control-label" for="edit-statusDeactive">Deactive</label>
-                        </div>
                     </div>
                     <button type="button" class="btn btn-primary" id="edit-map-btn">Save Changes</button>
                 </form>
@@ -183,6 +199,7 @@
 
             for (const map of mapsToShow) {
                 const mapRow = `
+<<<<<<< HEAD
                                     <tr>
                                         <td>
                                             <div class="media align-items-center">
@@ -222,6 +239,60 @@
                                         </td>
                                     </tr>
                                 `;
+=======
+                    <tr>
+                        <td>
+                            <div class="media align-items-center">
+                                <div class="m-l-10">
+                                    <h5 class="m-b-0">${map.mapName}</h5>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="media align-items-center">
+                                        <div class="avatar avatar-image rounded">
+                                                <img src="/Images/${map.buildingImg}" alt="">
+                                        </div>
+                                        <div class="m-l-10">
+                                            <h5 class="m-b-0">${map.buildingName}</h5>
+                                        </div>
+                                    </div>
+                        </td>
+                        <td>
+                            <span>${map.floorName}</span>
+                        </td>
+                            <td>
+                                    <span>${map.managerFullName}</span>
+                            </td>
+                        <td>
+                                <div class="avatar avatar-image rounded">
+                                                    <img src="/Images/${map.image2D}" alt="">
+                                </div>  
+                        </td>
+                        <td class="text-right">
+                            <div class="dropdown dropdown-animated scale-left">
+                                <a class="text-gray font-size-18" href="javascript:void(0);" data-toggle="dropdown">
+                                    <i class="anticon anticon-ellipsis"></i>
+                                </a>
+                                <div class="dropdown-menu">
+                                        <button class="dropdown-item btn btn-info btn-tone viewMap" type="button" data-id="${map.mapId}">
+                                        <i class="anticon anticon-eye"></i>
+                                        <span class="m-l-10">View</span>
+                                    </button>
+                                    <button class="dropdown-item btn btn-warning btn-tone editMap" type="button" data-id="${map.mapId}">
+                                        <i class="anticon anticon-edit"></i>
+                                        <span class="m-l-10">Edit</span>
+                                    </button>
+                                    <button class="dropdown-item btn btn-danger btn-tone deleteMap" type="button" data-id="${map.mapId}">
+                                        <i class="anticon anticon-delete"></i>
+                                        <span class="m-l-10">Delete</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+>>>>>>> origin/hieunh
 
                 $('#map-list').append(mapRow);
             }
@@ -303,25 +374,61 @@
             }
         });
 
-        // Create Map API
+        $('#new-map-building').change(function () {
+            var buildingId = $(this).val();
+            $.ajax({
+                url: 'https://localhost:7186/api/floors/building/' + buildingId,
+                type: 'GET',
+                success: function (response) {
+                    $('#new-map-floor').empty(); // Clear existing options
+                    response.forEach(function (floor) {
+                        $('#new-map-floor').append('<option value="' + floor.floorId + '">' + floor.floorName + '</option>');
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
+        $('#edit-map-building').change(function () {
+            var buildingId = $(this).val();
+            $.ajax({
+                url: 'https://localhost:7186/api/floors/building/' + buildingId,
+                type: 'GET',
+                success: function (response) {
+                    $('#edit-map-floor').empty(); // Clear existing options
+                    response.forEach(function (floor) {
+                        $('#edit-map-floor').append('<option value="' + floor.floorId + '">' + floor.floorName + '</option>');
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
+
+
+
         $('#create-map-btn').click(function () {
             var mapName = $('#new-map-name').val();
-            var buildingId = $('#new-map-building').val();
             var floorId = $('#new-map-floor').val();
-            var status = $('input[name="statusRadios"]:checked').val();
+            var imageInput = $('#new-building-image');
+      
+            var formData = new FormData();
+            formData.append('MapName', mapName);
+            formData.append('FloorId', floorId);
+            if (imageInput[0].files.length > 0) {
+                var imageFile = imageInput[0].files[0];
+                formData.append('Image2D', imageFile);
+            }
 
-            var formData = {
-                MapName: mapName,
-                BuildingId: buildingId,
-                FloorId: floorId,
-                Status: status
-            };
-
+            // Send an AJAX POST request to the API
             $.ajax({
                 url: 'https://localhost:7186/api/maps',
                 type: 'POST',
-                data: JSON.stringify(formData),
-                contentType: 'application/json',
+                data: formData,
+                processData: false,
+                contentType: false,
                 success: function (response) {
                     Swal.fire({
                         icon: 'success',
@@ -386,7 +493,96 @@
             var mapId = $(this).data('id');
             showEditModal(mapId);
         });
+<<<<<<< HEAD
+    });
+=======
+
+        function showEditModal(mapId) {
+            $.ajax({
+                url: 'https://localhost:7186/api/maps/' + mapId,
+                type: 'GET',
+                success: function (response) {
+                    $('#map-id').val(response.mapId);
+                    $('#edit-map-name').val(response.mapName);
+                    // Hiển thị modal chỉnh sửa
+                    $('#edit-map').modal('show');
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error fetching map details:', error);
+                }
+            });
+        }
+
+        $('#edit-map-btn').click(function () {
+            var mapId = $('#map-id').val();
+            var mapName = $('#edit-map-name').val();
+            var floorId = $('#edit-map-floor').val();
+            var imageInput = $('#edit-map-image');
+
+            var formData = new FormData();
+            formData.append('MapId', mapId);
+            formData.append('MapName', mapName);
+            formData.append('FloorId', floorId);
+            if (imageInput[0].files.length > 0) {
+                var imageFile = imageInput[0].files[0];
+                formData.append('Image2D', imageFile);
+            }
+
+            $.ajax({
+                url: 'https://localhost:7186/api/maps/' + $('#map-id').val(),
+                type: 'PUT',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Map Updated',
+                        text: 'Map information has been updated successfully!',
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then(() => {
+                        $('#form-edit-map').submit();
+                    });
+                    $('#edit-map').modal('hide');
+                    console.log('Map updated successfully:', response);
+                },
+                error: function (xhr, status, error) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'An error occurred while updating map information.',
+                    });
+                    console.error('Error updating map:', error);
+                }
+            });
+        });
+>>>>>>> origin/hieunh
+
+
+        //Redirect building detail
+        $(document).on('click', '.viewMap', function () {
+            var mapId = $(this).data('id');
+            window.location.href = `Detail/${mapId}`;
+        });
+
+
     });
 
+    function displaySelectedImage(input, containerId) {
+        var file = input.files[0];
+        var reader = new FileReader();
 
+        reader.onload = function (e) {
+            var imgElement = document.createElement('img');
+            imgElement.src = e.target.result;
+            imgElement.className = "img-fluid rounded";
+
+            var selectedImageContainer = document.getElementById(containerId);
+            selectedImageContainer.innerHTML = '';
+            selectedImageContainer.appendChild(imgElement);
+        }
+
+        reader.readAsDataURL(file);
+    }
 </script>
