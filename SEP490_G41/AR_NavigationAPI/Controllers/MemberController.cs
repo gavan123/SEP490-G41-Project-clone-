@@ -64,9 +64,30 @@ namespace AR_NavigationAPI.Controllers
             var check = _memberRepository.Login(username, password);
             if (check != null)
             {
+                HttpContext.Session.SetString("Username", check.Username);
+                HttpContext.Session.SetString("Role", check.RoleId.ToString());
                 return Ok(check);
             }
             return NotFound();
+        }
+
+        [HttpGet("CheckSession")]
+        public IActionResult CheckSession([FromServices] IHttpContextAccessor httpContextAccessor)
+        {
+            // Lấy giá trị từ session
+            var username = httpContextAccessor.HttpContext.Session.GetString("Username");
+            var role = httpContextAccessor.HttpContext.Session.GetString("Role");
+
+            if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(role))
+            {
+                // Session tồn tại
+                return Ok(new { Username = username, Role = role });
+            }
+            else
+            {
+                // Session không tồn tại
+                return NotFound();
+            }
         }
     }
 }
