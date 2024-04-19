@@ -9,7 +9,8 @@ namespace ProjectTest.DAOTest
 {
     public class MapDAOTests
     {
-       /* private readonly Mock<finsContext> _mockContext;
+    /*
+        private readonly Mock<finsContext> _mockContext;
         private readonly MapDAO _mapDAO;
 
         public MapDAOTests()

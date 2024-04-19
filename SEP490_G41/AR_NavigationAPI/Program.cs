@@ -66,6 +66,10 @@ builder.Services.AddScoped<IMapRepository, MapRepository>();
 builder.Services.AddScoped<IMapPointRepository, MapPointRepository>();
 builder.Services.AddScoped<IFloorRepository, FloorRepository>();
 builder.Services.AddScoped<IEdgeRepository, EdgeRepository>();
+<<<<<<< HEAD
+=======
+
+>>>>>>> Anhnh
 builder.Services.AddScoped<IMemberRepository, MemberRepository>();
 
 builder.Services.AddDistributedMemoryCache();

@@ -123,7 +123,7 @@ namespace DataAccess.IRepository.Repository
                 double longitude2 = double.Parse(coordinates2[1].Trim());
 
                 // Create a new Point object and map the DTO to the entity
-                Point location = new Point(longitude,latitude);
+                Point location = new Point(longitude, latitude);
                 var mapPointEntity = _mapper.Map<Mappoint>(mapPoint);
 
                 Point location1 = new Point(longitude, latitude);

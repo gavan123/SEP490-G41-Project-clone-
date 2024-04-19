@@ -42,6 +42,10 @@ namespace BusinessObject.Models
 
                 optionsBuilder.UseMySql(configuration.GetConnectionString("Project"), ServerVersion.AutoDetect(configuration.GetConnectionString("Project")),
                     mysqlOptions => mysqlOptions.UseNetTopologySuite()); // Enable NetTopologySuite for MySQL
+<<<<<<< HEAD
+=======
+
+>>>>>>> Anhnh
             }
         }
 
@@ -159,6 +163,7 @@ namespace BusinessObject.Models
                 entity.ToTable("mapmanage");
 
                 entity.HasIndex(e => e.MemberId, "FK_Member_Map_idx");
+
 
                 entity.Property(e => e.CreateDate).HasColumnType("datetime");
 

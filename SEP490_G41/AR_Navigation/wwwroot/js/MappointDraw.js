@@ -40,11 +40,11 @@ var endPoint = { id: "2", x: 0, y: 0 }
 var numberOfClicks = -1;
 
 function pixelLocation(event) {
-    document.getElementById("demo").innerHTML = "Location: (" + (event.offsetX) + ", " + (event.offsetY) + ")";
+    document.getElementById("demo").innerHTML = "Location Web: (" + (event.offsetX) + ", " + (event.offsetY) + ")";
 }
 function databaseLocation(event) {
     document.getElementById("demo").innerHTML = document.getElementById("demo").innerHTML +
-        " <br>  Location1: (" + (event.offsetX - root.x) / 8.4 + ", " + -(event.offsetY - root.y) / 8.62 + ")";
+        " <br>  Location App: (" + (event.offsetX - root.x) / 8.4 + ", " + -(event.offsetY - root.y) / 8.62 + ")";
 }
 function setRoot(event) {
     root.x = event.offsetX;
