@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 D:\DO-AN\sep490-g41-project2\SEP490_G41\DataAccess\bin\Debug\net6.0\DataAccess.deps.json
 D:\DO-AN\sep490-g41-project2\SEP490_G41\DataAccess\bin\Debug\net6.0\DataAccess.dll
 D:\DO-AN\sep490-g41-project2\SEP490_G41\DataAccess\bin\Debug\net6.0\DataAccess.pdb
@@ -14,3 +15,20 @@ D:\DO-AN\sep490-g41-project2\SEP490_G41\DataAccess\obj\Debug\net6.0\DataAccess.d
 D:\DO-AN\sep490-g41-project2\SEP490_G41\DataAccess\obj\Debug\net6.0\refint\DataAccess.dll
 D:\DO-AN\sep490-g41-project2\SEP490_G41\DataAccess\obj\Debug\net6.0\DataAccess.pdb
 D:\DO-AN\sep490-g41-project2\SEP490_G41\DataAccess\obj\Debug\net6.0\ref\DataAccess.dll
+=======
+D:\SEP490_G41_FinNS\sep490-g41-project\SEP490_G41\DataAccess\bin\Debug\net6.0\DataAccess.deps.json
+D:\SEP490_G41_FinNS\sep490-g41-project\SEP490_G41\DataAccess\bin\Debug\net6.0\DataAccess.dll
+D:\SEP490_G41_FinNS\sep490-g41-project\SEP490_G41\DataAccess\bin\Debug\net6.0\DataAccess.pdb
+D:\SEP490_G41_FinNS\sep490-g41-project\SEP490_G41\DataAccess\bin\Debug\net6.0\BusinessObject.dll
+D:\SEP490_G41_FinNS\sep490-g41-project\SEP490_G41\DataAccess\bin\Debug\net6.0\BusinessObject.pdb
+D:\SEP490_G41_FinNS\sep490-g41-project\SEP490_G41\DataAccess\obj\Debug\net6.0\DataAccess.csproj.AssemblyReference.cache
+D:\SEP490_G41_FinNS\sep490-g41-project\SEP490_G41\DataAccess\obj\Debug\net6.0\DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+D:\SEP490_G41_FinNS\sep490-g41-project\SEP490_G41\DataAccess\obj\Debug\net6.0\DataAccess.AssemblyInfoInputs.cache
+D:\SEP490_G41_FinNS\sep490-g41-project\SEP490_G41\DataAccess\obj\Debug\net6.0\DataAccess.AssemblyInfo.cs
+D:\SEP490_G41_FinNS\sep490-g41-project\SEP490_G41\DataAccess\obj\Debug\net6.0\DataAccess.csproj.CoreCompileInputs.cache
+D:\SEP490_G41_FinNS\sep490-g41-project\SEP490_G41\DataAccess\obj\Debug\net6.0\DataAccess.csproj.CopyComplete
+D:\SEP490_G41_FinNS\sep490-g41-project\SEP490_G41\DataAccess\obj\Debug\net6.0\DataAccess.dll
+D:\SEP490_G41_FinNS\sep490-g41-project\SEP490_G41\DataAccess\obj\Debug\net6.0\refint\DataAccess.dll
+D:\SEP490_G41_FinNS\sep490-g41-project\SEP490_G41\DataAccess\obj\Debug\net6.0\DataAccess.pdb
+D:\SEP490_G41_FinNS\sep490-g41-project\SEP490_G41\DataAccess\obj\Debug\net6.0\ref\DataAccess.dll
+>>>>>>> origin/tuyen

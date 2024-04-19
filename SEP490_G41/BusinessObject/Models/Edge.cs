@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace BusinessObject.Models
@@ -13,5 +13,6 @@ namespace BusinessObject.Models
 
         public virtual Mappoint MapPointANavigation { get; set; } = null!;
         public virtual Mappoint MapPointBNavigation { get; set; } = null!;
+
     }
 }
