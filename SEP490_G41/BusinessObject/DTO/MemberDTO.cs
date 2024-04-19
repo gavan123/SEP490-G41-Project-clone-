@@ -20,11 +20,6 @@ namespace BusinessObject.DTO
         public string Username { get; set; } = null!;
         public string Password { get; set; } = null!;
         public string Status { get; set; } = null!;
-<<<<<<< HEAD
-        public int RoleId { get; set; }
-        public string Country { get; set; } = null!;
-=======
->>>>>>> main
         public string? Avatar { get; set; }
     }
 

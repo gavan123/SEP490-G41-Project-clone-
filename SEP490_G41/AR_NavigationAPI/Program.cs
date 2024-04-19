@@ -57,13 +57,12 @@ builder.Services.AddScoped<MapDAO>();
 builder.Services.AddScoped<MappointDAO>();
 builder.Services.AddScoped<FloorDAO>();
 builder.Services.AddScoped<MemberDAO>();
-<<<<<<< HEAD
+
 builder.Services.AddScoped<ProfileDAO>();
-=======
+
 builder.Services.AddScoped<MapManageDAO>();
 builder.Services.AddScoped<EdgeDAO>();
 
->>>>>>> main
 
 builder.Services.AddScoped<IBuildingRepository, BuildingRepository>();
 builder.Services.AddScoped<IFacilityRepository, FacilityRepository>();

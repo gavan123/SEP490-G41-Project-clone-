@@ -11,13 +11,9 @@ namespace BusinessObject.Models
         }
 
         public int RoleId { get; set; }
-<<<<<<< HEAD
+
         public string RoleName { get; set; }
         public string Description { get; set; }
-=======
-        public string RoleName { get; set; } = null!;
-        public string? Description { get; set; }
->>>>>>> main
 
         public virtual ICollection<Member> Members { get; set; }
     }
