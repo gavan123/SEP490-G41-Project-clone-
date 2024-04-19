@@ -28,6 +28,10 @@ namespace DataAccess.DAO
         // Cập nhật thông tin Profile
         public void UpdateProfile(Member member)
         {
+            if (member == null)
+            {
+                throw new ArgumentNullException(nameof(member));
+            }
             var existingMember = _context.Members.FirstOrDefault(m => m.MemberId == member.MemberId);
 
             if (existingMember != null)
@@ -38,7 +42,8 @@ namespace DataAccess.DAO
                 existingMember.Address = member.Address;
                 existingMember.Phone = member.Phone;
                 existingMember.Email = member.Email;
-                
+                existingMember.Country = member.Country;
+                existingMember.Avatar = member.Avatar;
                 _context.SaveChanges();
             }
         }

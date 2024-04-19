@@ -7,10 +7,10 @@ namespace BusinessObject.Models
     {
         public int MapId { get; set; }
         public int MemberId { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public DateTime UpdateDate { get; set; }
+        public DateTime CreateDate { get; set; }
+        public DateTime? UpdateDate { get; set; }
 
-        public virtual Map Map { get; set; } = null!;
-        public virtual Member Member { get; set; } = null!;
+        public virtual Map Map { get; set; }
+        public virtual Member Member { get; set; }
     }
 }

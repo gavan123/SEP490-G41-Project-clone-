@@ -11,10 +11,10 @@ namespace BusinessObject.Models
         }
 
         public int RouteId { get; set; }
-        public string RouteName { get; set; } = null!;
-        public DateTime? StartTime { get; set; }
-        public DateTime? EndTime { get; set; }
-        public double? Distance { get; set; }
+        public string RouteName { get; set; }
+        public DateTime TimeStart { get; set; }
+        public DateTime TimeEnd { get; set; }
+        public double Distance { get; set; }
 
         public virtual ICollection<Mappointroute> Mappointroutes { get; set; }
     }

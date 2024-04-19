@@ -8,16 +8,22 @@
     <div class="row" id="view-profile">
         <div class="col-md-3 border-right">
             <div class="d-flex flex-column align-items-center text-center p-3 py-5">
-                <img class="rounded-circle mt-5" width="150px" src="/Images/Tuyen.jpg">
+                <img class="rounded-circle mt-5" width="150px" height="150px" id="profile-image">
                 <span class="font-weight-bold" id="profile-name"></span>
                 <span class="text-black-50" id="profile-email"></span>
             </div>
         </div>
         <div class="col-md-5">
-            <div class="text-right mb-3">
+            <div class="text-right mb-1">
                 <button class="btn btn-primary edit-profile">Edit profile</button>
             </div>
             <div class="p-3 py-5">
+                @* <div class="row mt-3">
+                <div class="col-md-12">
+                <label class="labels">Image</label>
+                <img id="profile-image" class="img-fluid">
+                </div>
+                </div> *@
                 <div class="row mt-2">
                     <div class="col-md-12">
                         <label class="labels">Name</label>
@@ -52,6 +58,12 @@
                         <input type="text" class="form-control" id="profile-dob" disabled>
                     </div>
                 </div>
+                <div class="row mt-3">
+                    <div class="col-md-12">
+                        <label class="labels">Country</label>
+                        <input type="text" class="form-control" id="profile-country" disabled>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -69,7 +81,11 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="form-edit-profile">
+                <form id="form-edit-profile" asp-page="/Profile/Myprofile" asp-page-handler="EditProfile">
+                    <div class="form-group">
+                        <label for="edit-profile-image">Profile Image</label>
+                        <input type="file" name="ImageFile" class="form-control-file" id="edit-profile-image" aria-describedby="inputGroupFileAddon" onchange="displaySelectedImage(this, 'edit-selected-image-container')">
+                    </div>
                     <div class="form-group">
                         <label for="edit-profile-name">Name</label>
                         <input type="text" class="form-control" id="edit-profile-name" placeholder="Enter your name">
@@ -89,6 +105,10 @@
                     <div class="form-group">
                         <label for="edit-profile-dob">Date of Birth</label>
                         <input type="date" class="form-control" id="edit-profile-dob">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-profile-country">Country</label>
+                        <input type="text" class="form-control" id="edit-profile-country">
                     </div>
                 </form>
             </div>
@@ -118,13 +138,10 @@
                     $('#profile-address').val(data.address);
                     $('#profile-emails').val(data.email);
                     $('#profile-dob').val(data.doB.substring(0, 10));// Cắt chuỗi để lấy ngày tháng năm
+                    $('#profile-country').val(data.country);
+                    var baseUrl = window.location.origin; // Lấy URL cơ sở của trang web
+                    $('#profile-image').attr('src', baseUrl + '/Images/' + data.avatar);
 
-                    // Hiển thị thông tin profile trong form chỉnh sửa
-                    // $('#edit-profile-name').val(data.fullName);
-                    //$('#edit-profile-email').val(data.email);
-                    // $('#edit-profile-mobile').val(data.phone);
-                    //$('#edit-profile-address').val(data.address);
-                    // $('#edit-profile-dob').val(data.doB.substring(0, 10)); // Cắt chuỗi để lấy ngày tháng năm
                 },
                 error: function (xhr, status, error) {
                     console.error('Error fetching profile:', error);
@@ -143,6 +160,8 @@
                     $('#edit-profile-email').val(data.email);
                     $('#edit-profile-mobile').val(data.phone);
                     $('#edit-profile-address').val(data.address);
+                    $('#edit-profile-country').val(data.country);
+
                     $('#edit-profile-dob').val(data.doB.substring(0, 10)); // Cắt chuỗi để lấy ngày tháng năm
                 },
                 error: function (xhr, status, error) {
@@ -156,47 +175,75 @@
 
         // Xử lý sự kiện khi người dùng nhấn nút "Save Changes"
         $('#save-profile-changes').click(function () {
-            // Lấy dữ liệu từ các trường nhập liệu
             var newName = $('#edit-profile-name').val();
             var newEmail = $('#edit-profile-email').val();
             var newMobile = $('#edit-profile-mobile').val();
             var newAddress = $('#edit-profile-address').val();
             var newDOB = new Date($('#edit-profile-dob').val()).toISOString().slice(0, 10); // Format date to 'yyyy-MM-dd'
+            var newCountry = $('#edit-profile-country').val();
+            // Lấy file hình ảnh được chọn
+            var imageInput = $('#edit-profile-image');
 
-            // Tạo đối tượng chứa dữ liệu cần lưu
-            var newData = {
-                MemberId: 1,
-                FullName: newName,
-                Email: newEmail,
-                Phone: newMobile,
-                Address: newAddress,
-                DoB: newDOB
-            };
+            var formData = new FormData();
+            formData.append('MemberId', 1);
+            formData.append('FullName', newName);
+            formData.append('Email', newEmail);
+            formData.append('Phone', newMobile);
+            formData.append('Address', newAddress);
+            formData.append('DoB', newDOB);
+            formData.append('Country', newCountry);
+            if (imageInput[0].files.length > 0) {
+                var imageFile = imageInput[0].files[0];
+                formData.append('Avatar', imageFile);
+            }
+         
 
-            // Gửi yêu cầu PUT để cập nhật thông tin profile qua API
-            $.ajax
-            ({
+            $.ajax({
                 url: 'https://localhost:7186/api/profiles/1',
                 type: 'PUT',
-                data: JSON.stringify(newData),
-                contentType: 'application/json',
+                data: formData,
+                contentType: false,
+                processData: false,
                 success: function (response) {
-                    // Thông báo lưu thành công
-                    alert('Profile updated successfully!');
-                    // Đóng modal chỉnh sửa profile
-                    $('#edit-profile').modal('hide');
-                    // Cập nhật thông tin profile trên trang view profile
+                    //alert('Profile updated successfully!');
+                    //$('#edit-profile').modal('hide');
                     $('#profile-name').text(newName);
                     $('#profile-email').text(newEmail);
-                        location.reload();
+                    //location.reload();
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Profile Updated',
+                        text: 'Profile information has been updated successfully!',
+                        showConfirmButton: true,
+                       
+                    }).then(() => {
+                        $('#form-edit-profile').submit();
+                    });
                 },
                 error: function (xhr, status, error) {
                     console.error('Error updating profile:', error);
-                    // Xử lý lỗi nếu có
+                    console.log(imageInput[0].files);
                     alert('Failed to update profile. Please try again later.');
                 }
             });
         });
-   });
+        //get image when selected
+        function displaySelectedImage(input, containerId) {
+            var file = input.files[0];
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                var imgElement = document.createElement('img');
+                imgElement.src = e.target.result;
+                imgElement.className = "img-fluid rounded";
+
+                var selectedImageContainer = document.getElementById(containerId);
+                selectedImageContainer.innerHTML = '';
+                selectedImageContainer.appendChild(imgElement);
+            }
+
+            reader.readAsDataURL(file);
+        }
+    });
 
 </script>
