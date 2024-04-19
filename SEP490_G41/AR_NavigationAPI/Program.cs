@@ -11,12 +11,14 @@ using System.Text.Json.Serialization;
 
 
 
+
 static IEdmModel GetEdmModel()
 {
     ODataModelBuilder builder = new ODataConventionModelBuilder();
 
     builder.EntitySet<Building>("building");
     builder.EntitySet<Facility>("facilities");
+    builder.EntitySet<Mappoint>("mappoint");
     builder.EntitySet<Floor>("floor");
     builder.EntitySet<Map>("map");
 
@@ -35,8 +37,9 @@ builder.Services.AddScoped<finsContext>();
 
 builder.Services.AddDbContext<finsContext>((serviceProvider, options) =>
 {
-    var serverVersion = new MySqlServerVersion(new Version(8, 0, 23)); // Thay thế bằng phiên bản MySQL Server bạn đang sử dụng
-    options.UseMySql(builder.Configuration.GetConnectionString("Project"), serverVersion);
+    var serverVersion = new MySqlServerVersion(new Version(10, 6, 10)); 
+    options.UseMySql(builder.Configuration.GetConnectionString("Project"), serverVersion,
+        mysqlOptions => mysqlOptions.UseNetTopologySuite()); 
 
 });
 builder.Services.AddSwaggerGen();
@@ -46,22 +49,45 @@ builder.Services.AddCors(policy =>
     policy.AddPolicy("AllowAll", builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 });
 
+
+
 builder.Services.AddScoped<BuildingDAO>();
 builder.Services.AddScoped<FacilityDAO>();
 builder.Services.AddScoped<MapDAO>();
+builder.Services.AddScoped<MappointDAO>();
 builder.Services.AddScoped<FloorDAO>();
 builder.Services.AddScoped<MemberDAO>();
+<<<<<<< HEAD
 builder.Services.AddScoped<ProfileDAO>();
+=======
+builder.Services.AddScoped<MapManageDAO>();
+builder.Services.AddScoped<EdgeDAO>();
+
+>>>>>>> main
 
 builder.Services.AddScoped<IBuildingRepository, BuildingRepository>();
 builder.Services.AddScoped<IFacilityRepository, FacilityRepository>();
 builder.Services.AddScoped<IMapRepository, MapRepository>();
+builder.Services.AddScoped<IMapPointRepository, MapPointRepository>();
 builder.Services.AddScoped<IFloorRepository, FloorRepository>();
+builder.Services.AddScoped<IEdgeRepository, EdgeRepository>();
 builder.Services.AddScoped<IMemberRepository, MemberRepository>();
 builder.Services.AddScoped<IProfileRepository, ProfileRepository>();
 
-var app = builder.Build();
+builder.Services.AddDistributedMemoryCache();
 
+// Add session services
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+builder.Services.AddHttpContextAccessor();
+
+
+var app = builder.Build();
+app.UseSession();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -71,6 +97,7 @@ if (app.Environment.IsDevelopment())
 app.UseCors("AllowAll");
 
 app.UseAuthorization();
+app.UseSession();
 
 app.MapControllers();
 

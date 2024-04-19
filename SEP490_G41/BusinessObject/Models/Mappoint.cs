@@ -1,5 +1,10 @@
-﻿using System;
+﻿using NetTopologySuite.Geometries;
+using System;
 using System.Collections.Generic;
+<<<<<<< HEAD
+=======
+using System.ComponentModel.DataAnnotations.Schema;
+>>>>>>> main
 using NetTopologySuite.Geometries;
 
 namespace BusinessObject.Models
@@ -15,19 +20,33 @@ namespace BusinessObject.Models
         }
 
         public int MapPointId { get; set; }
+<<<<<<< HEAD
         public string MapPointName { get; set; }
         public string Image { get; set; }
         public Point LocationWeb { get; set; }
         public Point LocationApp { get; set; }
         public Point LocationGps { get; set; }
+=======
+        public string MapPointName { get; set; } = null!;
+        public string? Image { get; set; }
+        public Point LocationWeb { get; set; } = null!;
+        public Point LocationApp { get; set; } = null!;
+        public Point? LocationGps { get; set; }
+>>>>>>> main
         public int MapId { get; set; }
         public int BuildingId { get; set; }
         public int FloorId { get; set; }
         public bool? Destination { get; set; }
 
+<<<<<<< HEAD
         public virtual Building Building { get; set; }
         public virtual Floor Floor { get; set; }
         public virtual Map Map { get; set; }
+=======
+        public virtual Building Building { get; set; } = null!;
+        public virtual Floor Floor { get; set; } = null!;
+        public virtual Map Map { get; set; } = null!;
+>>>>>>> main
         public virtual ICollection<Edge> EdgeMapPointANavigations { get; set; }
         public virtual ICollection<Edge> EdgeMapPointBNavigations { get; set; }
         public virtual ICollection<Mappointex> Mappointices { get; set; }

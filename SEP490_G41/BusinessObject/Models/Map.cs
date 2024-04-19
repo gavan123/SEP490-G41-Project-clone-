@@ -13,9 +13,15 @@ namespace BusinessObject.Models
 
         public int MapId { get; set; }
         public int FloorId { get; set; }
+<<<<<<< HEAD
         public string MapName { get; set; }
         public string MapImage2D { get; set; }
         public string MapImage3D { get; set; }
+=======
+        public string MapName { get; set; } = null!;
+        public string MapImage2D { get; set; } = null!;
+        public string? MapImage3D { get; set; }
+>>>>>>> main
 
         public virtual Floor Floor { get; set; }
         public virtual ICollection<Mapmanage> Mapmanages { get; set; }

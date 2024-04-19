@@ -15,8 +15,8 @@ namespace DataAccess.IRepository
         public bool DeleteMember(int id);
         public List<MemberDTO> SearchMemberByName(string name);
         public List<MemberDTO> SearchMemberByDoB(DateTime date);
-        public List<MemberDTO> SearchMemberByStatus(string status);
-        public bool Login(string username, string password);
-        public bool ChangePassword(string oldPass, string newPass);
+        /*public List<MemberDTO> SearchMemberByStatus(string status);*/
+        public MemberDTO Login(string username, string password);
+        public string ChangePassword(int id, string oldpass, string newpass, string re_newpass);
     }
 }

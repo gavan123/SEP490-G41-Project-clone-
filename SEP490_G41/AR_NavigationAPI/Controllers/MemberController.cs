@@ -1,4 +1,6 @@
-﻿using DataAccess.IRepository;
+﻿using BusinessObject.Models;
+using DataAccess.DAO;
+using DataAccess.IRepository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Query;
@@ -11,9 +13,11 @@ namespace AR_NavigationAPI.Controllers
     public class MemberController : ODataController
     {
         private readonly IMemberRepository _memberRepository;
-        public MemberController(IMemberRepository memberRepository)
+        private readonly finsContext _finsContext;
+        public MemberController(IMemberRepository memberRepository, finsContext finsContext)
         {
             _memberRepository = memberRepository;
+            _finsContext = finsContext;
         }
         [HttpGet]
         [EnableQuery]
@@ -24,55 +28,64 @@ namespace AR_NavigationAPI.Controllers
         }
 
 
-        [HttpGet("name")]
+        [HttpGet("{name}")]
         [EnableQuery]
         public IActionResult SearchMemberByName(string name)
         {
+
             var members = _memberRepository.SearchMemberByName(name);
 
-            if (members == null)
-            {
-                return NotFound();
-            }
-
             return Ok(members);
         }
 
-
-        [HttpGet("status")]
-        [EnableQuery]
-        public IActionResult SearchMemberByStatus(string status)
+        [HttpPut("ChangePassword/{id}")]
+        public IActionResult ChangePassword(int id, string oldpass, string newpass, string re_newpass)
         {
-            var members = _memberRepository.SearchMemberByStatus(status);
-
-            if (members == null)
+            var result = _memberRepository.ChangePassword(id, oldpass, newpass, re_newpass);
+            if (result.Equals("Success"))
             {
-                return NotFound();
+                return Ok(result);
             }
-
-            return Ok(members);
+            if (result.Equals("NotEqual"))
+            {
+                return Ok(result);
+            }
+            if (result.Equals("Same"))
+            {
+                return Ok(result);
+            }
+            return BadRequest("Password is incorrect!");
+            
         }
 
-        [HttpPut("ChangePassword")]
-        public IActionResult ChangePassword(string username, string oldPass, string newPass)
-        {
-            var check = _memberRepository.Login(username, oldPass);
-            if (check == true)
-            {
-                var member = _memberRepository.ChangePassword(oldPass, newPass);
-                return Ok(member);
-            }
-            return NotFound();
-        }
         [HttpGet("Login")]
-        public IActionResult Login(string username, string oldPass)
+        public IActionResult Login(string username, string password)
         {
-            var check = _memberRepository.Login(username, oldPass);
-            if (check == true)
+            var check = _memberRepository.Login(username, password);
+            if (check != null)
             {
-                return Ok();
+                return Ok(check);
             }
             return NotFound();
+        }
+
+        [HttpGet("CheckSession")]
+        public IActionResult CheckSession([FromServices] IHttpContextAccessor httpContextAccessor)
+        {
+            // Lấy giá trị từ session
+            var username = httpContextAccessor.HttpContext.Session.GetString("Username");
+            var role = httpContextAccessor.HttpContext.Session.GetString("Role");
+
+            if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(role))
+            {
+                // Session tồn tại
+                return Ok(new { Username = username, Role = role });
+            }
+            else
+            {
+                // Session không tồn tại
+                return NotFound();
+            }
         }
     }
 }

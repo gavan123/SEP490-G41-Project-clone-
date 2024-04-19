@@ -46,6 +46,19 @@ namespace DataAccess.IRepository.Repository
                 throw new Exception("Error occurred while getting all floors.", ex);
             }
         }
+        public List<FloorDTO> GetAllFloorsByBuildingId(int buildingId)
+        {
+            try
+            {
+                var floors = _floorDAO.GetAllFloorsByBuildingId(buildingId);
+                var floorDTOs = floors.Select(floor => _mapper.Map<FloorDTO>(floor)).ToList();
+                return floorDTOs;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error occurred while getting all floors by building ID: {buildingId}", ex);
+            }
+        }
 
         public void AddFloor(FloorAddDTO floor)
         {

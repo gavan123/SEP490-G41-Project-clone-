@@ -18,7 +18,11 @@ namespace BusinessObject.Models
         public string Status { get; set; }
         public int BuildingId { get; set; }
 
+<<<<<<< HEAD
         public virtual Building Building { get; set; }
+=======
+        public virtual Building Building { get; set; } = null!;
+>>>>>>> main
         public virtual ICollection<Mappoint> Mappoints { get; set; }
         public virtual ICollection<Map> Maps { get; set; }
         public virtual ICollection<Section> Sections { get; set; }

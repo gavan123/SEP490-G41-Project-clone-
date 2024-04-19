@@ -122,6 +122,12 @@
 
 <script>
     $(document).ready(function () {
+        //session
+        var userJson = sessionStorage.getItem('user');
+        if (!userJson) {
+            window.location.href = '/Authen/Login';
+            return;
+        }
         // Gửi yêu cầu AJAX để lấy thông tin profile từ API
         $.ajax
             ({

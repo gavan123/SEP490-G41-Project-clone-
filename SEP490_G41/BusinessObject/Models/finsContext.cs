@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.Extensions.Configuration;
 
 namespace BusinessObject.Models
 {
@@ -16,6 +17,7 @@ namespace BusinessObject.Models
         {
         }
 
+<<<<<<< HEAD
         public virtual DbSet<Building> Buildings { get; set; }
         public virtual DbSet<Edge> Edges { get; set; }
         public virtual DbSet<Facility> Facilities { get; set; }
@@ -29,13 +31,38 @@ namespace BusinessObject.Models
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Route> Routes { get; set; }
         public virtual DbSet<Section> Sections { get; set; }
+=======
+        public virtual DbSet<Building> Buildings { get; set; } = null!;
+        public virtual DbSet<Edge> Edges { get; set; } = null!;
+        public virtual DbSet<Facility> Facilities { get; set; } = null!;
+        public virtual DbSet<Floor> Floors { get; set; } = null!;
+        public virtual DbSet<Map> Maps { get; set; } = null!;
+        public virtual DbSet<Mapmanage> Mapmanages { get; set; } = null!;
+        public virtual DbSet<Mappoint> Mappoints { get; set; } = null!;
+        public virtual DbSet<Mappointex> Mappointices { get; set; } = null!;
+        public virtual DbSet<Mappointroute> Mappointroutes { get; set; } = null!;
+        public virtual DbSet<Member> Members { get; set; } = null!;
+        public virtual DbSet<Role> Roles { get; set; } = null!;
+        public virtual DbSet<Route> Routes { get; set; } = null!;
+        public virtual DbSet<Section> Sections { get; set; } = null!;
+>>>>>>> main
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
+<<<<<<< HEAD
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
                 optionsBuilder.UseMySql("server=localhost;database=fins;user=root;password=12345", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.33-mysql"), x => x.UseNetTopologySuite());
+=======
+                var builder = new ConfigurationBuilder()
+                                    .SetBasePath(Directory.GetCurrentDirectory())
+                                    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+                IConfigurationRoot configuration = builder.Build();
+
+                optionsBuilder.UseMySql(configuration.GetConnectionString("Project"), ServerVersion.AutoDetect(configuration.GetConnectionString("Project")),
+                    mysqlOptions => mysqlOptions.UseNetTopologySuite()); // Enable NetTopologySuite for MySQL
+>>>>>>> main
             }
         }
 
@@ -51,7 +78,10 @@ namespace BusinessObject.Models
                 entity.HasIndex(e => e.FacilityId, "FK_Building_Facility_idx");
 
                 entity.Property(e => e.BuildingName)
+<<<<<<< HEAD
                     .IsRequired()
+=======
+>>>>>>> main
                     .HasMaxLength(50)
                     .UseCollation("utf8mb3_general_ci")
                     .HasCharSet("utf8mb3");
@@ -97,13 +127,19 @@ namespace BusinessObject.Models
                 entity.ToTable("facilities");
 
                 entity.Property(e => e.Address)
+<<<<<<< HEAD
                     .IsRequired()
+=======
+>>>>>>> main
                     .HasMaxLength(100)
                     .UseCollation("utf8mb3_general_ci")
                     .HasCharSet("utf8mb3");
 
                 entity.Property(e => e.FacilityName)
+<<<<<<< HEAD
                     .IsRequired()
+=======
+>>>>>>> main
                     .HasMaxLength(100)
                     .UseCollation("utf8mb3_general_ci")
                     .HasCharSet("utf8mb3");
@@ -120,13 +156,19 @@ namespace BusinessObject.Models
                 entity.HasIndex(e => e.BuildingId, "FK_Building_Floor_idx");
 
                 entity.Property(e => e.FloorName)
+<<<<<<< HEAD
                     .IsRequired()
+=======
+>>>>>>> main
                     .HasMaxLength(50)
                     .UseCollation("utf8mb3_general_ci")
                     .HasCharSet("utf8mb3");
 
                 entity.Property(e => e.Greeting)
+<<<<<<< HEAD
                     .IsRequired()
+=======
+>>>>>>> main
                     .HasMaxLength(50)
                     .UseCollation("utf8mb3_general_ci")
                     .HasCharSet("utf8mb3");
@@ -171,6 +213,10 @@ namespace BusinessObject.Models
 
                 entity.HasIndex(e => e.MemberId, "FK_Member_Map_idx");
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> main
                 entity.Property(e => e.CreateDate).HasColumnType("datetime");
 
                 entity.Property(e => e.UpdateDate).HasColumnType("datetime");
@@ -202,6 +248,7 @@ namespace BusinessObject.Models
 
                 entity.Property(e => e.Image).HasMaxLength(100);
 
+<<<<<<< HEAD
                 entity.Property(e => e.LocationApp).IsRequired();
 
                 entity.Property(e => e.LocationGps).HasColumnName("LocationGPS");
@@ -211,6 +258,11 @@ namespace BusinessObject.Models
                 entity.Property(e => e.MapPointName)
                     .IsRequired()
                     .HasMaxLength(50);
+=======
+                entity.Property(e => e.LocationGps).HasColumnName("LocationGPS");
+
+                entity.Property(e => e.MapPointName).HasMaxLength(50);
+>>>>>>> main
 
                 entity.HasOne(d => d.Building)
                     .WithMany(p => p.Mappoints)
@@ -238,7 +290,10 @@ namespace BusinessObject.Models
                 entity.HasIndex(e => e.MapPointId, "FK_MPEX_MP_idx");
 
                 entity.Property(e => e.Url)
+<<<<<<< HEAD
                     .IsRequired()
+=======
+>>>>>>> main
                     .HasMaxLength(45)
                     .HasColumnName("URL");
 
@@ -314,7 +369,10 @@ namespace BusinessObject.Models
                     .IsFixedLength();
 
                 entity.Property(e => e.Status)
+<<<<<<< HEAD
                     .IsRequired()
+=======
+>>>>>>> main
                     .HasColumnType("enum('active','deactive')")
                     .HasDefaultValueSql("'deactive'");
 
@@ -343,13 +401,21 @@ namespace BusinessObject.Models
             modelBuilder.Entity<Route>(entity =>
             {
                 entity.ToTable("route");
+<<<<<<< HEAD
 
                 entity.Property(e => e.RouteName)
                     .IsRequired()
                     .HasMaxLength(45);
+=======
+>>>>>>> main
 
                 entity.Property(e => e.TimeEnd).HasColumnType("datetime");
 
+<<<<<<< HEAD
+=======
+                entity.Property(e => e.TimeEnd).HasColumnType("datetime");
+
+>>>>>>> main
                 entity.Property(e => e.TimeStart).HasColumnType("datetime");
             });
 
@@ -359,6 +425,7 @@ namespace BusinessObject.Models
 
                 entity.HasIndex(e => e.FloorId, "FK_Section_Floor_idx");
 
+<<<<<<< HEAD
                 entity.Property(e => e.DownCorner).IsRequired();
 
                 entity.Property(e => e.SectionName)
@@ -366,6 +433,9 @@ namespace BusinessObject.Models
                     .HasMaxLength(45);
 
                 entity.Property(e => e.UpCorner).IsRequired();
+=======
+                entity.Property(e => e.SectionName).HasMaxLength(45);
+>>>>>>> main
 
                 entity.HasOne(d => d.Floor)
                     .WithMany(p => p.Sections)

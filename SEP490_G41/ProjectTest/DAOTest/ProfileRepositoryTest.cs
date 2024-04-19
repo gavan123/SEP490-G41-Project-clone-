@@ -110,9 +110,37 @@
 //                var profileDAO = new ProfileDAO(context);
 //                var profileRepository = new ProfileRepository(profileDAO, mapper);
 
+<<<<<<< HEAD
 //                // Act & Assert
 //                Assert.Null(Record.Exception(() => profileRepository.ChangePassword(changePasswordDTO)));
 //            }
 //        }
 //    }
 //}
+=======
+     /*   [Fact]
+        public void ChangePassword_ValidPassword_NoExceptionThrown()
+        {
+            // Arrange
+            var changePasswordDTO = new ChangePasswordDTO { *//* create a valid change password DTO *//* };
+            var options = new DbContextOptionsBuilder<finsContext>()
+                .UseInMemoryDatabase(databaseName: "TestDB")
+                .Options;
+            using (var context = new finsContext(options))
+            {
+                var config = new MapperConfiguration(cfg =>
+                {
+                    cfg.CreateMap<ChangePasswordDTO, Member>();
+                });
+                IMapper mapper = config.CreateMapper();
+
+                var profileDAO = new ProfileDAO(context);
+                var profileRepository = new ProfileRepository(profileDAO, mapper);
+
+                // Act & Assert
+                Assert.Null(Record.Exception(() => profileRepository.ChangePassword(changePasswordDTO)));
+            }
+        }*/
+    }
+}
+>>>>>>> main

@@ -11,7 +11,12 @@ namespace BusinessObject.Models
         public int Direction { get; set; }
         public double Distance { get; set; }
 
+<<<<<<< HEAD
         public virtual Mappoint MapPointANavigation { get; set; }
         public virtual Mappoint MapPointBNavigation { get; set; }
+=======
+        public virtual Mappoint MapPointANavigation { get; set; } = null!;
+        public virtual Mappoint MapPointBNavigation { get; set; } = null!;
+>>>>>>> main
     }
 }
