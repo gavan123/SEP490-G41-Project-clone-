@@ -209,7 +209,6 @@
         var userJson = sessionStorage.getItem('user');
         if (!userJson) {
             window.location.href = '/Authen/Login';
-            return;
         }
 
         var buildingId = window.location.pathname.split("/").pop();

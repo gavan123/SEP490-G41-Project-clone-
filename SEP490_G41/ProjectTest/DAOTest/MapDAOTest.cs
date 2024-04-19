@@ -8,8 +8,13 @@ namespace ProjectTest.DAOTest
 
 {
     public class MapDAOTests
+<<<<<<< HEAD
     {/*
         private readonly Mock<finsContext> _mockContext;
+=======
+    {
+       /* private readonly Mock<finsContext> _mockContext;
+>>>>>>> main
         private readonly MapDAO _mapDAO;
 
         public MapDAOTests()
@@ -248,6 +253,10 @@ namespace ProjectTest.DAOTest
             // Assert
             Assert.Empty(result);
         }
+<<<<<<< HEAD
         */
+=======
+*/
+>>>>>>> main
     }
 }

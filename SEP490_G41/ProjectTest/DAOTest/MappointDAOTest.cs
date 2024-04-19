@@ -12,7 +12,11 @@ namespace ProjectTest.DAOTest
 {
     public class MappointDAOTests
     {
+<<<<<<< HEAD
         /*private readonly Mock<finsContext> _mockContext;
+=======
+       /* private readonly Mock<finsContext> _mockContext;
+>>>>>>> main
         private readonly MappointDAO _mappointDAO;
 
         public MappointDAOTests()

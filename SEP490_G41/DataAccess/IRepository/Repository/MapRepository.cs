@@ -114,7 +114,6 @@ namespace DataAccess.IRepository.Repository
                 throw new ArgumentException("Map ID must be a positive integer.");
             try
             {
-
                 string uniqueFileName = mapUpdateDTO.MapImage2D.FileName;
 
                 var map = new Map
