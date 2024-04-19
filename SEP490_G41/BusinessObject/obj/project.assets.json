@@ -3129,19 +3129,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-<<<<<<< HEAD
       "projectUniqueName": "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj",
-=======
-      "projectUniqueName": "D:\\DO-AN\\sep490-g41-project2\\SEP490_G41\\BusinessObject\\BusinessObject.csproj",
->>>>>>> main
       "projectName": "BusinessObject",
-      "projectPath": "D:\\DO-AN\\sep490-g41-project2\\SEP490_G41\\BusinessObject\\BusinessObject.csproj",
+      "projectPath": "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj",
       "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-<<<<<<< HEAD
       "outputPath": "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\BusinessObject\\obj\\",
-=======
-      "outputPath": "D:\\DO-AN\\sep490-g41-project2\\SEP490_G41\\BusinessObject\\obj\\",
->>>>>>> main
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",

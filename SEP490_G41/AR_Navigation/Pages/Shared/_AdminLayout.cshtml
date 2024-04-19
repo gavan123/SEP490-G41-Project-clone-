@@ -18,7 +18,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.27.1/dist/apexcharts.min.js"></script>
     <script src="/assets/vendors/chartjs/Chart.min.js"></script>
-   
+
 
 </head>
 <style>
@@ -126,40 +126,7 @@
             <!-- Side Nav START -->
             <div class="side-nav">
                 <div class="side-nav-inner">
-                    <ul class="side-nav-menu scrollable">
-                        <li class="nav-item">
-                            <a href="/Dashboard" class="nav-link">
-                                <span class="icon-holder">
-                                    <i class="anticon anticon-dashboard"></i>
-                                </span>
-                                <span class="title">Dashboard</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/Buildings/list" class="nav-link">
-                                <span class="icon-holder">
-                                    <i class="far fa-building"></i>
-                                </span>
-                                <span class="title">Building</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/Maps/list" class="nav-link">
-                                <span class="icon-holder">
-                                    <i class="fas fa-map"></i>
-                                </span>
-                                <span class="title">Map</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/Mappoints/list" class="nav-link">
-                                <span class="icon-holder">
-                                    <i class="fa fa-map-marker" aria-hidden="true"></i>
-                                </span>
-                                <span class="title">MapPoint</span>
-                            </a>
-                        </li>
-                       
+                    <ul class="side-nav-menu scrollable" id="side-bar">
                     </ul>
                 </div>
             </div>
@@ -187,7 +154,6 @@
 
             </div>
             <!-- Page Container END -->
-           
             <!-- Quick View START -->
             <div class="modal modal-right fade quick-view" id="quick-view">
                 <div class="modal-dialog">
@@ -264,11 +230,62 @@
 <script src="/assets/js/app.min.js"></script>
 <script>
     $(document).ready(function () {
+
+        var userJson = sessionStorage.getItem('user');
+        if (userJson) {
+            var user = JSON.parse(userJson);
+            console.log('Username:', user.username);
+            console.log('Role:', user.role);
+            if (userJson) {
+                var user = JSON.parse(userJson);
+                console.log('Username:', user.username);
+                console.log('Role:', user.role);
+
+                var sidebarContent = `
+                <li class="nav-item">
+                    <a href="/Dashboard" class="nav-link">
+                        <span class="icon-holder">
+                            <i class="anticon anticon-dashboard"></i>
+                        </span>
+                        <span class="title">Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/Buildings/list" class="nav-link">
+                        <span class="icon-holder">
+                            <i class="far fa-building"></i>
+                        </span>
+                        <span class="title">Building</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/Maps/list" class="nav-link">
+                        <span class="icon-holder">
+                            <i class="fas fa-map"></i>
+                        </span>
+                        <span class="title">Map</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/Mappoints/list" class="nav-link">
+                        <span class="icon-holder">
+                            <i class="fa fa-map-marker" aria-hidden="true"></i>
+                        </span>
+                        <span class="title">MapPoint</span>
+                    </a>
+                </li>
+            `;
+                // Thêm nội dung của sidebar vào thẻ có id là "side-bar"
+                document.getElementById("side-bar").innerHTML = sidebarContent;
+            }
+
+        }
         $('#logout-link').click(function (e) {
             e.preventDefault();
             sessionStorage.removeItem('user');
             window.location.href = '/HomePage/Home';
         });
+
     });
 </script>
 
