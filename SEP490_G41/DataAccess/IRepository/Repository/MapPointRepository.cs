@@ -74,16 +74,30 @@ namespace DataAccess.IRepository.Repository
         }
         private string ExtractCoordinatesFromGeoJson(string geoJson)
         {
-            // Parse chuỗi JSON thành đối tượng JObject
-            var jObject = JObject.Parse(geoJson);
+            // Kiểm tra xem đầu vào có phải là null hay không
+            if (string.IsNullOrEmpty(geoJson))
+            {
+                return null;
+            }
 
-            // Trích xuất giá trị của trường 'coordinates' và chuyển đổi thành chuỗi
-            string coordinatesJson = jObject["geometry"]["coordinates"].ToString();
+            try
+            {
+                // Parse chuỗi JSON thành đối tượng JObject
+                var jObject = JObject.Parse(geoJson);
 
-            // Loại bỏ các ký tự xuống dòng và khoảng trắng
-            coordinatesJson = coordinatesJson.Replace("\r\n", "").Replace(" ", "");
+                // Trích xuất giá trị của trường 'coordinates' và chuyển đổi thành chuỗi
+                string coordinatesJson = jObject["geometry"]["coordinates"].ToString();
 
-            return coordinatesJson;
+                // Loại bỏ các ký tự xuống dòng và khoảng trắng
+                coordinatesJson = coordinatesJson.Replace("\r\n", "").Replace(" ", "");
+
+                return coordinatesJson;
+            }
+            catch (Exception)
+            {
+                // Nếu có bất kỳ lỗi nào xảy ra trong quá trình xử lý, trả về null
+                return null;
+            }
         }
         public void AddMapPoint(MapPointAddDTO mapPoint)
         {
