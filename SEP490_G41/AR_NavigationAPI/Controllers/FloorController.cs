@@ -41,6 +41,14 @@ namespace AR_NavigationAPI.Controllers
             return Ok(floor);
         }
 
+        [HttpGet("building/{buildingId}")]
+        public IActionResult GetAllFloorsByBuildingId(int buildingId)
+        {
+            var floors = _floorRepository.GetAllFloorsByBuildingId(buildingId);
+            return Ok(floors);
+        }
+
+
         [HttpPost]
         public ActionResult AddFloors(List<FloorAddDTO> floors)
         {

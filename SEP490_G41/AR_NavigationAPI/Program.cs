@@ -56,6 +56,8 @@ builder.Services.AddScoped<MapDAO>();
 builder.Services.AddScoped<MappointDAO>();
 builder.Services.AddScoped<FloorDAO>();
 builder.Services.AddScoped<MemberDAO>();
+builder.Services.AddScoped<MapManageDAO>();
+builder.Services.AddScoped<EdgeDAO>();
 
 
 builder.Services.AddScoped<IBuildingRepository, BuildingRepository>();
@@ -63,6 +65,16 @@ builder.Services.AddScoped<IFacilityRepository, FacilityRepository>();
 builder.Services.AddScoped<IMapRepository, MapRepository>();
 builder.Services.AddScoped<IMapPointRepository, MapPointRepository>();
 builder.Services.AddScoped<IFloorRepository, FloorRepository>();
+<<<<<<< HEAD
+=======
+builder.Services.AddScoped<IEdgeRepository, EdgeRepository>();
+
+//builder.Services.AddControllers()
+//    .AddJsonOptions(options =>
+//    {
+//        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+//    });
+>>>>>>> origin/hieunh
 builder.Services.AddScoped<IMemberRepository, MemberRepository>();
 
 builder.Services.AddDistributedMemoryCache();

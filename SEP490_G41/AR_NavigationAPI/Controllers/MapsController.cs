@@ -1,4 +1,5 @@
-﻿using BusinessObject.DTO;
+﻿using AutoMapper.Execution;
+using BusinessObject.DTO;
 using DataAccess.IRepository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Query;
@@ -47,8 +48,7 @@ namespace AR_NavigationAPI.Controllers
         {
             if (map == null)
                 return BadRequest("Map cannot be null.");
-
-            _mapRepository.AddMap(map);
+            _mapRepository.AddMap(map, null);
             return Ok(map);
         }
 
