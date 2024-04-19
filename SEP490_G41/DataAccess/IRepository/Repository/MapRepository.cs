@@ -71,6 +71,7 @@ namespace DataAccess.IRepository.Repository
                                    BuildingName = b.BuildingName,
                                    ManagerFullName = mem.FullName,
                                    BuildingImg = b.Image,
+                                   BuildingId = b.BuildingId
                                }).ToList();
 
                 return mapDTOs;

@@ -12,6 +12,10 @@ public class MapPointDTO
     public int BuildingId { get; set; }
     public string Image { get; set; }
     public bool Destination { get; set; }
+    public string BuildingName { get; set; }
+    public string FloorName { get; set; }
+
+
 
 }
 

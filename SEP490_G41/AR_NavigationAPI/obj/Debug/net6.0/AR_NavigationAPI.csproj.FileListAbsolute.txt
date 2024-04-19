@@ -171,8 +171,8 @@ D:\sep490-g41-project\SEP490_G41\AR_NavigationAPI\obj\Debug\net6.0\scopedcss\bun
 D:\sep490-g41-project\SEP490_G41\AR_NavigationAPI\obj\Debug\net6.0\AR_NavigationAPI.csproj.CopyComplete
 D:\sep490-g41-project\SEP490_G41\AR_NavigationAPI\obj\Debug\net6.0\AR_NavigationAPI.genruntimeconfig.cache
 D:\sep490-g41-project\SEP490_G41\AR_NavigationAPI\obj\Debug\net6.0\ref\AR_NavigationAPI.dll
-D:\FPT\SEP\sep490-g41-project\SEP490_G41\AR_NavigationAPI\bin\Debug\net6.0\appsettings.Development.json
 D:\FPT\SEP\sep490-g41-project\SEP490_G41\AR_NavigationAPI\bin\Debug\net6.0\AR_NavigationAPI.exe
+D:\FPT\SEP\sep490-g41-project\SEP490_G41\AR_NavigationAPI\bin\Debug\net6.0\appsettings.Development.json
 D:\FPT\SEP\sep490-g41-project\SEP490_G41\AR_NavigationAPI\bin\Debug\net6.0\appsettings.json
 D:\FPT\SEP\sep490-g41-project\SEP490_G41\AR_NavigationAPI\bin\Debug\net6.0\AR_NavigationAPI.deps.json
 D:\FPT\SEP\sep490-g41-project\SEP490_G41\AR_NavigationAPI\bin\Debug\net6.0\AR_NavigationAPI.runtimeconfig.json

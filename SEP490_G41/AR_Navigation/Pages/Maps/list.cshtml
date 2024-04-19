@@ -30,8 +30,16 @@
             <div class="row">
                 <div class="col-md-5">
                     <div class="input-affix m-v-10">
+                        <select class="form-control" id="map-facility">
+                            <option value="0" disabled selected>Select by facility</option>
+                            <!-- Options for buildings will be created by JavaScript -->
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="input-affix m-v-10">
                         <select class="form-control" id="map-building">
-                            <option value="0">All</option>
+                            <option value="0" disabled selected>Select by building</option>
                             <!-- Options for buildings will be created by JavaScript -->
                         </select>
                     </div>
@@ -56,7 +64,7 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th style="width: 30%;">Map Name</th>
+                            <th>Map Name</th>
                             <th>Building Name</th>
                             <th>Floor Name</th>
                             <th>Map Manager Name</th>
@@ -305,21 +313,56 @@
             });
         });
 
-        // API to get buildings
-        $.ajax({
-            url: 'https://localhost:7186/api/buildings',
-            type: 'GET',
-            success: function (response) {
-                response.forEach(function (building) {
-                    $('#new-map-building').append('<option value="' + building.buildingId + '">' + building.buildingName + '</option>');
-                    $('#edit-map-building').append('<option value="' + building.buildingId + '">' + building.buildingName + '</option>');
-                    $('#map-building').append('<option value="' + building.buildingId + '">' + building.buildingName + '</option>');
+
+
+
+
+
+        $(document).ready(function () {
+            // Load danh sách các cơ sở ban đầu
+            $.ajax({
+                url: 'https://localhost:7186/api/facilities',
+                type: 'GET',
+                success: function (response) {
+                    response.forEach(function (facility) {
+                        // Thêm tùy chọn cho mỗi cơ sở
+                        $('#map-facility').append('<option value="' + facility.facilityId + '">' + facility.facilityName + '</option>');
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });
+
+
+
+            // Sự kiện change cho phần tử select của facility
+            $('#map-facility').change(function () {
+                var selectedFacilityId = $(this).val(); // Lấy giá trị của facility đã chọn
+                $('#map-building').empty(); // Xóa tất cả các tùy chọn tòa nhà hiện có
+
+                // Tạo URL OData để lấy danh sách các tòa nhà từ facility đã chọn
+                var url = 'https://localhost:7186/api/buildings?$filter=facilityId eq ' + selectedFacilityId;
+
+                // Gửi yêu cầu AJAX để lấy danh sách các tòa nhà từ facility đã chọn
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    success: function (response) {
+                        // Thêm tùy chọn cho mỗi tòa nhà từ response
+                        response.forEach(function (building) {
+                            $('#map-building').append('<option value="' + building.buildingId + '">' + building.buildingName + '</option>');
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(error);
+                    }
                 });
-            },
-            error: function (xhr, status, error) {
-                console.error(error);
-            }
+            });
         });
+
+
+
 
         $('#new-map-building').change(function () {
             var buildingId = $(this).val();
