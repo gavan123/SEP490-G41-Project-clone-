@@ -70,7 +70,8 @@
                     });
                     console.log('User information:', response.username);
 
-                    var user = { userid: response.username, fullname: response.fullname, username: response.username, role: response.roleId };
+
+                    var user = { userid: response.userid, fullname: response.fullname, username: response.username, role: response.roleId };
                     sessionStorage.setItem('user', JSON.stringify(user));
                     console.log(sessionStorage.getItem('user'));
 
