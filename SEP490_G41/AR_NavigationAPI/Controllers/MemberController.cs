@@ -64,8 +64,6 @@ namespace AR_NavigationAPI.Controllers
             var check = _memberRepository.Login(username, password);
             if (check != null)
             {
-                HttpContext.Session.SetString("Username", check.Username);
-                HttpContext.Session.SetString("Role", check.RoleId.ToString());
                 return Ok(check);
             }
             return NotFound();
