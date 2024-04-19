@@ -39,22 +39,23 @@ namespace DataAccess.IRepository.Repository
                     var mapPointDTO = new MapPointDTO();
                     mapPointDTO.MapPointId = mapPoint.MapPointId;
                     mapPointDTO.MapId = mapPoint.MapId;
-                    mapPointDTO.MappointName = mapPoint.MappointName;
+                    mapPointDTO.MappointName = mapPoint.MapPointName;
                     var geoJson = ConvertPointToGeoJson(mapPoint.LocationWeb);
                     var coordinatesJson = ExtractCoordinatesFromGeoJson(geoJson);
                     mapPointDTO.LocationWeb = coordinatesJson;
 
                     var geoJson1 = ConvertPointToGeoJson(mapPoint.LocationGps);
                     var LocationGps = ExtractCoordinatesFromGeoJson(geoJson1);
-                    mapPointDTO.LocationGps = coordinatesJson;
+                    mapPointDTO.LocationGps = LocationGps;
 
                     var geoJson2 = ConvertPointToGeoJson(mapPoint.LocationApp);
                     var LocationApp = ExtractCoordinatesFromGeoJson(geoJson2);
-                    mapPointDTO.LocationApp = coordinatesJson;
+                    mapPointDTO.LocationApp = LocationApp;
 
                     mapPointDTO.FloorId = mapPoint.FloorId;
                     mapPointDTO.BuildingId = mapPoint.BuildingId;
                     mapPointDTO.Image = mapPoint.Image;
+                    mapPointDTO.Destination = (bool)mapPoint.Destination;
 
                     return mapPointDTO;
                 }).ToList();
@@ -122,7 +123,7 @@ namespace DataAccess.IRepository.Repository
                 double longitude2 = double.Parse(coordinates2[1].Trim());
 
                 // Create a new Point object and map the DTO to the entity
-                Point location = new Point(longitude,latitude);
+                Point location = new Point(longitude, latitude);
                 var mapPointEntity = _mapper.Map<Mappoint>(mapPoint);
 
                 Point location1 = new Point(longitude, latitude);
@@ -185,7 +186,7 @@ namespace DataAccess.IRepository.Repository
                 double longitude2 = double.Parse(coordinates2[1].Trim());
                 existingMapPoint.LocationGps = new Point(longitude2, latitude2);
 
-                existingMapPoint.MappointName = mapPoint.MappointName;
+                existingMapPoint.MapPointName = mapPoint.MappointName;
                 existingMapPoint.FloorId = mapPoint.FloorId;
                 existingMapPoint.BuildingId = mapPoint.BuildingId;
                 existingMapPoint.Image = mapPoint.Image;

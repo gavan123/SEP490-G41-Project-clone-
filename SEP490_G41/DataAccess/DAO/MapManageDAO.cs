@@ -49,7 +49,7 @@ namespace DataAccess.DAO
             if (existingMapManage != null)
             {
                 existingMapManage.MemberId = mapManage.MemberId;
-                existingMapManage.CreateDate = mapManage.CreateDate;
+                existingMapManage.CreatedDate = mapManage.CreatedDate;
                 existingMapManage.UpdateDate = mapManage.UpdateDate;
 
                 _context.SaveChanges();

@@ -7,6 +7,7 @@ D:\DO-AN\sep490-g41-project\SEP490_G41\AR_Navigation\bin\Debug\net6.0\AR_Navigat
 D:\DO-AN\sep490-g41-project\SEP490_G41\AR_Navigation\bin\Debug\net6.0\AR_Navigation.dll
 D:\DO-AN\sep490-g41-project\SEP490_G41\AR_Navigation\bin\Debug\net6.0\AR_Navigation.pdb
 D:\DO-AN\sep490-g41-project\SEP490_G41\AR_Navigation\bin\Debug\net6.0\Newtonsoft.Json.dll
+D:\DO-AN\sep490-g41-project\SEP490_G41\AR_Navigation\bin\Debug\net6.0\System.Security.Permissions.dll
 D:\DO-AN\sep490-g41-project\SEP490_G41\AR_Navigation\obj\Debug\net6.0\AR_Navigation.csproj.AssemblyReference.cache
 D:\DO-AN\sep490-g41-project\SEP490_G41\AR_Navigation\obj\Debug\net6.0\AR_Navigation.GeneratedMSBuildEditorConfig.editorconfig
 D:\DO-AN\sep490-g41-project\SEP490_G41\AR_Navigation\obj\Debug\net6.0\AR_Navigation.AssemblyInfoInputs.cache
@@ -32,4 +33,3 @@ D:\DO-AN\sep490-g41-project\SEP490_G41\AR_Navigation\obj\Debug\net6.0\refint\AR_
 D:\DO-AN\sep490-g41-project\SEP490_G41\AR_Navigation\obj\Debug\net6.0\AR_Navigation.pdb
 D:\DO-AN\sep490-g41-project\SEP490_G41\AR_Navigation\obj\Debug\net6.0\AR_Navigation.genruntimeconfig.cache
 D:\DO-AN\sep490-g41-project\SEP490_G41\AR_Navigation\obj\Debug\net6.0\ref\AR_Navigation.dll
-D:\DO-AN\sep490-g41-project\SEP490_G41\AR_Navigation\bin\Debug\net6.0\System.Security.Permissions.dll

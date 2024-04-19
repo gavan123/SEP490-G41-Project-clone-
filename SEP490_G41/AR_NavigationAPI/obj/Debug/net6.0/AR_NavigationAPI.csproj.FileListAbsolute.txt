@@ -1,3 +1,11 @@
+D:\DO-AN\sep490-g41-project\SEP490_G41\AR_NavigationAPI\obj\Debug\net6.0\AR_NavigationAPI.csproj.AssemblyReference.cache
+D:\DO-AN\sep490-g41-project\SEP490_G41\AR_NavigationAPI\obj\Debug\net6.0\AR_NavigationAPI.GeneratedMSBuildEditorConfig.editorconfig
+D:\DO-AN\sep490-g41-project\SEP490_G41\AR_NavigationAPI\obj\Debug\net6.0\AR_NavigationAPI.AssemblyInfoInputs.cache
+D:\DO-AN\sep490-g41-project\SEP490_G41\AR_NavigationAPI\obj\Debug\net6.0\AR_NavigationAPI.AssemblyInfo.cs
+D:\DO-AN\sep490-g41-project\SEP490_G41\AR_NavigationAPI\obj\Debug\net6.0\AR_NavigationAPI.csproj.CoreCompileInputs.cache
+D:\DO-AN\sep490-g41-project\SEP490_G41\AR_NavigationAPI\obj\Debug\net6.0\AR_NavigationAPI.MvcApplicationPartsAssemblyInfo.cs
+D:\DO-AN\sep490-g41-project\SEP490_G41\AR_NavigationAPI\obj\Debug\net6.0\AR_NavigationAPI.MvcApplicationPartsAssemblyInfo.cache
+D:\DO-AN\sep490-g41-project\SEP490_G41\AR_NavigationAPI\obj\Debug\net6.0\AR_NavigationAPI.sourcelink.json
 D:\DO-AN\sep490-g41-project\SEP490_G41\AR_NavigationAPI\bin\Debug\net6.0\appsettings.Development.json
 D:\DO-AN\sep490-g41-project\SEP490_G41\AR_NavigationAPI\bin\Debug\net6.0\AR_NavigationAPI.exe
 D:\DO-AN\sep490-g41-project\SEP490_G41\AR_NavigationAPI\bin\Debug\net6.0\appsettings.json
@@ -66,14 +74,6 @@ D:\DO-AN\sep490-g41-project\SEP490_G41\AR_NavigationAPI\bin\Debug\net6.0\Busines
 D:\DO-AN\sep490-g41-project\SEP490_G41\AR_NavigationAPI\bin\Debug\net6.0\DataAccess.dll
 D:\DO-AN\sep490-g41-project\SEP490_G41\AR_NavigationAPI\bin\Debug\net6.0\BusinessObject.pdb
 D:\DO-AN\sep490-g41-project\SEP490_G41\AR_NavigationAPI\bin\Debug\net6.0\DataAccess.pdb
-D:\DO-AN\sep490-g41-project\SEP490_G41\AR_NavigationAPI\obj\Debug\net6.0\AR_NavigationAPI.csproj.AssemblyReference.cache
-D:\DO-AN\sep490-g41-project\SEP490_G41\AR_NavigationAPI\obj\Debug\net6.0\AR_NavigationAPI.GeneratedMSBuildEditorConfig.editorconfig
-D:\DO-AN\sep490-g41-project\SEP490_G41\AR_NavigationAPI\obj\Debug\net6.0\AR_NavigationAPI.AssemblyInfoInputs.cache
-D:\DO-AN\sep490-g41-project\SEP490_G41\AR_NavigationAPI\obj\Debug\net6.0\AR_NavigationAPI.AssemblyInfo.cs
-D:\DO-AN\sep490-g41-project\SEP490_G41\AR_NavigationAPI\obj\Debug\net6.0\AR_NavigationAPI.csproj.CoreCompileInputs.cache
-D:\DO-AN\sep490-g41-project\SEP490_G41\AR_NavigationAPI\obj\Debug\net6.0\AR_NavigationAPI.MvcApplicationPartsAssemblyInfo.cs
-D:\DO-AN\sep490-g41-project\SEP490_G41\AR_NavigationAPI\obj\Debug\net6.0\AR_NavigationAPI.MvcApplicationPartsAssemblyInfo.cache
-D:\DO-AN\sep490-g41-project\SEP490_G41\AR_NavigationAPI\obj\Debug\net6.0\AR_NavigationAPI.sourcelink.json
 D:\DO-AN\sep490-g41-project\SEP490_G41\AR_NavigationAPI\obj\Debug\net6.0\staticwebassets.build.json
 D:\DO-AN\sep490-g41-project\SEP490_G41\AR_NavigationAPI\obj\Debug\net6.0\staticwebassets.development.json
 D:\DO-AN\sep490-g41-project\SEP490_G41\AR_NavigationAPI\obj\Debug\net6.0\staticwebassets\msbuild.AR_NavigationAPI.Microsoft.AspNetCore.StaticWebAssets.props

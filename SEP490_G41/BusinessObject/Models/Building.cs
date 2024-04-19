@@ -8,6 +8,7 @@ namespace BusinessObject.Models
         public Building()
         {
             Floors = new HashSet<Floor>();
+            Mappoints = new HashSet<Mappoint>();
         }
 
         public int BuildingId { get; set; }
@@ -18,5 +19,6 @@ namespace BusinessObject.Models
 
         public virtual Facility Facility { get; set; } = null!;
         public virtual ICollection<Floor> Floors { get; set; }
+        public virtual ICollection<Mappoint> Mappoints { get; set; }
     }
 }
