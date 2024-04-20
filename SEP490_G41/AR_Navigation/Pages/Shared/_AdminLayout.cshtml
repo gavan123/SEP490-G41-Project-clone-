@@ -3,16 +3,23 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>@ViewBag.Title</title>
-    <link rel="shortcut icon" href="/assets/images/logo/favicon.png">
+    <title>FinS</title>
+    <link rel="shortcut icon" href="/Images/Logo.jpg">
 
     <!-- page css -->
     <!-- Core css -->
     <link href="/assets/css/app.min.css" rel="stylesheet">
+    <!-- Include ApexCharts CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/apexcharts@3.27.1/dist/apexcharts.min.css" rel="stylesheet">
+    <link href="/assets/vendors/datatables/dataTables.bootstrap.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- SweetAlert CDN -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-   
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.27.1/dist/apexcharts.min.js"></script>
+    <script src="/assets/vendors/chartjs/Chart.min.js"></script>
+
+
 </head>
 <style>
     .logo img {
@@ -26,10 +33,11 @@
             <!-- Header START -->
             <div class="header">
                 <div class="logo logo-dark">
-                    <a href="#">
-                        <img src="/Images/Logo.jpg" alt="Logo">
-                        <img class="logo-fold" src="/Images/Logo.jpg" alt="Logo">
+                    <a href="#" style="display: inline-block; text-decoration: none;">
+                        <img src="/Images/Logo.jpg" alt="Logo" style="vertical-align: middle;">
+                        <h3 style="display: inline-block; font-weight: bold; margin-left: 10px; vertical-align: middle;">FinNS</h3>
                     </a>
+                   
                 </div>
                 <div class="logo logo-white">
                     <a href="#">
@@ -54,7 +62,7 @@
                         <li class="dropdown dropdown-animated scale-left">
                             <div class="pointer" data-toggle="dropdown">
                                 <div class="avatar avatar-image  m-h-10 m-r-15">
-                                    <img src="/assets/images/avatars/thumb-3.jpg" alt="">
+                                    <img src="/Images/Tuyen.jpg"  alt="tuyen">
                                 </div>
                             </div>
                             <div class="p-b-15 p-t-20 dropdown-menu pop-profile">
@@ -64,39 +72,21 @@
                                             <img src="/assets/images/avatars/thumb-3.jpg" alt="">
                                         </div>
                                         <div class="m-l-10">
-                                            <p class="m-b-0 text-dark font-weight-semibold">Marshall Nichols</p>
-                                            <p class="m-b-0 opacity-07">UI/UX Desinger</p>
+                                            <p class="m-b-0 text-dark font-weight-semibold">Nguyễn Văn Tuyên</p>
+                                            <p class="m-b-0 opacity-07">>.Net c#</p>
                                         </div>
                                     </div>
                                 </div>
-                                <a href="javascript:void(0);" class="dropdown-item d-block p-h-15 p-v-10">
+                                <a href="/Profile/Myprofile" class="dropdown-item d-block p-h-15 p-v-10">
                                     <div class="d-flex align-items-center justify-content-between">
                                         <div>
                                             <i class="anticon opacity-04 font-size-16 anticon-user"></i>
-                                            <span class="m-l-10">Edit Profile</span>
+                                            <span class="m-l-10">My Profile</span>
                                         </div>
                                         <i class="anticon font-size-10 anticon-right"></i>
                                     </div>
                                 </a>
-                                <a href="javascript:void(0);" class="dropdown-item d-block p-h-15 p-v-10">
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <div>
-                                            <i class="anticon opacity-04 font-size-16 anticon-lock"></i>
-                                            <span class="m-l-10">Account Setting</span>
-                                        </div>
-                                        <i class="anticon font-size-10 anticon-right"></i>
-                                    </div>
-                                </a>
-                                <a href="javascript:void(0);" class="dropdown-item d-block p-h-15 p-v-10">
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <div>
-                                            <i class="anticon opacity-04 font-size-16 anticon-project"></i>
-                                            <span class="m-l-10">Projects</span>
-                                        </div>
-                                        <i class="anticon font-size-10 anticon-right"></i>
-                                    </div>
-                                </a>
-                                <a href="javascript:void(0);" class="dropdown-item d-block p-h-15 p-v-10">
+                                <a href="javascript:void(0);" class="dropdown-item d-block p-h-15 p-v-10" id="logout-link">
                                     <div class="d-flex align-items-center justify-content-between">
                                         <div>
                                             <i class="anticon opacity-04 font-size-16 anticon-logout"></i>
@@ -119,40 +109,7 @@
             <!-- Side Nav START -->
             <div class="side-nav">
                 <div class="side-nav-inner">
-                    <ul class="side-nav-menu scrollable">
-                        <li class="nav-item">
-                            <a href="/Dashboard" class="nav-link">
-                                <span class="icon-holder">
-                                    <i class="anticon anticon-dashboard"></i>
-                                </span>
-                                <span class="title">Dashboard</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/Buildings/list" class="nav-link">
-                                <span class="icon-holder">
-                                    <i class="far fa-building"></i>
-                                </span>
-                                <span class="title">Building</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/Maps/list" class="nav-link">
-                                <span class="icon-holder">
-                                    <i class="fas fa-map"></i>
-                                </span>
-                                <span class="title">Map</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/Mappoints/list" class="nav-link">
-                                <span class="icon-holder">
-                                    <i class="fa fa-map-marker" aria-hidden="true"></i>
-                                </span>
-                                <span class="title">MapPoint</span>
-                            </a>
-                        </li>
-                       
+                    <ul class="side-nav-menu scrollable" id="side-bar">
                     </ul>
                 </div>
             </div>
@@ -180,7 +137,6 @@
 
             </div>
             <!-- Page Container END -->
-           
             <!-- Quick View START -->
             <div class="modal modal-right fade quick-view" id="quick-view">
                 <div class="modal-dialog">
@@ -253,8 +209,66 @@
 <script src="/assets/vendors/chartjs/Chart.min.js"></script>
 <script src="/assets/js/pages/dashboard-default.js"></script>
 <script src="/assets/js/pages/project-list.js"></script>
-
 <!-- Core JS -->
 <script src="/assets/js/app.min.js"></script>
+<script>
+    $(document).ready(function () {
 
+        var userJson = sessionStorage.getItem('user');
+        if (userJson) {
+            var user = JSON.parse(userJson);
+            console.log('Username:', user.username);
+            console.log('Role:', user.role);
+            if (userJson) {
+                var user = JSON.parse(userJson);
+                console.log('Username:', user.username);
+                console.log('Role:', user.role);
+
+                var sidebarContent = `
+                <li class="nav-item">
+                    <a href="/Dashboard" class="nav-link">
+                        <span class="icon-holder">
+                            <i class="anticon anticon-dashboard"></i>
+                        </span>
+                        <span class="title">Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/Buildings/list" class="nav-link">
+                        <span class="icon-holder">
+                            <i class="far fa-building"></i>
+                        </span>
+                        <span class="title">Building</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/Maps/list" class="nav-link">
+                        <span class="icon-holder">
+                            <i class="fas fa-map"></i>
+                        </span>
+                        <span class="title">Map</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/Mappoints/list" class="nav-link">
+                        <span class="icon-holder">
+                            <i class="fa fa-map-marker" aria-hidden="true"></i>
+                        </span>
+                        <span class="title">MapPoint</span>
+                    </a>
+                </li>
+            `;
+                // Thêm nội dung của sidebar vào thẻ có id là "side-bar"
+                document.getElementById("side-bar").innerHTML = sidebarContent;
+            }
+
+        }
+        $('#logout-link').click(function (e) {
+            e.preventDefault();
+            sessionStorage.removeItem('user');
+            window.location.href = '/HomePage/Home';
+        });
+
+    });
+</script>
 

@@ -1,6 +1,12 @@
 ﻿using AutoMapper;
 using BusinessObject.DTO;
 using BusinessObject.Models;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using NetTopologySuite.Geometries;
 using System.Drawing;
 using Point = NetTopologySuite.Geometries.Point;
@@ -9,7 +15,7 @@ namespace BusinessObject.MappingProfile
 {
     public class MappingProfile : Profile
     {
-        
+
         public MappingProfile()
         {
 
@@ -45,6 +51,7 @@ namespace BusinessObject.MappingProfile
            .ForMember(dest => dest.LocationGps, opt => opt.ConvertUsing(new PointConverter(), src => src.LocationGps));
 
             CreateMap<Member, MemberDTO>().ReverseMap();
+            CreateMap<Member, MemberUpdateDTO>().ReverseMap();
 
             CreateMap<Edge, EdgeDTO>().ReverseMap();
             CreateMap<EdgeAddDTO, Edge>().ReverseMap();
@@ -62,10 +69,8 @@ namespace BusinessObject.MappingProfile
                 double longitude = double.Parse(coordinates[1].Trim());
 
                 // Create a new Point object
-                return new Point(latitude,longitude );
+                return new Point(latitude, longitude);
             }
         }
-
-
     }
 }

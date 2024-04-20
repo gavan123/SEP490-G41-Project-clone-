@@ -34,6 +34,7 @@ builder.Services.AddControllers().AddOData(option => option.Select()
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddScoped<finsContext>();
+
 builder.Services.AddDbContext<finsContext>((serviceProvider, options) =>
 {
     var serverVersion = new MySqlServerVersion(new Version(10, 6, 10)); 
@@ -48,6 +49,8 @@ builder.Services.AddCors(policy =>
     policy.AddPolicy("AllowAll", builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 });
 
+
+
 builder.Services.AddScoped<BuildingDAO>();
 builder.Services.AddScoped<FacilityDAO>();
 builder.Services.AddScoped<MapDAO>();
@@ -56,6 +59,7 @@ builder.Services.AddScoped<FloorDAO>();
 builder.Services.AddScoped<MemberDAO>();
 builder.Services.AddScoped<MapManageDAO>();
 builder.Services.AddScoped<EdgeDAO>();
+builder.Services.AddScoped<ProfileDAO>();
 
 builder.Services.AddScoped<IBuildingRepository, BuildingRepository>();
 builder.Services.AddScoped<IFacilityRepository, FacilityRepository>();
@@ -63,16 +67,23 @@ builder.Services.AddScoped<IMapRepository, MapRepository>();
 builder.Services.AddScoped<IMapPointRepository, MapPointRepository>();
 builder.Services.AddScoped<IFloorRepository, FloorRepository>();
 builder.Services.AddScoped<IEdgeRepository, EdgeRepository>();
-
-//builder.Services.AddControllers()
-//    .AddJsonOptions(options =>
-//    {
-//        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
-//    });
 builder.Services.AddScoped<IMemberRepository, MemberRepository>();
+builder.Services.AddScoped<IProfileRepository, ProfileRepository>();
+
+builder.Services.AddDistributedMemoryCache();
+
+// Add session services
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+builder.Services.AddHttpContextAccessor();
+
 
 var app = builder.Build();
-
+app.UseSession();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -82,6 +93,7 @@ if (app.Environment.IsDevelopment())
 app.UseCors("AllowAll");
 
 app.UseAuthorization();
+app.UseSession();
 
 app.MapControllers();
 

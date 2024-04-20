@@ -1,4 +1,5 @@
 ﻿@page
+@using Newtonsoft.Json
 @model AR_Navigation.Pages.HomePage.HomeModel
 @{
     Layout = "_HomeLayout";
@@ -7,7 +8,7 @@
     <!-- header section strats -->
     <div class="hero_bg_box">
         <div class="img-box">
-            <img src="/assets2/images/hero-bg.jpg" alt="">
+            <img src="~/Images/homeHeader.jpg" alt="">
         </div>
     </div>
 
@@ -18,7 +19,7 @@
                     <a href="" class="contact_link1">
                         <i class="fa fa-map-marker" aria-hidden="true"></i>
                         <span>
-                            Lorem ipsum dolor sit amet,
+                            Thach That, Hoa Lac, Ha Noi
                         </span>
                     </a>
                     <a href="" class="contact_link2">
@@ -49,7 +50,7 @@
                     </button>
 
                     <div class="collapse navbar-collapse ml-auto" id="navbarSupportedContent">
-                        <ul class="navbar-nav  ">
+                        <ul class="navbar-nav" id="navbar-head">
                             <li class="nav-item active">
                                 <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
                             </li>
@@ -64,12 +65,6 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="contact.html">Contact us</a>
-                            </li>
-                             <li class="nav-item">
-                                <a class="nav-link" href="Login">Contact us</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/Buildings/list">Building</a>
                             </li>
                         </ul>
                     </div>
@@ -119,7 +114,7 @@
             <div class="col-md-6 px-0">
                 <div class="img_container">
                     <div class="img-box">
-                        <img src="/assets2/images/about-img.jpg" alt="" />
+                        <img src="~/Images/roomBox.jpg" alt="" />
                     </div>
                 </div>
             </div>
@@ -179,7 +174,6 @@
             <div class="col-md-4">
                 <div class="box ">
                     <div class="img-box">
-                       
                     </div>
                     <div class="detail-box">
                         <h6>
@@ -230,7 +224,7 @@
                 <div class="carousel-item active">
                     <div class="box">
                         <div class="img-box">
-                            <img src="/assets2/images/client.png" alt="">
+                            <img src="/Images/office.jpg" alt="">
                         </div>
                         <div class="detail-box">
                             <h4>
@@ -248,7 +242,7 @@
                 <div class="carousel-item ">
                     <div class="box">
                         <div class="img-box">
-                            <img src="/assets2/images/client.png" alt="">
+                            <img src="~/Images/carteen.jpg" alt="">
                         </div>
                         <div class="detail-box">
                             <h4>
@@ -266,7 +260,7 @@
                 <div class="carousel-item ">
                     <div class="box">
                         <div class="img-box">
-                            <img src="/assets2/client.png" alt="">
+                            <img src="~/Images/classroom.jpg" alt="">
                         </div>
                         <div class="detail-box">
                             <h4>
@@ -297,7 +291,6 @@
 </section>
 
 <!-- end client section -->
-
 <!-- team section -->
 
 <section class="team_section layout_padding">
@@ -480,3 +473,27 @@
     </p>
 </footer>
 <!-- footer section -->
+
+<script>
+    $(document).ready(function () {
+        // Lấy dữ liệu từ sessionStorage
+        var userJson = sessionStorage.getItem('user');
+        if (userJson) {
+            var user = JSON.parse(userJson);
+            console.log('Username:', user.username);
+            console.log('Role:', user.role);
+
+            $('#navbar-head').append('<li class="nav-item"><a class="nav-link" id="logout-link" href="/Authen/Logout">Logout</a></li>');
+            $('#navbar-head').append('<li class="nav-item"><a class="nav-link" href="/Buildings/list">Building</a></li>');
+        } else {
+            $('#navbar-head').append('<li class="nav-item"><a class="nav-link" href="/Authen/Login">Login</a></li>');
+        }
+        $('#navbar-head').on('click', '#logout-link', function (e) {
+            e.preventDefault();
+            sessionStorage.removeItem('user');
+
+            window.location.href = $(this).attr('href');
+        });
+    });
+
+</script>

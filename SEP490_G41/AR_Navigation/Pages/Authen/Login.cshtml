@@ -1,0 +1,91 @@
+﻿@page
+@model AR_Navigation.Pages.Authen.LoginModel
+@{
+}
+@{
+    Layout = "_AdminLayout";
+}
+<div class="app">
+    <div class="container-fluid">
+        <div class="d-flex full-height p-v-15 flex-column justify-content-between">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h2 class="m-t-20">Sign In</h2>
+                                <p class="m-b-30">Enter your credential to get access</p>
+                                <form asp-page="/Authen/Login" asp-page-handler="Login" id="form-login" method="post">
+                                    <div class="form-group">
+                                        <label class="font-weight-semibold" for="userName">Username:</label>
+                                        <div class="input-affix">
+                                            <i class="prefix-icon anticon anticon-user"></i>
+                                            <input type="text" class="form-control" id="userName" placeholder="Username">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="font-weight-semibold" for="password">Password:</label>
+                                        <a class="float-right font-size-13 text-muted" href="">Forget Password?</a>
+                                        <div class="input-affix m-b-10">
+                                            <i class="prefix-icon anticon anticon-lock"></i>
+                                            <input type="password" class="form-control" id="password" placeholder="Password">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <span class="font-size-13 text-muted">
+                                                Don't have an account?
+                                                <a class="small" href=""> Signup</a>
+                                            </span>
+                                            <button class="btn btn-primary" id="login-btn">Sign In</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#login-btn').click(function (event) {
+            event.preventDefault(); // Ngăn chặn form submit mặc định
+
+            var username = $('#userName').val();
+            var password = $('#password').val();
+
+            // Gửi yêu cầu đăng nhập qua API
+            $.ajax({
+                url: 'https://localhost:7186/api/members/Login?username=' + username + '&password=' + password,
+                type: 'GET',
+                success: function (response) {
+                    console.log('Login successful');
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Login Successful',
+                        text: 'You have successfully logged in!',
+                    });
+                    console.log('User information:', response.username);
+
+
+                    var user = { userid: response.userid, fullname: response.fullname, username: response.username, role: response.roleId };
+                    sessionStorage.setItem('user', JSON.stringify(user));
+                    console.log(sessionStorage.getItem('user'));
+
+                    window.location.href = '/HomePage/Home';
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error while logging in:', error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Login Failed',
+                        text: 'Invalid username or password. Please try again!',
+                    });
+                }
+            });
+        });
+    });
+</script>

@@ -64,8 +64,8 @@ namespace DataAccess.IRepository.Repository
                                {
                                    MapId = m.MapId,
                                    MapName = m.MapName,
-                                   Image2D = m.MapImage2D,
-                                   Image3D = m.MapImage3D,
+                                   MapImage2D = m.MapImage2D,
+                                   MapImage3D = m.MapImage3D,
                                    FloorId = m.FloorId,
                                    FloorName = f.FloorName,
                                    BuildingName = b.BuildingName,
@@ -83,14 +83,13 @@ namespace DataAccess.IRepository.Repository
         }
 
 
-
         public void AddMap(MapAddDTO mapAddDTO, BusinessObject.Models.Member member)
         {
             if (mapAddDTO == null)
                 throw new ArgumentNullException(nameof(mapAddDTO));
             try
             {
-                string uniqueFileName = mapAddDTO.Image2D.FileName;
+                string uniqueFileName = mapAddDTO.MapImage2D.FileName;
 
                 var map = new Map
                 {
@@ -114,10 +113,9 @@ namespace DataAccess.IRepository.Repository
 
             if (mapUpdateDTO.MapId <= 0)
                 throw new ArgumentException("Map ID must be a positive integer.");
-
             try
             {
-                string uniqueFileName = mapUpdateDTO.Image2D.FileName;
+                string uniqueFileName = mapUpdateDTO.MapImage2D.FileName;
 
                 var map = new Map
                 {

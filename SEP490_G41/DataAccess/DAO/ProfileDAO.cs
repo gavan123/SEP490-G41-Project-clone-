@@ -28,21 +28,25 @@ namespace DataAccess.DAO
         // Cập nhật thông tin Profile
         public void UpdateProfile(Member member)
         {
+            if (member == null)
+            {
+                throw new ArgumentNullException(nameof(member));
+            }
             var existingMember = _context.Members.FirstOrDefault(m => m.MemberId == member.MemberId);
 
             if (existingMember != null)
             {
+                existingMember.MemberId = member.MemberId;
                 existingMember.FullName = member.FullName;
                 existingMember.DoB = member.DoB;
                 existingMember.Address = member.Address;
                 existingMember.Phone = member.Phone;
                 existingMember.Email = member.Email;
-                existingMember.Username = member.Username;
-                existingMember.Password = member.Password;
-                existingMember.Status = member.Phone;      
-
+                existingMember.Country = member.Country;
+                existingMember.Avatar = member.Avatar;
                 _context.SaveChanges();
             }
         }
+
     }
 }

@@ -13,9 +13,9 @@ namespace BusinessObject.Models
         }
 
         public int FloorId { get; set; }
-        public string FloorName { get; set; } = null!;
-        public string Greeting { get; set; } = null!;
-        public string Status { get; set; } = null!;
+        public string FloorName { get; set; }
+        public string Greeting { get; set; }
+        public string Status { get; set; }
         public int BuildingId { get; set; }
 
         public virtual Building Building { get; set; } = null!;

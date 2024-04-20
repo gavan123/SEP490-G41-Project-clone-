@@ -11,8 +11,8 @@ namespace BusinessObject.DTO
     {
         public int MapId { get; set; }
         public string MapName { get; set; } = null!;
-        public string Image2D { get; set; } = null!;
-        public string? Image3D { get; set; } = null!;
+        public string MapImage2D { get; set; } = null!;
+        public string? MapImage3D { get; set; } = null!;
         public int FloorId { get; set; }
         public int BuildingId { get; set; }
         public string FloorName { get; set; }
@@ -24,7 +24,7 @@ namespace BusinessObject.DTO
     public class MapAddDTO
     {
         public string MapName { get; set; } = null!;
-        public IFormFile Image2D { get; set; } = null!;
+        public IFormFile MapImage2D { get; set; } = null!;
         public int FloorId { get; set; }
     }
 
@@ -32,7 +32,7 @@ namespace BusinessObject.DTO
     {
         public int MapId { get; set; }
         public string MapName { get; set; } = null!;
-        public IFormFile Image2D { get; set; } = null!;
+        public IFormFile MapImage2D { get; set; } = null!;
         public int FloorId { get; set; }
     }
 }
