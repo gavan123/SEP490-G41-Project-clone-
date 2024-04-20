@@ -163,6 +163,7 @@ D:\DO-AN\sep490-g41-project\SEP490_G41\AR_NavigationAPI\obj\Debug\net6.0\AR_Navi
 D:\DO-AN\sep490-g41-project\SEP490_G41\AR_NavigationAPI\obj\Debug\net6.0\AR_NavigationAPI.AssemblyInfoInputs.cache
 D:\DO-AN\sep490-g41-project\SEP490_G41\AR_NavigationAPI\obj\Debug\net6.0\AR_NavigationAPI.AssemblyInfo.cs
 D:\DO-AN\sep490-g41-project\SEP490_G41\AR_NavigationAPI\obj\Debug\net6.0\AR_NavigationAPI.csproj.CoreCompileInputs.cache
+D:\DO-AN\sep490-g41-project\SEP490_G41\AR_NavigationAPI\obj\Debug\net6.0\AR_NavigationAPI.MvcApplicationPartsAssemblyInfo.cs
 D:\DO-AN\sep490-g41-project\SEP490_G41\AR_NavigationAPI\obj\Debug\net6.0\AR_NavigationAPI.MvcApplicationPartsAssemblyInfo.cache
 D:\DO-AN\sep490-g41-project\SEP490_G41\AR_NavigationAPI\obj\Debug\net6.0\AR_NavigationAPI.sourcelink.json
 D:\DO-AN\sep490-g41-project\SEP490_G41\AR_NavigationAPI\obj\Debug\net6.0\staticwebassets.build.json
@@ -179,5 +180,8 @@ D:\DO-AN\sep490-g41-project\SEP490_G41\AR_NavigationAPI\obj\Debug\net6.0\refint\
 D:\DO-AN\sep490-g41-project\SEP490_G41\AR_NavigationAPI\obj\Debug\net6.0\AR_NavigationAPI.pdb
 D:\DO-AN\sep490-g41-project\SEP490_G41\AR_NavigationAPI\obj\Debug\net6.0\AR_NavigationAPI.genruntimeconfig.cache
 D:\DO-AN\sep490-g41-project\SEP490_G41\AR_NavigationAPI\obj\Debug\net6.0\ref\AR_NavigationAPI.dll
+<<<<<<< HEAD
 D:\DO-AN\sep490-g41-project\SEP490_G41\AR_NavigationAPI\obj\Debug\net6.0\AR_NavigationAPI.MvcApplicationPartsAssemblyInfo.cs
+>>>>>>> Anhnh
+=======
 >>>>>>> Anhnh
