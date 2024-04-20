@@ -96,12 +96,13 @@ const sampleEdge = {
 }
 const canvas = document.getElementById("canvas_data");
 const context = canvas.getContext("2d");
-
+const imgData = context.getImageData(0, 0, canvas.width, canvas.height);
 var allEdges = [];
 
 //ratio of image's width, length vs image's pixels
+
 var ratio = 8.682926829;
-var root = { id: "root", x: 628, y: 160 };
+var root = { id: "root", x: 621, y: 3 };
 var radius = 5;
 
 //Start and end point of 1 edge
@@ -117,13 +118,13 @@ var numberOfClicks = 0;
 //cac function sau phuc vu cho viec lay toa do 
 //toa do trong anh tinh theo goc toa do cua database
 function pixelLocation(event) {
-    document.getElementById("demo").innerHTML = "LocationWeb1: (" + (event.offsetX) + ", " + (event.offsetY) + ")" +
-        "LocationWeb2: (" + (event.offsetX - root.x) + ", " + -(event.offsetY - root.y) + ")";
+    document.getElementById("demo").innerHTML = "Location: (" + (event.offsetX) + ", " + (event.offsetY) + ")" +
+        "Location1: (" + (event.offsetX - root.x) + ", " + -(event.offsetY - root.y) + ")";
 }
 //toa do cua diem trong database
 function databaseLocation(event) {
     document.getElementById("demo").innerHTML = document.getElementById("demo").innerHTML +
-        " <br>  LocationApp: (" + (event.offsetX - root.x) / ratio + ", " + -(event.offsetY - root.y) / ratio + ")";
+        " <br>  Location2: (" + (event.offsetX - root.x) / ratio + ", " + -(event.offsetY - root.y) / ratio + ")";
 }
 
 //function duoc goi khi bam nut Connect Edge
@@ -133,23 +134,21 @@ function setEdge() {
 }
 
 //function duoc goi khi bam Get Mappoints
-function renderPoints(points) {
-    // Lay du lieu tu array ben tren
-    points.forEach(point => {
+function renderPoints() {
+    //lay du lieu tu array ben tren
+    allPoints.forEach(point => {
         context.beginPath();
-        // Convert coordinates from image pixels to database coordinates
-        let pixelX = point.locationAppX * ratio + root.x ;
-        let pixelY = -point.locationAppY * ratio + root.y;
+        //convert coordinates from image pixels to database coordinates
+        let pixelX = point.x * ratio + root.x;
+        let pixelY = -point.y * ratio + root.y;
 
-        // Draw circle at pixelX,pixelY with radius = 2, start from angle 0, end at 360, counter-clockwise
+        //draw circle at pixelX,pixelY with radius = 2, start from angle 0, end at 360, counter-clockwise
         context.arc(pixelX, pixelY, radius, 0, 2 * Math.PI, false);
         context.fillStyle = 'red';
         context.fill();
     });
-    saveCanvasState();
+    // saveCanvasState();
 }
-window.renderPoints = renderPoints;
-
 //phuc vu cho drawLine()
 function count() {
     numberOfClicks = numberOfClicks + 1;
@@ -237,8 +236,8 @@ function saveEdge(point1, point2) {
     allEdges.push(edge);
     edge = sampleEdge;
     //luu lai canh vua moi ve
+    // const imgData = context.getImageData(0,0,canvas.width,canvas.height);
     saveCanvasState();
-
     showEdges(allEdges);
     //xoa cac event listener de khong nhan event nao cho den khi bam cac nut functionalities
     canvas.setAttribute("onclick", "");
@@ -296,8 +295,8 @@ function undo() {
         redrawCanvas();
     }
     //khi undo thi array cac edges cung se phai xoa di
-    if (edges.length > 0) {
-        edges.pop();
+    if (allEdges.length > 0) {
+        allEdges.pop();
         showEdges(allEdges);
     }
 }
@@ -354,27 +353,22 @@ function chooseRoot(event) {
     root.x = event.offsetX;
     root.y = event.offsetY;
     document.getElementById("demo1").innerHTML = "Root: " + root.x + ", " + root.y;
-    document.getElementById("demo1").innerHTML = document.getElementById("demo1").innerHTML + " <br> Ratio: ";
+    getRatio();
+    document.getElementById("demo1").innerHTML = document.getElementById("demo1").innerHTML + " <br> Ratio: " + ratio;
 }
 function getRatio(farthestPointImage, farthestPointDatabase, nearbyPointImage, nearbyPointDatabase, rootImage) {
-    //all of the following statements are relative to the root/ the coordinate origin
-    //farthestPointImage will be the furthest point in the image
-    //farthestPointDatabase will be the furthest point in the database
-    //nearbyPointImage will be a nearby point in the image 
-    //nearbyPointDatabase will be a nearby point in the database 
+    //farthestPointImage la diem xa nhat tinh tu goc toa do, lay toa do trong anh (khong chinh sua)
+    //farthestPointDatabase la farthestPointImage nhung toa do o trong database
+    //nearbyPointImage la 1 diem gan voi goc toa do, lay toa do trong anh (khong chinh sua)
+    //nearbyPointDatabase la nearbyPointImage nhung toa do o trong database
 
-    //all need to have the same coordinate origin positon (top left corner)
-    //final result will be the ratio of length between the image and database  
-    //by estimating the average length between the furthest point ratio and a nearby point ratio
-    //by estimating, we devide it by 2.05
+    //rootImage la toa do cua goc toa do o tren anh
 
-    console.log("farthestPointImage: " + farthestPointImage.x + ", " + farthestPointImage.y);
-    console.log("farthestPointDatabase: " + farthestPointDatabase.x + ", " + farthestPointDatabase.y);
+    //4 diem tren co the tinh duoc ti le cua (canh dai nhat tren anh, canh dai nhat tren database)
+    //va ti le cua (canh gan nhat tren anh, canh gan nhat tren database)
+    //lay tong cua ti le do chia 2.05 de uoc luong dong deu
+    //2.05 co the tuy chinh
 
-    console.log("nearbyPointImage: " + nearbyPointImage.x + ", " + nearbyPointImage.y);
-    console.log("nearbyPointDatabase: " + nearbyPointDatabase.x + ", " + nearbyPointDatabase.y);
-
-    console.log("rootImage: " + root.x + ", " + root.y);
     let p1X = farthestPointImage.x - root.x;
     let p1Y = farthestPointImage.y - root.y;
     let p2X = farthestPointDatabase.x;
@@ -393,3 +387,43 @@ function getRatio(farthestPointImage, farthestPointDatabase, nearbyPointImage, n
     return result
 }
 //==================================================================
+
+function getRatio() {
+    var irlLength = 125;
+    //irl length la tong chieu dai cua anh (tang 1 Al tong chieu dai la 125m)
+    //luu y: anh phai duoc cat sat mep nhat co the
+    //khong duoc de thua nhieu
+    //offsetWidth la chieu dai cua canvas
+    //==> ti le bao nhieu pixel/m 
+    let x = canvas.offsetWidth;
+    ratio = x / irlLength;
+}
+
+function resize() {
+    var canvas1 = new fabric.Canvas('canvas_data1');
+    // Load the background image (you can replace 'your-image.jpg' with your actual image URL)
+    fabric.Image.fromURL('../ALF1new.jpg', function (img) {
+        // Access the image dimensions
+        var scale = canvas1.width / img.width;
+
+        img.set({
+            scaleX: scale,
+            scaleY: scale,
+            originX: 'left',
+            originY: 'top'
+        });
+        // Set canvas dimensions to match the image size
+        canvas1.setWidth(canvas1.width * (canvas1.width / img.width));
+        canvas1.setHeight(img.height * (canvas1.width / img.width));
+        canvas1.setBackgroundImage(img, canvas1.renderAll.bind(canvas1));
+        // Add the image to the canvas
+        canvas.width = canvas1.width;
+        canvas.height = canvas1.height;
+        canvas1.setWidth(0);
+        canvas1.setHeight(0);
+        console.log("canvas: " + canvas.width + ", " + canvas.height);
+        console.log("canvas: " + canvas1.width + ", " + canvas1.height);
+
+        canvas.style.backgroundImage = 'url("../ALF1new.jpg")';
+    });
+}

@@ -68,7 +68,7 @@
                         </tr>
                     </thead>
                     <tbody id="map-list">
-
+                        
                     </tbody>
                 </table>
             </div>
@@ -183,13 +183,11 @@
 
 <script>
     $(document).ready(function () {
-        //session
         var userJson = sessionStorage.getItem('user');
         if (!userJson) {
             window.location.href = '/Authen/Login';
             return;
         }
-
         var itemsPerPage = 5;
 
         // Get map point list from API
@@ -200,49 +198,6 @@
 
             $('#map-list').empty();
 
-<<<<<<< HEAD
-            for (const map of mapsToShow) {
-                const mapRow = `
-                                                    <tr>
-                                                        <td>
-                                                            <div class="media align-items-center">
-                                                                <div class="m-l-10">
-                                                                    <h5 class="m-b-0">${map.mapName}</h5>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <span>${map.buildingName}</span>
-                                                        </td>
-                                                        <td>
-                                                            <span>${map.floorName}</span>
-                                                        </td>
-                                                        <td>
-                                                            <div class="d-flex align-items-center">
-                                                                <div class="badge badge-${map.status === 'active' ? 'success' : 'danger'} badge-dot m-r-10"></div>
-                                                                <div>${map.status}</div>
-                                                            </div>
-                                                        </td>
-                                                        <td class="text-right">
-                                                            <div class="dropdown dropdown-animated scale-left">
-                                                                <a class="text-gray font-size-18" href="javascript:void(0);" data-toggle="dropdown">
-                                                                    <i class="anticon anticon-ellipsis"></i>
-                                                                </a>
-                                                                <div class="dropdown-menu">
-                                                                    <button class="dropdown-item btn btn-warning btn-tone editMap" type="button" data-id="${map.mapId}">
-                                                                        <i class="anticon anticon-edit"></i>
-                                                                        <span class="m-l-10">Edit</span>
-                                                                    </button>
-                                                                    <button class="dropdown-item btn btn-danger btn-tone deleteMap" type="button" data-id="${map.mapId}">
-                                                                        <i class="anticon anticon-delete"></i>
-                                                                        <span class="m-l-10">Delete</span>
-                                                                    </button>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                `;
-=======
             for (const mapPoint of mapPointsToShow) {
                 const mapPointRow = `
                     <tr>
@@ -276,7 +231,6 @@
                                 </td>
                     </tr>
                 `;
->>>>>>> origin/hieunh
 
                 $('#map-list').append(mapPointRow);
             }
@@ -542,9 +496,6 @@
                     $('#edit-map-point-building').val(mapPoint.BuildingID);
                     $('#edit-map-point-image').val('');
 
-<<<<<<< HEAD
-    });
-=======
                     $('#edit-map').modal('show');
                 },
                 error: function (xhr, status, error) {
@@ -617,5 +568,4 @@
         });
     });
 
->>>>>>> origin/hieunh
 </script>

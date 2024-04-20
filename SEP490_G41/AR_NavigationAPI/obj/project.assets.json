@@ -4360,11 +4360,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\sep490-g41-project\\SEP490_G41\\AR_NavigationAPI\\AR_NavigationAPI.csproj",
+      "projectUniqueName": "D:\\FPT\\SEP\\sep490-g41-project\\SEP490_G41\\AR_NavigationAPI\\AR_NavigationAPI.csproj",
       "projectName": "AR_NavigationAPI",
-      "projectPath": "D:\\sep490-g41-project\\SEP490_G41\\AR_NavigationAPI\\AR_NavigationAPI.csproj",
+      "projectPath": "D:\\FPT\\SEP\\sep490-g41-project\\SEP490_G41\\AR_NavigationAPI\\AR_NavigationAPI.csproj",
       "packagesPath": "C:\\Users\\hieud\\.nuget\\packages\\",
-      "outputPath": "D:\\sep490-g41-project\\SEP490_G41\\AR_NavigationAPI\\obj\\",
+      "outputPath": "D:\\FPT\\SEP\\sep490-g41-project\\SEP490_G41\\AR_NavigationAPI\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -4379,17 +4379,18 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\sdk\\7.0.302\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "D:\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj": {
-              "projectPath": "D:\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj"
+            "D:\\FPT\\SEP\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj": {
+              "projectPath": "D:\\FPT\\SEP\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj"
             },
-            "D:\\sep490-g41-project\\SEP490_G41\\DataAccess\\DataAccess.csproj": {
-              "projectPath": "D:\\sep490-g41-project\\SEP490_G41\\DataAccess\\DataAccess.csproj"
+            "D:\\FPT\\SEP\\sep490-g41-project\\SEP490_G41\\DataAccess\\DataAccess.csproj": {
+              "projectPath": "D:\\FPT\\SEP\\sep490-g41-project\\SEP490_G41\\DataAccess\\DataAccess.csproj"
             }
           }
         }
@@ -4436,7 +4437,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.403\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.302\\RuntimeIdentifierGraph.json"
       }
     }
   }
