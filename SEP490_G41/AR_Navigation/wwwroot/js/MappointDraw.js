@@ -156,11 +156,15 @@ function count() {
     numberOfClicks = numberOfClicks + 1;
 }
 
-function drawLine(event) {
+function drawLine(event, element) {
+    var rect = canvas.getBoundingClientRect();
+    var scaleX = canvas.width / rect.width;
+    var scaleY = canvas.height / rect.height;
+
     // if it is the 2nd click then it is beginPoint
     if (numberOfClicks == 0) {
-        beginPoint.x = event.offsetX;
-        beginPoint.y = event.offsetY;
+        beginPoint.x = (event.clientX - rect.left) * scaleX;
+        beginPoint.y = (event.clientY - rect.top) * scaleY;
         console.log(beginPoint.x + ", " + beginPoint.y);
         
         if (inButtonRange(mappointList, beginPoint) == false) {
@@ -298,8 +302,8 @@ function undo() {
         redrawCanvas();
     }
     //khi undo thi array cac edges cung se phai xoa di
-    if (edges.length > 0) {
-        edges.pop();
+    if (allEdges.length > 0) {
+        allEdges.pop();
         showEdges(allEdges);
     }
 }
