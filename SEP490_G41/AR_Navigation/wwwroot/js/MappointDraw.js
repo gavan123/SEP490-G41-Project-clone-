@@ -4,13 +4,17 @@ var mappointList = [];
 var mappointIDList = [];
 
 var isClicked = false;
-function getMapPointsByMapId(mapId) {
+var mapidTake;
+var flooridTake;
+var buildingidTake;
+function getMapPointsByMapId(mapId, buildingid, floorid) {
     $.ajax({
         url: `https://localhost:7186/api/mappoints?filter=mapId eq ${mapId}`,
         method: "get",
     }).then(function (mappointdata) {
         $('#map-list').empty();
         mappointList = [];
+        mappointIDList = [];
         mappointdata.forEach(function (mappoint) {
             var locationAppParse = parseLocation(mappoint.locationApp);
             mappointList.push({
@@ -19,9 +23,9 @@ function getMapPointsByMapId(mapId) {
                 y: locationAppParse.y
             });
             mappointIDList.push({
-                MapId: mappoint.mapId,
-                BuildingId: mappoint.buildingId,
-                FloorId: mappoint.floorId
+                MapId: mapId,
+                BuildingId: buildingid,
+                FloorId: floorid
             });
             const mappointrow = `
                     <tr>
@@ -41,7 +45,7 @@ function getMapPointsByMapId(mapId) {
                            <button class="btn btn-icon btn-warning btn-hover btn-sm btn-rounded pull-right">
                           <i class="anticon anticon-edit"></i>
                             </button>
-                           <button class="btn btn-icon btn-danger btn-hover btn-sm btn-rounded">
+                           <button class="btn btn-icon btn-danger btn-hover btn-sm btn-rounded mappoint-delete" data-id=${mappoint.mapPointId}>
                              <i class="anticon anticon-delete"></i>
                           </button>
                         </td>
@@ -52,16 +56,163 @@ function getMapPointsByMapId(mapId) {
         });
         renderPoints(mappointList);
         console.log("mappoint legh:", mappointList);
-        console.log("mappoint leghssss:", mappointIDList);
+
+        mapidTake = mapId;
+        buildingidTake = buildingid;
+        flooridTake = floorid;
+
+        console.log("MapId:", mapId);
+        console.log("BuildingId:", buildingid);
+        console.log("FloorId:", floorid);
+
     }).catch(function (error) {
         console.error("error occurred while fetching mappoint data:", error);
     });
 }
 
-function getFirstMapPointID() {
-  return mappointIDList; // Lấy phần tử đầu tiên nếu mảng không rỗng
+//Delete mappoint
+$(document).on('click', '.mappoint-delete', function () {
+    var mapPointId = $(this).data('id');
+
+    // Hiển thị cửa sổ xác nhận của SweetAlert
+    Swal.fire({
+        title: 'Are you sure?',
+        text: 'You are about to delete this map point. This action cannot be undone.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'No, cancel!',
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {
+            deleteMapPoint(mapPointId);
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+            Swal.fire('Cancelled', 'Your map point is safe :)', 'info');
+        }
+    });
+});
+
+//Delete mappoint select
+$(document).on('click', '#delete-selected', function () {
+    var selectedMapPointIds = [];
+    // Lặp qua tất cả các checkbox
+    $('.checkbox').each(function () {
+        // Kiểm tra nếu checkbox được chọn
+        if ($(this).is(':checked')) {
+            // Lấy mapPointId của checkbox được chọn và thêm vào mảng selectedMapPointIds
+            var mapPointId = $(this).closest('tr').find('.mappoint-delete').data('id');
+            selectedMapPointIds.push(mapPointId);
+        }
+    });
+
+    // Kiểm tra xem có mapPointId được chọn hay không
+    if (selectedMapPointIds.length === 0) {
+        // Hiển thị thông báo cho người dùng nếu không có mappoint nào được chọn
+        Swal.fire({
+            icon: 'warning',
+            title: 'No map point selected',
+            text: 'Please select at least one map point to delete.'
+        });
+    } else {
+        // Xác nhận xóa từ người dùng
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'You are about to delete selected map points. This action cannot be undone.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete them!',
+            cancelButtonText: 'No, cancel!',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Gửi yêu cầu DELETE cho từng mappoint được chọn
+                selectedMapPointIds.forEach(function (mapPointId) {
+                    deleteMapPoint(mapPointId);
+                });
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                Swal.fire('Cancelled', 'Your map points are safe :)', 'info');
+            }
+        });
+    }
+});
+
+//function delete
+function deleteMapPoint(mapPointId) {
+    $.ajax({
+        url: `https://localhost:7186/api/mappoints/${mapPointId}`,
+        type: 'DELETE',
+        success: function (response) {
+            console.log('Map point deleted successfully:', response);
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: 'Map point deleted successfully!'
+            }).then((result) => {
+                // Tải lại trang sau khi đóng hộp thoại SweetAlert
+                location.reload();
+            });
+        },
+        error: function (xhr, status, error) {
+            console.error('Error deleting map point:', error);
+            // Hiển thị SweetAlert thông báo lỗi
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Failed to delete map point. Please try again later.'
+            });
+        }
+    });
+
 }
-window.getFirstMapPointID = getFirstMapPointID;
+function attachEventToSaveButton() {
+    addMapPoint(mapidTake, buildingidTake, flooridTake);
+}
+//add mappoint
+function addMapPoint(mapidTake, buildingidTake, flooridTake) {
+    var mappointName = $('#mapPointName').val();
+    var xCoordinate = $('#mapPointX').val();
+    var yCoordinate = $('#mapPointY').val();
+
+    //Lưu ý t để ngược bởi vì khi cho vào data base thì x với y bị đảo ngược
+    var coordinatesString = '[' + yCoordinate + ',' + xCoordinate + ']';
+
+    var formData = new FormData();
+    // Thêm các trường dữ liệu vào formData
+    formData.append('MappointName', mappointName);
+    formData.append('LocationWeb', coordinatesString);
+    formData.append('LocationApp', coordinatesString);
+    formData.append('LocationGps', '[0,0]');
+    formData.append('FloorId', flooridTake);
+    formData.append('BuildingId', buildingidTake);
+    formData.append('MapId', mapidTake);
+
+    $.ajax({
+        url: 'https://localhost:7186/api/mappoints',
+        type: 'POST',
+        processData: false, 
+        contentType: false, 
+        data: formData,
+        success: function (response) {
+            console.log('Map point added successfully:', response);
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: 'Map point added successfully!'
+            });
+            $('#add-MapPoint-modal').modal('hide');
+        },
+        error: function (xhr, status, error) {
+            console.error('Error adding map point:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Failed to add map point. Please try again later.'
+            });
+            // Xử lý lỗi khi không thể thêm map point
+        }
+    });
+}
+
 
 //choose mappoint
 function chooseMapPoint() {
@@ -69,6 +220,7 @@ function chooseMapPoint() {
     canvas.setAttribute("onclick", "drawMapPoint(event)");
 }
 function drawMapPoint(event) {
+    var scale = 2;
     // Nếu đã bấm vào canvas, không cho phép thực hiện hành động lần nữa
     if (isClicked) {
         return;
@@ -77,8 +229,8 @@ function drawMapPoint(event) {
     var x = event.offsetX;
     var y = event.offsetY;
 
-    var xParse = (event.offsetX - root.x) / ratio;
-    var yParse = -(event.offsetY - root.y) / ratio;
+    var xParse = (event.offsetX - root.x) / ratio ;
+    var yParse = -(event.offsetY - root.y) / ratio ;
 
     context.fillStyle = 'blue';
 
@@ -106,10 +258,24 @@ function drawMapPoint(event) {
 
     isClicked = true;
 
-    showSelectedPointInForm();
+  
+    
+}
+//show Coordinate in form
+function showSelectedPointInForm() {
+    if (selectedPoint) {
+        // Lấy giá trị x và y từ selectedPoint
+        var xCoordinate = selectedPoint.x.toFixed(2);;
+        var yCoordinate = selectedPoint.y.toFixed(2);
+
+        $('#mapPointX').val(xCoordinate);
+        $('#mapPointY').val(yCoordinate);
+    } else {
+        // Nếu selectedPoint không có giá trị, thông báo lỗi
+        console.error("Selected point is undefined or null.");
+    }
     $('#add-MapPoint-modal').modal('show');
 }
-
 
 
 function parseLocation(locationWebString) {

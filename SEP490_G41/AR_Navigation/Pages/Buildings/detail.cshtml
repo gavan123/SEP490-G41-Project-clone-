@@ -4,10 +4,10 @@
     Layout = "_AdminLayout";
 }
 <head>
-    
+
 </head>
 <style>
-   
+
 
 
 
@@ -71,13 +71,13 @@
     <button type="button" id="undoButton" class="btn btn-light btn-with-border" onclick="undo()">Undo</button>
     <div class="selected-image-container" id="map-images-container">
         <canvas id="canvas_data" width="1065%"
-                onclick="pixelLocation(event), databaseLocation(event)">
+                onclick="chooseMapPoint(event),pixelLocation(event), databaseLocation(event)">
         </canvas>
     </div>
     <div id="demo"></div>
     <div id="demo1"></div>
     <button id="clear-canvas-btn" class="btn btn-light btn-with-border">Delete draw</button>
-    <button id="add-mappoint-btn" class="btn btn-light btn-with-border" onclick="chooseMapPoint(event)">Add</button>
+    <button id="add-mappoint-btn" class="btn btn-light btn-with-border" onclick="showSelectedPointInForm();">Add</button>
 </div>
 <!-- Content Wrapper START -->
 <div class="main-content">
@@ -169,7 +169,7 @@
                         <label for="mapPointY">Y Coordinate</label>
                         <input type="text" class="form-control" id="mapPointY" placeholder="Enter Y Coordinate" required>
                     </div>
-                    <button type="button" class="btn btn-primary" id="add-mapPoint-btn" onclick="addMapPoint()">Save</button>
+                    <button type="button" class="btn btn-primary" id="add-mapPoint-btn" onclick="attachEventToSaveButton()">Save</button>
                 </form>
             </div>
         </div>
@@ -254,35 +254,52 @@
                 url: `https://localhost:7186/api/maps?$filter=floorId eq ${floorId}`,
                 type: 'GET',
                 success: function (maps) {
-                    if (maps.length > 0) {
-                        var imageSrc = `/Images/${maps[0].mapImage2D}`; // Đường dẫn đến hình ảnh
+                    $.ajax({
+                        url: `https://localhost:7186/api/floors/${floorId}`,
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function (floorData) {
+                            const buildingId = floorData.buildingId;
 
-                        var canvas = document.getElementById('canvas_data');
-                        canvas.style.backgroundImage = `url(${imageSrc})`;
-                        // Cập nhật nút chỉnh sửa bản đồ
-                        $('#button-change').html(`
-                                <button class="btn btn-primary" id="edit-map-button" data-id="${maps[0].mapId}" data-toggle="modal" data-target="#add-edit-MapImage">
-                                    <i class="anticon anticon-edit"></i>
-                                    <span class="m-l-5">Edit Map</span>
-                                </button>
-                            `);
-                        $('#add-edit-map-btn').click(function () {
-                            var mapid = maps[0].mapid;
-                            editmap(mapid);
-                        });
-                        getMapPointsByMapId(maps[0].mapId);
-                    } else {
-                        $('#button-change').html(`
-                                <button class="btn btn-primary" id="add-map-button" data-toggle="modal" data-target="#add-edit-MapImage">
-                                    <i class="anticon anticon-plus"></i>
-                                    <span class="m-l-5">Add Map</span>
-                                </button>
-                            `);
-                        console.log('No map found for the specified floor.');
-                        $('#add-edit-map-btn').click(function () {
-                            addNewMap();
-                        });
-                    }
+                            if (maps.length > 0) {
+                                var imageSrc = `/Images/${maps[0].mapImage2D}`; // Đường dẫn đến hình ảnh
+
+                                var canvas = document.getElementById('canvas_data');
+                                canvas.style.backgroundImage = `url(${imageSrc})`;
+                                // Cập nhật nút chỉnh sửa bản đồ
+                                $('#button-change').html(`
+                                            <button class="btn btn-primary" id="edit-map-button" data-id="${maps[0].mapId}" data-toggle="modal" data-target="#add-edit-MapImage">
+                                                <i class="anticon anticon-edit"></i>
+                                                <span class="m-l-5">Edit Map</span>
+                                            </button>
+                                        `);
+                                $('#add-edit-map-btn').click(function () {
+                                    var mapid = maps[0].mapId;
+                                    editmap(mapid);
+                                });
+                                getMapPointsByMapId(maps[0].mapId, buildingId, maps[0].floorId);
+                            } else {
+                                $('#button-change').html(`
+                                            <button class="btn btn-primary" id="add-map-button" data-toggle="modal" data-target="#add-edit-MapImage">
+                                                <i class="anticon anticon-plus"></i>
+                                                <span class="m-l-5">Add Map</span>
+                                            </button>
+                                        `);
+                                console.log('No map found for the specified floor.');
+                                $('#add-edit-map-btn').click(function () {
+                                    addNewMap();
+                                });
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            console.error('Error fetching floor details:', error);
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: 'An error occurred while loading floor details.'
+                            });
+                        }
+                    });
                 },
                 error: function (xhr, status, error) {
                     console.error('Error fetching map details:', error);
@@ -405,6 +422,7 @@
                 }
             });
         }
+       
 
     });
 
@@ -425,15 +443,12 @@
 
         reader.readAsDataURL(file);
     }
+
 </script>
+
 <script src="/js/MappointDraw.js"></script>
+
 <script>
-    var mappointIDs = getFirstMapPointID();
-    // In kết quả ra console để kiểm tra
-    console.log(mappointIDs);
-    var firstBuildingId = mappointIDs[0].BuildingId;
-    var firstFloorId = mappointIDs[0].FloorId;
-    console.log(firstBuildingId, firstFloorId);
     document.getElementById('getMPButton').addEventListener('click', function () {
         // Gọi hàm renderPoints từ tệp JavaScript MappointDraw.js và truyền vào mappointList
         renderPoints(mappointList);
@@ -449,63 +464,6 @@
         isClicked = false;
     });
 
-    //show Coordinate in form
-    function showSelectedPointInForm() {
-        if (selectedPoint) {
-            // Lấy giá trị x và y từ selectedPoint
-            var xCoordinate = selectedPoint.x.toFixed(2);;
-            var yCoordinate = selectedPoint.y.toFixed(2);
 
-            $('#mapPointX').val(xCoordinate);
-            $('#mapPointY').val(yCoordinate);
-        } else {
-            // Nếu selectedPoint không có giá trị, thông báo lỗi
-            console.error("Selected point is undefined or null.");
-        }
-    }
-    //add mappoint
-    function addMapPoint() {
-        var mappointName = $('#mapPointName').val();
-        var xCoordinate = $('#mapPointX').val(); 
-        var yCoordinate = $('#mapPointY').val(); 
-        var floorId = mappointidlist.FloorId;
-        var mapid = mappointidlist.MapId;
-        var building = mappointidlist.BuildingId;
-        var coordinatesString = '[' + xCoordinate + ',' + yCoordinate + ']';
-
-        var mapPoint = {
-            MappointName: mappointName,
-            LocationWeb: coordinatesString,
-            LocationApp: coordinatesString,
-            LocationGps:"[0,0]",
-            FloorId: floorId,
-            BuildingId: building,
-            MapId: mapid
-        };
-
-        $.ajax({
-            url: 'https://localhost:7186/api/mappoints',
-            type: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify(mapPoint),
-            success: function (response) {
-                console.log('Map point added successfully:', response);
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Success',
-                    text: 'Map point added successfully!'
-                });
-            },
-            error: function (xhr, status, error) {
-                console.error('Error adding map point:', error);
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'Failed to add map point. Please try again later.'
-                });
-                // Xử lý lỗi khi không thể thêm map point
-            }
-        });
-    }
 
 </script>
