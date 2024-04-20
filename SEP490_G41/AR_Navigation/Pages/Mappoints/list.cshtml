@@ -46,13 +46,6 @@
 
         </div>
         <div class="col-md-4">
-            <div class="text-md-right m-v-10">
-                <button class="btn btn-primary" data-toggle="modal" data-target="#create-new-map">
-                    <i class="anticon anticon-plus"></i>
-                    <span class="m-l-5">New MapPoint</span>
-                </button>
-                
-            </div>
         </div>
     </div>
 </div>
@@ -216,15 +209,15 @@
                                 <i class="anticon anticon-ellipsis"></i>
                             </a>
                                <div class="dropdown-menu">
-                            <button class="dropdown-item btn btn-info btn-tone viewBuilding" type="button" data-id="${mapPoint.mapPointId}">
+                            <button class="dropdown-item btn btn-info btn-tone viewMappoint" type="button" data-id="${mapPoint.mapPointId}">
                         <i class="anticon anticon-eye"></i>
                         <span class="m-l-10">View</span>
                     </button>
-                                <button class="dropdown-item btn btn-warning btn-tone editBuilding" type="button" data-id="${mapPoint.mapPointId}">
+                                    <button class="dropdown-item btn btn-warning btn-tone editMappoint" type="button" data-id="${mapPoint.mapPointId}">
                         <i class="anticon anticon-edit"></i>
                         <span class="m-l-10">Edit</span>
                     </button>
-                                <button class="dropdown-item btn btn-danger btn-tone deleteBuilding" type="button" data-id="${mapPoint.mapPointId}">
+                                    <button class="dropdown-item btn btn-danger btn-tone deleteMappoint" type="button" data-id="${mapPoint.mapPointId}">
                         <i class="anticon anticon-delete"></i>
                         <span class="m-l-10">Delete</span>
                     </button>
@@ -561,6 +554,12 @@
                     });
                 }
             });
+        });
+
+        //Redirect maps detail
+        $(document).on('click', '.viewMappoint', function () {
+            var mapPointId = $(this).data('id');
+            window.location.href = `Detail/${mapPointId}`;
         });
     });
 
