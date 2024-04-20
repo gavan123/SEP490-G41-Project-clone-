@@ -1,19 +1,27 @@
 ﻿
 //get MapPoints ByMapId
 var mappointList = [];
+var mappointIDList = [];
+
+var isClicked = false;
 function getMapPointsByMapId(mapId) {
     $.ajax({
         url: `https://localhost:7186/api/mappoints?filter=mapId eq ${mapId}`,
         method: "get",
     }).then(function (mappointdata) {
         $('#map-list').empty();
-        mappointList = []; 
+        mappointList = [];
         mappointdata.forEach(function (mappoint) {
             var locationAppParse = parseLocation(mappoint.locationApp);
             mappointList.push({
                 id: mappoint.mappointName,
                 x: locationAppParse.x,
                 y: locationAppParse.y
+            });
+            mappointIDList.push({
+                MapId: mappoint.mapId,
+                BuildingId: mappoint.buildingId,
+                FloorId: mappoint.floorId
             });
             const mappointrow = `
                     <tr>
@@ -44,11 +52,66 @@ function getMapPointsByMapId(mapId) {
         });
         renderPoints(mappointList);
         console.log("mappoint legh:", mappointList);
-        console.log("mappoint legh:", allPoints);
+        console.log("mappoint leghssss:", mappointIDList);
     }).catch(function (error) {
         console.error("error occurred while fetching mappoint data:", error);
     });
 }
+
+function getFirstMapPointID() {
+  return mappointIDList; // Lấy phần tử đầu tiên nếu mảng không rỗng
+}
+window.getFirstMapPointID = getFirstMapPointID;
+
+//choose mappoint
+function chooseMapPoint() {
+    console.log("Choose Mappoint");
+    canvas.setAttribute("onclick", "drawMapPoint(event)");
+}
+function drawMapPoint(event) {
+    // Nếu đã bấm vào canvas, không cho phép thực hiện hành động lần nữa
+    if (isClicked) {
+        return;
+    }
+
+    var x = event.offsetX;
+    var y = event.offsetY;
+
+    var xParse = (event.offsetX - root.x) / ratio;
+    var yParse = -(event.offsetY - root.y) / ratio;
+
+    context.fillStyle = 'blue';
+
+    if (inButtonRange(mappointList, { x: x, y: y })) {
+        beginPoint = nearbyPoint;
+        console.log("a");
+        //ve hinh tron mau xanh 
+        context.beginPath();
+        context.arc(beginPoint.x * ratio + root.x, -beginPoint.y * ratio + root.y, radius, 0, 2 * Math.PI, false);
+        context.closePath();
+        context.fillStyle = 'green';
+        context.fill();
+        nearbyPoint = { id: "", x: 0, y: 0 };
+        selectedPoint = { x: beginPoint.x * ratio + root.x, y: -beginPoint.y * ratio + root.y };
+    } else {
+        context.beginPath();
+        context.arc(x, y, radius, 0, 2 * Math.PI, false);
+        context.closePath();
+        context.fill();
+        selectedPoint = { x: xParse, y: yParse };
+    }
+
+    selectedPoint = { x: xParse, y: yParse };
+    console.log("Map point selected - X:", xParse, ", Y:", yParse);
+
+    isClicked = true;
+
+    showSelectedPointInForm();
+    $('#add-MapPoint-modal').modal('show');
+}
+
+
+
 function parseLocation(locationWebString) {
     // Loại bỏ dấu ngoặc vuông và dấu cách ở hai đầu chuỗi
     var cleanedString = locationWebString.replace(/^\[|\]$/g, '');
@@ -62,34 +125,7 @@ function parseLocation(locationWebString) {
 
     return { x: x, y: y };
 }
-//pre-define map-points that represent data from database
-var mapPoint0 = { id: "p.R102", x: 19.13, y: -7.61 };
-var mapPoint1 = { id: "p.R104", x: 30.74, y: -7.61 };
-var mapPoint2 = { id: "p.R106", x: 35.74, y: -7.61 };
-var mapPoint3 = { id: "p.R103", x: 28, y: -10.15 };
-var mapPoint4 = { id: "p.R105", x: 33.65, y: -10.15 };
-var mapPoint5 = { id: "p.TS", x: 16.8, y: -11.65 };
-var mapPoint6 = { id: "p.R107", x: 40, y: -11.44 };
-var mapPoint7 = { id: "p.kt", x: 40.575, y: -7.61 };
-var mapPoint8 = { id: "Tuong Coc", x: 5.58, y: -13.5 };
-var mapPoint9 = { id: "WC", x: 10.5, y: -1.2 };
-var mapPoint10 = { id: "Cau Thang 1", x: 3.7, y: -1.16 };
-var mapPoint11 = { id: "p.L108", x: -69.2, y: -7.4 };
-var mapPoint12 = { id: "p.L106", x: -60, y: -7.4 };
-var mapPoint13 = { id: "p.L104", x: -55.23, y: -7.4 };
-var mapPoint14 = { id: "p.L102", x: -44.75, y: -7.4 };
-var mapPoint15 = { id: "p.L107", x: -68, y: -10 };
-var mapPoint16 = { id: "p.L105", x: -62, y: -10 };
-var mapPoint17 = { id: "p.L103", x: -53, y: -10 };
-var mapPoint18 = { id: "p.L101", x: -37.84, y: -13.83 };
-var mapPoint19 = { id: "Ngoi Sao", x: -7.2, y: -11 };
 
-var allPoints = [
-    mapPoint0, mapPoint1, mapPoint2, mapPoint3, mapPoint4, mapPoint5,
-    mapPoint6, mapPoint7, mapPoint8, mapPoint9, mapPoint10, mapPoint11,
-    mapPoint12, mapPoint13, mapPoint14, mapPoint15, mapPoint16, mapPoint17,
-    mapPoint18, mapPoint19
-];
 const sampleEdge = {
     edgeId: "", pointId1: "", pointId2: "", direction: 2, edgeLength: 0
 }
@@ -139,7 +175,7 @@ function renderPoints(points) {
     points.forEach(point => {
         context.beginPath();
         // Convert coordinates from image pixels to database coordinates
-        let pixelX = point.x * ratio + root.x ;
+        let pixelX = point.x * ratio + root.x;
         let pixelY = -point.y * ratio + root.y;
 
         // Draw circle at pixelX,pixelY with radius = 2, start from angle 0, end at 360, counter-clockwise
@@ -156,17 +192,14 @@ function count() {
     numberOfClicks = numberOfClicks + 1;
 }
 
-function drawLine(event, element) {
-    var rect = canvas.getBoundingClientRect();
-    var scaleX = canvas.width / rect.width;
-    var scaleY = canvas.height / rect.height;
 
+function drawLine(event) {
     // if it is the 2nd click then it is beginPoint
     if (numberOfClicks == 0) {
-        beginPoint.x = (event.clientX - rect.left) * scaleX;
-        beginPoint.y = (event.clientY - rect.top) * scaleY;
+        beginPoint.x = event.offsetX;
+        beginPoint.y = event.offsetY;
         console.log(beginPoint.x + ", " + beginPoint.y);
-        
+
         if (inButtonRange(mappointList, beginPoint) == false) {
             console.log("1");
             numberOfClicks = -1;
@@ -251,7 +284,7 @@ function saveEdge(point1, point2) {
 }
 
 function showEdges(list) {
-    document.getElementById("demo1").innerHTML = "";
+    document.getElementById("demo").innerHTML = "";
     list.forEach(e => {
         document.getElementById("demo").innerHTML +=
             "<br> Id: " + e.id + ", Start: " + e.pointId1 + ", End: " + e.pointId2 + ", Length: " + e.edgeLength;
@@ -297,6 +330,7 @@ function saveCanvasState() {
 
 // Function to undo the last stroke (connect wrong edge)
 function undo() {
+
     if (strokeHistory.length > 0) {
         strokeHistory.pop(); // Remove the last stroke
         redrawCanvas();

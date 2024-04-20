@@ -35,6 +35,11 @@
         background-clip: border-box;
         background-repeat: no-repeat;
     }
+
+    .btn-with-border {
+        border: 1px solid #000; /* Màu và độ dày của border có thể được điều chỉnh */
+    }
+
 </style>
 <div class="page-header no-gutters">
     <h1>Building Detail</h1>
@@ -60,18 +65,19 @@
     </div>
 
     <!-- Map Image -->
-    <button type="button" id="setRootButton" class="btn btn-light" onclick="setRoot()">Set Root</button>
-    <button type="button" id="getMPButton" class="btn btn-light">Get Mappoints</button>
-    <button type="button" id="connectEdgeButton" class="btn btn-light" >Connect Edge</button>
-    <button type="button" id="undoButton" class="btn btn-light" onclick="undo()">Undo</button>
+    <button type="button" id="setRootButton" class="btn btn-light btn-with-border" onclick="setRoot()">Set Root</button>
+    <button type="button" id="getMPButton" class="btn btn-light btn-with-border">Get Mappoints</button>
+    <button type="button" id="connectEdgeButton" class="btn btn-light btn-with-border">Connect Edge</button>
+    <button type="button" id="undoButton" class="btn btn-light btn-with-border" onclick="undo()">Undo</button>
     <div class="selected-image-container" id="map-images-container">
         <canvas id="canvas_data" width="1065%"
-                onclick="drawLine(event,this),pixelLocation(event), databaseLocation(event), count()">
+                onclick="pixelLocation(event), databaseLocation(event)">
         </canvas>
     </div>
     <div id="demo"></div>
     <div id="demo1"></div>
-    <button id="clear-canvas-btn" class="btn btn-light">Delete draw</button>
+    <button id="clear-canvas-btn" class="btn btn-light btn-with-border">Delete draw</button>
+    <button id="add-mappoint-btn" class="btn btn-light btn-with-border" onclick="chooseMapPoint(event)">Add</button>
 </div>
 <!-- Content Wrapper START -->
 <div class="main-content">
@@ -139,20 +145,39 @@
     </div>
 </div>
 
+@* Modal add Mapppoint*@
+<div class="modal fade" id="add-MapPoint-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Map Point</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <i class="anticon anticon-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="form-add-mapPoint" method="post">
+                    <div class="form-group">
+                        <label for="mapPointName">Map Point Name</label>
+                        <input type="text" class="form-control" id="mapPointName" placeholder="Enter Map Point Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="mapPointX">X Coordinate</label>
+                        <input type="text" class="form-control" id="mapPointX" placeholder="Enter X Coordinate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="mapPointY">Y Coordinate</label>
+                        <input type="text" class="form-control" id="mapPointY" placeholder="Enter Y Coordinate" required>
+                    </div>
+                    <button type="button" class="btn btn-primary" id="add-mapPoint-btn" onclick="addMapPoint()">Save</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <script>
-    document.getElementById('getMPButton').addEventListener('click', function () {
-        // Gọi hàm renderPoints từ tệp JavaScript MappointDraw.js và truyền vào mappointList
-        renderPoints(mappointList);
-    });
-    document.getElementById('connectEdgeButton').addEventListener('click', function () {
-        setEdge();
-    });
-    // Delete draw line
-    document.getElementById("clear-canvas-btn").addEventListener("click", function () {
-        var canvas = document.getElementById('canvas_data');
-        var context = canvas.getContext('2d');
-        context.clearRect(0, 0, canvas.width, canvas.height); // Xóa tất cả các đường vẽ trên canvas
-    });
     $(document).ready(function () {
         //session
         var userJson = sessionStorage.getItem('user');
@@ -381,11 +406,6 @@
             });
         }
 
-
-
-        //get MapPoints ByMapId
-       
-
     });
 
     //get image when selected
@@ -405,6 +425,87 @@
 
         reader.readAsDataURL(file);
     }
-
 </script>
 <script src="/js/MappointDraw.js"></script>
+<script>
+    var mappointIDs = getFirstMapPointID();
+    // In kết quả ra console để kiểm tra
+    console.log(mappointIDs);
+    var firstBuildingId = mappointIDs[0].BuildingId;
+    var firstFloorId = mappointIDs[0].FloorId;
+    console.log(firstBuildingId, firstFloorId);
+    document.getElementById('getMPButton').addEventListener('click', function () {
+        // Gọi hàm renderPoints từ tệp JavaScript MappointDraw.js và truyền vào mappointList
+        renderPoints(mappointList);
+    });
+    document.getElementById('connectEdgeButton').addEventListener('click', function () {
+        setEdge();
+    });
+    // Delete draw line
+    document.getElementById("clear-canvas-btn").addEventListener("click", function () {
+        var canvas = document.getElementById('canvas_data');
+        var context = canvas.getContext('2d');
+        context.clearRect(0, 0, canvas.width, canvas.height); // Xóa tất cả các đường vẽ trên canvas
+        isClicked = false;
+    });
+
+    //show Coordinate in form
+    function showSelectedPointInForm() {
+        if (selectedPoint) {
+            // Lấy giá trị x và y từ selectedPoint
+            var xCoordinate = selectedPoint.x.toFixed(2);;
+            var yCoordinate = selectedPoint.y.toFixed(2);
+
+            $('#mapPointX').val(xCoordinate);
+            $('#mapPointY').val(yCoordinate);
+        } else {
+            // Nếu selectedPoint không có giá trị, thông báo lỗi
+            console.error("Selected point is undefined or null.");
+        }
+    }
+    //add mappoint
+    function addMapPoint() {
+        var mappointName = $('#mapPointName').val();
+        var xCoordinate = $('#mapPointX').val(); 
+        var yCoordinate = $('#mapPointY').val(); 
+        var floorId = mappointidlist.FloorId;
+        var mapid = mappointidlist.MapId;
+        var building = mappointidlist.BuildingId;
+        var coordinatesString = '[' + xCoordinate + ',' + yCoordinate + ']';
+
+        var mapPoint = {
+            MappointName: mappointName,
+            LocationWeb: coordinatesString,
+            LocationApp: coordinatesString,
+            LocationGps:"[0,0]",
+            FloorId: floorId,
+            BuildingId: building,
+            MapId: mapid
+        };
+
+        $.ajax({
+            url: 'https://localhost:7186/api/mappoints',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(mapPoint),
+            success: function (response) {
+                console.log('Map point added successfully:', response);
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: 'Map point added successfully!'
+                });
+            },
+            error: function (xhr, status, error) {
+                console.error('Error adding map point:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Failed to add map point. Please try again later.'
+                });
+                // Xử lý lỗi khi không thể thêm map point
+            }
+        });
+    }
+
+</script>
