@@ -214,53 +214,7 @@ function addMapPoint(mapidTake, buildingidTake, flooridTake) {
 }
 
 
-//choose mappoint
-function chooseMapPoint() {
-    console.log("Choose Mappoint");
-    canvas.setAttribute("onclick", "drawMapPoint(event)");
-}
-function drawMapPoint(event) {
-    var scale = 2;
-    // Nếu đã bấm vào canvas, không cho phép thực hiện hành động lần nữa
-    if (isClicked) {
-        return;
-    }
 
-    var x = event.offsetX;
-    var y = event.offsetY;
-
-    var xParse = (event.offsetX - root.x) / ratio ;
-    var yParse = -(event.offsetY - root.y) / ratio ;
-
-    context.fillStyle = 'blue';
-
-    if (inButtonRange(mappointList, { x: x, y: y })) {
-        beginPoint = nearbyPoint;
-        console.log("a");
-        //ve hinh tron mau xanh 
-        context.beginPath();
-        context.arc(beginPoint.x * ratio + root.x, -beginPoint.y * ratio + root.y, radius, 0, 2 * Math.PI, false);
-        context.closePath();
-        context.fillStyle = 'green';
-        context.fill();
-        nearbyPoint = { id: "", x: 0, y: 0 };
-        selectedPoint = { x: beginPoint.x * ratio + root.x, y: -beginPoint.y * ratio + root.y };
-    } else {
-        context.beginPath();
-        context.arc(x, y, radius, 0, 2 * Math.PI, false);
-        context.closePath();
-        context.fill();
-        selectedPoint = { x: xParse, y: yParse };
-    }
-
-    selectedPoint = { x: xParse, y: yParse };
-    console.log("Map point selected - X:", xParse, ", Y:", yParse);
-
-    isClicked = true;
-
-  
-    
-}
 //show Coordinate in form
 function showSelectedPointInForm() {
     if (selectedPoint) {
@@ -296,6 +250,9 @@ const sampleEdge = {
     edgeId: "", pointId1: "", pointId2: "", direction: 2, edgeLength: 0
 }
 
+
+//=============================================================================================================================
+
 const canvas = document.getElementById("canvas_data");
 const context = canvas.getContext("2d");
 
@@ -305,6 +262,10 @@ var allEdges = [];
 var ratio = 8.682926829;
 var root = { id: "root", x: 628, y: 160 };
 var radius = 5;
+
+//var ratio = 17.696;
+//var root = { id: "root", x: 1290, y: 6 };
+//var radius = 5 * Math.sqrt(ratio) / 2;
 
 //Start and end point of 1 edge
 var beginPoint = { id: "", x: 0, y: 0 };
@@ -346,9 +307,15 @@ function renderPoints(points) {
 
         // Draw circle at pixelX,pixelY with radius = 2, start from angle 0, end at 360, counter-clockwise
         context.arc(pixelX, pixelY, radius, 0, 2 * Math.PI, false);
-        context.fillStyle = 'red';
+        context.fillStyle = 'orange';
         context.fill();
     });
+    saveCanvasState();
+    context.beginPath();
+    context.arc(root.x, root.y, radius, 0, 2 * Math.PI, false);
+    context.fillStyle = 'blue';
+    context.fill();
+    context.closePath();
     saveCanvasState();
 }
 window.renderPoints = renderPoints;
@@ -364,10 +331,7 @@ function drawLine(event) {
     if (numberOfClicks == 0) {
         beginPoint.x = event.offsetX;
         beginPoint.y = event.offsetY;
-        console.log(beginPoint.x + ", " + beginPoint.y);
-
         if (inButtonRange(mappointList, beginPoint) == false) {
-            console.log("1");
             numberOfClicks = -1;
             nearbyPoint = { id: "", x: 0, y: 0 };
             beginPoint = { id: "", x: 0, y: 0 };
@@ -377,7 +341,6 @@ function drawLine(event) {
             //khi xac nhan bam dung vao pham vi map point
             inButtonRange(mappointList, beginPoint);
             beginPoint = nearbyPoint;
-            console.log("a");
             //ve hinh tron mau xanh 
             context.beginPath();
             context.arc(beginPoint.x * ratio + root.x, -beginPoint.y * ratio + root.y, radius, 0, 2 * Math.PI, false);
@@ -395,7 +358,7 @@ function drawLine(event) {
         context.beginPath();
         context.arc(beginPoint.x * ratio + root.x, -beginPoint.y * ratio + root.y, radius, 0, 2 * Math.PI, false);
         context.closePath();
-        context.fillStyle = 'red';
+        context.fillStyle = 'orange';
         context.fill();
         //truong hop chon khong dung trong pham vi map point
         if (inButtonRange(mappointList, endPoint) == false) {
@@ -442,12 +405,13 @@ function saveEdge(point1, point2) {
     allEdges.push(edge);
     edge = sampleEdge;
     //luu lai canh vua moi ve
+    // const imgData = context.getImageData(0,0,canvas.width,canvas.height);
     saveCanvasState();
-
     showEdges(allEdges);
     //xoa cac event listener de khong nhan event nao cho den khi bam cac nut functionalities
     canvas.setAttribute("onclick", "");
 }
+
 
 function showEdges(list) {
     document.getElementById("demo").innerHTML = "";
@@ -495,17 +459,18 @@ function saveCanvasState() {
 }
 
 // Function to undo the last stroke (connect wrong edge)
-function undo() {
-
+function undo(value) {
     if (strokeHistory.length > 0) {
         strokeHistory.pop(); // Remove the last stroke
         redrawCanvas();
     }
     //khi undo thi array cac edges cung se phai xoa di
-    if (allEdges.length > 0) {
+    if (allEdges.length > 0 && value == 1) {
         allEdges.pop();
         showEdges(allEdges);
     }
+    canvas.setAttribute("onclick", "");
+    isClicked = false;
 }
 
 // Function to redraw the canvas from strokeHistory
@@ -553,49 +518,114 @@ function getNearbyPoint(event) {
     document.getElementById("canvas_data").setAttribute("onclick", "");
 }
 function setRoot() {
+    undo(false);
     canvas.setAttribute("onclick", "chooseRoot(event)");
 }
 function chooseRoot(event) {
+
     //function nay chua xong , neu xong thi se lien quan den get Ratio()
     root.x = event.offsetX;
     root.y = event.offsetY;
+    context.beginPath();
+    context.arc(root.x, root.y, radius, 0, 2 * Math.PI, false);
+    context.fillStyle = 'blue';
+    context.fill();
+    context.closePath();
+    saveCanvasState();
     document.getElementById("demo1").innerHTML = "Root: " + root.x + ", " + root.y;
-    document.getElementById("demo1").innerHTML = document.getElementById("demo1").innerHTML + " <br> Ratio: ";
+    getRatio();
+    document.getElementById("demo1").innerHTML = document.getElementById("demo1").innerHTML + " <br> Ratio: " + ratio;
+    canvas.setAttribute("onclick", "");
 }
-function getRatio(farthestPointImage, farthestPointDatabase, nearbyPointImage, nearbyPointDatabase, rootImage) {
-    //all of the following statements are relative to the root/ the coordinate origin
-    //farthestPointImage will be the furthest point in the image
-    //farthestPointDatabase will be the furthest point in the database
-    //nearbyPointImage will be a nearby point in the image 
-    //nearbyPointDatabase will be a nearby point in the database 
-
-    //all need to have the same coordinate origin positon (top left corner)
-    //final result will be the ratio of length between the image and database  
-    //by estimating the average length between the furthest point ratio and a nearby point ratio
-    //by estimating, we devide it by 2.05
-
-    console.log("farthestPointImage: " + farthestPointImage.x + ", " + farthestPointImage.y);
-    console.log("farthestPointDatabase: " + farthestPointDatabase.x + ", " + farthestPointDatabase.y);
-
-    console.log("nearbyPointImage: " + nearbyPointImage.x + ", " + nearbyPointImage.y);
-    console.log("nearbyPointDatabase: " + nearbyPointDatabase.x + ", " + nearbyPointDatabase.y);
-
-    console.log("rootImage: " + root.x + ", " + root.y);
-    let p1X = farthestPointImage.x - root.x;
-    let p1Y = farthestPointImage.y - root.y;
-    let p2X = farthestPointDatabase.x;
-    let p2Y = farthestPointDatabase.y;
-    let p3X = nearbyPointImage.x - root.x;
-    let p3Y = nearbyPointImage.y - root.y;
-    let p4X = nearbyPointDatabase.x;
-    let p4Y = nearbyPointDatabase.y;
-
-    let parameter1 = Math.sqrt(p1X * p1X + p1Y * p1Y);
-    let parameter2 = Math.sqrt(p2X * p2X + p2Y * p2Y);
-    let parameter3 = Math.sqrt(p3X * p3X + p3Y * p3Y);
-    let parameter4 = Math.sqrt(p4X * p4X + p4Y * p4Y);
-
-    let result = ((parameter1 / parameter2) + (parameter3 / parameter4)) / 2.05;
-    return result
+function getRatio() {
+    var irlLength = 125;
+    //irl length la tong chieu dai cua anh (tang 1 Al tong chieu dai la 125m)
+    //luu y: anh phai duoc cat sat mep nhat co the
+    //khong duoc de thua nhieu
+    //offsetWidth la chieu dai cua canvas
+    //==> ti le bao nhieu pixel/m 
+    let x = canvas.offsetWidth;
+    ratio = x / irlLength;
 }
-//==================================================================
+
+function resize() {
+    var canvas1 = new fabric.Canvas('canvas_data1');
+    // Load the background image (you can replace 'your-image.jpg' with your actual image URL)
+    fabric.Image.fromURL('/Images/Alpha_tang1.jpg', function (img) {
+        // Access the image dimensions
+        var scale = canvas1.width / img.width;
+
+        img.set({
+            scaleX: scale,
+            scaleY: scale,
+            originX: 'left',
+            originY: 'top'
+        });
+        // Set canvas dimensions to match the image size
+        canvas1.setWidth(canvas1.width * (canvas1.width / img.width));
+        canvas1.setHeight(img.height * (canvas1.width / img.width));
+        canvas1.setBackgroundImage(img, canvas1.renderAll.bind(canvas1));
+        // Add the image to the canvas
+        canvas.width = canvas1.width;
+        canvas.height = canvas1.height;
+        canvas1.setWidth(0);
+        canvas1.setHeight(0);
+        canvas.style.backgroundImage = 'url("../ALF1new.jpg")';
+    });
+}
+
+function newMappoint() {
+    canvas.setAttribute("onclick", "chooseMappoint(event)");
+}
+//bien nay se la de luu mappoint moi duoc ghi
+var newPoint = { id: "", x: 0, y: 0 };
+
+function chooseMappoint(event) {
+    saveCanvasState();
+    document.getElementById("demo2").innerHTML = "Toa do tren anh: x: " + event.offsetX + ", y: " +
+        event.offsetY + "<br> Toa do tren database: x: " + -(event.offsetX - root.x) / ratio + ", y: " +
+        (event.offsetY - root.y) / ratio;
+    let x = (event.offsetX - root.x) / ratio;
+    let y = -(event.offsetY - root.y) / ratio;
+    context.beginPath();
+    context.arc(event.offsetX, event.offsetY, radius, 0, 2 * Math.PI, false);
+    context.fillStyle = 'red';
+    context.fill();
+    context.closePath();
+    newPoint = { id: "", x: x, y: y };
+    selectedPoint = { x: x, y: y };
+    console.log("Map point selected - X:", x, ", Y:", y);
+    canvas.setAttribute("onclick", "undo(false),chooseMappoint(event)");
+}
+
+function search() {
+    var ok = false;
+    var inputId = document.getElementById("searchMappoint").value.trim().toLowerCase(); // Sử dụng trim và chuyển đổi thành chữ thường
+    if (inputId == "") {
+        console.log("1111");
+        return;
+    } else {
+        mappointList.forEach(a => {
+            if (a.id.toLowerCase() === inputId) { // So sánh cả 2 ở dạng chữ thường
+                context.beginPath();
+                // Convert coordinates from image pixels to database coordinates
+                let pixelX = a.x * ratio + root.x;
+                let pixelY = -a.y * ratio + root.y;
+
+                context.arc(pixelX, pixelY, radius, 0, 2 * Math.PI, false);
+                context.fillStyle = 'red';
+                context.fill();
+                context.closePath();
+                saveCanvasState();
+                ok = true;
+                document.getElementById("searchMappoint").value = "";
+                return;
+            }
+        });
+    }
+    if (!ok) {
+        alert("Couldn't find Map point id");
+    } else {
+        canvas.setAttribute("onclick", "undo(2)");
+    }
+}
