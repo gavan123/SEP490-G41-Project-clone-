@@ -3,7 +3,6 @@
 var mappointList = [];
 var mappointIDList = [];
 
-var isClicked = false;
 var mapidTake;
 var flooridTake;
 var buildingidTake;
@@ -470,7 +469,6 @@ function undo(value) {
         showEdges(allEdges);
     }
     canvas.setAttribute("onclick", "");
-    isClicked = false;
 }
 
 // Function to redraw the canvas from strokeHistory
