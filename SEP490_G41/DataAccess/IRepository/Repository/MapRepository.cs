@@ -83,7 +83,7 @@ namespace DataAccess.IRepository.Repository
         }
 
 
-        public void AddMap(MapAddDTO mapAddDTO, BusinessObject.Models.Member member)
+        public void AddMap(MapAddDTO mapAddDTO, int memberId)
         {
             if (mapAddDTO == null)
                 throw new ArgumentNullException(nameof(mapAddDTO));
@@ -98,7 +98,7 @@ namespace DataAccess.IRepository.Repository
                     FloorId = mapAddDTO.FloorId
                 };
 
-                _mapDAO.AddMap(map, member);
+                _mapDAO.AddMap(map, memberId);
             }
             catch (Exception ex)
             {
@@ -147,9 +147,5 @@ namespace DataAccess.IRepository.Repository
             }
         }
 
-        public void AddMap(MapAddDTO map)
-        {
-            
-        }
     }
 }

@@ -44,11 +44,11 @@ namespace AR_NavigationAPI.Controllers
 
         // POST: api/maps
         [HttpPost]
-        public ActionResult<MapAddDTO> AddMap([FromForm] MapAddDTO map)
+        public ActionResult<MapAddDTO> AddMap([FromForm] MapAddDTO map, int memberId)
         {
             if (map == null)
                 return BadRequest("Map cannot be null.");
-            _mapRepository.AddMap(map, null);
+            _mapRepository.AddMap(map, memberId);
             return Ok(map);
         }
 
