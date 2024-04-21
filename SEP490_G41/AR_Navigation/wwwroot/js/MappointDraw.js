@@ -257,6 +257,8 @@ const context = canvas.getContext("2d");
 
 var allEdges = [];
 
+
+
 //ratio of image's width, length vs image's pixels
 var ratio = 8.682926829;
 var root = { id: "root", x: 628, y: 160 };
@@ -307,6 +309,9 @@ function ChooseEditMappoint(event) {
             //khi xac nhan bam dung vao pham vi map point
             inButtonRange(mappointList, beginPoint);
             beginPoint = nearbyPoint;
+            var mappointInfo = "Mappoint hiện tại: " + beginPoint.name + "\n";
+            mappointInfo += "Tọa độ: (" + (event.offsetX - root.x) / ratio + ", " + (event.offsetY - root.y) / ratio + ")\n";
+            document.getElementById("editInfo").innerText = mappointInfo;
             //ve hinh tron mau xanh 
             context.beginPath();
             context.arc(beginPoint.x * ratio + root.x, -beginPoint.y * ratio + root.y, radius, 0, 2 * Math.PI, false);
@@ -314,6 +319,7 @@ function ChooseEditMappoint(event) {
             context.fillStyle = 'green';
             context.fill();
             nearbyPoint = { id: "", x: 0, y: 0 };
+           
         }
     }
     //3r click will be endPoint
@@ -353,6 +359,8 @@ function ChooseEditMappoint(event) {
             context.lineTo(endPoint.x, endPoint.y);
             context.stroke();
 
+            showInEditForm(beginpoint, endpoint);
+
             // Reset variables for next execution
             numberOfClicks = -1;
             beginPoint = { id: "", x: 0, y: 0 };
@@ -361,6 +369,21 @@ function ChooseEditMappoint(event) {
             canvas.setAttribute("onclick", "");
         }
     }
+}
+
+function showInEditForm(beginpoint, endpoint) {
+    if (endpoint) {
+        // Lấy giá trị x và y từ selectedPoint
+        var xCoordinate = selectedPoint.x.toFixed(2);;
+        var yCoordinate = selectedPoint.y.toFixed(2);
+
+        $('#mapPointX').val(xCoordinate);
+        $('#mapPointY').val(yCoordinate);
+    } else {
+        // Nếu selectedPoint không có giá trị, thông báo lỗi
+        console.error("Selected point is undefined or null.");
+    }
+    $('#add-MapPoint-modal').modal('show');
 }
 function setDeleteMappoint() {
     console.log("SETTING Delete MAPPOINT");
@@ -418,7 +441,7 @@ function ChooseDeleteMappoint(event) {
         }
 
     }
-  
+
 }
 function filterMapPointsByName(name) {
     $.ajax({
