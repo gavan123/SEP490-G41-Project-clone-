@@ -87,12 +87,12 @@
     <button type="button" id="getMPButton" class="btn btn-light btn-with-border">Get Mappoints</button>
     <button type="button" id="connectEdgeButton" class="btn btn-light btn-with-border">Connect Edge</button>
     <button type="button" id="undoButton" class="btn btn-light btn-with-border" onclick="undo()">Undo</button>
-    <button type="button" id="newMappointButton" class="btn btn-light btn-with-border" onclick="newMappoint()">New Mappoint</button>
+    <button type="button" id="newMappointButton" class="btn btn-light btn-with-border" onclick="newMappoint()">Choose Mappoint</button>
 
     @* trường cho canvas *@
     <div class="selected-image-container" id="map-images-container">
         <canvas id="canvas_data" style="border: 1px, black;" width="1065%"
-                onclick="pixelLocation(event), databaseLocation(event)">
+                onclick="">
         </canvas>
     </div>
     @* Hiện tọa dộ trên ảnh và database *@
@@ -102,6 +102,8 @@
 
     <button id="clear-canvas-btn" class="btn btn-light btn-with-border">Delete draw</button>
     <button id="add-mappoint-btn" class="btn btn-light btn-with-border" onclick="showSelectedPointInAddForm()">Add</button>
+    <button type="button" class="btn btn-light btn-with-border" onclick="setEditmappoint()">Edit</button>
+    <button type="button" class="btn btn-light btn-with-border" onclick="setDeleteMappoint()">Delete</button>
 </div>
 <!-- Content Wrapper START -->
 <div class="main-content">
@@ -194,6 +196,62 @@
                         <input type="text" class="form-control" id="mapPointY" placeholder="Enter Y Coordinate" required>
                     </div>
                     <button type="button" class="btn btn-primary" id="add-mapPoint-btn" onclick="attachEventToSaveButton()">Save</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* Modal edit Mapppoint*@
+<div class="modal fade" id="update-MapPoint-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Update Map Point</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <i class="anticon anticon-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="form-update-mapPoint" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="update-mapPointName">Map Point Name</label>
+                        <input type="text" class="form-control" id="update-mapPointName" placeholder="Enter Map Point Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="update-mapPointImage">Image</label>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="update-mapPointImage" onchange="previewImage()">
+                            <label class="custom-file-label" for="update-mapPointImage">Choose file</label>
+                        </div>
+                        <img id="imagePreview" src="#" alt="Image preview" style="display: none; max-width: 100px; max-height: 100px; margin-top: 10px;">
+                    </div>
+                    <div class="form-group">
+                        <label for="update-mapPointLocationWeb">Location Web</label>
+                        <input type="text" class="form-control" id="update-mapPointLocationWeb" placeholder="Enter Location Web" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="update-mapPointLocationApp">Location App</label>
+                        <input type="text" class="form-control" id="update-mapPointLocationApp" placeholder="Enter Location App" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="update-mapPointLocationGps">Location GPS</label>
+                        <input type="text" class="form-control" id="update-mapPointLocationGps" placeholder="Enter Location GPS">
+                    </div>
+                    <div class="form-group">
+                        <label for="update-mapPointDestination">Destination</label>
+                        <div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="update-mapPointDestination" id="update-mapPointDestinationOn" value="true">
+                                <label class="form-check-label" for="update-mapPointDestinationOn">On</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="update-mapPointDestination" id="update-mapPointDestinationOff" value="false">
+                                <label class="form-check-label" for="update-mapPointDestinationOff">Off</label>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-primary" id="update-mapPoint-btn" onclick="">Update</button>
                 </form>
             </div>
         </div>
@@ -467,7 +525,23 @@
 
         reader.readAsDataURL(file);
     }
+    function previewImage() {
+        var input = document.getElementById('update-mapPointImage');
+        var preview = document.getElementById('imagePreview');
+        var file = input.files[0];
+        var reader = new FileReader();
 
+        reader.onloadend = function () {
+            preview.src = reader.result;
+            preview.style.display = 'block';
+        }
+
+        if (file) {
+            reader.readAsDataURL(file);
+        } else {
+            preview.src = '';
+        }
+    }
 </script>
 
 <script src="/js/MappointDraw.js"></script>

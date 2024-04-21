@@ -17,7 +17,8 @@ function getMapPointsByMapId(mapId, buildingid, floorid) {
         mappointdata.forEach(function (mappoint) {
             var locationAppParse = parseLocation(mappoint.locationApp);
             mappointList.push({
-                id: mappoint.mappointName,
+                id: mappoint.mapPointId,
+                name: mappoint.mappointName,
                 x: locationAppParse.x,
                 y: locationAppParse.y
             });
@@ -194,6 +195,8 @@ function addMapPoint(mapidTake, buildingidTake, flooridTake) {
                 icon: 'success',
                 title: 'Success',
                 text: 'Map point added successfully!'
+            }).then(function () {
+                location.reload();
             });
             $('#add-MapPoint-modal').modal('hide');
         },
@@ -240,6 +243,8 @@ function parseLocation(locationWebString) {
     return { x: x, y: y };
 }
 
+
+
 const sampleEdge = {
     edgeId: "", pointId1: "", pointId2: "", direction: 2, edgeLength: 0
 }
@@ -282,6 +287,165 @@ function databaseLocation(event) {
     document.getElementById("demo").innerHTML = document.getElementById("demo").innerHTML +
         " <br>  LocationApp: (" + (event.offsetX - root.x) / ratio + ", " + -(event.offsetY - root.y) / ratio + ")";
 }
+
+function setEditmappoint() {
+    console.log("SETTING EDIT MAPPOINT");
+    canvas.setAttribute("onclick", "ChooseEditMappoint(event), count(event)");
+}
+function ChooseEditMappoint(event) {
+    // if it is the 2nd click then it is beginPoint
+    if (numberOfClicks == 0) {
+        beginPoint.x = event.offsetX;
+        beginPoint.y = event.offsetY;
+        if (inButtonRange(mappointList, beginPoint) == false) {
+            numberOfClicks = -1;
+            nearbyPoint = { id: "", x: 0, y: 0 };
+            beginPoint = { id: "", x: 0, y: 0 };
+            return;
+        }
+        else {
+            //khi xac nhan bam dung vao pham vi map point
+            inButtonRange(mappointList, beginPoint);
+            beginPoint = nearbyPoint;
+            //ve hinh tron mau xanh 
+            context.beginPath();
+            context.arc(beginPoint.x * ratio + root.x, -beginPoint.y * ratio + root.y, radius, 0, 2 * Math.PI, false);
+            context.closePath();
+            context.fillStyle = 'green';
+            context.fill();
+            nearbyPoint = { id: "", x: 0, y: 0 };
+        }
+    }
+    //3r click will be endPoint
+    if (numberOfClicks == 1) {
+        endPoint.x = event.offsetX;
+        endPoint.y = event.offsetY;
+        //ve hinh tron mau do
+        context.beginPath();
+        context.arc(beginPoint.x * ratio + root.x, -beginPoint.y * ratio + root.y, radius, 0, 2 * Math.PI, false);
+        context.closePath();
+        context.fillStyle = 'orange';
+        context.fill();
+        // Check if endPoint is within map point range
+        if (inButtonRange(mappointList, endPoint)) {
+            // If endPoint is within map point range, reset variables and return
+            numberOfClicks = -1;
+            nearbyPoint = { id: "", x: 0, y: 0 };
+            beginPoint = nearbyPoint;
+            endPoint = nearbyPoint;
+            return;
+        }
+        else {
+            // Draw red circle at endPoint
+            context.beginPath();
+            context.arc(endPoint.x, endPoint.y, radius, 0, 2 * Math.PI, false);
+            context.closePath();
+            context.fillStyle = 'red';
+            context.fill();
+
+            // Draw line between beginPoint and endPoint
+            context.lineWidth = 1;
+            context.beginPath();
+            let bX = beginPoint.x * ratio + root.x;
+            let bY = -beginPoint.y * ratio + root.y;
+
+            context.moveTo(bX, bY);
+            context.lineTo(endPoint.x, endPoint.y);
+            context.stroke();
+
+            // Reset variables for next execution
+            numberOfClicks = -1;
+            beginPoint = { id: "", x: 0, y: 0 };
+            endPoint = { id: "", x: 0, y: 0 };
+            nearbyPoint = { id: "", x: 0, y: 0 };
+            canvas.setAttribute("onclick", "");
+        }
+    }
+}
+function setDeleteMappoint() {
+    console.log("SETTING Delete MAPPOINT");
+    canvas.setAttribute("onclick", "ChooseDeleteMappoint(event), count(event)");
+}
+function ChooseDeleteMappoint(event) {
+    // if it is the 2nd click then it is beginPoint
+    if (numberOfClicks == 0) {
+        beginPoint.x = event.offsetX;
+        beginPoint.y = event.offsetY;
+        if (inButtonRange(mappointList, beginPoint) == false) {
+            numberOfClicks = -1;
+            nearbyPoint = { id: "", x: 0, y: 0 };
+            beginPoint = { id: "", x: 0, y: 0 };
+            return;
+        }
+        else {
+            //khi xac nhan bam dung vao pham vi map point
+            inButtonRange(mappointList, beginPoint);
+            beginPoint = nearbyPoint;
+            //ve hinh tron mau xanh 
+            context.beginPath();
+            context.arc(beginPoint.x * ratio + root.x, -beginPoint.y * ratio + root.y, radius, 0, 2 * Math.PI, false);
+            context.closePath();
+            context.fillStyle = 'green';
+            context.fill();
+            nearbyPoint = { id: "", x: 0, y: 0 };
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'You are about to delete this map point. This action cannot be undone.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    deleteMapPoint(beginPoint.id);
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    Swal.fire('Cancelled', 'Your map point is safe :)', 'info');
+                }
+            });
+            context.beginPath();
+            context.arc(beginPoint.x * ratio + root.x, -beginPoint.y * ratio + root.y, radius, 0, 2 * Math.PI, false);
+            context.closePath();
+            context.fillStyle = 'orange';
+            context.fill();
+
+            //reset
+            numberOfClicks = -1;
+            beginPoint = { id: "", x: 0, y: 0 };
+            nearbyPoint = { id: "", x: 0, y: 0 };
+            canvas.setAttribute("onclick", "");
+        }
+
+    }
+  
+}
+function filterMapPointsByName(name) {
+    $.ajax({
+        url: `https://localhost:7186/api/mappoints?filter=mappointName eq ${name}`,
+        type: 'GET',
+        success: function (data) {
+            data.forEach(function (mapPoint) {
+                console.log('Filtered Map Point ID:', mapPoint.mapPointId);
+            });
+        },
+        error: function (xhr, status, error) {
+            console.error('Error filtering Map Points:', error);
+        }
+    });
+}
+
+
+//tìm dc id trong mappoint list đó
+function findIdInMapPointList(id, mappointList) {
+    for (var i = 0; i < mappointList.length; i++) {
+        if (mappointList[i].id === id) {
+            return mappointList[i].id; // Trả về id nếu được tìm thấy trong mảng
+        }
+    }
+    return null; // Trả về null nếu id không tồn tại trong mảng
+}
+
 
 //function duoc goi khi bam nut Connect Edge
 function setEdge() {
@@ -394,7 +558,7 @@ function drawLine(event) {
 
 function saveEdge(point1, point2) {
     var edge = {
-        edgeId: "1", pointId1: point1.id, pointId2: point2.id, direction: 2, edgeLength: getDistance(point1, point2)
+        edgeId: "1", pointId1: point1.name, pointId2: point2.name, direction: 2, edgeLength: getDistance(point1, point2)
     }
     allEdges.push(edge);
     edge = sampleEdge;
@@ -601,7 +765,7 @@ function search() {
         return;
     } else {
         mappointList.forEach(a => {
-            if (a.id.toLowerCase() === inputId) { // So sánh cả 2 ở dạng chữ thường
+            if (a.name.toLowerCase() === inputId) { // So sánh cả 2 ở dạng chữ thường
                 context.beginPath();
                 // Convert coordinates from image pixels to database coordinates
                 let pixelX = a.x * ratio + root.x;

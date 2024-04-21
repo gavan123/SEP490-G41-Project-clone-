@@ -1,4 +1,5 @@
-﻿using NetTopologySuite.Geometries;
+﻿using Microsoft.AspNetCore.Http;
+using NetTopologySuite.Geometries;
 
 public class MapPointDTO
 {
@@ -21,7 +22,7 @@ public class MapPointAddDTO
     public string MappointName { get; set; } = null!;
     public string LocationWeb { get; set; } = null!;
     public string LocationApp { get; set; } = null!;
-    public string LocationGps { get; set; } 
+    public string LocationGps { get; set; }
     public int FloorId { get; set; }
     public int BuildingId { get; set; }
 
@@ -37,7 +38,7 @@ public class MapPointUpdateDTO
     public string LocationGps { get; set; }
     public int FloorId { get; set; }
     public int BuildingId { get; set; }
-    public string Image { get; set; } = null!;
+    public IFormFile Image { get; set; } = null!;
     public bool Destination { get; set; }
 
 }
