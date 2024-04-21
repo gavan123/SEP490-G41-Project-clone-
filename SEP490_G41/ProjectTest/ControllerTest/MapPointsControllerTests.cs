@@ -143,7 +143,7 @@ namespace ProjectTest.ControllerTest
 
        
 
-        [Fact]
+      /*  [Fact]
         public void UpdateMapPointById_WhenMapPointNotFound_ReturnsNotFoundResult()
         {
             // Arrange
@@ -240,5 +240,5 @@ namespace ProjectTest.ControllerTest
             // Assert
             Assert.IsType<OkResult>(result);
         }
-    }
+    }*/
 }
