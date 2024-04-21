@@ -10,6 +10,7 @@ namespace DataAccess.DAO
     {
         private readonly finsContext _context;
 
+
         public MappointDAO(finsContext context)
         {
             _context = context;

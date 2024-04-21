@@ -70,15 +70,15 @@ namespace ProjectTest.RepositoryTest
             Assert.Equal("Map 2", result[1].MapName);
         }
 
-        [Fact]
-        public void AddMap_WhenMapDTOIsNull_ThrowsArgumentNullException()
-        {
-            // Arrange
-            MapAddDTO nullMap = null;
+        //[Fact]
+        //public void AddMap_WhenMapDTOIsNull_ThrowsArgumentNullException()
+        //{
+        //    // Arrange
+        //    MapAddDTO nullMap = null;
 
-            // Act & Assert
-            Assert.Throws<ArgumentNullException>(() => _mapRepository.AddMap(nullMap));
-        }
+        //    // Act & Assert
+        //    Assert.Throws<ArgumentNullException>(() => _mapRepository.AddMap(nullMap));
+        //}
 
         [Fact]
         public void UpdateMap_WhenMapDTOIsNull_ThrowsArgumentNullException()

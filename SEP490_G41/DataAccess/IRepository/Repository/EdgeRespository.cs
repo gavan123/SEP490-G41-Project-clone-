@@ -26,7 +26,7 @@ namespace DataAccess.IRepository.Repository
         {
             var edge = _edgeDAO.GetEdgeById(edgeId);
             if (edge == null)
-            {
+            {                                                                                                                    
                 throw new Exception("Edge not found");
             }
             return _mapper.Map<EdgeDTO>(edge);
@@ -36,7 +36,7 @@ namespace DataAccess.IRepository.Repository
         {
             try
             {
-                var edges = _edgeDAO.GetAllEdges();
+                var edges = _edgeDAO.GetAllEdges();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
                 var edgeDTOs = edges.Select(edge => _mapper.Map<EdgeDTO>(edge)).ToList();
                 return edgeDTOs;
             }

@@ -7,25 +7,45 @@
 <div class="page-header no-gutters">
     <h1>MapPoint List</h1>
     <div class="row align-items-md-center">
-        <div class="col-md-6">
+        <div class="col-md-8">
             <div class="row">
-                <div class="col-md-5">
+                <div class="col-md-3">
                     <div class="input-affix m-v-10">
-                        <select class="form-control" id="map-building">
-                            <option value="0">All</option>
+                        <select class="form-control" id="mappoint-facility">
+                            <option value="0" disabled selected>Select by facility</option>
+                            <!-- Options for facilities will be created by JavaScript -->
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="input-affix m-v-10">
+                        <select class="form-control" id="mappoint-building">
+                            <option value="0" disabled selected>Select by building</option>
                             <!-- Options for buildings will be created by JavaScript -->
                         </select>
                     </div>
                 </div>
+                <div class="col-md-3">
+                    <div class="input-affix m-v-10">
+                        <select class="form-control" id="mappoint-floor">
+                            <option value="0" disabled selected>Select by floor</option>
+                            <!-- Options for buildings will be created by JavaScript -->
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group d-flex align-items-center">
+                        <div class="switch mt-2 m-r-10">
+                            <input type="checkbox" id="mappoint-destination-switch" checked="">
+                            <label for="mappoint-destination-switch"></label>
+                        </div>
+                        <label class="mt-3">Destination</label>
+                    </div>
+                </div>
             </div>
+
         </div>
-        <div class="col-md-6">
-            <div class="text-md-right m-v-10">
-                <button class="btn btn-primary" data-toggle="modal" data-target="#create-new-map">
-                    <i class="anticon anticon-plus"></i>
-                    <span class="m-l-5">New MapPoint</span>
-                </button>
-            </div>
+        <div class="col-md-4">
         </div>
     </div>
 </div>
@@ -37,18 +57,18 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th style="width: 30%;">Map Point Name</th>
+                            <th>Map Point Name</th>
                             <th>Location (Web)</th>
                             <th>Location (App)</th>
                             <th>Location (GPS)</th>
-                            <th>Floor ID</th>
-                            <th>Building ID</th>
+                            <th>Floor Name</th>
+                            <th>Building Name</th>
                             <th>Image</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody id="map-list">
-
+                        
                     </tbody>
                 </table>
             </div>
@@ -141,11 +161,11 @@
                         <input type="text" class="form-control" id="edit-map-point-location-gps" placeholder="Please input GPS location">
                     </div>
                     <div class="form-group">
-                        <label for="edit-map-point-floor">Floor ID</label>
+                        <label for="edit-map-point-floor">Floor Name</label>
                         <input type="text" class="form-control" id="edit-map-point-floor" placeholder="Please input floor ID">
                     </div>
                     <div class="form-group">
-                        <label for="edit-map-point-building">Building ID</label>
+                        <label for="edit-map-point-building">Building Name</label>
                         <input type="text" class="form-control" id="edit-map-point-building" placeholder="Please input building ID">
                     </div>
                     <div class="form-group">
@@ -163,13 +183,11 @@
 
 <script>
     $(document).ready(function () {
-        //session
         var userJson = sessionStorage.getItem('user');
         if (!userJson) {
             window.location.href = '/Authen/Login';
             return;
         }
-
         var itemsPerPage = 5;
 
         // Get map point list from API
@@ -178,53 +196,8 @@
             const endIndex = startIndex + itemsPerPage;
             const mapPointsToShow = mapPoints.slice(startIndex, endIndex);
 
-           
-
             $('#map-list').empty();
 
-<<<<<<< HEAD
-            for (const map of mapsToShow) {
-                const mapRow = `
-                                                    <tr>
-                                                        <td>
-                                                            <div class="media align-items-center">
-                                                                <div class="m-l-10">
-                                                                    <h5 class="m-b-0">${map.mapName}</h5>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <span>${map.buildingName}</span>
-                                                        </td>
-                                                        <td>
-                                                            <span>${map.floorName}</span>
-                                                        </td>
-                                                        <td>
-                                                            <div class="d-flex align-items-center">
-                                                                <div class="badge badge-${map.status === 'active' ? 'success' : 'danger'} badge-dot m-r-10"></div>
-                                                                <div>${map.status}</div>
-                                                            </div>
-                                                        </td>
-                                                        <td class="text-right">
-                                                            <div class="dropdown dropdown-animated scale-left">
-                                                                <a class="text-gray font-size-18" href="javascript:void(0);" data-toggle="dropdown">
-                                                                    <i class="anticon anticon-ellipsis"></i>
-                                                                </a>
-                                                                <div class="dropdown-menu">
-                                                                    <button class="dropdown-item btn btn-warning btn-tone editMap" type="button" data-id="${map.mapId}">
-                                                                        <i class="anticon anticon-edit"></i>
-                                                                        <span class="m-l-10">Edit</span>
-                                                                    </button>
-                                                                    <button class="dropdown-item btn btn-danger btn-tone deleteMap" type="button" data-id="${map.mapId}">
-                                                                        <i class="anticon anticon-delete"></i>
-                                                                        <span class="m-l-10">Delete</span>
-                                                                    </button>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                `;
-=======
             for (const mapPoint of mapPointsToShow) {
                 const mapPointRow = `
                     <tr>
@@ -232,8 +205,8 @@
                         <td>${mapPoint.locationWeb}</td>
                         <td>${mapPoint.locationApp}</td>
                             <td>${mapPoint.locationGps}</td>
-                            <td>${mapPoint.floorId}</td>
-                            <td>${mapPoint.buildingId}</td>
+                                <td>${mapPoint.floorName}</td>
+                                <td>${mapPoint.buildingName}</td>
                             <td>${mapPoint.image}</td>
                             <td class="text-right">
                                         <div class="dropdown dropdown-animated scale-left">
@@ -241,15 +214,15 @@
                                 <i class="anticon anticon-ellipsis"></i>
                             </a>
                                <div class="dropdown-menu">
-                            <button class="dropdown-item btn btn-info btn-tone viewBuilding" type="button" data-id="${mapPoint.mapPointId}">
+                            <button class="dropdown-item btn btn-info btn-tone viewMappoint" type="button" data-id="${mapPoint.mapPointId}">
                         <i class="anticon anticon-eye"></i>
                         <span class="m-l-10">View</span>
                     </button>
-                                <button class="dropdown-item btn btn-warning btn-tone editBuilding" type="button" data-id="${mapPoint.mapPointId}">
+                                    <button class="dropdown-item btn btn-warning btn-tone edit-map-point" type="button" data-id="${mapPoint.mapPointId}">
                         <i class="anticon anticon-edit"></i>
                         <span class="m-l-10">Edit</span>
                     </button>
-                                <button class="dropdown-item btn btn-danger btn-tone deleteBuilding" type="button" data-id="${mapPoint.mapPointId}">
+                                        <button class="dropdown-item btn btn-danger btn-tone delete-map-point" type="button" data-id="${mapPoint.mapPointId}">
                         <i class="anticon anticon-delete"></i>
                         <span class="m-l-10">Delete</span>
                     </button>
@@ -258,7 +231,6 @@
                                 </td>
                     </tr>
                 `;
->>>>>>> origin/hieunh
 
                 $('#map-list').append(mapPointRow);
             }
@@ -300,13 +272,30 @@
             }
         });
 
-        // Filter map points by building
-        $('#map-building').on('change', function () {
-            const selectedBuildingId = $(this).val(); // Get the selected buildingId
+       
+        // Filter mappoint points by building, floor and destination
+        $('#mappoint-building, #mappoint-floor, #mappoint-destination-switch').on('change', function () {
+            const selectedBuildingId = $('#mappoint-building').val(); // Get the selected buildingId
+            const selectedFloorId = $('#mappoint-floor').val(); // Get the selected floorId
+            const selectedDestination = $('#mappoint-destination-switch').is(':checked'); // Get the selected destination
 
             let url = 'https://localhost:7186/api/mappoints';
+            let filters = [];
+
             if (selectedBuildingId !== '0' && selectedBuildingId) {
-                url += '?$filter=BuildingID eq ' + selectedBuildingId;
+                filters.push(`BuildingId eq ${selectedBuildingId}`);
+            }
+
+            if (selectedFloorId !== '0' && selectedFloorId) {
+                filters.push(`FloorId eq ${selectedFloorId}`);
+            }
+
+            if (selectedDestination !== null) {
+                filters.push(`Destination eq ${selectedDestination}`);
+            }
+
+            if (filters.length > 0) {
+                url += '?$filter=' + filters.join(' and ');
             }
 
             $.ajax({
@@ -321,6 +310,75 @@
                 error: function (xhr, status, error) {
                     console.error('Error:', error);
                 }
+            });
+        });
+
+
+
+
+        $(document).ready(function () {
+            // Load danh sách các cơ sở ban đầu
+            $.ajax({
+                url: 'https://localhost:7186/api/facilities',
+                type: 'GET',
+                success: function (response) {
+                    response.forEach(function (facility) {
+                        // Thêm tùy chọn cho mỗi cơ sở
+                        $('#mappoint-facility').append('<option value="' + facility.facilityId + '">' + facility.facilityName + '</option>');
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });
+
+            // Sự kiện change cho phần tử select của facility
+            $('#mappoint-facility').change(function () {
+                var selectedFacilityId = $(this).val(); // Lấy giá trị của facility đã chọn
+                $('#mappoint-building').empty(); // Xóa tất cả các tùy chọn tòa nhà hiện có
+                $('#mappoint-floor').empty(); // Xóa tất cả các tùy chọn tầng hiện có
+
+                // Tạo URL OData để lấy danh sách các tòa nhà từ facility đã chọn
+                var url = 'https://localhost:7186/api/buildings?$filter=facilityId eq ' + selectedFacilityId;
+
+                // Gửi yêu cầu AJAX để lấy danh sách các tòa nhà từ facility đã chọn
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    success: function (response) {
+                        // Thêm tùy chọn cho mỗi tòa nhà từ response
+                        response.forEach(function (building) {
+                            $('#mappoint-building').append('<option value="' + building.buildingId + '">' + building.buildingName + '</option>');
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            });
+
+            // Sự kiện change cho phần tử select của building
+            $('#mappoint-building').change(function () {
+                var selectedBuildingId = $(this).val(); // Lấy giá trị của tòa nhà đã chọn
+                $('#mappoint-floor').empty(); // Xóa tất cả các tùy chọn tầng hiện có
+
+                // Tạo URL OData để lấy danh sách các tầng từ tòa nhà đã chọn
+                var url = 'https://localhost:7186/api/floors?$filter=buildingId eq ' + selectedBuildingId;
+
+                // Gửi yêu cầu AJAX để lấy danh sách các tầng từ tòa nhà đã chọn
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    success: function (response) {
+                        // Thêm tùy chọn cho mỗi tầng từ response
+                        response.forEach(function (floor) {
+                            $('#mappoint-floor').append('<option value="' + floor.floorId + '">' + floor.floorName + '</option>');
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(error);
+                    }
+                });
             });
         });
 
@@ -438,9 +496,6 @@
                     $('#edit-map-point-building').val(mapPoint.BuildingID);
                     $('#edit-map-point-image').val('');
 
-<<<<<<< HEAD
-    });
-=======
                     $('#edit-map').modal('show');
                 },
                 error: function (xhr, status, error) {
@@ -505,7 +560,12 @@
                 }
             });
         });
+
+        //Redirect mappoints detail
+        $(document).on('click', '.viewMappoint', function () {
+            var mapPointId = $(this).data('id');
+            window.location.href = `Detail/${mapPointId}`;
+        });
     });
 
->>>>>>> origin/hieunh
 </script>

@@ -34,6 +34,7 @@ builder.Services.AddControllers().AddOData(option => option.Select()
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddScoped<finsContext>();
+
 builder.Services.AddDbContext<finsContext>((serviceProvider, options) =>
 {
     var serverVersion = new MySqlServerVersion(new Version(10, 6, 10)); 
@@ -58,7 +59,8 @@ builder.Services.AddScoped<FloorDAO>();
 builder.Services.AddScoped<MemberDAO>();
 builder.Services.AddScoped<MapManageDAO>();
 builder.Services.AddScoped<EdgeDAO>();
-
+builder.Services.AddScoped<ProfileDAO>();
+builder.Services.AddScoped<PathShortest>();
 
 builder.Services.AddScoped<IBuildingRepository, BuildingRepository>();
 builder.Services.AddScoped<IFacilityRepository, FacilityRepository>();
@@ -67,6 +69,7 @@ builder.Services.AddScoped<IMapPointRepository, MapPointRepository>();
 builder.Services.AddScoped<IFloorRepository, FloorRepository>();
 builder.Services.AddScoped<IEdgeRepository, EdgeRepository>();
 builder.Services.AddScoped<IMemberRepository, MemberRepository>();
+builder.Services.AddScoped<IProfileRepository, ProfileRepository>();
 
 builder.Services.AddDistributedMemoryCache();
 

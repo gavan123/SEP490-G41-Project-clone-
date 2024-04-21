@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
@@ -17,19 +17,19 @@ namespace BusinessObject.Models
         {
         }
 
-        public virtual DbSet<Building> Buildings { get; set; } = null!;
-        public virtual DbSet<Edge> Edges { get; set; } = null!;
-        public virtual DbSet<Facility> Facilities { get; set; } = null!;
-        public virtual DbSet<Floor> Floors { get; set; } = null!;
-        public virtual DbSet<Map> Maps { get; set; } = null!;
-        public virtual DbSet<Mapmanage> Mapmanages { get; set; } = null!;
-        public virtual DbSet<Mappoint> Mappoints { get; set; } = null!;
-        public virtual DbSet<Mappointex> Mappointices { get; set; } = null!;
-        public virtual DbSet<Mappointroute> Mappointroutes { get; set; } = null!;
-        public virtual DbSet<Member> Members { get; set; } = null!;
-        public virtual DbSet<Role> Roles { get; set; } = null!;
-        public virtual DbSet<Route> Routes { get; set; } = null!;
-        public virtual DbSet<Section> Sections { get; set; } = null!;
+        public virtual DbSet<Building> Buildings { get; set; }
+        public virtual DbSet<Edge> Edges { get; set; }
+        public virtual DbSet<Facility> Facilities { get; set; }
+        public virtual DbSet<Floor> Floors { get; set; }
+        public virtual DbSet<Map> Maps { get; set; }
+        public virtual DbSet<Mapmanage> Mapmanages { get; set; }
+        public virtual DbSet<Mappoint> Mappoints { get; set; }
+        public virtual DbSet<Mappointex> Mappointices { get; set; }
+        public virtual DbSet<Mappointroute> Mappointroutes { get; set; }
+        public virtual DbSet<Member> Members { get; set; }
+        public virtual DbSet<Role> Roles { get; set; }
+        public virtual DbSet<Route> Routes { get; set; }
+        public virtual DbSet<Section> Sections { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -42,6 +42,7 @@ namespace BusinessObject.Models
 
                 optionsBuilder.UseMySql(configuration.GetConnectionString("Project"), ServerVersion.AutoDetect(configuration.GetConnectionString("Project")),
                     mysqlOptions => mysqlOptions.UseNetTopologySuite()); // Enable NetTopologySuite for MySQL
+
             }
         }
 
@@ -57,11 +58,16 @@ namespace BusinessObject.Models
                 entity.HasIndex(e => e.FacilityId, "FK_Building_Facility_idx");
 
                 entity.Property(e => e.BuildingName)
+                    .IsRequired()
                     .HasMaxLength(50)
                     .UseCollation("utf8mb3_general_ci")
                     .HasCharSet("utf8mb3");
 
-                entity.Property(e => e.Status).HasColumnType("enum('active','deactive')");
+                entity.Property(e => e.Image).IsRequired();
+
+                entity.Property(e => e.Status)
+                    .IsRequired()
+                    .HasColumnType("enum('active','deactive')");
 
                 entity.HasOne(d => d.Facility)
                     .WithMany(p => p.Buildings)
@@ -98,16 +104,20 @@ namespace BusinessObject.Models
                 entity.ToTable("facilities");
 
                 entity.Property(e => e.Address)
+                    .IsRequired()
                     .HasMaxLength(100)
                     .UseCollation("utf8mb3_general_ci")
                     .HasCharSet("utf8mb3");
 
                 entity.Property(e => e.FacilityName)
+                    .IsRequired()
                     .HasMaxLength(100)
                     .UseCollation("utf8mb3_general_ci")
                     .HasCharSet("utf8mb3");
 
-                entity.Property(e => e.Status).HasColumnType("enum('active','deactive')");
+                entity.Property(e => e.Status)
+                    .IsRequired()
+                    .HasColumnType("enum('active','deactive')");
             });
 
             modelBuilder.Entity<Floor>(entity =>
@@ -117,16 +127,20 @@ namespace BusinessObject.Models
                 entity.HasIndex(e => e.BuildingId, "FK_Building_Floor_idx");
 
                 entity.Property(e => e.FloorName)
+                    .IsRequired()
                     .HasMaxLength(50)
                     .UseCollation("utf8mb3_general_ci")
                     .HasCharSet("utf8mb3");
 
                 entity.Property(e => e.Greeting)
+                    .IsRequired()
                     .HasMaxLength(50)
                     .UseCollation("utf8mb3_general_ci")
                     .HasCharSet("utf8mb3");
 
-                entity.Property(e => e.Status).HasColumnType("enum('active','deactive')");
+                entity.Property(e => e.Status)
+                    .IsRequired()
+                    .HasColumnType("enum('active','deactive')");
 
                 entity.HasOne(d => d.Building)
                     .WithMany(p => p.Floors)
@@ -141,7 +155,11 @@ namespace BusinessObject.Models
 
                 entity.HasIndex(e => e.FloorId, "FK_Map_Floor_idx");
 
-                entity.Property(e => e.MapName).HasMaxLength(50);
+                entity.Property(e => e.MapImage2D).IsRequired();
+
+                entity.Property(e => e.MapName)
+                    .IsRequired()
+                    .HasMaxLength(50);
 
                 entity.HasOne(d => d.Floor)
                     .WithMany(p => p.Maps)
@@ -159,7 +177,6 @@ namespace BusinessObject.Models
                 entity.ToTable("mapmanage");
 
                 entity.HasIndex(e => e.MemberId, "FK_Member_Map_idx");
-
 
                 entity.Property(e => e.CreateDate).HasColumnType("datetime");
 
@@ -195,6 +212,15 @@ namespace BusinessObject.Models
                 entity.Property(e => e.LocationGps).HasColumnName("LocationGPS");
 
                 entity.Property(e => e.MapPointName).HasMaxLength(50);
+                entity.Property(e => e.LocationApp).IsRequired();
+
+                entity.Property(e => e.LocationGps).HasColumnName("LocationGPS");
+
+                entity.Property(e => e.LocationWeb).IsRequired();
+
+                entity.Property(e => e.MapPointName)
+                    .IsRequired()
+                    .HasMaxLength(50);
 
                 entity.HasOne(d => d.Building)
                     .WithMany(p => p.Mappoints)
@@ -222,6 +248,7 @@ namespace BusinessObject.Models
                 entity.HasIndex(e => e.MapPointId, "FK_MPEX_MP_idx");
 
                 entity.Property(e => e.Url)
+                    .IsRequired()
                     .HasMaxLength(45)
                     .HasColumnName("URL");
 
@@ -281,21 +308,29 @@ namespace BusinessObject.Models
 
                 entity.Property(e => e.DoB).HasColumnType("datetime");
 
-                entity.Property(e => e.Email).HasMaxLength(50);
+                entity.Property(e => e.Email)
+                    .IsRequired()
+                    .HasMaxLength(50);
 
                 entity.Property(e => e.FullName).HasMaxLength(50);
 
-                entity.Property(e => e.Password).HasMaxLength(1000);
+                entity.Property(e => e.Password)
+                    .IsRequired()
+                    .HasMaxLength(1000);
 
                 entity.Property(e => e.Phone)
+                    .IsRequired()
                     .HasMaxLength(10)
                     .IsFixedLength();
 
                 entity.Property(e => e.Status)
+                    .IsRequired()
                     .HasColumnType("enum('active','deactive')")
                     .HasDefaultValueSql("'deactive'");
 
-                entity.Property(e => e.Username).HasMaxLength(50);
+                entity.Property(e => e.Username)
+                    .IsRequired()
+                    .HasMaxLength(50);
 
                 entity.HasOne(d => d.Role)
                     .WithMany(p => p.Members)
@@ -310,14 +345,19 @@ namespace BusinessObject.Models
 
                 entity.Property(e => e.Description).HasMaxLength(45);
 
-                entity.Property(e => e.RoleName).HasMaxLength(45);
+                entity.Property(e => e.RoleName)
+                    .IsRequired()
+                    .HasMaxLength(45);
             });
 
             modelBuilder.Entity<Route>(entity =>
             {
                 entity.ToTable("route");
+                entity.Property(e => e.RouteName)
+                    .IsRequired()
+                    .HasMaxLength(45);
 
-                entity.Property(e => e.RouteName).HasMaxLength(45);
+                entity.Property(e => e.TimeEnd).HasColumnType("datetime");
 
                 entity.Property(e => e.TimeEnd).HasColumnType("datetime");
 

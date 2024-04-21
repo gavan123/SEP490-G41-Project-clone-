@@ -16,7 +16,7 @@ namespace AR_NavigationAPI.Controllers
             _profileRepository = profileRepository;
         }
 
-        // GET: api/buildings/5
+        // GET: api/buildings/1
         [HttpGet("{id}")]
         public IActionResult GetMemberById(int id)
         {
@@ -29,9 +29,9 @@ namespace AR_NavigationAPI.Controllers
 
             return Ok(profile);
         }
-        // PUT: api/buildings/5
+        // PUT: api/buildings/1
         [HttpPut("{id}")]
-        public IActionResult UpdateProfileById(int id, MemberUpdateDTO progfile)
+        public IActionResult UpdateProfileById(int id,[FromForm] MemberUpdateDTO progfile)
         {
             var tmpProfile = _profileRepository.GetMemberById(id);
             if (tmpProfile == null)

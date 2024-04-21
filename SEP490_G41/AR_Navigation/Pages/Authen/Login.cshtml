@@ -2,9 +2,26 @@
 @model AR_Navigation.Pages.Authen.LoginModel
 @{
 }
-@{
-    Layout = "_AdminLayout";
-}
+
+<link href="/assets/css/app.min.css" rel="stylesheet">
+<!-- Include ApexCharts CSS -->
+<link href="https://cdn.jsdelivr.net/npm/apexcharts@3.27.1/dist/apexcharts.min.css" rel="stylesheet">
+<link href="/assets/vendors/datatables/dataTables.bootstrap.min.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- SweetAlert CDN -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts@3.27.1/dist/apexcharts.min.js"></script>
+<script src="/assets/vendors/chartjs/Chart.min.js"></script>
+<style>
+    .app {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+</style>
 <div class="app">
     <div class="container-fluid">
         <div class="d-flex full-height p-v-15 flex-column justify-content-between">
@@ -13,6 +30,10 @@
                     <div class="col-md-6">
                         <div class="card">
                             <div class="card-body">
+                                <div style="display: inline-block; text-decoration: none;">
+                                    <img src="/Images/Logo.jpg" alt="Logo" style=" max-width: 40px; max-height: 40px;vertical-align: middle;">
+                                    <h3 style="display: inline-block; font-weight: bold; margin-left: 10px; margin-top: 10px; vertical-align: middle;">FPT INDOOR NAVIGATION</h3>
+                                </div>
                                 <h2 class="m-t-20">Sign In</h2>
                                 <p class="m-b-30">Enter your credential to get access</p>
                                 <form asp-page="/Authen/Login" asp-page-handler="Login" id="form-login" method="post">
@@ -69,7 +90,7 @@
                         text: 'You have successfully logged in!',
                     });
                     console.log('User information:', response.username);
-
+                    console.log('User information:', response.memberId);
                     var user = { userid: response.memberId, fullname: response.fullname, username: response.username, role: response.roleId };
                     sessionStorage.setItem('user', JSON.stringify(user));
                     console.log(sessionStorage.getItem('user'));
