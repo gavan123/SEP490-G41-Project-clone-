@@ -30,8 +30,16 @@
             <div class="row">
                 <div class="col-md-5">
                     <div class="input-affix m-v-10">
+                        <select class="form-control" id="map-facility">
+                            <option value="0" disabled selected>Select by facility</option>
+                            <!-- Options for buildings will be created by JavaScript -->
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="input-affix m-v-10">
                         <select class="form-control" id="map-building">
-                            <option value="0">All</option>
+                            <option value="0" disabled selected>Select by building</option>
                             <!-- Options for buildings will be created by JavaScript -->
                         </select>
                     </div>
@@ -56,7 +64,7 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th style="width: 30%;">Map Name</th>
+                            <th>Map Name</th>
                             <th>Building Name</th>
                             <th>Floor Name</th>
                             <th>Map Manager Name</th>
@@ -65,12 +73,8 @@
                         </tr>
                     </thead>
                     <tbody id="map-list">
-<<<<<<< HEAD
-                       
-=======
                         
 
->>>>>>> origin/hieunh
                     </tbody>
                 </table>
             </div>
@@ -109,6 +113,12 @@
                             </div>
                         </div>
                         <div id="add-selected-image-container" class="selected-image-container" style="margin-top: 10px;"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="new-map-building">Facility</label>
+                        <select class="form-control" id="new-map-facility">
+                            <!-- Options will be created by JavaScript -->
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="new-map-building">Building</label>
@@ -157,6 +167,12 @@
                         <div id="add-selected-image-container" class="selected-image-container" style="margin-top: 10px;"></div>
                     </div>
                     <div class="form-group">
+                        <label for="edit-map-building">Facility</label>
+                        <select class="form-control" id="edit-map-facility">
+                            <!-- Options will be created by JavaScript -->
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label for="edit-map-building">Building</label>
                         <select class="form-control" id="edit-map-building">
                             <!-- Options will be created by JavaScript -->
@@ -177,13 +193,11 @@
 
 <script>
     $(document).ready(function () {
-        //session
         var userJson = sessionStorage.getItem('user');
         if (!userJson) {
             window.location.href = '/Authen/Login';
             return;
         }
-
         var itemsPerPage = 5;
 
         // Get map list from API
@@ -199,47 +213,6 @@
 
             for (const map of mapsToShow) {
                 const mapRow = `
-<<<<<<< HEAD
-                                    <tr>
-                                        <td>
-                                            <div class="media align-items-center">
-                                                <div class="m-l-10">
-                                                    <h5 class="m-b-0">${map.mapName}</h5>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <span>${map.buildingName}</span>
-                                        </td>
-                                        <td>
-                                            <span>${map.floorName}</span>
-                                        </td>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div class="badge badge-${map.status === 'active' ? 'success' : 'danger'} badge-dot m-r-10"></div>
-                                                <div>${map.status}</div>
-                                            </div>
-                                        </td>
-                                        <td class="text-right">
-                                            <div class="dropdown dropdown-animated scale-left">
-                                                <a class="text-gray font-size-18" href="javascript:void(0);" data-toggle="dropdown">
-                                                    <i class="anticon anticon-ellipsis"></i>
-                                                </a>
-                                                <div class="dropdown-menu">
-                                                    <button class="dropdown-item btn btn-warning btn-tone editMap" type="button" data-id="${map.mapId}">
-                                                        <i class="anticon anticon-edit"></i>
-                                                        <span class="m-l-10">Edit</span>
-                                                    </button>
-                                                    <button class="dropdown-item btn btn-danger btn-tone deleteMap" type="button" data-id="${map.mapId}">
-                                                        <i class="anticon anticon-delete"></i>
-                                                        <span class="m-l-10">Delete</span>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                `;
-=======
                     <tr>
                         <td>
                             <div class="media align-items-center">
@@ -266,7 +239,7 @@
                             </td>
                         <td>
                                 <div class="avatar avatar-image rounded">
-                                                    <img src="/Images/${map.image2D}" alt="">
+                                                        <img src="/Images/${map.mapImage2D}" alt="">
                                 </div>  
                         </td>
                         <td class="text-right">
@@ -292,7 +265,6 @@
                         </td>
                     </tr>
                 `;
->>>>>>> origin/hieunh
 
                 $('#map-list').append(mapRow);
             }
@@ -358,21 +330,100 @@
             });
         });
 
-        // API to get buildings
-        $.ajax({
-            url: 'https://localhost:7186/api/buildings',
-            type: 'GET',
-            success: function (response) {
-                response.forEach(function (building) {
-                    $('#new-map-building').append('<option value="' + building.buildingId + '">' + building.buildingName + '</option>');
-                    $('#edit-map-building').append('<option value="' + building.buildingId + '">' + building.buildingName + '</option>');
-                    $('#map-building').append('<option value="' + building.buildingId + '">' + building.buildingName + '</option>');
+
+
+
+
+
+        $(document).ready(function () {
+            // Load danh sách các cơ sở ban đầu
+            $.ajax({
+                url: 'https://localhost:7186/api/facilities',
+                type: 'GET',
+                success: function (response) {
+                    response.forEach(function (facility) {
+                        // Thêm tùy chọn cho mỗi cơ sở
+                        $('#map-facility').append('<option value="' + facility.facilityId + '">' + facility.facilityName + '</option>');
+                        $('#new-map-facility').append('<option value="' + facility.facilityId + '">' + facility.facilityName + '</option>');
+                        $('#edit-map-facility').append('<option value="' + facility.facilityId + '">' + facility.facilityName + '</option>');
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });
+
+
+
+            // Sự kiện change cho phần tử select của facility
+            $('#map-facility').change(function () {
+                var selectedFacilityId = $(this).val(); // Lấy giá trị của facility đã chọn
+                $('#map-building').empty(); // Xóa tất cả các tùy chọn tòa nhà hiện có
+
+                // Tạo URL OData để lấy danh sách các tòa nhà từ facility đã chọn
+                var url = 'https://localhost:7186/api/buildings?$filter=facilityId eq ' + selectedFacilityId;
+
+                // Gửi yêu cầu AJAX để lấy danh sách các tòa nhà từ facility đã chọn
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    success: function (response) {
+                        // Thêm tùy chọn cho mỗi tòa nhà từ response
+                        response.forEach(function (building) {
+                            $('#map-building').append('<option value="' + building.buildingId + '">' + building.buildingName + '</option>');
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(error);
+                    }
                 });
-            },
-            error: function (xhr, status, error) {
-                console.error(error);
+            });
+        });
+        $('#new-map-facility').change(function () {
+            var selectedFacilityId = $(this).val();
+            $('#new-map-building').empty();
+
+            if (selectedFacilityId !== '0') {
+                var url = 'https://localhost:7186/api/buildings?$filter=facilityId eq ' + selectedFacilityId;
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    success: function (response) {
+                        response.forEach(function (building) {
+                            $('#new-map-building').append('<option value="' + building.buildingId + '">' + building.buildingName + '</option>');
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(error);
+                    }
+                });
             }
         });
+
+        // Load building options based on selected facility for edit modal
+        $('#edit-map-facility').change(function () {
+            var selectedFacilityId = $(this).val();
+            $('#edit-map-building').empty();
+
+            if (selectedFacilityId !== '0') {
+                var url = 'https://localhost:7186/api/buildings?$filter=facilityId eq ' + selectedFacilityId;
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    success: function (response) {
+                        response.forEach(function (building) {
+                            $('#edit-map-building').append('<option value="' + building.buildingId + '">' + building.buildingName + '</option>');
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            }
+        });
+
+
+
 
         $('#new-map-building').change(function () {
             var buildingId = $(this).val();
@@ -413,18 +464,20 @@
             var mapName = $('#new-map-name').val();
             var floorId = $('#new-map-floor').val();
             var imageInput = $('#new-building-image');
-      
+            var userJson = sessionStorage.getItem('user');
+            var user = JSON.parse(userJson); // Parse userJson thành đối tượng JavaScript
+
             var formData = new FormData();
             formData.append('MapName', mapName);
             formData.append('FloorId', floorId);
             if (imageInput[0].files.length > 0) {
                 var imageFile = imageInput[0].files[0];
-                formData.append('Image2D', imageFile);
+                formData.append('mapImage2D', imageFile);
             }
 
             // Send an AJAX POST request to the API
             $.ajax({
-                url: 'https://localhost:7186/api/maps',
+                url: 'https://localhost:7186/api/maps?memberId=' + user.userid,
                 type: 'POST',
                 data: formData,
                 processData: false,
@@ -493,9 +546,6 @@
             var mapId = $(this).data('id');
             showEditModal(mapId);
         });
-<<<<<<< HEAD
-    });
-=======
 
         function showEditModal(mapId) {
             $.ajax({
@@ -525,7 +575,7 @@
             formData.append('FloorId', floorId);
             if (imageInput[0].files.length > 0) {
                 var imageFile = imageInput[0].files[0];
-                formData.append('Image2D', imageFile);
+                formData.append('mapImage2D', imageFile);
             }
 
             $.ajax({
@@ -557,10 +607,9 @@
                 }
             });
         });
->>>>>>> origin/hieunh
 
 
-        //Redirect building detail
+        //Redirect maps detail
         $(document).on('click', '.viewMap', function () {
             var mapId = $(this).data('id');
             window.location.href = `Detail/${mapId}`;

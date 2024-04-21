@@ -60,6 +60,7 @@ builder.Services.AddScoped<MemberDAO>();
 builder.Services.AddScoped<MapManageDAO>();
 builder.Services.AddScoped<EdgeDAO>();
 builder.Services.AddScoped<ProfileDAO>();
+builder.Services.AddScoped<PathShortest>();
 
 builder.Services.AddScoped<IBuildingRepository, BuildingRepository>();
 builder.Services.AddScoped<IFacilityRepository, FacilityRepository>();

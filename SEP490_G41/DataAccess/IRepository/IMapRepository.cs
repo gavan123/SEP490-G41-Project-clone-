@@ -13,7 +13,7 @@ namespace DataAccess.IRepository
     {
         MapDTO GetMapById(int mapId);
         List<MapDTO> GetAllMaps();
-        void AddMap(MapAddDTO map, Member member);
+        void AddMap(MapAddDTO map, int memberId);
         void UpdateMap(MapUpdateDTO map);
         void DeleteMap(int mapId);
 

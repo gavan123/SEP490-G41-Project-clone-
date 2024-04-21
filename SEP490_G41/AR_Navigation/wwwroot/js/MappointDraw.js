@@ -249,15 +249,16 @@ const sampleEdge = {
 
 const canvas = document.getElementById("canvas_data");
 const context = canvas.getContext("2d");
-
+const imgData = context.getImageData(0, 0, canvas.width, canvas.height);
 var allEdges = [];
 
 
 
 //ratio of image's width, length vs image's pixels
-var ratio = 8.682926829;
-var root = { id: "root", x: 628, y: 160 };
-var radius = 5;
+
+var ratio = 17.696;
+var root = { id: "root", x: 1290, y: 6 };
+var radius = 5 * Math.sqrt(ratio) / 2;
 
 //var ratio = 17.696;
 //var root = { id: "root", x: 1290, y: 6 };
@@ -276,13 +277,18 @@ var numberOfClicks = 0;
 //cac function sau phuc vu cho viec lay toa do 
 //toa do trong anh tinh theo goc toa do cua database
 function pixelLocation(event) {
+<<<<<<< HEAD
     document.getElementById("demo").innerHTML = "LocationWeb1: (" + (event.offsetX) + ", " + (event.offsetY) + ")" +
         "LocationWebRoot: (" + (event.offsetX - root.x) + ", " + -(event.offsetY - root.y) + ")";
+=======
+    document.getElementById("demo").innerHTML = "Location: (" + (event.offsetX) + ", " + (event.offsetY) + ")" +
+        "Location1: (" + (event.offsetX - root.x) + ", " + -(event.offsetY - root.y) + ")";
+>>>>>>> origin/hieunh
 }
 //toa do cua diem trong database
 function databaseLocation(event) {
     document.getElementById("demo").innerHTML = document.getElementById("demo").innerHTML +
-        " <br>  LocationApp: (" + (event.offsetX - root.x) / ratio + ", " + -(event.offsetY - root.y) / ratio + ")";
+        " <br>  Location2: (" + (event.offsetX - root.x) / ratio + ", " + -(event.offsetY - root.y) / ratio + ")";
 }
 
 function setEditmappoint() {
@@ -534,24 +540,28 @@ function findCoordinatesById(id, mappointList) {
 
 //function duoc goi khi bam nut Connect Edge
 function setEdge() {
-    console.log("SETTING EDGE");
     canvas.setAttribute("onclick", "drawLine(event), count(event)");
 }
 window.setEdge = setEdge;
 
 //function duoc goi khi bam Get Mappoints
-function renderPoints(points) {
-    // Lay du lieu tu array ben tren
-    points.forEach(point => {
+function renderPoints() {
+    //lay du lieu tu array ben tren
+    allPoints.forEach(point => {
         context.beginPath();
+<<<<<<< HEAD
         // Convert coordinates from image pixels to database coordinates
+=======
+        //convert coordinates from image pixels to database coordinates
+>>>>>>> origin/hieunh
         let pixelX = point.x * ratio + root.x;
         let pixelY = -point.y * ratio + root.y;
 
-        // Draw circle at pixelX,pixelY with radius = 2, start from angle 0, end at 360, counter-clockwise
+        //draw circle at pixelX,pixelY with radius = 2, start from angle 0, end at 360, counter-clockwise
         context.arc(pixelX, pixelY, radius, 0, 2 * Math.PI, false);
         context.fillStyle = 'orange';
         context.fill();
+        context.closePath();
     });
     saveCanvasState();
     context.beginPath();
@@ -561,8 +571,6 @@ function renderPoints(points) {
     context.closePath();
     saveCanvasState();
 }
-window.renderPoints = renderPoints;
-
 //phuc vu cho drawLine()
 function count() {
     numberOfClicks = numberOfClicks + 1;
@@ -574,7 +582,11 @@ function drawLine(event) {
     if (numberOfClicks == 0) {
         beginPoint.x = event.offsetX;
         beginPoint.y = event.offsetY;
+<<<<<<< HEAD
         if (inButtonRange(mappointList, beginPoint) == false) {
+=======
+        if (inButtonRange(allPoints, beginPoint) == false) {
+>>>>>>> origin/hieunh
             numberOfClicks = -1;
             nearbyPoint = { id: "", x: 0, y: 0 };
             beginPoint = { id: "", x: 0, y: 0 };
@@ -788,6 +800,7 @@ function getRatio() {
     //==> ti le bao nhieu pixel/m 
     let x = canvas.offsetWidth;
     ratio = x / irlLength;
+<<<<<<< HEAD
 }
 
 function resize() {
@@ -873,3 +886,122 @@ function search() {
         canvas.setAttribute("onclick", "undo(2)");
     }
 }
+=======
+}
+
+function resize() {
+    var canvas1 = new fabric.Canvas('canvas_data1');
+    // Load the background image (you can replace 'your-image.jpg' with your actual image URL)
+    fabric.Image.fromURL('../ALF1new.jpg', function (img) {
+        // Access the image dimensions
+        var scale = canvas1.width / img.width;
+
+        img.set({
+            scaleX: scale,
+            scaleY: scale,
+            originX: 'left',
+            originY: 'top'
+        });
+        // Set canvas dimensions to match the image size
+        canvas1.setWidth(canvas1.width * (canvas1.width / img.width));
+        canvas1.setHeight(img.height * (canvas1.width / img.width));
+        canvas1.setBackgroundImage(img, canvas1.renderAll.bind(canvas1));
+        // Add the image to the canvas
+        canvas.width = canvas1.width;
+        canvas.height = canvas1.height;
+        canvas1.setWidth(0);
+        canvas1.setHeight(0);
+        canvas.style.backgroundImage = 'url("../ALF1new.jpg")';
+    });
+}
+
+function newMappoint() {
+    //hien ra cac input fields 
+    document.getElementById("idInput").hidden = false;
+    document.getElementById("nameInput").hidden = false;
+    document.getElementById("buildingInput").hidden = false;
+    document.getElementById("message").hidden = false;
+    document.getElementById("saveMappoint").hidden = false;
+
+    document.getElementById("idInput").disabled = false;
+    document.getElementById("nameInput").disabled = false;
+    document.getElementById("buildingInput").disabled = false;
+    document.getElementById("message").disabled = false;
+    document.getElementById("saveMappoint").disabled = false;
+    canvas.setAttribute("onclick", "chooseMappoint(event)");
+}
+//bien nay se la de luu mappoint moi duoc ghi
+var newPoint = { id: "", x: 0, y: 0 };
+
+function chooseMappoint(event) {
+    saveCanvasState();
+    document.getElementById("demo2").innerHTML = "Toa do tren anh: x: " + event.offsetX + ", y: " +
+        event.offsetY + "<br> Toa do tren database: x: " + (event.offsetX - root.x) / ratio + ", y: " +
+        (event.offsetY - root.y) / ratio;
+    let x = (event.offsetX - root.x) / ratio;
+    let y = -(event.offsetY - root.y) / ratio;
+    context.beginPath();
+    context.arc(event.offsetX, event.offsetY, radius, 0, 2 * Math.PI, false);
+    context.fillStyle = 'red';
+    context.fill();
+    context.closePath();
+    newPoint = { id: "", x: x, y: y };
+    canvas.setAttribute("onclick", "undo(false),chooseMappoint(event)");
+}
+
+function saveMappoint() {
+    newPoint.id = document.getElementById("idInput").value;
+    document.getElementById("demo2").innerHTML = "id: " + newPoint.id + ", x: " + newPoint.x + ", y: " + newPoint.y;
+
+    document.getElementById("idInput").hidden = true;
+    document.getElementById("nameInput").hidden = true;
+    document.getElementById("buildingInput").hidden = true;
+    document.getElementById("message").hidden = true;
+    document.getElementById("saveMappoint").hidden = true;
+
+    document.getElementById("idInput").disabled = true;
+    document.getElementById("nameInput").disabled = true;
+    document.getElementById("buildingInput").disabled = true;
+    document.getElementById("message").disabled = true;
+    document.getElementById("saveMappoint").disabled = true;
+
+    allPoints.push(newPoint);
+    canvas.setAttribute("onclick", "");
+
+}
+
+function search() {
+    var ok = false;
+    var inputId = document.getElementById("searchMappoint").value;
+    if (inputId == "") {
+        console.log("1111");
+        return;
+    }
+    else {
+        allPoints.forEach(a => {
+            if (a.id == inputId) {
+                context.beginPath();
+                //convert coordinates from image pixels to database coordinates
+                let pixelX = a.x * ratio + root.x;
+                let pixelY = -a.y * ratio + root.y;
+
+                context.arc(pixelX, pixelY, radius * 1.5, 0, 2 * Math.PI, false);
+                context.fillStyle = 'red';
+                context.fill();
+                context.closePath();
+                saveCanvasState();
+                ok = true;
+                document.getElementById("searchMappoint").value = "";
+                return;
+            }
+            else {
+            }
+        });
+    }
+    if (ok == false) {
+        alert("Counldn't find Map point id");
+    } else {
+        canvas.setAttribute("onclick", "undo(2)");
+    }
+}
+>>>>>>> origin/hieunh
