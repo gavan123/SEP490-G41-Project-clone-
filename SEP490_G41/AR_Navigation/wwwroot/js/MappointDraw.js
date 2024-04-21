@@ -21,11 +21,6 @@ function getMapPointsByMapId(mapId, buildingid, floorid) {
                 x: locationAppParse.x,
                 y: locationAppParse.y
             });
-            mappointIDList.push({
-                MapId: mapId,
-                BuildingId: buildingid,
-                FloorId: floorid
-            });
             const mappointrow = `
                     <tr>
                         <td><input type="checkbox" class="checkbox"></td>
@@ -163,6 +158,8 @@ function deleteMapPoint(mapPointId) {
     });
 
 }
+
+//onclick Save button add form
 function attachEventToSaveButton() {
     addMapPoint(mapidTake, buildingidTake, flooridTake);
 }
@@ -188,8 +185,8 @@ function addMapPoint(mapidTake, buildingidTake, flooridTake) {
     $.ajax({
         url: 'https://localhost:7186/api/mappoints',
         type: 'POST',
-        processData: false, 
-        contentType: false, 
+        processData: false,
+        contentType: false,
         data: formData,
         success: function (response) {
             console.log('Map point added successfully:', response);
@@ -212,10 +209,8 @@ function addMapPoint(mapidTake, buildingidTake, flooridTake) {
     });
 }
 
-
-
-//show Coordinate in form
-function showSelectedPointInForm() {
+//show Coordinate in addform
+function showSelectedPointInAddForm() {
     if (selectedPoint) {
         // Lấy giá trị x và y từ selectedPoint
         var xCoordinate = selectedPoint.x.toFixed(2);;
@@ -230,7 +225,7 @@ function showSelectedPointInForm() {
     $('#add-MapPoint-modal').modal('show');
 }
 
-
+//Convert string thành tọa dộ
 function parseLocation(locationWebString) {
     // Loại bỏ dấu ngoặc vuông và dấu cách ở hai đầu chuỗi
     var cleanedString = locationWebString.replace(/^\[|\]$/g, '');
@@ -596,6 +591,8 @@ function chooseMappoint(event) {
     canvas.setAttribute("onclick", "undo(false),chooseMappoint(event)");
 }
 
+
+//chức năng search mappoint theo name
 function search() {
     var ok = false;
     var inputId = document.getElementById("searchMappoint").value.trim().toLowerCase(); // Sử dụng trim và chuyển đổi thành chữ thường
