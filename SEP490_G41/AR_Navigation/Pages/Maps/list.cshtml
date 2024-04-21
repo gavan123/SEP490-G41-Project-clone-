@@ -160,30 +160,15 @@
                         <label for="new-building-image">Image</label>
                         <div class="input-group">
                             <div class="custom-file">
-                                <input type="file" name="ImageFile" class="custom-file-input" id="edit-map-image" aria-describedby="inputGroupFileAddon" onchange="displaySelectedImage(this, 'add-selected-image-container')">
+                                <input type="file" name="ImageFile" class="custom-file-input" id="edit-map-image" aria-describedby="inputGroupFileAddon" onchange="displaySelectedImage(this, 'edit-selected-image-container')">
                                 <label class="custom-file-label" for="new-building-image">Choose file</label>
                             </div>
                         </div>
-                        <div id="add-selected-image-container" class="selected-image-container" style="margin-top: 10px;"></div>
+                        <div id="edit-selected-image-container" class="selected-image-container" style="margin-top: 10px;"></div>
                     </div>
-                    <div class="form-group">
-                        <label for="edit-map-building">Facility</label>
-                        <select class="form-control" id="edit-map-facility">
-                            <!-- Options will be created by JavaScript -->
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="edit-map-building">Building</label>
-                        <select class="form-control" id="edit-map-building">
-                            <!-- Options will be created by JavaScript -->
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="edit-map-floor">Floor</label>
-                        <select class="form-control" id="edit-map-floor">
-                            <!-- Options will be created by JavaScript -->
-                        </select>
-                    </div>
+                  
+                        <input type="hidden" id="edit-map-floor">
+                       
                     <button type="button" class="btn btn-primary" id="edit-map-btn">Save Changes</button>
                 </form>
             </div>
@@ -554,6 +539,7 @@
                 success: function (response) {
                     $('#map-id').val(response.mapId);
                     $('#edit-map-name').val(response.mapName);
+                    $('#edit-map-floor').val(response.floorId);
                     // Hiển thị modal chỉnh sửa
                     $('#edit-map').modal('show');
                 },
@@ -575,7 +561,7 @@
             formData.append('FloorId', floorId);
             if (imageInput[0].files.length > 0) {
                 var imageFile = imageInput[0].files[0];
-                formData.append('mapImage2D', imageFile);
+                formData.append('MapImage2D', imageFile);
             }
 
             $.ajax({
