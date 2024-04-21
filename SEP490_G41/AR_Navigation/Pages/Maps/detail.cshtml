@@ -57,7 +57,7 @@
                 // Cập nhật tên bản đồ
                 $('#map-name').text(map.mapName);
                 $('#floor-name').text(map.floorName);
-                var mapImages = `<img src="/Images/${map.image2D}" alt="Map Image">`;
+                var mapImages = `<img src="/Images/${map.mapImage2D}" alt="Map Image">`;
                 $('#map-images-container').html(mapImages);
             },
             error: function (xhr, status, error) {

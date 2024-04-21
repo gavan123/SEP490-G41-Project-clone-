@@ -101,9 +101,9 @@ var allEdges = [];
 
 //ratio of image's width, length vs image's pixels
 
-var ratio = 8.682926829;
-var root = { id: "root", x: 621, y: 3 };
-var radius = 5;
+var ratio = 17.696;
+var root = { id: "root", x: 1290, y: 6 };
+var radius = 5 * Math.sqrt(ratio) / 2;
 
 //Start and end point of 1 edge
 var beginPoint = { id: "", x: 0, y: 0 };
@@ -129,7 +129,6 @@ function databaseLocation(event) {
 
 //function duoc goi khi bam nut Connect Edge
 function setEdge() {
-    console.log("SETTING EDGE");
     canvas.setAttribute("onclick", "drawLine(event), count(event)");
 }
 
@@ -144,10 +143,17 @@ function renderPoints() {
 
         //draw circle at pixelX,pixelY with radius = 2, start from angle 0, end at 360, counter-clockwise
         context.arc(pixelX, pixelY, radius, 0, 2 * Math.PI, false);
-        context.fillStyle = 'red';
+        context.fillStyle = 'orange';
         context.fill();
+        context.closePath();
     });
-    // saveCanvasState();
+    saveCanvasState();
+    context.beginPath();
+    context.arc(root.x, root.y, radius, 0, 2 * Math.PI, false);
+    context.fillStyle = 'blue';
+    context.fill();
+    context.closePath();
+    saveCanvasState();
 }
 //phuc vu cho drawLine()
 function count() {
@@ -159,9 +165,7 @@ function drawLine(event) {
     if (numberOfClicks == 0) {
         beginPoint.x = event.offsetX;
         beginPoint.y = event.offsetY;
-        console.log(beginPoint.x + ", " + beginPoint.y);
         if (inButtonRange(allPoints, beginPoint) == false) {
-            console.log("1");
             numberOfClicks = -1;
             nearbyPoint = { id: "", x: 0, y: 0 };
             beginPoint = { id: "", x: 0, y: 0 };
@@ -171,7 +175,6 @@ function drawLine(event) {
             //khi xac nhan bam dung vao pham vi map point
             inButtonRange(allPoints, beginPoint);
             beginPoint = nearbyPoint;
-            console.log("a");
             //ve hinh tron mau xanh 
             context.beginPath();
             context.arc(beginPoint.x * ratio + root.x, -beginPoint.y * ratio + root.y, radius, 0, 2 * Math.PI, false);
@@ -189,7 +192,7 @@ function drawLine(event) {
         context.beginPath();
         context.arc(beginPoint.x * ratio + root.x, -beginPoint.y * ratio + root.y, radius, 0, 2 * Math.PI, false);
         context.closePath();
-        context.fillStyle = 'red';
+        context.fillStyle = 'orange';
         context.fill();
         //truong hop chon khong dung trong pham vi map point
         if (inButtonRange(allPoints, endPoint) == false) {
@@ -289,16 +292,17 @@ function saveCanvasState() {
 }
 
 // Function to undo the last stroke (connect wrong edge)
-function undo() {
+function undo(value) {
     if (strokeHistory.length > 0) {
         strokeHistory.pop(); // Remove the last stroke
         redrawCanvas();
     }
     //khi undo thi array cac edges cung se phai xoa di
-    if (allEdges.length > 0) {
+    if (allEdges.length > 0 && value == 1) {
         allEdges.pop();
         showEdges(allEdges);
     }
+    canvas.setAttribute("onclick", "");
 }
 
 // Function to redraw the canvas from strokeHistory
@@ -346,48 +350,25 @@ function getNearbyPoint(event) {
     document.getElementById("canvas_data").setAttribute("onclick", "");
 }
 function setRoot() {
+    undo(false);
     canvas.setAttribute("onclick", "chooseRoot(event)");
 }
 function chooseRoot(event) {
+
     //function nay chua xong , neu xong thi se lien quan den get Ratio()
     root.x = event.offsetX;
     root.y = event.offsetY;
+    context.beginPath();
+    context.arc(root.x, root.y, radius, 0, 2 * Math.PI, false);
+    context.fillStyle = 'blue';
+    context.fill();
+    context.closePath();
+    saveCanvasState();
     document.getElementById("demo1").innerHTML = "Root: " + root.x + ", " + root.y;
     getRatio();
     document.getElementById("demo1").innerHTML = document.getElementById("demo1").innerHTML + " <br> Ratio: " + ratio;
+    canvas.setAttribute("onclick", "");
 }
-function getRatio(farthestPointImage, farthestPointDatabase, nearbyPointImage, nearbyPointDatabase, rootImage) {
-    //farthestPointImage la diem xa nhat tinh tu goc toa do, lay toa do trong anh (khong chinh sua)
-    //farthestPointDatabase la farthestPointImage nhung toa do o trong database
-    //nearbyPointImage la 1 diem gan voi goc toa do, lay toa do trong anh (khong chinh sua)
-    //nearbyPointDatabase la nearbyPointImage nhung toa do o trong database
-
-    //rootImage la toa do cua goc toa do o tren anh
-
-    //4 diem tren co the tinh duoc ti le cua (canh dai nhat tren anh, canh dai nhat tren database)
-    //va ti le cua (canh gan nhat tren anh, canh gan nhat tren database)
-    //lay tong cua ti le do chia 2.05 de uoc luong dong deu
-    //2.05 co the tuy chinh
-
-    let p1X = farthestPointImage.x - root.x;
-    let p1Y = farthestPointImage.y - root.y;
-    let p2X = farthestPointDatabase.x;
-    let p2Y = farthestPointDatabase.y;
-    let p3X = nearbyPointImage.x - root.x;
-    let p3Y = nearbyPointImage.y - root.y;
-    let p4X = nearbyPointDatabase.x;
-    let p4Y = nearbyPointDatabase.y;
-
-    let parameter1 = Math.sqrt(p1X * p1X + p1Y * p1Y);
-    let parameter2 = Math.sqrt(p2X * p2X + p2Y * p2Y);
-    let parameter3 = Math.sqrt(p3X * p3X + p3Y * p3Y);
-    let parameter4 = Math.sqrt(p4X * p4X + p4Y * p4Y);
-
-    let result = ((parameter1 / parameter2) + (parameter3 / parameter4)) / 2.05;
-    return result
-}
-//==================================================================
-
 function getRatio() {
     var irlLength = 125;
     //irl length la tong chieu dai cua anh (tang 1 Al tong chieu dai la 125m)
@@ -421,9 +402,96 @@ function resize() {
         canvas.height = canvas1.height;
         canvas1.setWidth(0);
         canvas1.setHeight(0);
-        console.log("canvas: " + canvas.width + ", " + canvas.height);
-        console.log("canvas: " + canvas1.width + ", " + canvas1.height);
-
         canvas.style.backgroundImage = 'url("../ALF1new.jpg")';
     });
+}
+
+function newMappoint() {
+    //hien ra cac input fields 
+    document.getElementById("idInput").hidden = false;
+    document.getElementById("nameInput").hidden = false;
+    document.getElementById("buildingInput").hidden = false;
+    document.getElementById("message").hidden = false;
+    document.getElementById("saveMappoint").hidden = false;
+
+    document.getElementById("idInput").disabled = false;
+    document.getElementById("nameInput").disabled = false;
+    document.getElementById("buildingInput").disabled = false;
+    document.getElementById("message").disabled = false;
+    document.getElementById("saveMappoint").disabled = false;
+    canvas.setAttribute("onclick", "chooseMappoint(event)");
+}
+//bien nay se la de luu mappoint moi duoc ghi
+var newPoint = { id: "", x: 0, y: 0 };
+
+function chooseMappoint(event) {
+    saveCanvasState();
+    document.getElementById("demo2").innerHTML = "Toa do tren anh: x: " + event.offsetX + ", y: " +
+        event.offsetY + "<br> Toa do tren database: x: " + (event.offsetX - root.x) / ratio + ", y: " +
+        (event.offsetY - root.y) / ratio;
+    let x = (event.offsetX - root.x) / ratio;
+    let y = -(event.offsetY - root.y) / ratio;
+    context.beginPath();
+    context.arc(event.offsetX, event.offsetY, radius, 0, 2 * Math.PI, false);
+    context.fillStyle = 'red';
+    context.fill();
+    context.closePath();
+    newPoint = { id: "", x: x, y: y };
+    canvas.setAttribute("onclick", "undo(false),chooseMappoint(event)");
+}
+
+function saveMappoint() {
+    newPoint.id = document.getElementById("idInput").value;
+    document.getElementById("demo2").innerHTML = "id: " + newPoint.id + ", x: " + newPoint.x + ", y: " + newPoint.y;
+
+    document.getElementById("idInput").hidden = true;
+    document.getElementById("nameInput").hidden = true;
+    document.getElementById("buildingInput").hidden = true;
+    document.getElementById("message").hidden = true;
+    document.getElementById("saveMappoint").hidden = true;
+
+    document.getElementById("idInput").disabled = true;
+    document.getElementById("nameInput").disabled = true;
+    document.getElementById("buildingInput").disabled = true;
+    document.getElementById("message").disabled = true;
+    document.getElementById("saveMappoint").disabled = true;
+
+    allPoints.push(newPoint);
+    canvas.setAttribute("onclick", "");
+
+}
+
+function search() {
+    var ok = false;
+    var inputId = document.getElementById("searchMappoint").value;
+    if (inputId == "") {
+        console.log("1111");
+        return;
+    }
+    else {
+        allPoints.forEach(a => {
+            if (a.id == inputId) {
+                context.beginPath();
+                //convert coordinates from image pixels to database coordinates
+                let pixelX = a.x * ratio + root.x;
+                let pixelY = -a.y * ratio + root.y;
+
+                context.arc(pixelX, pixelY, radius * 1.5, 0, 2 * Math.PI, false);
+                context.fillStyle = 'red';
+                context.fill();
+                context.closePath();
+                saveCanvasState();
+                ok = true;
+                document.getElementById("searchMappoint").value = "";
+                return;
+            }
+            else {
+            }
+        });
+    }
+    if (ok == false) {
+        alert("Counldn't find Map point id");
+    } else {
+        canvas.setAttribute("onclick", "undo(2)");
+    }
 }
