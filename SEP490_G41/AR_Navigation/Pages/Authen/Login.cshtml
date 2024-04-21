@@ -91,11 +91,6 @@
                     });
                     console.log('User information:', response.username);
                     console.log('User information:', response.memberId);
-
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/hieunh
                     var user = { userid: response.memberId, fullname: response.fullname, username: response.username, role: response.roleId };
                     sessionStorage.setItem('user', JSON.stringify(user));
                     console.log(sessionStorage.getItem('user'));

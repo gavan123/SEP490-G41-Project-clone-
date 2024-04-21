@@ -43,11 +43,7 @@ namespace AR_NavigationAPI.Controllers
 
         // POST: api/mappoints
         [HttpPost]
-<<<<<<< HEAD
-        public ActionResult<MapPointAddDTO> AddMapPoint([FromForm] MapPointAddDTO mapPoint)
-=======
         public ActionResult<MapPointAddDTO> AddMapPoint([FromForm]MapPointAddDTO mapPoint)
->>>>>>> origin/hieunh
         {
             if (mapPoint == null)
                 return BadRequest("MapPoint cannot be null.");

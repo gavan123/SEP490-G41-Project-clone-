@@ -10,6 +10,7 @@ namespace DataAccess.DAO
     {
         private readonly finsContext _context;
 
+
         public MappointDAO(finsContext context)
         {
             _context = context;
@@ -92,9 +93,24 @@ namespace DataAccess.DAO
             if (mappointId <= 0)
                 throw new ArgumentException("Mappoint ID must be a positive integer.");
 
-            var mappoint = _context.Mappoints.Find(mappointId);
+            var mappoint = _context.Mappoints
+                .Include(m => m.Mappointices) // Include related Mappointex entries
+                .Include(m => m.Mappointroutes) // Include related Mappointroute entries
+                .SingleOrDefault(m => m.MapPointId == mappointId);
+
             if (mappoint != null)
             {
+                // Remove edges associated with the map point
+                var edgesToRemove = _context.Edges.Where(e => e.MapPointA == mappointId || e.MapPointB == mappointId);
+                _context.Edges.RemoveRange(edgesToRemove);
+
+                // Remove related Mappointex entries
+                _context.Mappointices.RemoveRange(mappoint.Mappointices);
+
+                // Remove related Mappointroute entries
+                _context.Mappointroutes.RemoveRange(mappoint.Mappointroutes);
+
+                // Remove the map point itself
                 _context.Mappoints.Remove(mappoint);
                 _context.SaveChanges();
             }
