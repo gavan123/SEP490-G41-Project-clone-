@@ -3116,24 +3116,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\hieud\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\ADMIN\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\FPT\\SEP\\sep490-g41-project\\SEP490_G41\\DataAccess\\DataAccess.csproj",
+      "projectUniqueName": "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\DataAccess\\DataAccess.csproj",
       "projectName": "DataAccess",
-      "projectPath": "D:\\FPT\\SEP\\sep490-g41-project\\SEP490_G41\\DataAccess\\DataAccess.csproj",
-      "packagesPath": "C:\\Users\\hieud\\.nuget\\packages\\",
-      "outputPath": "D:\\FPT\\SEP\\sep490-g41-project\\SEP490_G41\\DataAccess\\obj\\",
+      "projectPath": "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\DataAccess\\DataAccess.csproj",
+      "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
+      "outputPath": "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\DataAccess\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\hieud\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -3147,8 +3142,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "D:\\FPT\\SEP\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj": {
-              "projectPath": "D:\\FPT\\SEP\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj"
+            "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj": {
+              "projectPath": "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj"
             }
           }
         }
@@ -3192,7 +3187,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.302\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101\\RuntimeIdentifierGraph.json"
       }
     }
   }

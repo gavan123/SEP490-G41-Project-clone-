@@ -29,7 +29,7 @@ function getMapPointsByMapId(mapId, buildingid, floorid) {
                          <td>
                        <div class="d-flex align-items-center">
                          <div class="avatar avatar-image avatar-sm m-r-10">
-                               <img src="${mappoint.image}" alt="">
+                               <img src="/Images/${mappoint.image}" alt="">
                                  </div>
                              <h6 class="m-b-0">${mappoint.mappointName}</h6>
                                  </div>
@@ -37,9 +37,6 @@ function getMapPointsByMapId(mapId, buildingid, floorid) {
                       <td>${mappoint.locationWeb}</td>
                           <td>${mappoint.locationApp}</td>
                           <td class="text-right">
-                           <button class="btn btn-icon btn-warning btn-hover btn-sm btn-rounded pull-right">
-                          <i class="anticon anticon-edit"></i>
-                            </button>
                            <button class="btn btn-icon btn-danger btn-hover btn-sm btn-rounded mappoint-delete" data-id=${mappoint.mapPointId}>
                              <i class="anticon anticon-delete"></i>
                           </button>
@@ -160,12 +157,9 @@ function deleteMapPoint(mapPointId) {
 
 }
 
-//onclick Save button add form
-function attachEventToSaveButton() {
-    addMapPoint(mapidTake, buildingidTake, flooridTake);
-}
+
 //add mappoint
-function addMapPoint(mapidTake, buildingidTake, flooridTake) {
+function addMapPoint() {
     var mappointName = $('#mapPointName').val();
     var xCoordinate = $('#mapPointX').val();
     var yCoordinate = $('#mapPointY').val();
@@ -257,14 +251,16 @@ const context = canvas.getContext("2d");
 
 var allEdges = [];
 
-//ratio of image's width, length vs image's pixels
-//var ratio = 8.682926829;
-//var root = { id: "root", x: 628, y: 160 };
-//var radius = 5;
 
-var ratio = 17.696;
-var root = { id: "root", x: 618, y: 145 };
-var radius = 5 * Math.sqrt(ratio) / 2;
+
+//ratio of image's width, length vs image's pixels
+var ratio = 8.682926829;
+var root = { id: "root", x: 628, y: 160 };
+var radius = 5;
+
+//var ratio = 17.696;
+//var root = { id: "root", x: 1290, y: 6 };
+//var radius = 5 * Math.sqrt(ratio) / 2;
 
 //Start and end point of 1 edge
 var beginPoint = { id: "", x: 0, y: 0 };
@@ -286,6 +282,253 @@ function pixelLocation(event) {
 function databaseLocation(event) {
     document.getElementById("demo").innerHTML = document.getElementById("demo").innerHTML +
         " <br>  LocationApp: (" + (event.offsetX - root.x) / ratio + ", " + -(event.offsetY - root.y) / ratio + ")";
+}
+
+function setEditmappoint() {
+    console.log("SETTING EDIT MAPPOINT");
+    canvas.setAttribute("onclick", "ChooseEditMappoint(event), count(event)");
+}
+function ChooseEditMappoint(event) {
+    // if it is the 2nd click then it is beginPoint
+    if (numberOfClicks == 0) {
+        beginPoint.x = event.offsetX;
+        beginPoint.y = event.offsetY;
+        if (inButtonRange(mappointList, beginPoint) == false) {
+            numberOfClicks = -1;
+            nearbyPoint = { id: "", x: 0, y: 0 };
+            beginPoint = { id: "", x: 0, y: 0 };
+            return;
+        }
+        else {
+            //khi xac nhan bam dung vao pham vi map point
+            inButtonRange(mappointList, beginPoint);
+            beginPoint = nearbyPoint;
+            var mappointInfo = "Mappoint hiện tại: " + beginPoint.name + "\n";
+            mappointInfo += "Tọa độ: (" + (event.offsetX - root.x) / ratio + ", " + (event.offsetY - root.y) / ratio + ")\n";
+            document.getElementById("editInfo").innerText = mappointInfo;
+            //ve hinh tron mau xanh 
+            context.beginPath();
+            context.arc(beginPoint.x * ratio + root.x, -beginPoint.y * ratio + root.y, radius, 0, 2 * Math.PI, false);
+            context.closePath();
+            context.fillStyle = 'green';
+            context.fill();
+            nearbyPoint = { id: "", x: 0, y: 0 };
+
+        }
+    }
+    //3r click will be endPoint
+    if (numberOfClicks == 1) {
+        endPoint.x = event.offsetX;
+        endPoint.y = event.offsetY;
+        //ve hinh tron mau do
+        context.beginPath();
+        context.arc(beginPoint.x * ratio + root.x, -beginPoint.y * ratio + root.y, radius, 0, 2 * Math.PI, false);
+        context.closePath();
+        context.fillStyle = 'orange';
+        context.fill();
+        // Check if endPoint is within map point range
+        if (inButtonRange(mappointList, endPoint)) {
+            // If endPoint is within map point range, reset variables and return
+            numberOfClicks = -1;
+            nearbyPoint = { id: "", x: 0, y: 0 };
+            beginPoint = nearbyPoint;
+            endPoint = nearbyPoint;
+            return;
+        }
+        else {
+            // Draw red circle at endPoint
+            context.beginPath();
+            context.arc(endPoint.x, endPoint.y, radius, 0, 2 * Math.PI, false);
+            context.closePath();
+            context.fillStyle = 'red';
+            context.fill();
+
+            // Draw line between beginPoint and endPoint
+            context.lineWidth = 1;
+            context.beginPath();
+            let bX = beginPoint.x * ratio + root.x;
+            let bY = -beginPoint.y * ratio + root.y;
+
+            context.moveTo(bX, bY);
+            context.lineTo(endPoint.x, endPoint.y);
+            context.stroke();
+
+            showInEditForm(beginPoint, endPoint);
+
+            // Reset variables for next execution
+            numberOfClicks = -1;
+            beginPoint = { id: "", x: 0, y: 0 };
+            endPoint = { id: "", x: 0, y: 0 };
+            nearbyPoint = { id: "", x: 0, y: 0 };
+            canvas.setAttribute("onclick", "");
+        }
+    }
+}
+
+function showInEditForm(beginPoint, endPoint) {
+
+    if (endPoint) {
+        // Lấy giá trị x và y từ selectedPoint
+        let xCoordinate = ((endPoint.x - root.x) / ratio).toFixed(2);
+        let yCoordinate = (-(endPoint.y - root.y) / ratio).toFixed(2);
+
+        //do khi cho vào database bị ngược
+        var coordinatesString = '[' + yCoordinate + ',' + xCoordinate + ']';
+
+        var mappointName = findNameInMapPointList(beginPoint.id, mappointList);
+        var mappointId = findIdInMapPointList(beginPoint.id, mappointList);
+        var mappointData = findCoordinatesById(mappointId, mappointList)
+
+        $('#update-mapPointId').val(mappointId);
+        $('#update-mapPointName').val(mappointName);
+        $('#update-mapPointOldLocation').val('[' + mappointData.x + ',' + mappointData.y + ']');
+        $('#update-mapPointXCoordinate').val(xCoordinate);
+        $('#update-mapPointYCoordinate').val(yCoordinate);
+    } else {
+        // Nếu selectedPoint không có giá trị, thông báo lỗi
+        console.error("Selected point is undefined or null.");
+    }
+    $('#update-MapPoint-modal').modal('show');
+}
+
+function editMapPoint() {
+    var mappointId = $('#update-mapPointId').val();
+    var mappointName = $('#update-mapPointName').val();
+    var xCoordinate = $('#update-mapPointXCoordinate').val();
+    var yCoordinate = $('#update-mapPointYCoordinate').val();
+    var newLocation = $('#update-mapPointNewLocation').val();
+    var imageInput = $('#update-mapPointImage');
+
+    var coordinatesString = '[' + yCoordinate + ',' + xCoordinate + ']';
+    var formData = new FormData();
+    // Thêm các trường dữ liệu vào formData
+    formData.append('MapPointId', mappointId);
+    formData.append('MappointName', mappointName);
+    formData.append('LocationWeb', coordinatesString);
+    formData.append('LocationApp', coordinatesString);
+    formData.append('LocationGps', '[0,0]');
+    formData.append('FloorId', flooridTake);
+    formData.append('BuildingId', buildingidTake);
+    formData.append('MapId', mapidTake);
+    if (imageInput[0].files.length > 0) {
+        var imageFile = imageInput[0].files[0];
+        formData.append('Image', imageFile);
+    }
+
+    $.ajax({
+        url: 'https://localhost:7186/api/mappoints/' + mappointId,
+        type: 'PUT',
+        processData: false,
+        contentType: false,
+        data: formData,
+        success: function (response) {
+            console.log('Map point update successfully:', response);
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: 'Map point update successfully!'
+            }).then(function () {
+                location.reload();
+            });
+        },
+        error: function (xhr, status, error) {
+            console.error('Error adding map point:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Failed to add map point. Please try again later.'
+            });
+        }
+    });
+}
+function setDeleteMappoint() {
+    console.log("SETTING Delete MAPPOINT");
+    canvas.setAttribute("onclick", "ChooseDeleteMappoint(event), count(event)");
+}
+function ChooseDeleteMappoint(event) {
+    // if it is the 2nd click then it is beginPoint
+    if (numberOfClicks == 0) {
+        beginPoint.x = event.offsetX;
+        beginPoint.y = event.offsetY;
+        if (inButtonRange(mappointList, beginPoint) == false) {
+            numberOfClicks = -1;
+            nearbyPoint = { id: "", x: 0, y: 0 };
+            beginPoint = { id: "", x: 0, y: 0 };
+            return;
+        }
+        else {
+            //khi xac nhan bam dung vao pham vi map point
+            inButtonRange(mappointList, beginPoint);
+            beginPoint = nearbyPoint;
+            //ve hinh tron mau xanh 
+            context.beginPath();
+            context.arc(beginPoint.x * ratio + root.x, -beginPoint.y * ratio + root.y, radius, 0, 2 * Math.PI, false);
+            context.closePath();
+            context.fillStyle = 'green';
+            context.fill();
+            nearbyPoint = { id: "", x: 0, y: 0 };
+
+
+        }
+        var mappointID = beginPoint.id;
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'You are about to delete this map point. This action cannot be undone.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel!',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deleteMapPoint(mappointID);
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                Swal.fire('Cancelled', 'Your map point is safe :)', 'info');
+            }
+        });
+
+        context.beginPath();
+        context.arc(beginPoint.x * ratio + root.x, -beginPoint.y * ratio + root.y, radius, 0, 2 * Math.PI, false);
+        context.closePath();
+        context.fillStyle = 'orange';
+        context.fill();
+
+        //reset
+        numberOfClicks = -1;
+        beginPoint = { id: "", x: 0, y: 0 };
+        nearbyPoint = { id: "", x: 0, y: 0 };
+        canvas.setAttribute("onclick", "");
+    }
+
+}
+
+//tìm dc id trong mappoint list đó
+function findIdInMapPointList(id, mappointList) {
+    for (var i = 0; i < mappointList.length; i++) {
+        if (mappointList[i].id === id) {
+            return mappointList[i].id; // Trả về id nếu được tìm thấy trong mảng
+        }
+    }
+    return null; // Trả về null nếu id không tồn tại trong mảng
+}
+
+//tìm dc name trong mappoint list đó
+function findNameInMapPointList(id, mappointList) {
+    for (var i = 0; i < mappointList.length; i++) {
+        if (mappointList[i].id === id) {
+            return mappointList[i].name; // Trả về name nếu được tìm thấy trong mảng
+        }
+    }
+    return null; // Trả về null nếu name không tồn tại trong mảng
+}
+
+function findCoordinatesById(id, mappointList) {
+    for (var i = 0; i < mappointList.length; i++) {
+        if (mappointList[i].id === id) {
+            return { x: mappointList[i].x, y: mappointList[i].y }; // Trả về tọa độ nếu id được tìm thấy trong mảng
+        }
+    }
+    return null; // Trả về null nếu không tìm thấy id trong mảng
 }
 
 function setEditmappoint() {

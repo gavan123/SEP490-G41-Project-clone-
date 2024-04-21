@@ -200,13 +200,14 @@ namespace DataAccess.IRepository.Repository
 
             try
             {
+
                 // Get the existing Mappoint entity
                 var existingMapPoint = _mappointDAO.GetMappointById(mapPoint.MapPointId);
                 if (existingMapPoint == null)
                 {
                     throw new Exception($"MapPoint with ID {mapPoint.MapPointId} not found.");
                 }
-
+                string uniqueFileName = mapPoint.Image.FileName;
                 // Update the properties of the existing entity
                 string[] coordinates = mapPoint.LocationWeb.Trim('[', ']').Split(',');
                 double latitude = double.Parse(coordinates[0].Trim());
@@ -226,7 +227,7 @@ namespace DataAccess.IRepository.Repository
                 existingMapPoint.MapPointName = mapPoint.MappointName;
                 existingMapPoint.FloorId = mapPoint.FloorId;
                 existingMapPoint.BuildingId = mapPoint.BuildingId;
-                existingMapPoint.Image = mapPoint.Image;
+                existingMapPoint.Image = uniqueFileName;
                 existingMapPoint.MapId = mapPoint.MapId;
 
                 // Update the entity in the database

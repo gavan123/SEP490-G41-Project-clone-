@@ -16,8 +16,9 @@ namespace AR_Navigation.Pages.Buildings
             _webHostEnvironment = webHostEnvironment;
             _logger = logger;
         }
-        [BindProperty]
-        public int FloorId { get; set; }
+        public int Id { get; set; }
+
+      
         [BindProperty]
         public IFormFile ImageFile { get; set; }
         public async Task<IActionResult> OnPostAddOrEditMapAsync()
@@ -40,14 +41,30 @@ namespace AR_Navigation.Pages.Buildings
             _logger.LogInformation($"Images directory: {imagesDirectory}");
 
 
-            if (FloorId != 0)
+
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostEditMappointMapAsync()
+        {
+
+            string imagesDirectory = Path.Combine(_webHostEnvironment.WebRootPath, "Images");
+
+            string uniqueFileName = null;
+            if (ImageFile != null && ImageFile.Length > 0)
             {
-                return RedirectToPage("/Building/detail/" + FloorId);
+                uniqueFileName = ImageFile.FileName;
+
+                string filePath = Path.Combine(imagesDirectory, uniqueFileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await ImageFile.CopyToAsync(stream);
+                }
             }
-            else
-            {
-                return Page();
-            }
+            _logger.LogInformation($"Images directory: {imagesDirectory}");
+
+            return Page();
         }
     }
 }
