@@ -393,7 +393,7 @@
             formData.append('FloorId', floorId);
             if (imageInput[0].files.length > 0) {
                 var imageFile = imageInput[0].files[0];
-                formData.append('Image2D', imageFile);
+                formData.append('MapImage2D', imageFile);
             }
             $.ajax({
                 url: 'https://localhost:7186/api/maps',
@@ -440,7 +440,7 @@
             formData.append('MapId', mapId);
             if (imageInput[0].files.length > 0) {
                 var imageFile = imageInput[0].files[0];
-                formData.append('Image2D', imageFile);
+                formData.append('MapImage2D', imageFile);
             }
 
             $.ajax({
