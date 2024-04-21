@@ -8,6 +8,7 @@ namespace DataAccess.IRepository
     {
         MapPointDTO GetMapPointById(int mapPointId);
         List<MapPointDTO> GetAllMapPoints();
+        List<MapPointDTO> GetAllMapPointsPath(int inputPosition, int inputDestination);
         void AddMapPoint(MapPointAddDTO mapPoint);
         void UpdateMapPoint(MapPointUpdateDTO mapPoint);
         void DeleteMapPoint(int mapPointId);
