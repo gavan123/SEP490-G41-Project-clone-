@@ -39,6 +39,5 @@ public class MapPointUpdateDTO
     public int FloorId { get; set; }
     public int BuildingId { get; set; }
     public IFormFile Image { get; set; } = null!;
-    public bool Destination { get; set; }
 
 }

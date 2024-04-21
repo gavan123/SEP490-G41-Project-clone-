@@ -49,5 +49,35 @@ namespace AR_Navigation.Pages.Buildings
                 return Page();
             }
         }
+
+        public async Task<IActionResult> OnPostEditMappointMapAsync()
+        {
+
+            string imagesDirectory = Path.Combine(_webHostEnvironment.WebRootPath, "Images");
+
+            string uniqueFileName = null;
+            if (ImageFile != null && ImageFile.Length > 0)
+            {
+                uniqueFileName = ImageFile.FileName;
+
+                string filePath = Path.Combine(imagesDirectory, uniqueFileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await ImageFile.CopyToAsync(stream);
+                }
+            }
+            _logger.LogInformation($"Images directory: {imagesDirectory}");
+
+
+            if (FloorId != 0)
+            {
+                return RedirectToPage("/Building/detail/" + FloorId);
+            }
+            else
+            {
+                return Page();
+            }
+        }
     }
 }

@@ -57,7 +57,7 @@ namespace AR_NavigationAPI.Controllers
 
         // PUT: api/mappoints/5
         [HttpPut("{id}")]
-        public IActionResult UpdateMapPointById(int id, MapPointUpdateDTO mapPoint)
+        public IActionResult UpdateMapPointById(int id, [FromForm] MapPointUpdateDTO mapPoint)
         {
             if (id <= 0)
                 return BadRequest("MapPoint ID must be a positive integer.");
