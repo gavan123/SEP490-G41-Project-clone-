@@ -26,6 +26,7 @@ namespace BusinessObject.DTO
         public string MapName { get; set; } = null!;
         public IFormFile MapImage2D { get; set; } = null!;
         public int FloorId { get; set; }
+        public int MemberId { get; set; } 
     }
 
     public class MapUpdateDTO
