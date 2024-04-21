@@ -88,6 +88,7 @@ namespace DataAccess.DAO
         }
 
         // Xóa mappoint bằng Id
+        // Xóa mappoint bằng Id
         public void DeleteMappoint(int mappointId)
         {
             if (mappointId <= 0)
@@ -119,6 +120,7 @@ namespace DataAccess.DAO
                 throw new ArgumentException($"Mappoint with ID {mappointId} does not exist.");
             }
         }
+
 
         // Lấy tất cả các mappoint
         public List<Mappoint> GetAllMappoints()
