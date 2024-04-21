@@ -4,23 +4,26 @@
     Layout = "_AdminLayout";
 }
 <style>
-    .selected-image-container {
-        width: 1200px;
-        height: 400px;
-        border: 2px solid #ced4da;
-        border-radius: 10px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-top: 10px;
+    canvas {
+        width: 100%;
+        background-position: center;
+        background-size: 100%;
+        background-clip: border-box;
+        background-repeat: no-repeat;
     }
 
-        .selected-image-container img {
-            width: 50%;
-            height: 250px;
-            display: block;
-            margin-bottom: 10px;
-        }
+    .btn-with-border {
+        border: 1px solid #000;
+    }
+
+
+    #searchMappoint {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+        width: 170px;
+    }
+
 </style>
 <div class="page-header no-gutters">
     <h1>Map Detail</h1>
@@ -40,10 +43,39 @@
     </div>
 
     <!-- Map Image -->
-    <div class="selected-image-container" id="map-images-container">
-        <!-- Dynamically populated map images will go here -->
+    <div class="row mb-1">
+        <div class="col-md-4">
+            <input type="text" style="width:110%" class="form-control" id="searchMappoint" placeholder="Search by Name">
+        </div>
+        <div class="col-md-2">
+            <button type="button" class="btn btn-light btn-with-border btn-block" onclick="search()">Search</button>
+        </div>
     </div>
+    <button type="button" id="setRootButton" class="btn btn-light btn-with-border" onclick="setRoot()">Set Root</button>
+    <button type="button" id="getMPButton" class="btn btn-light btn-with-border">Get Mappoints</button>
+    <button type="button" id="connectEdgeButton" class="btn btn-light btn-with-border">Connect Edge</button>
+    <button type="button" id="undoButton" class="btn btn-light btn-with-border" onclick="undo()">Undo</button>
+    <button type="button" id="newMappointButton" class="btn btn-light btn-with-border" onclick="newMappoint()">Choose Mappoint</button>
+
+    @* trường cho canvas *@
+    <div class="selected-image-container" id="map-images-container">
+        <canvas id="canvas_data" style="border: 1px, black;" width="1065%"
+                onclick="">
+        </canvas>
+    </div>
+    @* Hiện tọa dộ trên ảnh và database *@
+    <p id="demo"></p>
+    <p id="demo1"></p>
+    <p id="demo2"></p>
+    <p id="editInfo"></p>
+
+    <button id="clear-canvas-btn" class="btn btn-light btn-with-border">Delete draw</button>
+    <button id="add-mappoint-btn" class="btn btn-light btn-with-border" onclick="showSelectedPointInAddForm()">Add</button>
+    <button type="button" class="btn btn-light btn-with-border" onclick="setEditmappoint()">Edit</button>
+    <button type="button" class="btn btn-light btn-with-border" onclick="setDeleteMappoint()">Delete</button>
 </div>
+
+
 <script>
     $(document).ready(function () {
         // Lấy mapId từ URL
@@ -57,8 +89,11 @@
                 // Cập nhật tên bản đồ
                 $('#map-name').text(map.mapName);
                 $('#floor-name').text(map.floorName);
-                var mapImages = `<img src="/Images/${map.mapImage2D}" alt="Map Image">`;
-                $('#map-images-container').html(mapImages);
+                var imageSrc = `/Images/${map.mapImage2D}`; 
+                var canvas = document.getElementById('canvas_data');
+                canvas.style.backgroundImage = `url(${imageSrc})`;
+
+                getMapPointsByMapId(mapId, map.buildingId, map.floorId)
             },
             error: function (xhr, status, error) {
                 console.error(xhr.responseText);
@@ -75,5 +110,21 @@
             window.open(imageUrl, '_blank');
         });
       
+    });
+</script>
+<script src="/js/MappointDraw.js"></script>
+<script>
+    document.getElementById('getMPButton').addEventListener('click', function () {
+        // Gọi hàm renderPoints từ tệp JavaScript MappointDraw.js và truyền vào mappointList
+        renderPoints(mappointList);
+    });
+    document.getElementById('connectEdgeButton').addEventListener('click', function () {
+        setEdge();
+    });
+    // Delete draw line
+    document.getElementById("clear-canvas-btn").addEventListener("click", function () {
+        var canvas = document.getElementById('canvas_data');
+        var context = canvas.getContext('2d');
+        context.clearRect(0, 0, canvas.width, canvas.height); // Xóa tất cả các đường vẽ trên canvas
     });
 </script>

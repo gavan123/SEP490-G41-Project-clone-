@@ -22,7 +22,7 @@ namespace DataAccess.IRepository.Repository
 
 
 
-        public MapRepository(MapDAO mapDAO, IMapper mapper, FloorDAO floorDAO, BuildingDAO buildingDAO, MemberDAO memberDAO,MapManageDAO mapManageDAO)
+        public MapRepository(MapDAO mapDAO, IMapper mapper, FloorDAO floorDAO, BuildingDAO buildingDAO, MemberDAO memberDAO, MapManageDAO mapManageDAO)
         {
             _mapDAO = mapDAO;
             _mapper = mapper;
