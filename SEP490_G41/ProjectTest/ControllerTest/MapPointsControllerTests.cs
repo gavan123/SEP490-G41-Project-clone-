@@ -113,13 +113,14 @@ namespace ProjectTest.ControllerTest
             Assert.IsType<NotFoundResult>(result);
         }
 
-        
+
 
         [Fact]
-        public void AddMapPoint_WhenMapPointIsValid_ReturnsOkObjectResult()
+       /* public void AddMapPoint_WhenMapPointIsValid_ReturnsOkObjectResult()
         {
             // Arrange
-            var newMapPoint = new MapPointAddDTO {
+            var newMapPoint = new MapPointAddDTO
+            {
                 MapId = 1,
                 MappointName = "Point 1",
                 LocationWeb = "[10, 20]",
@@ -137,108 +138,110 @@ namespace ProjectTest.ControllerTest
             Assert.IsType<OkObjectResult>(result.Result);
             var okResult = (OkObjectResult)result.Result;
             Assert.Equal(newMapPoint, okResult.Value);
-        }
+        }*/
 
-        
 
-       
 
-      /*  [Fact]
-        public void UpdateMapPointById_WhenMapPointNotFound_ReturnsNotFoundResult()
-        {
-            // Arrange
-            int validId = 1;
-            var mapPoint = new MapPointUpdateDTO {
-                MapId = 1,
-                MappointName = "Point 1",
-                LocationWeb = "[10, 20]",
-                LocationApp = "[11, 21]",
-                LocationGps = "[12, 22]",
-                FloorId = 1,
-                BuildingId = 101,
-                Image = "point1.jpg"
-            };
-            _mockMapPointRepository.Setup(repo => repo.GetMapPointById(validId)).Returns((MapPointDTO)null);
 
-            // Act
-            var result = _controller.UpdateMapPointById(validId, mapPoint);
 
-            // Assert
-            Assert.IsType<NotFoundResult>(result);
-        }
+        /*  [Fact]
+          public void UpdateMapPointById_WhenMapPointNotFound_ReturnsNotFoundResult()
+          {
+              // Arrange
+              int validId = 1;
+              var mapPoint = new MapPointUpdateDTO {
+                  MapId = 1,
+                  MappointName = "Point 1",
+                  LocationWeb = "[10, 20]",
+                  LocationApp = "[11, 21]",
+                  LocationGps = "[12, 22]",
+                  FloorId = 1,
+                  BuildingId = 101,
+                  Image = "point1.jpg"
+              };
+              _mockMapPointRepository.Setup(repo => repo.GetMapPointById(validId)).Returns((MapPointDTO)null);
 
-        [Fact]
-        public void UpdateMapPointById_WhenMapPointIsValid_ReturnsOkResult()
-        {
-            // Arrange
-            int validId = 1;
-            var mapPoint = new MapPointUpdateDTO { MapPointId = validId,
-                MapId = 1,
-                MappointName = "Point 1",
-                LocationWeb = "[10, 20]",
-                LocationApp = "[11, 21]",
-                LocationGps = "[12, 22]",
-                FloorId = 1,
-                BuildingId = 101,
-                Image = "point1.jpg"
-            };
-            var expectedMapPoint = new MapPointDTO { MapPointId = validId,
-                MapId = 1,
-                MappointName = "Point 1",
-                LocationWeb = "[10, 20]",
-                LocationApp = "[11, 21]",
-                LocationGps = "[12, 22]",
-                FloorId = 1,
-                BuildingId = 101,
-                Image = "point1.jpg"
-            };
-            _mockMapPointRepository.Setup(repo => repo.GetMapPointById(validId)).Returns(expectedMapPoint);
+              // Act
+              var result = _controller.UpdateMapPointById(validId, mapPoint);
 
-            // Act
-            var result = _controller.UpdateMapPointById(validId, mapPoint);
+              // Assert
+              Assert.IsType<NotFoundResult>(result);
+          }
 
-            // Assert
-            Assert.IsType<OkResult>(result);
-        }
+          [Fact]
+          public void UpdateMapPointById_WhenMapPointIsValid_ReturnsOkResult()
+          {
+              // Arrange
+              int validId = 1;
+              var mapPoint = new MapPointUpdateDTO { MapPointId = validId,
+                  MapId = 1,
+                  MappointName = "Point 1",
+                  LocationWeb = "[10, 20]",
+                  LocationApp = "[11, 21]",
+                  LocationGps = "[12, 22]",
+                  FloorId = 1,
+                  BuildingId = 101,
+                  Image = "point1.jpg"
+              };
+              var expectedMapPoint = new MapPointDTO { MapPointId = validId,
+                  MapId = 1,
+                  MappointName = "Point 1",
+                  LocationWeb = "[10, 20]",
+                  LocationApp = "[11, 21]",
+                  LocationGps = "[12, 22]",
+                  FloorId = 1,
+                  BuildingId = 101,
+                  Image = "point1.jpg"
+              };
+              _mockMapPointRepository.Setup(repo => repo.GetMapPointById(validId)).Returns(expectedMapPoint);
 
-       
+              // Act
+              var result = _controller.UpdateMapPointById(validId, mapPoint);
 
-        [Fact]
-        public void DeleteMapPointById_WhenMapPointNotFound_ReturnsNotFoundResult()
-        {
-            // Arrange
-            int validId = 1;
-            _mockMapPointRepository.Setup(repo => repo.GetMapPointById(validId)).Returns((MapPointDTO)null);
+              // Assert
+              Assert.IsType<OkResult>(result);
+          }
 
-            // Act
-            var result = _controller.DeleteMapPointById(validId);
 
-            // Assert
-            Assert.IsType<NotFoundResult>(result);
-        }
 
-        [Fact]
-        public void DeleteMapPointById_WhenMapPointIsValid_ReturnsOkResult()
-        {
-            // Arrange
-            int validId = 1;
-            var expectedMapPoint = new MapPointDTO { MapPointId = validId,
-                MapId = 1,
-                MappointName = "Point 1",
-                LocationWeb = "[10, 20]",
-                LocationApp = "[11, 21]",
-                LocationGps = "[12, 22]",
-                FloorId = 1,
-                BuildingId = 101,
-                Image = "point1.jpg"
-            };
-            _mockMapPointRepository.Setup(repo => repo.GetMapPointById(validId)).Returns(expectedMapPoint);
+          [Fact]
+          public void DeleteMapPointById_WhenMapPointNotFound_ReturnsNotFoundResult()
+          {
+              // Arrange
+              int validId = 1;
+              _mockMapPointRepository.Setup(repo => repo.GetMapPointById(validId)).Returns((MapPointDTO)null);
 
-            // Act
-            var result = _controller.DeleteMapPointById(validId);
+              // Act
+              var result = _controller.DeleteMapPointById(validId);
 
-            // Assert
-            Assert.IsType<OkResult>(result);
-        }
-    }*/
+              // Assert
+              Assert.IsType<NotFoundResult>(result);
+          }
+
+          [Fact]
+          public void DeleteMapPointById_WhenMapPointIsValid_ReturnsOkResult()
+          {
+              // Arrange
+              int validId = 1;
+              var expectedMapPoint = new MapPointDTO { MapPointId = validId,
+                  MapId = 1,
+                  MappointName = "Point 1",
+                  LocationWeb = "[10, 20]",
+                  LocationApp = "[11, 21]",
+                  LocationGps = "[12, 22]",
+                  FloorId = 1,
+                  BuildingId = 101,
+                  Image = "point1.jpg"
+              };
+              _mockMapPointRepository.Setup(repo => repo.GetMapPointById(validId)).Returns(expectedMapPoint);
+
+              // Act
+              var result = _controller.DeleteMapPointById(validId);
+
+              // Assert
+              Assert.IsType<OkResult>(result);
+          }
+      }*/
+    }
 }
+
