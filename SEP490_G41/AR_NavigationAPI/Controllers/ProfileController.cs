@@ -1,6 +1,8 @@
 ﻿using BusinessObject.DTO;
+using BusinessObject.Validate;
 using DataAccess.IRepository;
 using DataAccess.IRepository.Repository;
+using K4os.Compression.LZ4.Internal;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Routing.Controllers;
 
@@ -11,6 +13,7 @@ namespace AR_NavigationAPI.Controllers
     public class ProfileController : ODataController
     {
         private readonly IProfileRepository _profileRepository;
+        Validate validate = new Validate();
         public ProfileController(IProfileRepository profileRepository)
         {
             _profileRepository = profileRepository;
@@ -42,5 +45,7 @@ namespace AR_NavigationAPI.Controllers
 
             return Ok();
         }
+   
+
     }
 }

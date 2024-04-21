@@ -1,4 +1,5 @@
-﻿using BusinessObject.Models;
+﻿using BusinessObject.DTO;
+using BusinessObject.Models;
 using DataAccess.DAO;
 using DataAccess.IRepository;
 using Microsoft.AspNetCore.Http;
@@ -39,9 +40,9 @@ namespace AR_NavigationAPI.Controllers
         }
 
         [HttpPut("ChangePassword/{id}")]
-        public IActionResult ChangePassword(int id, string oldpass, string newpass, string re_newpass)
+        public IActionResult ChangePassword(int id, ChangePasswordModel changePassword)
         {
-            var result = _memberRepository.ChangePassword(id, oldpass, newpass, re_newpass);
+            var result = _memberRepository.ChangePassword(id, changePassword);
             if (result.Equals("Success"))
             {
                 return Ok(result);

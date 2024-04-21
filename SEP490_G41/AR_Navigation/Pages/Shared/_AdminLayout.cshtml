@@ -73,7 +73,7 @@
                                             <img id="userImage2" src="/assets/images/avatars/thumb-3.jpg" alt="">
                                         </div>
                                         <div class="m-l-10">
-                                            <p class="m-b-0 text-dark font-weight-semibold">Nguyễn Văn Tuyên</p>                                       
+                                            <p id="user_name" class="m-b-0 text-dark font-weight-semibold">Nguyễn Văn Tuyên</p>                                       
                                         </div>
                                     </div>
                                 </div>
@@ -259,9 +259,9 @@
             var fullname = user.fullname; // Lấy tên người dùng từ sessionStorage
 
             // Thay đổi nội dung của phần tử HTML
-            var profileNameElement = document.querySelector('.pop-profile .font-weight-semibold');
-            if (profileNameElement) {
-                profileNameElement.innerText = fullname;
+            var profileName = document.getElementById('user_name');
+            if (profileName) {
+                profileName.innerText = fullname;
             } else {
                 console.log("Element with class 'font-weight-semibold' not found in '.pop-profile'");
             }

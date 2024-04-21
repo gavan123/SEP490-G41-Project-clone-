@@ -59,5 +59,6 @@ namespace DataAccess.IRepository.Repository
                 throw new Exception("Error occurred while updating member.", ex);
             }
         }
+       
     }
 }

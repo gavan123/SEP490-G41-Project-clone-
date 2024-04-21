@@ -47,4 +47,12 @@ namespace BusinessObject.DTO
         public IFormFile Avatar { get; set; } = null!;
 
     }
+    public class ChangePasswordModel
+    {
+        public int MemberId { get; set; }
+        public string OldPassword { get; set; }
+        public string NewPassword { get; set; }
+        public string ReNewPassword { get; set; }
+    }
+
 }

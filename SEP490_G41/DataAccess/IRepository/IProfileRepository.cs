@@ -12,5 +12,7 @@ namespace DataAccess.IRepository
         MemberDTO GetMemberById(int memberid);
         void UpdateProfile(MemberUpdateDTO profile);
 
+   
+
     }
 }

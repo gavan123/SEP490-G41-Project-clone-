@@ -17,6 +17,6 @@ namespace DataAccess.IRepository
         public List<MemberDTO> SearchMemberByDoB(DateTime date);
         /*public List<MemberDTO> SearchMemberByStatus(string status);*/
         public MemberDTO Login(string username, string password);
-        public string ChangePassword(int id, string oldpass, string newpass, string re_newpass);
+        public string ChangePassword(int id, ChangePasswordModel changePass);
     }
 }
