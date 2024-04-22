@@ -27,6 +27,10 @@ static IEdmModel GetEdmModel()
 }
 var builder = WebApplication.CreateBuilder(args);
 
+builder.WebHost.ConfigureKestrel(serverOptions =>
+{
+    serverOptions.ListenAnyIP(7186);
+});
 // Add services to the container.
 
 builder.Services.AddControllers().AddOData(option => option.Select()
