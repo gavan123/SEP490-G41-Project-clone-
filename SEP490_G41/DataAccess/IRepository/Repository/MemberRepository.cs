@@ -46,11 +46,11 @@ namespace DataAccess.IRepository.Repository
                 throw new Exception("Can't add new member");
             }
         }
-        public string ChangePassword(int id, string oldpass, string newpass, string re_newpass)
+        public string ChangePassword(int id, ChangePasswordModel changePassword)
         {
             try
             {
-                var result = _memberDAO.ChangePassword(id, oldpass, newpass, re_newpass);
+                var result = _memberDAO.ChangePassword(id, changePassword);
                 return result;
             }catch (Exception ex)
             {

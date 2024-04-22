@@ -79,37 +79,49 @@
         $('#login-btn').click(function (event) {
             event.preventDefault(); // Ngăn chặn form submit mặc định
 
-            var username = $('#userName').val();
-            var password = $('#password').val();
+                var username = $('#userName').val();
+                var password = $('#password').val();
 
-            // Gửi yêu cầu đăng nhập qua API
-            $.ajax({
-                url: 'https://localhost:7186/api/members/Login?username=' + username + '&password=' + password,
-                type: 'GET',
-                success: function (response) {
-                    console.log('Login successful');
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Login Successful',
-                        text: 'You have successfully logged in!',
-                    });
-                    console.log('User information:', response.username);
-                    console.log('User information:', response.memberId);
-                    var user = { userid: response.memberId, fullname: response.fullname, username: response.username, role: response.roleId };
-                    sessionStorage.setItem('user', JSON.stringify(user));
-                    console.log(sessionStorage.getItem('user'));
+                // Gửi yêu cầu đăng nhập qua API
+                $.ajax({
+                    url: 'https://localhost:7186/api/members/Login?username=' + username + '&password=' + password,
+                    type: 'GET',
+                    success: function (response) {
+                        console.log('Login successful');
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Login Successful',
+                            text: 'You have successfully logged in!',
+                            timer: 3000, // Thời gian hiển thị thông báo (đơn vị: ms), ở đây là 3 giây
+                            showConfirmButton: false // Ẩn nút "Xác nhận" để tự động đóng thông báo
+                        });
+                        console.log('User information:', response.username);
 
-                    window.location.href = '/HomePage/Home';
-                },
-                error: function (xhr, status, error) {
-                    console.error('Error while logging in:', error);
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Login Failed',
-                        text: 'Invalid username or password. Please try again!',
-                    });
-                }
+                        var user = { userid: response.memberId, fullname: response.fullName, username: response.username, role: response.roleId, avatar: response.avatar };
+                        sessionStorage.setItem('user', JSON.stringify(user));
+                        console.log(sessionStorage.getItem('user'));
+
+                        window.location.href = '/Buildings/list';
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error while logging in:', error);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Login Failed',
+                            text: 'Invalid username or password. Please try again!',
+                        });
+                    }
+                });
             });
         });
-    });
-</script>
+        $(document).ready(function () {
+            $('#logout-link').click(function (e) {
+                e.preventDefault();
+                sessionStorage.removeItem('user');
+                window.location.href = '/HomePage/Home';
+            });
+        });
+
+    </script>
+</body>
+</html>

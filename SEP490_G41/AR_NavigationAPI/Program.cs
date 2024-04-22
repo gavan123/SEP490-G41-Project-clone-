@@ -62,6 +62,9 @@ builder.Services.AddScoped<EdgeDAO>();
 builder.Services.AddScoped<ProfileDAO>();
 builder.Services.AddScoped<PathShortest>();
 
+
+
+
 builder.Services.AddScoped<IBuildingRepository, BuildingRepository>();
 builder.Services.AddScoped<IFacilityRepository, FacilityRepository>();
 builder.Services.AddScoped<IMapRepository, MapRepository>();

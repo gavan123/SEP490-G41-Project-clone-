@@ -4,7 +4,10 @@
     Layout = "_AdminLayout";
 }
 <div class="container rounded bg-white mt-5 mb-5">
-    <h1 class="text-left">Profile</h1>
+    <h1 class="text-left" style="display: inline;margin-right:20px; border-bottom: 1px solid black;transition: color 0.3s;" onmouseover="this.style.color='blue'" onmouseout="this.style.color=''">Profile</h1>
+    <a href="/Profile/ChangePassword">
+    <h3 class="text-left" style="display: inline; transition: color 0.3s;" onmouseover="this.style.color='blue'" onmouseout="this.style.color=''">ChangePassword</h3>
+    </a>
     <div class="row" id="view-profile">
         <div class="col-md-3 border-right">
             <div class="d-flex flex-column align-items-center text-center p-3 py-5">
@@ -124,15 +127,20 @@
     $(document).ready(function () {
         //session
         var userJson = sessionStorage.getItem('user');
-        if (!userJson) {
+        if (userJson)
+        {
+            var user = JSON.parse(userJson);
+            var userid = user.userid;
+        }else
+        {
             window.location.href = '/Authen/Login';
             return;
         }
         // Gửi yêu cầu AJAX để lấy thông tin profile từ API
         $.ajax
             ({
-                url: 'https://localhost:7186/api/profiles/1',
-                //url: 'https://localhost:7186/api/profiles/' + $('#MemberId').val(), // Thay đổi số 1 thành memberId thực tế của bạn
+                //url: 'https://localhost:7186/api/profiles/1',
+                url: 'https://localhost:7186/api/profiles/' + userid, // Thay đổi số 1 thành memberId thực tế của bạn
                 type: 'GET',
                 success: function (data) {
                     // Hiển thị thông tin profile trên trang view profile
@@ -159,7 +167,7 @@
         $('.edit-profile').click(function () {
             // Lấy và hiển thị thông tin profile trong form chỉnh sửa
             $.ajax({
-                url: 'https://localhost:7186/api/profiles/1',
+                url: 'https://localhost:7186/api/profiles/' + userid,
                 type: 'GET',
                 success: function (data) {
                     $('#edit-profile-name').val(data.fullName);
@@ -191,7 +199,7 @@
             var imageInput = $('#edit-profile-image');
 
             var formData = new FormData();
-            formData.append('MemberId', 1);
+            formData.append('MemberId', userid);
             formData.append('FullName', newName);
             formData.append('Email', newEmail);
             formData.append('Phone', newMobile);
@@ -205,7 +213,7 @@
          
 
             $.ajax({
-                url: 'https://localhost:7186/api/profiles/1',
+                url: 'https://localhost:7186/api/profiles/' + userid,
                 type: 'PUT',
                 data: formData,
                 contentType: false,
