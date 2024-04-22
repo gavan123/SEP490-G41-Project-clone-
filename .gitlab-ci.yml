@@ -10,7 +10,7 @@ deploy:
     - docker images | grep 'finns-api-img' | grep -v 'latest' | awk '{print $3}' | xargs docker rmi || true
     - echo '--------------------------------------------DEPLOY-------------------------------'
     - docker stop finns-api-con || true
-    - docker run --rm -d --name finns-api-con -p 7186:7186 finns-api-img
+    - docker run --rm -d --name finns-api-con -p 7199:7199 finns-api-img
   only:
     - main
   tags:
