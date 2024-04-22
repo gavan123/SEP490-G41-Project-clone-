@@ -110,14 +110,14 @@
 //                var profileDAO = new ProfileDAO(context);
 //                var profileRepository = new ProfileRepository(profileDAO, mapper);
 
-<<<<<<< HEAD
+
 //                // Act & Assert
 //                Assert.Null(Record.Exception(() => profileRepository.ChangePassword(changePasswordDTO)));
 //            }
 //        }
 //    }
 //}
-=======
+
      /*   [Fact]
         public void ChangePassword_ValidPassword_NoExceptionThrown()
         {
@@ -141,6 +141,4 @@
                 Assert.Null(Record.Exception(() => profileRepository.ChangePassword(changePasswordDTO)));
             }
         }*/
-    }
-}
->>>>>>> main
+
