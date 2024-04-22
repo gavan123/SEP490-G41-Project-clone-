@@ -1,0 +1,100 @@
+﻿@page
+@model AR_Navigation.Pages.Accounts.ListsMemberModel
+@{
+    Layout = "_AdminLayout";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Member List</title>
+    <style>
+        /* Đặt kích thước cho container chứa ảnh */
+        .selected-image-container {
+            width: 200px;
+            height: 200px;
+            border: 2px solid #ced4da;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+            .selected-image-container img {
+                max-width: 100%;
+                max-height: 100%;
+                border-radius: 8px;
+            }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="card" id="list-view">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Full Name</th>
+                                <th>Phone</th>
+                                <th>Email</th>
+                                <th>Address</th>
+                                <th>Active</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="member-list">
+                            <!-- Table body will be populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <nav aria-label="Page navigation">
+        <ul class="pagination" id="pagination">
+            <!-- Pagination buttons will be created dynamically -->
+        </ul>
+    </nav>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Function to update the member list in the table body
+            function updateMemberList(members) {
+                var tbody = $('#member-list');
+                tbody.empty(); // Clear existing table body content
+                members.forEach(function (member) {
+                    var row = $('<tr>');
+                    row.append('<td>' + member.memberId + '</td>');
+                    row.append('<td>' + member.fullName + '</td>');
+                    row.append('<td>' + member.phone + '</td>');
+                    row.append('<td>' + member.email + '</td>');
+                    row.append('<td>' + member.address + '</td>');
+                    var statusBadge = '<div class="badge badge-' + (member.status === 'active' ? 'success' : 'danger') + ' badge-dot m-r-10"></div>';
+                    row.append('<td>' + statusBadge + member.status + '</td>');
+                    row.append('<td><button class="btn btn-danger">Details</button></td>');
+                    tbody.append(row);
+                });
+            }
+
+            // Get Member list from API
+            $.ajax({
+                url: 'https://localhost:7186/api/members',              
+                type: 'GET',
+                contentType: 'application/json',
+                success: function (members) {
+                    updateMemberList(members);
+                },
+                error: function (xhr, status, error) {
+                    console.log('Error loading member from API: ' + error);
+                    console.log('Status: ' + status);
+                    console.log('Response: ' + xhr.responseText);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
