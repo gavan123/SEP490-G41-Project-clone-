@@ -252,7 +252,7 @@
 
         //Get data builind Detail
         $.ajax({
-            url: `https://localhost:7186/api/buildings/${buildingId}`,
+            url: `https://finnsapi.developvn.click/api/buildings/${buildingId}`,
             type: 'GET',
             success: function (building) {
                 // Cập nhật tên tòa nhà
@@ -260,7 +260,7 @@
 
                 // Gửi AJAX request để lấy thông tin về các tầng của tòa nhà
                 $.ajax({
-                    url: `https://localhost:7186/api/floors?$filter=buildingId eq ${buildingId}`,
+                    url: `https://finnsapi.developvn.click/api/floors?$filter=buildingId eq ${buildingId}`,
                     type: 'GET',
                     success: function (floors) {
                         // Tạo danh sách các tầng
@@ -316,11 +316,11 @@
         //update map image by floor
         function updateMapImage(floorId) {
             $.ajax({
-                url: `https://localhost:7186/api/maps?$filter=floorId eq ${floorId}`,
+                url: `https://finnsapi.developvn.click/api/maps?$filter=floorId eq ${floorId}`,
                 type: 'GET',
                 success: function (maps) {
                     $.ajax({
-                        url: `https://localhost:7186/api/floors/${floorId}`,
+                        url: `https://finnsapi.developvn.click/api/floors/${floorId}`,
                         type: 'GET',
                         dataType: 'json',
                         success: function (floorData) {
@@ -395,7 +395,7 @@
                 formData.append('MapImage2D', imageFile);
             }
             $.ajax({
-                url: 'https://localhost:7186/api/maps?memberId=' + user.userid,
+                url: 'https://finnsapi.developvn.click/api/maps?memberId=' + user.userid,
                 type: 'POST',
                 data: formData,
                 contentType: false,
@@ -443,7 +443,7 @@
             }
 
             $.ajax({
-                url: `https://localhost:7186/api/maps/${mapId}`,
+                url: `https://finnsapi.developvn.click/api/maps/${mapId}`,
                 type: 'PUT',
                 data: formData,
                 contentType: false,
@@ -478,7 +478,7 @@
         //show map info
         function showEdit(mapId) {
             $.ajax({
-                url: `https://localhost:7186/api/maps/${mapId}`,
+                url: `https://finnsapi.developvn.click/api/maps/${mapId}`,
                 type: 'GET',
                 success: function (map) {
                     $('#new-map-name').val(map.mapName);

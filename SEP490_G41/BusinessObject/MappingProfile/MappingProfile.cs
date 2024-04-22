@@ -53,6 +53,7 @@ namespace BusinessObject.MappingProfile
 
             CreateMap<Member, MemberDTO>().ReverseMap();
             CreateMap<Member, MemberUpdateDTO>().ReverseMap();
+            CreateMap<Member, ChangePasswordModel>().ReverseMap();
 
             CreateMap<Edge, EdgeDTO>()
                 .ForMember(dest => dest.MapPointAName, opt => opt.MapFrom(src => src.MapPointANavigation.MapPointName))

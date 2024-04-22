@@ -6,19 +6,17 @@ EXPOSE 80
 EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
-ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["AR_NavigationAPI/AR_NavigationAPI.csproj", "AR_NavigationAPI/"]
 COPY ["BusinessObject/BusinessObject.csproj", "BusinessObject/"]
 COPY ["DataAccess/DataAccess.csproj", "DataAccess/"]
-RUN dotnet restore "./AR_NavigationAPI/./AR_NavigationAPI.csproj"
+RUN dotnet restore "AR_NavigationAPI/AR_NavigationAPI.csproj"
 COPY . .
 WORKDIR "/src/AR_NavigationAPI"
-RUN dotnet build "./AR_NavigationAPI.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "AR_NavigationAPI.csproj" -c Release -o /app/build
 
 FROM build AS publish
-ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./AR_NavigationAPI.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "AR_NavigationAPI.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app

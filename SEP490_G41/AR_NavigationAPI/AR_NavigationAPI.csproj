@@ -4,7 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>bde46d26-0cfa-495a-9fe9-c2835b778f40</UserSecretsId>
+    <UserSecretsId>73548cc2-6ecf-43d7-b2f6-cb46a6e99d20</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
 

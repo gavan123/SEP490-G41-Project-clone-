@@ -177,7 +177,6 @@ namespace BusinessObject.Models
                 entity.ToTable("mapmanage");
 
                 entity.HasIndex(e => e.MemberId, "FK_Member_Map_idx");
-
                 entity.Property(e => e.CreateDate).HasColumnType("datetime");
 
                 entity.Property(e => e.UpdateDate).HasColumnType("datetime");

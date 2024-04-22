@@ -1,0 +1,17 @@
+stages:
+  - deploy
+
+deploy:
+  stage: deploy
+  script:
+    - echo '------------------------------------------BUILD IMAGES------------------------------------------'
+    - "cd SEP490_G41"
+    - docker build -t finns-api-img -f AR_NavigationAPI/Dockerfile .
+    - docker images | grep 'finns-api-img' | grep -v 'latest' | awk '{print $3}' | xargs docker rmi || true
+    - echo '--------------------------------------------DEPLOY-------------------------------'
+    - docker stop finns-api-con || true
+    - docker run --rm -d --name finns-api-con -p 7199:7199 finns-api-img
+  only:
+    - main
+  tags:
+    - linux
