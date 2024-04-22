@@ -53,6 +53,7 @@
     </div>
     <button type="button" id="setRootButton" class="btn btn-light btn-with-border" onclick="setRoot()">Set Root</button>
     <button type="button" id="getMPButton" class="btn btn-light btn-with-border">Get Mappoints</button>
+    <button type="button" id="getEDButton" class="btn btn-light btn-with-border">Get Edges</button>
     <button type="button" id="connectEdgeButton" class="btn btn-light btn-with-border">Connect Edge</button>
     <button type="button" id="undoButton" class="btn btn-light btn-with-border" onclick="undo()">Undo</button>
     <button type="button" id="newMappointButton" class="btn btn-light btn-with-border" onclick="newMappoint()">Choose Mappoint</button>
@@ -60,7 +61,7 @@
     @* trường cho canvas *@
     <div class="selected-image-container" id="map-images-container">
         <canvas id="canvas_data" style="border: 1px, black;" width="1065%"
-                onclick="">
+                onclick="databaseLocation(event)">
         </canvas>
     </div>
     @* Hiện tọa dộ trên ảnh và database *@
@@ -73,8 +74,40 @@
     <button id="add-mappoint-btn" class="btn btn-light btn-with-border" onclick="showSelectedPointInAddForm()">Add</button>
     <button type="button" class="btn btn-light btn-with-border" onclick="setEditmappoint()">Edit</button>
     <button type="button" class="btn btn-light btn-with-border" onclick="setDeleteMappoint()">Delete</button>
-</div>
 
+
+    
+</div>
+<div class="main-content">
+    <div class="card">
+        <div class="card-body">
+            <div class="row m-b-30">
+                <div class="col-lg-12 text-right">
+                    <button class="btn btn-danger" id="delete-selected-egde">
+                        <i class="anticon anticon-delete"></i>
+                        <span>Delete</span>
+                    </button>
+                </div>
+                <div class="table-responsive">
+                    <table id="data-table" class="table ">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>ID</th>
+                                <th>Mappoint A</th>
+                                <th>Mappoint B</th>
+                                <th>Distance</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="edge-list">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
     $(document).ready(function () {
@@ -109,7 +142,9 @@
             var imageUrl = $(this).attr('src');
             window.open(imageUrl, '_blank');
         });
-      
+        if (window.location.href.includes('Maps/Detail')) {
+            renderEgdes(edgeList, mappointList);
+        }
     });
 </script>
 <script src="/js/MappointDraw.js"></script>
@@ -117,6 +152,10 @@
     document.getElementById('getMPButton').addEventListener('click', function () {
         // Gọi hàm renderPoints từ tệp JavaScript MappointDraw.js và truyền vào mappointList
         renderPoints(mappointList);
+    });
+    document.getElementById('getEDButton').addEventListener('click', function () {
+        // Gọi hàm renderPoints từ tệp JavaScript MappointDraw.js và truyền vào mappointList
+        renderEgdes(edgeList, mappointList);
     });
     document.getElementById('connectEdgeButton').addEventListener('click', function () {
         setEdge();

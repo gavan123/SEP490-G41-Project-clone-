@@ -9,7 +9,7 @@ var buildingidTake;
 
 var edgeCount = 0;
 
-function getMapPointsByMapId(mapId, buildingid, floorid) {
+function getMapPointsByMapId2(mapId, buildingid, floorid) {
     $.ajax({
         url: `https://localhost:7186/api/mappoints?filter=mapId eq ${mapId}`,
         method: "get",
@@ -25,29 +25,6 @@ function getMapPointsByMapId(mapId, buildingid, floorid) {
                 x: locationAppParse.x,
                 y: locationAppParse.y
             });
-            const mappointrow = `
-                    <tr>
-                        <td><input type="checkbox" class="mappoint-checkbox"></td>
-                         <td>#${mappoint.mapPointId}</td>
-                         <td>
-                       <div class="d-flex align-items-center">
-                         <div class="avatar avatar-image avatar-sm m-r-10">
-                               <img src="/Images/${mappoint.image}" alt="">
-                                 </div>
-                             <h6 class="m-b-0">${mappoint.mappointName}</h6>
-                                 </div>
-                        </td>
-                      <td>${mappoint.locationWeb}</td>
-                          <td>${mappoint.locationApp}</td>
-                          <td class="text-right">
-                           <button class="btn btn-icon btn-danger btn-hover btn-sm btn-rounded mappoint-delete" data-id=${mappoint.mapPointId}>
-                             <i class="anticon anticon-delete"></i>
-                          </button>
-                        </td>
-                      </tr>
-                       `;
-            // thêm hàng mới vào tbody
-            $('#map-list').append(mappointrow);
         });
         renderPoints(mappointList);
         console.log("mappoint legh:", mappointList);
@@ -66,6 +43,7 @@ function getMapPointsByMapId(mapId, buildingid, floorid) {
         console.error("error occurred while fetching mappoint data:", error);
     });
 }
+window.getMapPointsByMapId2 = getMapPointsByMapId2;
 
 //lấy egde list
 async function getEdgesByMapPointAOrB(mapPointId) {
@@ -125,12 +103,12 @@ async function getEdgesByMapPointAOrB(mapPointId) {
             `;
             $('#edge-list').append(edgerow);
         });
-
+        renderEgdes(edgeList, mappointList);
         // Kiểm tra xem đã thu thập được tất cả các edges chưa
         if (edgeCount === response.length) {
             console.log("All edges:", edgeList);
         }
-       
+
     } catch (error) {
         console.error('Error while fetching edges:', error);
     }
@@ -154,7 +132,7 @@ $(document).on('click', '.edge-delete', function () {
             deleteEdge(edgeId);
         } else if (result.dismiss === Swal.DismissReason.cancel) {
             Swal.fire('Cancelled', 'Your egde is safe :)', 'info');
-           
+
         }
     });
 });
