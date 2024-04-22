@@ -3116,27 +3116,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\ADMIN\\.nuget\\packages\\": {}
+    "C:\\Users\\hieud\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-<<<<<<< HEAD
-      "projectUniqueName": "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\DataAccess\\DataAccess.csproj",
+      "projectUniqueName": "D:\\New folder (2)\\sep490-g41-project\\SEP490_G41\\DataAccess\\DataAccess.csproj",
       "projectName": "DataAccess",
-      "projectPath": "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\DataAccess\\DataAccess.csproj",
-      "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-      "outputPath": "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\DataAccess\\obj\\",
-=======
-      "projectUniqueName": "D:\\SEP490_G41_FinNS\\sep490-g41-project\\SEP490_G41\\DataAccess\\DataAccess.csproj",
-      "projectName": "DataAccess",
-      "projectPath": "D:\\SEP490_G41_FinNS\\sep490-g41-project\\SEP490_G41\\DataAccess\\DataAccess.csproj",
-      "packagesPath": "C:\\Users\\TGDD'\\.nuget\\packages\\",
-      "outputPath": "D:\\SEP490_G41_FinNS\\sep490-g41-project\\SEP490_G41\\DataAccess\\obj\\",
->>>>>>> origin/tuyen
+      "projectPath": "D:\\New folder (2)\\sep490-g41-project\\SEP490_G41\\DataAccess\\DataAccess.csproj",
+      "packagesPath": "C:\\Users\\hieud\\.nuget\\packages\\",
+      "outputPath": "D:\\New folder (2)\\sep490-g41-project\\SEP490_G41\\DataAccess\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\hieud\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -3150,13 +3147,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-<<<<<<< HEAD
-            "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj": {
-              "projectPath": "D:\\DO-AN\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj"
-=======
-            "D:\\SEP490_G41_FinNS\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj": {
-              "projectPath": "D:\\SEP490_G41_FinNS\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj"
->>>>>>> origin/tuyen
+            "D:\\New folder (2)\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj": {
+              "projectPath": "D:\\New folder (2)\\sep490-g41-project\\SEP490_G41\\BusinessObject\\BusinessObject.csproj"
             }
           }
         }
@@ -3200,7 +3192,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.403\\RuntimeIdentifierGraph.json"
       }
     }
   }
