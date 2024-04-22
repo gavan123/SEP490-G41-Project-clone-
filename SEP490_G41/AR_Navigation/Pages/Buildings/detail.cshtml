@@ -86,7 +86,7 @@
     @* trường cho canvas *@
     <div class="selected-image-container" id="map-images-container">
         <canvas id="canvas_data" style="border: 1px, black;" width="1065%"
-                onclick="">
+                onclick="databaseLocation(event)">
         </canvas>
     </div>
     @* Hiện tọa dộ trên ảnh và database *@
@@ -106,7 +106,7 @@
         <div class="card-body">
             <div class="row m-b-30">
                 <div class="col-lg-12 text-right">
-                    <button class="btn btn-danger" id="delete-selected">
+                    <button class="btn btn-danger" id="delete-selected-mappoint">
                         <i class="anticon anticon-delete"></i>
                         <span>Delete</span>
                     </button>

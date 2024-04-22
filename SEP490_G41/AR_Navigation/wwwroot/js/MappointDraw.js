@@ -1,11 +1,14 @@
 ﻿
 //get MapPoints ByMapId
 var mappointList = [];
-var mappointIDList = [];
+var edgeList = [];
 
 var mapidTake;
 var flooridTake;
 var buildingidTake;
+
+var edgeCount = 0;
+
 function getMapPointsByMapId(mapId, buildingid, floorid) {
     $.ajax({
         url: `https://localhost:7186/api/mappoints?filter=mapId eq ${mapId}`,
@@ -13,7 +16,7 @@ function getMapPointsByMapId(mapId, buildingid, floorid) {
     }).then(function (mappointdata) {
         $('#map-list').empty();
         mappointList = [];
-        mappointIDList = [];
+        edgeList = [];
         mappointdata.forEach(function (mappoint) {
             var locationAppParse = parseLocation(mappoint.locationApp);
             mappointList.push({
@@ -24,7 +27,7 @@ function getMapPointsByMapId(mapId, buildingid, floorid) {
             });
             const mappointrow = `
                     <tr>
-                        <td><input type="checkbox" class="checkbox"></td>
+                        <td><input type="checkbox" class="mappoint-checkbox"></td>
                          <td>#${mappoint.mapPointId}</td>
                          <td>
                        <div class="d-flex align-items-center">
@@ -48,7 +51,9 @@ function getMapPointsByMapId(mapId, buildingid, floorid) {
         });
         renderPoints(mappointList);
         console.log("mappoint legh:", mappointList);
-
+        mappointList.forEach(e =>
+            getEdgesByMapPointAOrB(e.id)
+        );
         mapidTake = mapId;
         buildingidTake = buildingid;
         flooridTake = floorid;
@@ -62,6 +67,96 @@ function getMapPointsByMapId(mapId, buildingid, floorid) {
     });
 }
 
+//lấy egde list
+async function getEdgesByMapPointAOrB(mapPointId) {
+    try {
+        const response = await $.ajax({
+            url: 'https://localhost:7186/api/edges?$filter=mapPointA eq ' + mapPointId + ' or mapPointB eq ' + mapPointId,
+            type: 'GET'
+        });
+
+        // Thêm kết quả vào mảng edgeList
+        var tempEdgeList = [];
+
+
+        // Lặp qua các edge trong response
+        response.forEach(function (edge) {
+            // Kiểm tra xem edge đã tồn tại trong edgeList chưa
+            var isEdgeExist = edgeList.some(function (existingEdge) {
+                return existingEdge.edgeId === edge.edgeId;
+            });
+
+            // Nếu edge chưa tồn tại trong edgeList, thêm vào edgeList và tempEdgeList
+            if (!isEdgeExist) {
+                edgeList.push(edge);
+                tempEdgeList.push(edge);
+            }
+        });
+
+        // Tăng biến đếm số lượng edges đã được thêm vào
+        edgeCount += tempEdgeList.length;
+        edgeList.sort(function (a, b) {
+            return a.edgeId - b.edgeId;
+        });
+        // Sắp xếp tempEdgeList
+        // Thêm các cạnh vào bảng
+        $('#edge-list').empty();
+        edgeList.forEach(function (edge) {
+            const edgerow = `
+                 <tr>
+                    <td><input type="checkbox" class="edge-checkbox"></td>
+                     <td>#${edge.edgeId}</td>
+                     <td>
+                         <h6 class="m-b-0">${edge.mapPointAName}</h6>
+                    </td>
+                  <td>
+                        <h6 class="m-b-0">${edge.mapPointBName}</h6>
+                  </td>
+                   <td>
+                        <h6 class="m-b-0">${edge.distance} m</h6>
+                  </td>
+                      <td></td>
+                      <td class="text-right">
+                       <button class="btn btn-icon btn-danger btn-hover btn-sm btn-rounded edge-delete" data-id=${edge.edgeId}>
+                         <i class="anticon anticon-delete"></i>
+                      </button>
+                    </td>
+                  </tr>
+            `;
+            $('#edge-list').append(edgerow);
+        });
+
+        // Kiểm tra xem đã thu thập được tất cả các edges chưa
+        if (edgeCount === response.length) {
+            console.log("All edges:", edgeList);
+        }
+    } catch (error) {
+        console.error('Error while fetching edges:', error);
+    }
+}
+
+//Delete egde
+$(document).on('click', '.edge-delete', function () {
+    var edgeId = $(this).data('id');
+
+    // Hiển thị cửa sổ xác nhận của SweetAlert
+    Swal.fire({
+        title: 'Are you sure?',
+        text: 'You are about to delete this egde. This action cannot be undone.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'No, cancel!',
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {
+            deleteEdge(edgeId);
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+            Swal.fire('Cancelled', 'Your egde is safe :)', 'info');
+           
+        }
+    });
+});
 
 //Delete mappoint
 $(document).on('click', '.mappoint-delete', function () {
@@ -81,16 +176,16 @@ $(document).on('click', '.mappoint-delete', function () {
             deleteMapPoint(mapPointId);
         } else if (result.dismiss === Swal.DismissReason.cancel) {
             Swal.fire('Cancelled', 'Your map point is safe :)', 'info');
+
         }
     });
 });
 
+
 //Delete mappoint select
-$(document).on('click', '#delete-selected', function () {
+$(document).on('click', '#delete-selected-mappoint', function () {
     var selectedMapPointIds = [];
-    // Lặp qua tất cả các checkbox
-    $('.checkbox').each(function () {
-        // Kiểm tra nếu checkbox được chọn
+    $('.mappoint-checkbox').each(function () {
         if ($(this).is(':checked')) {
             // Lấy mapPointId của checkbox được chọn và thêm vào mảng selectedMapPointIds
             var mapPointId = $(this).closest('tr').find('.mappoint-delete').data('id');
@@ -98,16 +193,13 @@ $(document).on('click', '#delete-selected', function () {
         }
     });
 
-    // Kiểm tra xem có mapPointId được chọn hay không
     if (selectedMapPointIds.length === 0) {
-        // Hiển thị thông báo cho người dùng nếu không có mappoint nào được chọn
         Swal.fire({
             icon: 'warning',
             title: 'No map point selected',
             text: 'Please select at least one map point to delete.'
         });
     } else {
-        // Xác nhận xóa từ người dùng
         Swal.fire({
             title: 'Are you sure?',
             text: 'You are about to delete selected map points. This action cannot be undone.',
@@ -124,12 +216,55 @@ $(document).on('click', '#delete-selected', function () {
                 });
             } else if (result.dismiss === Swal.DismissReason.cancel) {
                 Swal.fire('Cancelled', 'Your map points are safe :)', 'info');
+                location.reload();
             }
         });
     }
 });
 
-//function delete
+//Delete edge select
+$(document).on('click', '#delete-selected-egde', function () {
+    var selectedEdgeIds = [];
+    // Lặp qua tất cả các checkbox
+    $('.edge-checkbox').each(function () {
+        // Kiểm tra nếu checkbox được chọn
+        if ($(this).is(':checked')) {
+            var edgeId = $(this).closest('tr').find('.edge-delete').data('id');
+            selectedEdgeIds.push(edgeId);
+        }
+    });
+
+    if (selectedEdgeIds.length === 0) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'No edge selected',
+            text: 'Please select at least one edge to delete.'
+        });
+    } else {
+        // Xác nhận xóa từ người dùng
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'You are about to delete selected edges. This action cannot be undone.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete them!',
+            cancelButtonText: 'No, cancel!',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Gửi yêu cầu DELETE cho từng edge được chọn
+                selectedEdgeIds.forEach(function (edgeId) {
+                    deleteEdge(edgeId);
+                });
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                Swal.fire('Cancelled', 'Your edges are safe :)', 'info');
+                location.reload();
+            }
+        });
+    }
+});
+
+//function delete mappoint
 function deleteMapPoint(mapPointId) {
     $.ajax({
         url: `https://localhost:7186/api/mappoints/${mapPointId}`,
@@ -152,6 +287,35 @@ function deleteMapPoint(mapPointId) {
                 icon: 'error',
                 title: 'Error',
                 text: 'Failed to delete map point. Please try again later.'
+            });
+        }
+    });
+
+}
+
+//function delete edges
+function deleteEdge(edgeId) {
+    $.ajax({
+        url: `https://localhost:7186/api/edges/${edgeId}`,
+        type: 'DELETE',
+        success: function (response) {
+            console.log('Edge deleted successfully:', response);
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: 'Edge deleted successfully!'
+            }).then((result) => {
+                // Tải lại trang sau khi đóng hộp thoại SweetAlert
+                location.reload();
+            });
+        },
+        error: function (xhr, status, error) {
+            console.error('Error deleting Edge:', error);
+            // Hiển thị SweetAlert thông báo lỗi
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Failed to delete edge. Please try again later.'
             });
         }
     });
@@ -255,13 +419,13 @@ var allEdges = [];
 
 
 //ratio of image's width, length vs image's pixels
-//var ratio = 8.682926829;
-//var root = { id: "root", x: 628, y: 160 };
-//var radius = 5;
+var ratio = 8.682926829;
+var root = { id: "root", x: 628, y: 160 };
+var radius = 5;
 
-var ratio = 17.696;
-var root = { id: "root", x: 1290, y: 6 };
-var radius = 5 * math.sqrt(ratio) / 2;
+//var ratio = 17.696;
+//var root = { id: "root", x: 1290, y: 6 };
+//var radius = 5 * Math.sqrt(ratio) / 2;
 
 //Start and end point of 1 edge
 var beginPoint = { id: "", x: 0, y: 0 };
@@ -281,6 +445,7 @@ function pixelLocation(event) {
 }
 //toa do cua diem trong database
 function databaseLocation(event) {
+    document.getElementById("demo").innerHTML = "";
     document.getElementById("demo").innerHTML = document.getElementById("demo").innerHTML +
         " <br>  LocationApp: (" + (event.offsetX - root.x) / ratio + ", " + -(event.offsetY - root.y) / ratio + ")";
 }

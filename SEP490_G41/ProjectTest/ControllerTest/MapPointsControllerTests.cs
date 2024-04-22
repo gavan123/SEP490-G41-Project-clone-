@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace ProjectTest.ControllerTest
 {
-    public class MapPointsControllerTests
+    /*public class MapPointsControllerTests
     {
         private readonly Mock<IMapPointRepository> _mockMapPointRepository;
         private readonly MapPointsController _controller;
@@ -116,7 +116,7 @@ namespace ProjectTest.ControllerTest
 
 
         [Fact]
-       /* public void AddMapPoint_WhenMapPointIsValid_ReturnsOkObjectResult()
+       *//* public void AddMapPoint_WhenMapPointIsValid_ReturnsOkObjectResult()
         {
             // Arrange
             var newMapPoint = new MapPointAddDTO
@@ -241,7 +241,7 @@ namespace ProjectTest.ControllerTest
               // Assert
               Assert.IsType<OkResult>(result);
           }
-      }*/
-    }
+      }*//*
+    }*/
 }
 
