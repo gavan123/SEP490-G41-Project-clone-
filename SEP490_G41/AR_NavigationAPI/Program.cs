@@ -98,7 +98,8 @@ app.UseSwagger();
 app.UseSwaggerUI();
 
 app.UseCors("AllowAll");
-
+app.UseSwagger();
+app.UseSwaggerUI();
 app.UseAuthorization();
 app.UseSession();
 

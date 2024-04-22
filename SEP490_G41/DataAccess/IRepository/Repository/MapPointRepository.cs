@@ -16,13 +16,17 @@ namespace DataAccess.IRepository.Repository
         private readonly IMapper _mapper;
         private readonly FloorDAO _floorDAO;
         private readonly BuildingDAO _buildingDAO;
+        private readonly PathShortest _pathShortest;
 
-        public MapPointRepository(MappointDAO mappointDAO,BuildingDAO buildingDAO, FloorDAO floorDAO, IMapper mapper)
+
+        public MapPointRepository(MappointDAO mappointDAO,BuildingDAO buildingDAO, FloorDAO floorDAO, PathShortest pathShortest, IMapper mapper)
         {
             _mappointDAO = mappointDAO;
             _buildingDAO = buildingDAO;
             _floorDAO = floorDAO;
             _mapper = mapper;
+            _pathShortest = pathShortest;
+
         }
         public MapPointDTO GetMapPointById(int mapPointId)
         {
@@ -41,6 +45,50 @@ namespace DataAccess.IRepository.Repository
                 var mapPoints = _mappointDAO.GetAllMappoints()
                     .Join(_buildingDAO.GetAllBuildings(), mp => mp.BuildingId, b => b.BuildingId, (mp, b) => new { MapPoint = mp, Building = b })
                     .Join(_floorDAO.GetAllFloors(), mpb => mpb.MapPoint.FloorId, f => f.FloorId, (mpb, f) => new { mpb.MapPoint, mpb.Building, Floor = f });
+
+                var mapPointDTOs = mapPoints
+                    .Select(mpbf => new MapPointDTO
+                    {
+                        MapPointId = mpbf.MapPoint.MapPointId,
+                        MapId = mpbf.MapPoint.MapId,
+                        MappointName = mpbf.MapPoint.MapPointName,
+                        LocationWeb = ExtractCoordinatesFromGeoJson(ConvertPointToGeoJson(mpbf.MapPoint.LocationWeb)),
+                        LocationGps = ExtractCoordinatesFromGeoJson(ConvertPointToGeoJson(mpbf.MapPoint.LocationGps ?? GeometryFactory.Default.CreatePoint(new Coordinate(0, 0)))),
+                        LocationApp = ExtractCoordinatesFromGeoJson(ConvertPointToGeoJson(mpbf.MapPoint.LocationApp)),
+                        FloorId = mpbf.MapPoint.FloorId,
+                        BuildingId = mpbf.MapPoint.BuildingId,
+                        Image = mpbf.MapPoint.Image,
+                        Destination = mpbf.MapPoint.Destination ?? false,
+                        BuildingName = mpbf.Building.BuildingName,
+                        FloorName = mpbf.Floor.FloorName
+                    })
+                    .ToList();
+
+                return mapPointDTOs;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error occurred while getting all map points.", ex);
+            }
+        }
+        public List<MapPointDTO> GetAllMapPointsPath(int inputPosition, int inputDestination)
+        {
+            try
+            {
+                int multi = 1;
+                var mapPoints = _pathShortest.Dijkstra(inputPosition, inputDestination, multi)
+                    .Join(_buildingDAO.GetAllBuildings(), mp => mp.BuildingId, b => b.BuildingId, (mp, b) => new { MapPoint = mp, Building = b })
+                    .Join(_floorDAO.GetAllFloors(), mpb => mpb.MapPoint.FloorId, f => f.FloorId, (mpb, f) => new { mpb.MapPoint, mpb.Building, Floor = f }); ;
+
+                while (mapPoints.Count() == 1)
+                {
+                    multi++;
+                    mapPoints = _pathShortest.Dijkstra(inputPosition, inputDestination, multi)
+                    .Join(_buildingDAO.GetAllBuildings(), mp => mp.BuildingId, b => b.BuildingId, (mp, b) => new { MapPoint = mp, Building = b })
+                    .Join(_floorDAO.GetAllFloors(), mpb => mpb.MapPoint.FloorId, f => f.FloorId, (mpb, f) => new { mpb.MapPoint, mpb.Building, Floor = f });
+                }
+
+
 
                 var mapPointDTOs = mapPoints
                     .Select(mpbf => new MapPointDTO
