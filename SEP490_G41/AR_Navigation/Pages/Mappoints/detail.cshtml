@@ -149,7 +149,7 @@
         var mappointId = window.location.pathname.split("/").pop();
 
         $.ajax({
-            url: `https://localhost:7186/api/mappoints/${mappointId}`,
+            url: `https://finnsapi.developvn.click/api/mappoints/${mappointId}`,
             type: 'GET',
             dataType: 'json',
             success: function (mapPoint) {
@@ -157,7 +157,7 @@
                 $('#mappoint-image').attr('src', `/Images/${mapPoint.image}`);
                     // Gọi API để lấy thông tin map theo mapId
                     $.ajax({
-                        url: `https://localhost:7186/api/maps/${mapId}`,
+                        url: `https://finnsapi.developvn.click/api/maps/${mapId}`,
                         type: 'GET',
                         dataType: 'json',
                         success: function (map) {
