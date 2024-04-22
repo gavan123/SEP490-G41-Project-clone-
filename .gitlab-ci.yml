@@ -11,6 +11,6 @@ deploy:
   - docker stop finns-api-con  || true
   - docker run --rm -d --name finns-api-con -p 7186:7186 finns-api-img
   only:
-  - dev
+  - main
   tags:
   - linux
