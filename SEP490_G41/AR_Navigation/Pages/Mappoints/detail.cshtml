@@ -52,47 +52,94 @@
     </div>
 </div>
 <div class="container">
-  
-
-    <!-- Map Image -->
-    <button type="button" id="setRootButton" onclick="setRoot()">Set Root</button>
-    <button type="button" id="getMPButton" onclick="renderPoints()">Get Mappoints</button>
-    <button type="button" id="connectEdgeButton" onclick="setEdge()">Connect Edge</button>
-    <button type="button" id="undoButton" onclick="undo(1)">Undo</button>
-    <button type="button" id="newMappointButton" onclick="newMappoint()">New Mappoint</button>
-    <input type="text" id="searchMappoint" placeholder="Search by ID">
-    <button type="button" id="submitSearch" onclick="search()">Search</button>
     <div class="selected-image-container" id="map-images-container">
         <canvas id="canvas_data" width="1065%"
                 onclick="pixelLocation(event), databaseLocation(event)">
         </canvas>
     </div>
-    <div id="demo"></div>
-    <div id="demo1"></div>
-    <button id="clear-canvas-btn">Delete draw</button>
+    <div class="selected-image-container2">
+        <img id="mappoint-image" src="" alt="Mappoint Image">
+    </div>
+    <div class="text-md-right m-v-10" id="button-change">
+        <button id="edit-btn" class="btn btn-primary">Edit</button>
+    </div>
+    <div id="edit-form" style="display: none;">
+        <h3>Edit Mappoint</h3>
+        <form>
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" class="form-control" id="name" name="name">
+            </div>
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea class="form-control" id="description" name="description"></textarea>
+            </div>
+            <!-- Thêm các trường khác tùy theo yêu cầu -->
+            <button type="button" id="save-btn" class="btn btn-primary">Save</button>
+            <button type="button" id="cancel-btn" class="btn btn-secondary">Cancel</button>
+        </form>
+    </div>
 </div>
 
 <!-- Content Wrapper END -->
 @* Modal Map Image*@
-<script src="/js/MappointDraw1.js"></script>
+<script src="/js/detailMappoint.js"></script>
 <script>
-    document.getElementById('getMPButton').addEventListener('click', function () {
-        // Gọi hàm renderPoints từ tệp JavaScript MappointDraw.js và truyền vào mappointList
-        renderPoints(mappointList);
-    });
-    // Delete draw line
-    document.getElementById("clear-canvas-btn").addEventListener("click", function () {
-        var canvas = document.getElementById('canvas_data');
-        var context = canvas.getContext('2d');
-        context.clearRect(0, 0, canvas.width, canvas.height); // Xóa tất cả các đường vẽ trên canvas
-    });
 
     $(document).ready(function () {
-        var mappointId = window.location.pathname.split("/").pop();
-        renderPoints(mappointList, mappointId);
-    });
-   
+        // ...
 
+        $('#edit-btn').click(function () {
+            // Hiển thị form chỉnh sửa
+            $('#edit-form').show();
+
+            // Lấy thông tin mappoint từ API và điền vào form
+            $.ajax({
+                url: `https://localhost:7186/api/mappoints/${mappointId}`,
+                type: 'GET',
+                dataType: 'json',
+                success: function (mapPoint) {
+                    $('#name').val(mapPoint.name);
+                    $('#description').val(mapPoint.description);
+                    // Điền các trường khác tùy theo yêu cầu
+                },
+                error: function (xhr, status, error) {
+                    console.log('Error loading mappoint from API: ' + error);
+                }
+            });
+        });
+
+        $('#save-btn').click(function () {
+            // Lấy dữ liệu từ form
+            const name = $('#name').val();
+            const description = $('#description').val();
+            // Lấy các trường khác tùy theo yêu cầu
+
+            // Gửi dữ liệu lên API
+            $.ajax({
+                url: `https://localhost:7186/api/mappoints/${mappointId}`,
+                type: 'PUT',
+                data: JSON.stringify({ name, description /* Thêm các trường khác tùy theo yêu cầu */ }),
+                contentType: 'application/json',
+                success: function (response) {
+                    console.log('Mappoint updated successfully');
+                    // Ẩn form chỉnh sửa
+                    $('#edit-form').hide();
+                },
+                error: function (xhr, status, error) {
+                    console.log('Error updating mappoint: ' + error);
+                }
+            });
+        });
+
+        $('#cancel-btn').click(function () {
+            // Ẩn form chỉnh sửa
+            $('#edit-form').hide();
+        });
+
+        // ...
+    });
+    
     $(document).ready(function () {
         //session
         var userJson = sessionStorage.getItem('user');
@@ -107,6 +154,7 @@
             dataType: 'json',
             success: function (mapPoint) {
                     const mapId = mapPoint.mapId;
+                $('#mappoint-image').attr('src', `/Images/${mapPoint.image}`);
                     // Gọi API để lấy thông tin map theo mapId
                     $.ajax({
                         url: `https://localhost:7186/api/maps/${mapId}`,

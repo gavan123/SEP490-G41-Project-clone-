@@ -75,9 +75,20 @@ namespace DataAccess.IRepository.Repository
         {
             try
             {
-                var mapPoints = _pathShortest.Dijkstra(inputPosition, inputDestination)
+                int multi = 1;
+                var mapPoints = _pathShortest.Dijkstra(inputPosition, inputDestination, multi)
+                    .Join(_buildingDAO.GetAllBuildings(), mp => mp.BuildingId, b => b.BuildingId, (mp, b) => new { MapPoint = mp, Building = b })
+                    .Join(_floorDAO.GetAllFloors(), mpb => mpb.MapPoint.FloorId, f => f.FloorId, (mpb, f) => new { mpb.MapPoint, mpb.Building, Floor = f }); ;
+
+                while (mapPoints.Count() == 1)
+                {
+                    multi++;
+                    mapPoints = _pathShortest.Dijkstra(inputPosition, inputDestination, multi)
                     .Join(_buildingDAO.GetAllBuildings(), mp => mp.BuildingId, b => b.BuildingId, (mp, b) => new { MapPoint = mp, Building = b })
                     .Join(_floorDAO.GetAllFloors(), mpb => mpb.MapPoint.FloorId, f => f.FloorId, (mpb, f) => new { mpb.MapPoint, mpb.Building, Floor = f });
+                }
+
+
 
                 var mapPointDTOs = mapPoints
                     .Select(mpbf => new MapPointDTO
