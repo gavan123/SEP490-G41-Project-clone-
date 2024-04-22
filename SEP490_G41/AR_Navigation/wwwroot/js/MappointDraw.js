@@ -255,13 +255,13 @@ var allEdges = [];
 
 
 //ratio of image's width, length vs image's pixels
-var ratio = 8.682926829;
-var root = { id: "root", x: 628, y: 160 };
-var radius = 5;
+//var ratio = 8.682926829;
+//var root = { id: "root", x: 628, y: 160 };
+//var radius = 5;
 
-//var ratio = 17.696;
-//var root = { id: "root", x: 1290, y: 6 };
-//var radius = 5 * Math.sqrt(ratio) / 2;
+var ratio = 17.696;
+var root = { id: "root", x: 1290, y: 6 };
+var radius = 5 * math.sqrt(ratio) / 2;
 
 //Start and end point of 1 edge
 var beginPoint = { id: "", x: 0, y: 0 };

@@ -95,7 +95,7 @@
                     });
                     console.log('User information:', response.username);
                     console.log('User information:', response.memberId);
-                    var user = { userid: response.memberId, fullname: response.fullname, username: response.username, role: response.roleId };
+                    var user = { userid: response.memberId, fullname: response.fullname, username: response.username, role: response.roleId, avatar: response.avatar };
                     sessionStorage.setItem('user', JSON.stringify(user));
                     console.log(sessionStorage.getItem('user'));
 
