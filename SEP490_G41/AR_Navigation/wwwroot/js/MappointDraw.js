@@ -130,6 +130,7 @@ async function getEdgesByMapPointAOrB(mapPointId) {
         if (edgeCount === response.length) {
             console.log("All edges:", edgeList);
         }
+       
     } catch (error) {
         console.error('Error while fetching edges:', error);
     }
@@ -733,7 +734,30 @@ function count() {
     numberOfClicks = numberOfClicks + 1;
 }
 
+function renderEgdes(edges, mappoints) {
+    edges.forEach(edge => {
+        let startPoint = mappoints.find(point => point.id === edge.mapPointA);
+        let endPoint = mappoints.find(point => point.id === edge.mapPointB);
 
+        if (startPoint && endPoint) {
+            // Tính toạ độ pixel của điểm đầu và điểm cuối
+            let startX = startPoint.x * ratio + root.x;
+            let startY = -startPoint.y * ratio + root.y;
+            let endX = endPoint.x * ratio + root.x;
+            let endY = -endPoint.y * ratio + root.y;
+
+            // Thiết lập độ rộng đường viền và bắt đầu vẽ đường thẳng
+            context.lineWidth = 1;
+            context.beginPath();
+            context.moveTo(startX, startY);
+            context.lineTo(endX, endY);
+            context.stroke();
+        }
+    });
+
+    saveCanvasState();
+}
+window.renderEgdes = renderEgdes;
 function drawLine(event) {
     // if it is the 2nd click then it is beginPoint
     if (numberOfClicks == 0) {
@@ -825,7 +849,7 @@ function showEdges(list) {
     document.getElementById("demo").innerHTML = "";
     list.forEach(e => {
         document.getElementById("demo").innerHTML +=
-            "<br> Id: " + e.id + ", Start: " + e.pointId1 + ", End: " + e.pointId2 + ", Length: " + e.edgeLength;
+            "<br> Id: " + e.edgeId + ", Start: " + e.pointId1 + ", End: " + e.pointId2 + ", Length: " + e.edgeLength;
     });
 }
 //Neu trong pham vi cua button thi se tra ve true

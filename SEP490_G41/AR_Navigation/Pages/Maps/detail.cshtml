@@ -53,6 +53,7 @@
     </div>
     <button type="button" id="setRootButton" class="btn btn-light btn-with-border" onclick="setRoot()">Set Root</button>
     <button type="button" id="getMPButton" class="btn btn-light btn-with-border">Get Mappoints</button>
+    <button type="button" id="getEDButton" class="btn btn-light btn-with-border">Get Edges</button>
     <button type="button" id="connectEdgeButton" class="btn btn-light btn-with-border">Connect Edge</button>
     <button type="button" id="undoButton" class="btn btn-light btn-with-border" onclick="undo()">Undo</button>
     <button type="button" id="newMappointButton" class="btn btn-light btn-with-border" onclick="newMappoint()">Choose Mappoint</button>
@@ -141,7 +142,9 @@
             var imageUrl = $(this).attr('src');
             window.open(imageUrl, '_blank');
         });
-      
+        if (window.location.href.includes('Maps/Detail')) {
+            renderEgdes(edgeList, mappointList);
+        }
     });
 </script>
 <script src="/js/MappointDraw.js"></script>
@@ -149,6 +152,10 @@
     document.getElementById('getMPButton').addEventListener('click', function () {
         // Gọi hàm renderPoints từ tệp JavaScript MappointDraw.js và truyền vào mappointList
         renderPoints(mappointList);
+    });
+    document.getElementById('getEDButton').addEventListener('click', function () {
+        // Gọi hàm renderPoints từ tệp JavaScript MappointDraw.js và truyền vào mappointList
+        renderEgdes(edgeList, mappointList);
     });
     document.getElementById('connectEdgeButton').addEventListener('click', function () {
         setEdge();

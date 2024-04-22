@@ -79,7 +79,6 @@
     </div>
     <button type="button" id="setRootButton" class="btn btn-light btn-with-border" onclick="setRoot()">Set Root</button>
     <button type="button" id="getMPButton" class="btn btn-light btn-with-border">Get Mappoints</button>
-    <button type="button" id="connectEdgeButton" class="btn btn-light btn-with-border">Connect Edge</button>
     <button type="button" id="undoButton" class="btn btn-light btn-with-border" onclick="undo()">Undo</button>
     <button type="button" id="newMappointButton" class="btn btn-light btn-with-border" onclick="newMappoint()">Choose Mappoint</button>
 
@@ -536,9 +535,6 @@
     document.getElementById('getMPButton').addEventListener('click', function () {
         // Gọi hàm renderPoints từ tệp JavaScript MappointDraw.js và truyền vào mappointList
         renderPoints(mappointList);
-    });
-    document.getElementById('connectEdgeButton').addEventListener('click', function () {
-        setEdge();
     });
     // Delete draw line
     document.getElementById("clear-canvas-btn").addEventListener("click", function () {
