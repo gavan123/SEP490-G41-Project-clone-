@@ -278,7 +278,7 @@
 
         // Get map list from API
         $.ajax({
-            url: 'https://finnsapi.developvn.click/api/maps',
+            url: 'http://14.225.205.28:7391/api/maps',
             type: 'GET',
             dataType: 'json',
             success: function (maps) {
@@ -295,7 +295,7 @@
         $('#map-building').on('change', function () {
             const selectedBuildingId = $(this).val(); // Get the selected buildingId
 
-            let url = 'https://finnsapi.developvn.click/api/maps';
+            let url = 'http://14.225.205.28:7391/api/maps';
             if (selectedBuildingId !== '0' && selectedBuildingId) {
                 url += '?filter=buildingId eq ' + selectedBuildingId;
             }
@@ -323,7 +323,7 @@
         $(document).ready(function () {
             // Load danh sách các cơ sở ban đầu
             $.ajax({
-                url: 'https://finnsapi.developvn.click/api/facilities',
+                url: 'http://14.225.205.28:7391/api/facilities',
                 type: 'GET',
                 success: function (response) {
                     response.forEach(function (facility) {
@@ -346,7 +346,7 @@
                 $('#map-building').empty(); // Xóa tất cả các tùy chọn tòa nhà hiện có
 
                 // Tạo URL OData để lấy danh sách các tòa nhà từ facility đã chọn
-                var url = 'https://finnsapi.developvn.click/api/buildings?$filter=facilityId eq ' + selectedFacilityId;
+                var url = 'http://14.225.205.28:7391/api/buildings?$filter=facilityId eq ' + selectedFacilityId;
 
                 // Gửi yêu cầu AJAX để lấy danh sách các tòa nhà từ facility đã chọn
                 $.ajax({
@@ -369,7 +369,7 @@
             $('#new-map-building').empty();
 
             if (selectedFacilityId !== '0') {
-                var url = 'https://finnsapi.developvn.click/api/buildings?$filter=facilityId eq ' + selectedFacilityId;
+                var url = 'http://14.225.205.28:7391/api/buildings?$filter=facilityId eq ' + selectedFacilityId;
                 $.ajax({
                     url: url,
                     type: 'GET',
@@ -391,7 +391,7 @@
             $('#edit-map-building').empty();
 
             if (selectedFacilityId !== '0') {
-                var url = 'https://finnsapi.developvn.click/api/buildings?$filter=facilityId eq ' + selectedFacilityId;
+                var url = 'http://14.225.205.28:7391/api/buildings?$filter=facilityId eq ' + selectedFacilityId;
                 $.ajax({
                     url: url,
                     type: 'GET',
@@ -413,7 +413,7 @@
         $('#new-map-building').change(function () {
             var buildingId = $(this).val();
             $.ajax({
-                url: 'https://finnsapi.developvn.click/api/floors/building/' + buildingId,
+                url: 'http://14.225.205.28:7391/api/floors/building/' + buildingId,
                 type: 'GET',
                 success: function (response) {
                     $('#new-map-floor').empty(); // Clear existing options
@@ -429,7 +429,7 @@
         $('#edit-map-building').change(function () {
             var buildingId = $(this).val();
             $.ajax({
-                url: 'https://finnsapi.developvn.click/api/floors/building/' + buildingId,
+                url: 'http://14.225.205.28:7391/api/floors/building/' + buildingId,
                 type: 'GET',
                 success: function (response) {
                     $('#edit-map-floor').empty(); // Clear existing options
@@ -462,7 +462,7 @@
 
             // Send an AJAX POST request to the API
             $.ajax({
-                url: 'https://finnsapi.developvn.click/api/maps?memberId=' + user.userid,
+                url: 'http://14.225.205.28:7391/api/maps?memberId=' + user.userid,
                 type: 'POST',
                 data: formData,
                 processData: false,
@@ -503,7 +503,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: 'https://finnsapi.developvn.click/api/maps/' + mapId,
+                        url: 'http://14.225.205.28:7391/api/maps/' + mapId,
                         type: 'DELETE',
                         success: function (response) {
                             Swal.fire(
@@ -534,7 +534,7 @@
 
         function showEditModal(mapId) {
             $.ajax({
-                url: 'https://finnsapi.developvn.click/api/maps/' + mapId,
+                url: 'http://14.225.205.28:7391/api/maps/' + mapId,
                 type: 'GET',
                 success: function (response) {
                     $('#map-id').val(response.mapId);
@@ -565,7 +565,7 @@
             }
 
             $.ajax({
-                url: 'https://finnsapi.developvn.click/api/maps/' + $('#map-id').val(),
+                url: 'http://14.225.205.28:7391/api/maps/' + $('#map-id').val(),
                 type: 'PUT',
                 data: formData,
                 contentType: false,

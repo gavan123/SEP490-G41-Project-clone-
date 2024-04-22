@@ -11,7 +11,7 @@ var edgeCount = 0;
 
 function getMapPointsByMapId(mapId, buildingid, floorid) {
     $.ajax({
-        url: `https://localhost:7186/api/mappoints?filter=mapId eq ${mapId}`,
+        url: `http://14.225.205.28:7391/api/mappoints?filter=mapId eq ${mapId}`,
         method: "get",
     }).then(function (mappointdata) {
         $('#map-list').empty();
@@ -71,7 +71,7 @@ function getMapPointsByMapId(mapId, buildingid, floorid) {
 async function getEdgesByMapPointAOrB(mapPointId) {
     try {
         const response = await $.ajax({
-            url: 'https://localhost:7186/api/edges?$filter=mapPointA eq ' + mapPointId + ' or mapPointB eq ' + mapPointId,
+            url: 'http://14.225.205.28:7391/api/edges?$filter=mapPointA eq ' + mapPointId + ' or mapPointB eq ' + mapPointId,
             type: 'GET'
         });
 
@@ -268,7 +268,7 @@ $(document).on('click', '#delete-selected-egde', function () {
 //function delete mappoint
 function deleteMapPoint(mapPointId) {
     $.ajax({
-        url: `https://localhost:7186/api/mappoints/${mapPointId}`,
+        url: `http://14.225.205.28:7391/api/mappoints/${mapPointId}`,
         type: 'DELETE',
         success: function (response) {
             console.log('Map point deleted successfully:', response);
@@ -297,7 +297,7 @@ function deleteMapPoint(mapPointId) {
 //function delete edges
 function deleteEdge(edgeId) {
     $.ajax({
-        url: `https://localhost:7186/api/edges/${edgeId}`,
+        url: `http://14.225.205.28:7391/api/edges/${edgeId}`,
         type: 'DELETE',
         success: function (response) {
             console.log('Edge deleted successfully:', response);
@@ -344,7 +344,7 @@ function addMapPoint() {
     formData.append('MapId', mapidTake);
 
     $.ajax({
-        url: 'https://localhost:7186/api/mappoints',
+        url: 'http://14.225.205.28:7391/api/mappoints',
         type: 'POST',
         processData: false,
         contentType: false,
@@ -583,7 +583,7 @@ function editMapPoint() {
     }
 
     $.ajax({
-        url: 'https://localhost:7186/api/mappoints/' + mappointId,
+        url: 'http://14.225.205.28:7391/api/mappoints/' + mappointId,
         type: 'PUT',
         processData: false,
         contentType: false,
@@ -832,7 +832,7 @@ function ChooseDeleteMappoint(event) {
 }
 function filterMapPointsByName(name) {
     $.ajax({
-        url: `https://localhost:7186/api/mappoints?filter=mappointName eq ${name}`,
+        url: `http://14.225.205.28:7391/api/mappoints?filter=mappointName eq ${name}`,
         type: 'GET',
         success: function (data) {
             data.forEach(function (mapPoint) {
