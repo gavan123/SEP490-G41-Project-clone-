@@ -42,8 +42,9 @@ namespace DataAccess.IRepository.Repository
             return result;
         }
 
-        public List<Mappoint> PointInArea(Mappoint pos1, Mappoint pos2) //get local points important
+        public List<Mappoint> PointInArea(Mappoint pos1, Mappoint pos2,int multi) //get local points important
         {
+            
             List<Mappoint> listOfMapPoint = _mappointDAO.GetAllMappoints();
             List<Mappoint> pointInAreaList = new List<Mappoint>();
             double result;
@@ -55,7 +56,7 @@ namespace DataAccess.IRepository.Repository
                 result = NumberFomula(find.LocationApp.X,
                     find.LocationApp.Y, pos1.LocationApp.X,
                     pos1.LocationApp.Y);
-                if (result <= rotate * 1.5)
+                if (result <= rotate * multi && (find.FloorId == pos1.FloorId || find.FloorId == pos2.FloorId) )
                 {
                     if (!pointInAreaList.Contains(find))
                     {
@@ -160,15 +161,16 @@ namespace DataAccess.IRepository.Repository
             List<Edge> listOfEdge = _edgeDAO.GetAllEdges();
             foreach (Edge edge in listOfEdge)
             {
-                if (edge.MapPointA == p1 && edge.MapPointB == p2 || edge.MapPointA == p2 && edge.MapPointB == p1) ;
+                if ((edge.MapPointA == p1 && edge.MapPointB == p2) || (edge.MapPointA == p2 && edge.MapPointB == p1)) ;
                 edge1 = edge;
             }
             return edge1;
         }
 
-        public List<Mappoint> Dijkstra(int inputPosition, int inputDestination)
+        public List<Mappoint> Dijkstra(int inputPosition, int inputDestination,int multi)
         {
-            List<Mappoint> pointInAreaList = PointInArea(_mappointDAO.GetMappointById(inputPosition),_mappointDAO.GetMappointById(inputDestination));
+            
+            List <Mappoint> pointInAreaList = PointInArea(_mappointDAO.GetMappointById(inputPosition),_mappointDAO.GetMappointById(inputDestination),multi);
             int position = getIndex(inputPosition, pointInAreaList);
             int destination = getIndex(inputDestination, pointInAreaList);
             int numMapPoint = pointInAreaList.Count;
