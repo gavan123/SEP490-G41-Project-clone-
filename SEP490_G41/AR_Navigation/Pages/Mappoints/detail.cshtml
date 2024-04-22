@@ -74,7 +74,7 @@
 
 <!-- Content Wrapper END -->
 @* Modal Map Image*@
-<script src="/js/MappointDraw.js"></script>
+<script src="/js/MappointDraw1.js"></script>
 <script>
     document.getElementById('getMPButton').addEventListener('click', function () {
         // Gọi hàm renderPoints từ tệp JavaScript MappointDraw.js và truyền vào mappointList
@@ -86,6 +86,13 @@
         var context = canvas.getContext('2d');
         context.clearRect(0, 0, canvas.width, canvas.height); // Xóa tất cả các đường vẽ trên canvas
     });
+
+    $(document).ready(function () {
+        var mappointId = window.location.pathname.split("/").pop();
+        renderPoints(mappointList, mappointId);
+    });
+   
+
     $(document).ready(function () {
         //session
         var userJson = sessionStorage.getItem('user');
@@ -108,7 +115,7 @@
                         success: function (map) {
                             // Lấy mapImage2D từ map
                             const mapImage2D = map.mapImage2D;
-                            getMapPointsByMapId(map.mapId);
+                            getMapPointsByMapId(map.mapId, mappointId);
                             // Sử dụng mapImage2D để hiển thị ảnh
                             var imageSrc = `/Images/${mapImage2D}`;
                             var canvas = document.getElementById('canvas_data');
@@ -125,6 +132,8 @@
             }
         });
     });
+
+
 
 </script>
 
