@@ -406,7 +406,7 @@ function parseLocation(locationWebString) {
 
 
 const sampleEdge = {
-    edgeId: "", pointId1: "", pointId2: "", direction: 2, edgeLength: 0
+     pointId1: "", pointId2: "", direction: 2, edgeLength: 0
 }
 
 
@@ -832,7 +832,7 @@ function drawLine(event) {
 
 function saveEdge(point1, point2) {
     var edge = {
-        edgeId: "1", pointId1: point1.name, pointId2: point2.name, direction: 2, edgeLength: getDistance(point1, point2)
+         pointId1: point1.name, pointId2: point2.name, direction: 2, edgeLength: getDistance(point1, point2)
     }
     allEdges.push(edge);
     edge = sampleEdge;
@@ -849,7 +849,7 @@ function showEdges(list) {
     document.getElementById("demo").innerHTML = "";
     list.forEach(e => {
         document.getElementById("demo").innerHTML +=
-            "<br> Id: " + e.edgeId + ", Start: " + e.pointId1 + ", End: " + e.pointId2 + ", Length: " + e.edgeLength;
+            "<br> Start: " + e.pointId1 + ", End: " + e.pointId2 + ", Length: " + e.edgeLength;
     });
 }
 //Neu trong pham vi cua button thi se tra ve true
