@@ -3,6 +3,7 @@
 @{
     Layout = null;
 }
+<html>
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>FinS</title>
@@ -18,7 +19,7 @@
     <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.27.1/dist/apexcharts.min.js"></script>
     <script src="/assets/vendors/chartjs/Chart.min.js"></script>
 </head>
-
+<body>
 <style>
     .app {
         display: flex;
@@ -79,8 +80,8 @@
         $('#login-btn').click(function (event) {
             event.preventDefault(); // Ngăn chặn form submit mặc định
 
-            var username = $('#userName').val();
-            var password = $('#password').val();
+                var username = $('#userName').val();
+                var password = $('#password').val();
 
             // Gửi yêu cầu đăng nhập qua API
             $.ajax({
@@ -95,21 +96,35 @@
                     });
                     console.log('User information:', response.username);
                     console.log('User information:', response.memberId);
-                    var user = { userid: response.memberId, fullname: response.fullname, username: response.username, role: response.roleId };
+                    var user = { userid: response.memberId, fullname: response.fullname, username: response.username, role: response.roleId, avatar: response.avatar };
                     sessionStorage.setItem('user', JSON.stringify(user));
                     console.log(sessionStorage.getItem('user'));
 
-                    window.location.href = '/HomePage/Home';
-                },
-                error: function (xhr, status, error) {
-                    console.error('Error while logging in:', error);
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Login Failed',
-                        text: 'Invalid username or password. Please try again!',
-                    });
-                }
+                        var user = { userid: response.memberId, fullname: response.fullName, username: response.username, role: response.roleId, avatar: response.avatar };
+                        sessionStorage.setItem('user', JSON.stringify(user));
+                        console.log(sessionStorage.getItem('user'));
+
+                        window.location.href = '/Buildings/list';
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error while logging in:', error);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Login Failed',
+                            text: 'Invalid username or password. Please try again!',
+                        });
+                    }
+                });
             });
         });
-    });
-</script>
+        $(document).ready(function () {
+            $('#logout-link').click(function (e) {
+                e.preventDefault();
+                sessionStorage.removeItem('user');
+                window.location.href = '/HomePage/Home';
+            });
+        });
+
+    </script>
+</body>
+</html>

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using BusinessObject.Models;
+using BusinessObject.Validate;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.DAO
@@ -14,6 +15,7 @@ namespace DataAccess.DAO
     public class ProfileDAO
     {
         private readonly finsContext _context;
+        Validate validate = new Validate();
         public ProfileDAO(finsContext context)
         {
             _context = context;
@@ -47,6 +49,7 @@ namespace DataAccess.DAO
                 _context.SaveChanges();
             }
         }
+       
 
     }
 }

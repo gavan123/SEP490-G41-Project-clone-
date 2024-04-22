@@ -7,10 +7,6 @@
 
 </head>
 <style>
-
-
-
-
     .selected-image-container2 {
         width: 400px;
         height: 200px;
@@ -40,13 +36,12 @@
         border: 1px solid #000;
     }
 
-    <style >
+
     #searchMappoint {
-        padding: 10px;
         border: 1px solid #ccc;
         border-radius: 5px;
         font-size: 16px;
-        width: 200px;
+        width: 170px;
     }
 
 </style>
@@ -84,17 +79,16 @@
     </div>
     <button type="button" id="setRootButton" class="btn btn-light btn-with-border" onclick="setRoot()">Set Root</button>
     <button type="button" id="getMPButton" class="btn btn-light btn-with-border">Get Mappoints</button>
-    <button type="button" id="connectEdgeButton" class="btn btn-light btn-with-border">Connect Edge</button>
     <button type="button" id="undoButton" class="btn btn-light btn-with-border" onclick="undo()">Undo</button>
     <button type="button" id="newMappointButton" class="btn btn-light btn-with-border" onclick="newMappoint()">Choose Mappoint</button>
 
-        @* trường cho canvas *@
+    @* trường cho canvas *@
     <div class="selected-image-container" id="map-images-container">
         <canvas id="canvas_data" style="border: 1px, black;" width="1065%"
-                onclick="">
+                onclick="databaseLocation(event)">
         </canvas>
     </div>
-        @* Hiện tọa dộ trên ảnh và database *@
+    @* Hiện tọa dộ trên ảnh và database *@
     <p id="demo"></p>
     <p id="demo1"></p>
     <p id="demo2"></p>
@@ -111,7 +105,7 @@
         <div class="card-body">
             <div class="row m-b-30">
                 <div class="col-lg-12 text-right">
-                    <button class="btn btn-danger" id="delete-selected">
+                    <button class="btn btn-danger" id="delete-selected-mappoint">
                         <i class="anticon anticon-delete"></i>
                         <span>Delete</span>
                     </button>
@@ -137,7 +131,7 @@
     </div>
 </div>
 <!-- Content Wrapper END -->
-    @* Modal Map Image*@
+@* Modal Map Image*@
 <div class="modal fade" id="add-edit-MapImage-modal">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -171,7 +165,7 @@
     </div>
 </div>
 
-    @* Modal add Mapppoint*@
+@* Modal add Mapppoint*@
 <div class="modal fade" id="add-MapPoint-modal">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -202,7 +196,7 @@
     </div>
 </div>
 
-    @* Modal edit Mapppoint*@
+@* Modal edit Mapppoint*@
 <div class="modal fade" id="update-MapPoint-modal">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -249,6 +243,7 @@
     $(document).ready(function () {
         //session
         var userJson = sessionStorage.getItem('user');
+        var user = JSON.parse(userJson);
         if (!userJson) {
             window.location.href = '/Authen/Login';
         }
@@ -310,12 +305,14 @@
         // Event that listens when the user selects a new floor
         $('#floor-select').change(function () {
             var selectedFloorId = $(this).val();
+            reloadCanvas();
             updateMapImage(selectedFloorId);
-            var canvas = document.getElementById('canvas_data');
-            var context = canvas.getContext('2d');
-            context.clearRect(0, 0, canvas.width, canvas.height);
         });
 
+        function reloadCanvas() {
+            var canvas = document.getElementById('canvas_data');
+            canvas.width = canvas.width; // Tải lại canvas bằng cách reset width
+        }
         //update map image by floor
         function updateMapImage(floorId) {
             $.ajax({
@@ -330,17 +327,19 @@
                             const buildingId = floorData.buildingId;
 
                             if (maps.length > 0) {
-                                var imageSrc = `/Images/${maps[0].mapImage2D}`; // Đường dẫn đến hình ảnh
-
                                 var canvas = document.getElementById('canvas_data');
+                                var context = canvas.getContext('2d');
+                                context.clearRect(0, 0, canvas.width, canvas.height);
+                                var imageSrc = `/Images/${maps[0].mapImage2D}`; // Đường dẫn đến hình ảnh
+                                console.log(maps[0].mapImage2D);
                                 canvas.style.backgroundImage = `url(${imageSrc})`;
                                 // Cập nhật nút chỉnh sửa bản đồ
                                 $('#button-change').html(`
-                                                        <button class="btn btn-primary" id="edit-map-button" data-id="${maps[0].mapId}" data-toggle="modal" data-target="#add-edit-MapImage">
-                                                            <i class="anticon anticon-edit"></i>
-                                                            <span class="m-l-5">Edit Map</span>
-                                                        </button>
-                                                    `);
+                                                                <button class="btn btn-primary" id="edit-map-button" data-id="${maps[0].mapId}" data-toggle="modal" data-target="#add-edit-MapImage">
+                                                                    <i class="anticon anticon-edit"></i>
+                                                                    <span class="m-l-5">Edit Map</span>
+                                                                </button>
+                                                            `);
                                 $('#add-edit-map-btn').click(function () {
                                     var mapid = maps[0].mapId;
                                     editmap(mapid);
@@ -348,11 +347,11 @@
                                 getMapPointsByMapId(maps[0].mapId, buildingId, maps[0].floorId);
                             } else {
                                 $('#button-change').html(`
-                                                        <button class="btn btn-primary" id="add-map-button" data-toggle="modal" data-target="#add-edit-MapImage">
-                                                            <i class="anticon anticon-plus"></i>
-                                                            <span class="m-l-5">Add Map</span>
-                                                        </button>
-                                                    `);
+                                                                <button class="btn btn-primary" id="add-map-button" data-toggle="modal" data-target="#add-edit-MapImage">
+                                                                    <i class="anticon anticon-plus"></i>
+                                                                    <span class="m-l-5">Add Map</span>
+                                                                </button>
+                                                            `);
                                 console.log('No map found for the specified floor.');
                                 $('#add-edit-map-btn').click(function () {
                                     addNewMap();
@@ -396,7 +395,7 @@
                 formData.append('MapImage2D', imageFile);
             }
             $.ajax({
-                url: 'https://localhost:7186/api/maps',
+                url: 'https://localhost:7186/api/maps?memberId=' + user.userid,
                 type: 'POST',
                 data: formData,
                 contentType: false,
@@ -536,9 +535,6 @@
     document.getElementById('getMPButton').addEventListener('click', function () {
         // Gọi hàm renderPoints từ tệp JavaScript MappointDraw.js và truyền vào mappointList
         renderPoints(mappointList);
-    });
-    document.getElementById('connectEdgeButton').addEventListener('click', function () {
-        setEdge();
     });
     // Delete draw line
     document.getElementById("clear-canvas-btn").addEventListener("click", function () {

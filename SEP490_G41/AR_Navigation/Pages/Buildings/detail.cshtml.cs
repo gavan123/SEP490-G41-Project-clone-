@@ -16,9 +16,15 @@ namespace AR_Navigation.Pages.Buildings
             _webHostEnvironment = webHostEnvironment;
             _logger = logger;
         }
+
+
+        public void OnGet([FromRoute] int id)
+        {
+            Id = id;
+        }
+        [BindProperty]
         public int Id { get; set; }
 
-      
         [BindProperty]
         public IFormFile ImageFile { get; set; }
         public async Task<IActionResult> OnPostAddOrEditMapAsync()
@@ -41,8 +47,7 @@ namespace AR_Navigation.Pages.Buildings
             _logger.LogInformation($"Images directory: {imagesDirectory}");
 
 
-
-            return Page();
+            return RedirectToPage("/Buildings/Detail", new { id = Id });
         }
 
         public async Task<IActionResult> OnPostEditMappointMapAsync()
@@ -64,7 +69,8 @@ namespace AR_Navigation.Pages.Buildings
             }
             _logger.LogInformation($"Images directory: {imagesDirectory}");
 
-            return Page();
+            return RedirectToPage("/Buildings/Detail", new { id = Id });
+
         }
     }
 }

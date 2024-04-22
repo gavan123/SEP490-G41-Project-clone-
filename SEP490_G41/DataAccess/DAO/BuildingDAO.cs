@@ -85,6 +85,29 @@ namespace DataAccess.DAO
                 // Xóa từng tầng trong danh sách
                 foreach (var floor in floors)
                 {
+                    var maps = _context.Maps.Where(m => m.FloorId == floor.FloorId).ToList();
+                    foreach (var map in maps)
+                    {
+                        var mapId = map.MapId;
+                        // Xóa các dữ liệu liên quan đến bản đồ
+                        var mappoints = _context.Mappoints.Where(mp => mp.MapId == mapId).ToList();
+                        foreach (var mappoint in mappoints)
+                        {
+                            // Xóa các dữ liệu liên quan đến Mappoint
+                            var mappointId = mappoint.MapPointId;
+                            var mappointexs = _context.Mappointices.Where(me => me.MapPointId == mappointId).ToList();
+                            _context.Mappointices.RemoveRange(mappointexs);
+                            var mappointroutes = _context.Mappointroutes.Where(mr => mr.MapPointId == mappointId).ToList();
+                            _context.Mappointroutes.RemoveRange(mappointroutes);
+                            var edges = _context.Edges.Where(e => e.MapPointA == mappointId || e.MapPointB == mappointId).ToList();
+                            _context.Edges.RemoveRange(edges);
+
+                            _context.Mappoints.Remove(mappoint);
+                        }
+
+                        _context.Maps.Remove(map);
+                    }
+
                     _context.Floors.Remove(floor);
                 }
 
@@ -106,6 +129,7 @@ namespace DataAccess.DAO
                 throw;
             }
         }
+
 
         // Lấy danh sách tất cả các tòa nhà
         public List<Building> GetAllBuildings()
