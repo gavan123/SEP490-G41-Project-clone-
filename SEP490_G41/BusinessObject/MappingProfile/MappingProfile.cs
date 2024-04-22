@@ -68,6 +68,13 @@ namespace BusinessObject.MappingProfile
         {
             public Point Convert(string source, ResolutionContext context)
             {
+                // Remove leading and trailing whitespace
+                source = source.Trim();
+
+                if (source.Contains("\\n"))
+                {
+                    source = source.Replace("\\n", "");
+                }
                 // Parse the location string to extract the coordinates
                 string[] coordinates = source.Trim('[', ']').Split(',');
                 double latitude = double.Parse(coordinates[0].Trim());

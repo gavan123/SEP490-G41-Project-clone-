@@ -71,8 +71,7 @@
     <p id="editInfo"></p>
 
     <button id="clear-canvas-btn" class="btn btn-light btn-with-border">Delete draw</button>
-    <button id="add-mappoint-btn" class="btn btn-light btn-with-border" onclick="showSelectedPointInAddForm()">Add</button>
-    <button type="button" class="btn btn-light btn-with-border" onclick="setEditmappoint()">Edit</button>
+    <button id="add-mappoint-btn" class="btn btn-light btn-with-border" onclick="addEdgeConfirm()">Add Edge</button>
     <button type="button" class="btn btn-light btn-with-border" onclick="setDeleteMappoint()">Delete</button>
 
 
@@ -111,12 +110,16 @@
 
 <script>
     $(document).ready(function () {
+        var userJson = sessionStorage.getItem('user');
+        if (!userJson) {
+            window.location.href = '/Authen/Login';
+        }
         // Lấy mapId từ URL
         var mapId = window.location.pathname.split("/").pop();
 
         //Get map data by mapId
         $.ajax({
-            url: `https://finnsapi.developvn.click/api/maps/${mapId}`,
+            url: `http://localhost:7199/api/maps/${mapId}`,
             type: 'GET',
             success: function (map) {
                 // Cập nhật tên bản đồ
@@ -165,5 +168,6 @@
         var canvas = document.getElementById('canvas_data');
         var context = canvas.getContext('2d');
         context.clearRect(0, 0, canvas.width, canvas.height); // Xóa tất cả các đường vẽ trên canvas
+        edgeAddList = [];
     });
 </script>
