@@ -624,7 +624,7 @@
         $('#navbar-head').on('click', '#logout-link', function (e) {
             e.preventDefault();
             sessionStorage.removeItem('user');
-            window.location.href = $(this).attr('href');
+            window.location.href = '/HomePage/Home';
         });
     });
     function scrollToAboutUs(event) {
