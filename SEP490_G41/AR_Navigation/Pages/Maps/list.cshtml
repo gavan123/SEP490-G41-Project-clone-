@@ -117,19 +117,19 @@
                     <div class="form-group">
                         <label for="new-map-building">Facility</label>
                         <select class="form-control" id="new-map-facility">
-                            <!-- Options will be created by JavaScript -->
+                            <option value="0" disabled selected>Select by facility</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="new-map-building">Building</label>
                         <select class="form-control" id="new-map-building">
-                            <!-- Options will be created by JavaScript -->
+                            <option value="0" disabled selected>Select by building</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="new-map-floor">Floor</label>
                         <select class="form-control" id="new-map-floor">
-                            <!-- Options will be created by JavaScript -->
+                            <option value="0" disabled selected>Select by floor</option>
                         </select>
                     </div>
                     <button type="button" class="btn btn-primary" id="create-map-btn">Create Map</button>
@@ -415,6 +415,7 @@
             $('#map-facility').change(function () {
                 var selectedFacilityId = $(this).val(); // Lấy giá trị của facility đã chọn
                 $('#map-building').empty(); // Xóa tất cả các tùy chọn tòa nhà hiện có
+                $('#map-building').append('<option value="0" disabled selected>Select by building</option>');
 
                 // Tạo URL OData để lấy danh sách các tòa nhà từ facility đã chọn
                 var url = 'https://finnsapi.developvn.click/api/buildings?$filter=facilityId eq ' + selectedFacilityId;
@@ -438,6 +439,7 @@
         $('#new-map-facility').change(function () {
             var selectedFacilityId = $(this).val();
             $('#new-map-building').empty();
+            $('#new-map-building').append('<option value="0" disabled selected>Select by building</option>');
 
             if (selectedFacilityId !== '0') {
                 var url = 'https://finnsapi.developvn.click/api/buildings?$filter=facilityId eq ' + selectedFacilityId;
@@ -460,6 +462,7 @@
         $('#edit-map-facility').change(function () {
             var selectedFacilityId = $(this).val();
             $('#edit-map-building').empty();
+            $('#edit-map-building').append('<option value="0" disabled selected>Select by building</option>');
 
             if (selectedFacilityId !== '0') {
                 var url = 'https://finnsapi.developvn.click/api/buildings?$filter=facilityId eq ' + selectedFacilityId;
@@ -488,6 +491,7 @@
                 type: 'GET',
                 success: function (response) {
                     $('#new-map-floor').empty(); // Clear existing options
+                    $('#new-map-floor').append('<option value="0" disabled selected>Select by floor</option>');
                     response.forEach(function (floor) {
                         $('#new-map-floor').append('<option value="' + floor.floorId + '">' + floor.floorName + '</option>');
                     });

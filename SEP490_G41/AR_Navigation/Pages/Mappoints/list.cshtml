@@ -402,6 +402,8 @@
                 var selectedFacilityId = $(this).val(); // Lấy giá trị của facility đã chọn
                 $('#mappoint-building').empty(); // Xóa tất cả các tùy chọn tòa nhà hiện có
                 $('#mappoint-floor').empty(); // Xóa tất cả các tùy chọn tầng hiện có
+                $('#mappoint-building').append('<option value="0" disabled selected>Select by building</option>');
+
 
                 // Tạo URL OData để lấy danh sách các tòa nhà từ facility đã chọn
                 var url = 'https://finnsapi.developvn.click/api/buildings?$filter=facilityId eq ' + selectedFacilityId;
@@ -426,7 +428,7 @@
             $('#mappoint-building').change(function () {
                 var selectedBuildingId = $(this).val(); // Lấy giá trị của tòa nhà đã chọn
                 $('#mappoint-floor').empty(); // Xóa tất cả các tùy chọn tầng hiện có
-
+                $('#mappoint-floor').append('<option value="0" disabled selected>Select by floor</option>');
                 // Tạo URL OData để lấy danh sách các tầng từ tòa nhà đã chọn
                 var url = 'https://finnsapi.developvn.click/api/floors?$filter=buildingId eq ' + selectedBuildingId;
 
