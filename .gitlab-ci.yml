@@ -1,8 +1,10 @@
 stages:
-  - deploy
+  - deployBE
+  - deployFE
 
-deploy:
-  stage: deploy
+
+deployBE:
+  stage: deployBE
   script:
     - echo '------------------------------------------BUILD IMAGES------------------------------------------'
     - "cd SEP490_G41"
@@ -10,7 +12,22 @@ deploy:
     - docker images | grep 'finns-api-img' | grep -v 'latest' | awk '{print $3}' | xargs docker rmi || true
     - echo '--------------------------------------------DEPLOY-------------------------------'
     - docker stop finns-api-con || true
-    - docker run --rm -d --name finns-api-con -p 7199:7199 finns-api-img
+    - docker run --rm -d --name finns-api-con -p 7391:7391 finns-api-img
+  only:
+    - main
+  tags:
+    - linux
+
+deployFE:
+  stage: deployFE
+  script:
+    - echo '------------------------------------------BUILD IMAGES------------------------------------------'
+    - "cd SEP490_G41"
+    - docker build -t finns-fe-img -f AR_Navigation/Dockerfile .
+    - docker images | grep 'finns-fe-img' | grep -v 'latest' | awk '{print $3}' | xargs docker rmi || true
+    - echo '--------------------------------------------DEPLOY-------------------------------'
+    - docker stop finns-fe-con || true
+    - docker run --rm -d --name finns-fe-con -p 7224:7224 finns-fe-img
   only:
     - main
   tags:
