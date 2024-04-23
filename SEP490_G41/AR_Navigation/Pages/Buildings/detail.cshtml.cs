@@ -30,7 +30,7 @@ namespace AR_Navigation.Pages.Buildings
         public async Task<IActionResult> OnPostAddOrEditMapAsync()
         {
 
-            string imagesDirectory = Path.Combine(_webHostEnvironment.WebRootPath, "Images", "Map");
+            string imagesDirectory = Path.Combine(_webHostEnvironment.WebRootPath, "Images/Map");
 
             string uniqueFileName = null;
             if (ImageFile != null && ImageFile.Length > 0)
@@ -53,7 +53,7 @@ namespace AR_Navigation.Pages.Buildings
         public async Task<IActionResult> OnPostEditMappointMapAsync()
         {
 
-            string imagesDirectory = Path.Combine(_webHostEnvironment.WebRootPath, "Images", "Map");
+            string imagesDirectory = Path.Combine(_webHostEnvironment.WebRootPath, "Images/Map");
 
             string uniqueFileName = null;
             if (ImageFile != null && ImageFile.Length > 0)

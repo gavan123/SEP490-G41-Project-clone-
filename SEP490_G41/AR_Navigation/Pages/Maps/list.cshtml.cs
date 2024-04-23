@@ -21,7 +21,7 @@ namespace AR_Navigation.Pages.Maps
         public async Task<IActionResult> OnPostCreateBuildingAsync()
         {
 
-            string imagesDirectory = Path.Combine(_webHostEnvironment.WebRootPath, "Images", "Map");
+            string imagesDirectory = Path.Combine(_webHostEnvironment.WebRootPath, "Images/Map");
 
             string uniqueFileName = null;
             if (ImageFile != null && ImageFile.Length > 0)
@@ -44,7 +44,7 @@ namespace AR_Navigation.Pages.Maps
         public async Task<IActionResult> OnPostEditBuildingAsync()
         {
 
-            string imagesDirectory = Path.Combine(_webHostEnvironment.WebRootPath, "Images", "Map");
+            string imagesDirectory = Path.Combine(_webHostEnvironment.WebRootPath, "Images/Map";
 
             string uniqueFileName = null;
             if (ImageFile != null && ImageFile.Length > 0)
