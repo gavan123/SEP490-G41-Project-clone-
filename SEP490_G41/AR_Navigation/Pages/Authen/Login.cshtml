@@ -98,9 +98,8 @@
                         });
                         console.log('User information:', response.username);
 
-                        var user = { userid: response.memberId, fullname: response.fullName, username: response.username, role: response.roleId, avatar: response.avatar };
+                        var user = { userid: response.memberId, fullname: response.fullName, username: response.username, role: response.roleId, avatar: response.avatar, status: response.status };
                         sessionStorage.setItem('user', JSON.stringify(user));
-                        console.log(sessionStorage.getItem('user'));
 
                         window.location.href = '/Buildings/list';
                     },
