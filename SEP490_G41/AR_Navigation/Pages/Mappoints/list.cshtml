@@ -202,84 +202,125 @@
                 });
             }
         }
+
+        var currentPage = 1;
         var itemsPerPage = 5;
 
-        // Get map point list from API
         function updateMapPointList(mapPoints, currentPage, itemsPerPage) {
             const startIndex = (currentPage - 1) * itemsPerPage;
-            const endIndex = startIndex + itemsPerPage;
+            const endIndex = Math.min(startIndex + itemsPerPage, mapPoints.length);
             const mapPointsToShow = mapPoints.slice(startIndex, endIndex);
 
             $('#map-list').empty();
 
             for (const mapPoint of mapPointsToShow) {
                 const mapPointRow = `
-                    <tr>
-                        <td>${mapPoint.mappointName}</td>
-                        <td>${mapPoint.locationWeb}</td>
-                        <td>${mapPoint.locationApp}</td>
-                            <td>${mapPoint.locationGps}</td>
-                                <td>${mapPoint.floorName}</td>
-                                <td>${mapPoint.buildingName}</td>
-                            <td>
-                                 <div class="avatar avatar-image rounded"><img src="/Images/Mappoint/${mapPoint.image}" alt=""> </div>
-                            </td>
-                            <td class="text-right">
-                                        <div class="dropdown dropdown-animated scale-left">
-                            
-
-                            <button class="btn btn-primary viewMappoint"" type="button"  data-id="${mapPoint.mapPointId}">View Detail</button>
-
-                                    
-                </div>
+                <tr>
+                    <td>${mapPoint.mappointName}</td>
+                    <td>${mapPoint.locationWeb}</td>
+                    <td>${mapPoint.locationApp}</td>
+                    <td>${mapPoint.locationGps}</td>
+                    <td>${mapPoint.floorName}</td>
+                    <td>${mapPoint.buildingName}</td>
+                    <td>
+                        <div class="avatar avatar-image rounded"><img src="/Images/${mapPoint.image}" alt=""> </div>
+                    </td>
+                    <td class="text-right">
+                        <div class="dropdown dropdown-animated scale-left">
+                            <button class="btn btn-primary viewMappoint" type="button" data-id="${mapPoint.mapPointId}">View Detail</button>
                         </div>
-                                </td>
-                    </tr>
-                `;
+                    </td>
+                </tr>
+            `;
 
                 $('#map-list').append(mapPointRow);
             }
         }
 
-        //tạo phân trang
-        function createPagination(totalPages, buildings) {
-            var pagination = $('#pagination');
-            var currentPage = 1; // Trang hiện tại
 
+        function createPagination(totalPages, mapPoints) {
+            var pagination = $('#pagination');
             if (totalPages > 0) {
                 pagination.empty();
+                var startPage = Math.max(1, currentPage - 2);
+                var endPage = Math.min(totalPages, currentPage + 2);
 
-                // Nút "Previous"
-                pagination.append('<li class="page-item" id="prevPage"><a class="page-link" href="#" aria-label="Previous">&laquo;</a></li>');
+                // Thêm nút "Prev"
+                var prevLi = $('<li class="page-item"><a class="page-link" href="#">Prev</a></li>');
+                prevLi.data('page', 'Prev');
+                pagination.append(prevLi);
 
-                // Hiển thị trang hiện tại ở giữa
-                pagination.append('<li class="page-item active"><a class="page-link" href="#">' + currentPage + '</a></li>');
+                // Tạo các nút phân trang
+                for (var i = startPage; i <= endPage; i++) {
+                    var li = $('<li class="page-item"><a class="page-link" href="#">' + i + '</a></li>');
+                    li.data('page', i);
+                    if (i === currentPage) {
+                        li.addClass('active');
+                    }
+                    pagination.append(li);
+                }
 
-                // Nút "Next"
-                pagination.append('<li class="page-item" id="nextPage"><a class="page-link" href="#" aria-label="Next">&raquo;</a></li>');
+                // Thêm nút "Next"
+                var nextLi = $('<li class="page-item"><a class="page-link" href="#">Next</a></li>');
+                nextLi.data('page', 'Next');
+                pagination.append(nextLi);
 
-                pagination.parent().show(); // Hiển thị phân trang và cha của nó
+                pagination.show();
             } else {
-                pagination.parent().hide(); // Ẩn phân trang và cha của nó nếu không có trang nào
+                pagination.hide();
             }
 
-            pagination.off('click').on('click', '#prevPage, #nextPage', function (event) {
+            pagination.off('click').on('click', 'a', function (event) {
                 event.preventDefault();
-                if (this.id === "prevPage" && currentPage > 1) {
-                    currentPage--;
-                } else if (this.id === "nextPage" && currentPage < totalPages) {
-                    currentPage++;
+                var page = $(this).parent().data('page');
+                if (page === 'Next') {
+                    currentPage = Math.min(currentPage + 1, totalPages);
+                } else if (page === 'Prev') {
+                    currentPage = Math.max(currentPage - 1, 1);
+                } else {
+                    currentPage = page;
                 }
-                updatePagination();
-                updateBuildingList(buildings, currentPage, itemsPerPage);
+                updatePagination(totalPages, mapPoints);
+                updateMapPointList(mapPoints, currentPage, itemsPerPage);
             });
+        }
 
-            function updatePagination() {
-                pagination.find('.page-item.active').removeClass('active');
-                pagination.find('li:nth-child(2)').html('<a class="page-link" href="#">' + currentPage + '</a>').addClass('active');
+        function updatePagination(totalPages, mapPoints) {
+            var pagination = $('#pagination');
+            var startPage = Math.max(1, currentPage - 2);
+            var endPage = Math.min(totalPages, currentPage + 2);
+
+            // Cập nhật nút "Prev"
+            var prevLi = pagination.find('li:first');
+            if (currentPage === 1) {
+                prevLi.addClass('disabled');
+            } else {
+                prevLi.removeClass('disabled');
+            }
+
+            // Cập nhật các nút phân trang
+            var pageLinks = pagination.find('li:not(:first):not(:last)');
+            pageLinks.removeClass('active');
+            for (var i = 0; i < pageLinks.length; i++) {
+                var pageLink = $(pageLinks[i]);
+                var page = startPage + i;
+                pageLink.find('a').text(page);
+                pageLink.data('page', page);
+                if (page === currentPage) {
+                    pageLink.addClass('active');
+                }
+            }
+
+            // Cập nhật nút "Next"
+            var nextLi = pagination.find('li:last');
+            if (currentPage === totalPages) {
+                nextLi.addClass('disabled');
+            } else {
+                nextLi.removeClass('disabled');
             }
         }
 
+       
 
         // Get map point list from API
         $.ajax({
