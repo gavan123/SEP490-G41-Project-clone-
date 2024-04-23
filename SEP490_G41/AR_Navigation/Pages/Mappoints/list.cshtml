@@ -188,54 +188,69 @@
             window.location.href = '/Authen/Login';
             return;
         }
+
+        var currentPage = 1;
         var itemsPerPage = 5;
 
-        // Get map point list from API
         function updateMapPointList(mapPoints, currentPage, itemsPerPage) {
             const startIndex = (currentPage - 1) * itemsPerPage;
-            const endIndex = startIndex + itemsPerPage;
+            const endIndex = Math.min(startIndex + itemsPerPage, mapPoints.length);
             const mapPointsToShow = mapPoints.slice(startIndex, endIndex);
 
             $('#map-list').empty();
 
             for (const mapPoint of mapPointsToShow) {
                 const mapPointRow = `
-                    <tr>
-                        <td>${mapPoint.mappointName}</td>
-                        <td>${mapPoint.locationWeb}</td>
-                        <td>${mapPoint.locationApp}</td>
-                            <td>${mapPoint.locationGps}</td>
-                                <td>${mapPoint.floorName}</td>
-                                <td>${mapPoint.buildingName}</td>
-                            <td>
-                                 <div class="avatar avatar-image rounded"><img src="/Images/${mapPoint.image}" alt=""> </div>
-                            </td>
-                            <td class="text-right">
-                                        <div class="dropdown dropdown-animated scale-left">
-                            
-
-                            <button class="btn btn-primary viewMappoint"" type="button"  data-id="${mapPoint.mapPointId}">View Detail</button>
-
-                                    
-                </div>
+                <tr>
+                    <td>${mapPoint.mappointName}</td>
+                    <td>${mapPoint.locationWeb}</td>
+                    <td>${mapPoint.locationApp}</td>
+                    <td>${mapPoint.locationGps}</td>
+                    <td>${mapPoint.floorName}</td>
+                    <td>${mapPoint.buildingName}</td>
+                    <td>
+                        <div class="avatar avatar-image rounded"><img src="/Images/${mapPoint.image}" alt=""> </div>
+                    </td>
+                    <td class="text-right">
+                        <div class="dropdown dropdown-animated scale-left">
+                            <button class="btn btn-primary viewMappoint" type="button" data-id="${mapPoint.mapPointId}">View Detail</button>
                         </div>
-                                </td>
-                    </tr>
-                `;
+                    </td>
+                </tr>
+            `;
 
                 $('#map-list').append(mapPointRow);
             }
         }
 
+
         function createPagination(totalPages, mapPoints) {
             var pagination = $('#pagination');
             if (totalPages > 0) {
                 pagination.empty();
-                for (var i = 1; i <= totalPages; i++) {
+                var startPage = Math.max(1, currentPage - 2);
+                var endPage = Math.min(totalPages, currentPage + 2);
+
+                // Thêm nút "Prev"
+                var prevLi = $('<li class="page-item"><a class="page-link" href="#">Prev</a></li>');
+                prevLi.data('page', 'Prev');
+                pagination.append(prevLi);
+
+                // Tạo các nút phân trang
+                for (var i = startPage; i <= endPage; i++) {
                     var li = $('<li class="page-item"><a class="page-link" href="#">' + i + '</a></li>');
                     li.data('page', i);
+                    if (i === currentPage) {
+                        li.addClass('active');
+                    }
                     pagination.append(li);
                 }
+
+                // Thêm nút "Next"
+                var nextLi = $('<li class="page-item"><a class="page-link" href="#">Next</a></li>');
+                nextLi.data('page', 'Next');
+                pagination.append(nextLi);
+
                 pagination.show();
             } else {
                 pagination.hide();
@@ -244,8 +259,51 @@
             pagination.off('click').on('click', 'a', function (event) {
                 event.preventDefault();
                 var page = $(this).parent().data('page');
-                updateMapPointList(mapPoints, page, itemsPerPage);
+                if (page === 'Next') {
+                    currentPage = Math.min(currentPage + 1, totalPages);
+                } else if (page === 'Prev') {
+                    currentPage = Math.max(currentPage - 1, 1);
+                } else {
+                    currentPage = page;
+                }
+                updatePagination(totalPages, mapPoints);
+                updateMapPointList(mapPoints, currentPage, itemsPerPage);
             });
+        }
+
+        function updatePagination(totalPages, mapPoints) {
+            var pagination = $('#pagination');
+            var startPage = Math.max(1, currentPage - 2);
+            var endPage = Math.min(totalPages, currentPage + 2);
+
+            // Cập nhật nút "Prev"
+            var prevLi = pagination.find('li:first');
+            if (currentPage === 1) {
+                prevLi.addClass('disabled');
+            } else {
+                prevLi.removeClass('disabled');
+            }
+
+            // Cập nhật các nút phân trang
+            var pageLinks = pagination.find('li:not(:first):not(:last)');
+            pageLinks.removeClass('active');
+            for (var i = 0; i < pageLinks.length; i++) {
+                var pageLink = $(pageLinks[i]);
+                var page = startPage + i;
+                pageLink.find('a').text(page);
+                pageLink.data('page', page);
+                if (page === currentPage) {
+                    pageLink.addClass('active');
+                }
+            }
+
+            // Cập nhật nút "Next"
+            var nextLi = pagination.find('li:last');
+            if (currentPage === totalPages) {
+                nextLi.addClass('disabled');
+            } else {
+                nextLi.removeClass('disabled');
+            }
         }
 
         // Get map point list from API
