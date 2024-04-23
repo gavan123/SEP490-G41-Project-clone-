@@ -240,8 +240,6 @@
 
         function createPagination(totalPages, mapPoints) {
             var pagination = $('#pagination');
-            var currentPage = 1; // Trang hiện tại
-
             if (totalPages > 0) {
                 pagination.empty();
                 var startPage = Math.max(1, currentPage - 2);
@@ -269,10 +267,10 @@
 
                 pagination.show();
             } else {
-                pagination.parent().hide(); // Ẩn phân trang và cha của nó nếu không có trang nào
+                pagination.hide();
             }
 
-            pagination.off('click').on('click', '#prevPage', function (event) {
+            pagination.off('click').on('click', 'a', function (event) {
                 event.preventDefault();
                 var page = $(this).parent().data('page');
                 if (page === 'Next') {
@@ -285,20 +283,6 @@
                 updatePagination(totalPages, mapPoints);
                 updateMapPointList(mapPoints, currentPage, itemsPerPage);
             });
-
-            pagination.off('click').on('click', '#nextPage', function (event) {
-                event.preventDefault();
-                if (currentPage < totalPages) {
-                    currentPage++;
-                    updatePagination();
-                    updateMapPointList(list, currentPage, itemsPerPage);
-                }
-            });
-
-            function updatePagination() {
-                pagination.find('.page-item.active').removeClass('active');
-                pagination.find('li:nth-child(2)').html('<a class="page-link" href="#">' + currentPage + '</a>').addClass('active');
-            }
         }
 
         function updatePagination(totalPages, mapPoints) {
@@ -335,6 +319,8 @@
                 nextLi.removeClass('disabled');
             }
         }
+
+       
 
         // Get map point list from API
         $.ajax({
