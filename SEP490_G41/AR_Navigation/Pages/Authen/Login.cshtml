@@ -85,7 +85,7 @@
 
                 // Gửi yêu cầu đăng nhập qua API
                 $.ajax({
-                    url: 'https://finnsapi.developvn.click/api/members/Login?username=' + username + '&password=' + password,
+                    url: 'http://localhost:7199/api/members/Login?username=' + username + '&password=' + password,
                     type: 'GET',
                     success: function (response) {
                         console.log('Login successful');
