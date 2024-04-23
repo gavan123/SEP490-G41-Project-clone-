@@ -275,7 +275,7 @@
                      $('#mappoint-image').attr('src', originalImageSrc);
                 // Gọi API để lấy thông tin map theo mapId
                     $.ajax({
-                        url: `http://localhost:7199/api/maps/${mapId}`,
+                    url: `https://finnsapi.developvn.click/api/maps/${mapId}`,
                         type: 'GET',
                         dataType: 'json',
                         success: function (map) {
