@@ -15,11 +15,16 @@ namespace AR_Navigation.Pages.Mappoints
             _webHostEnvironment = webHostEnvironment;
             _logger = logger;
         }
-
+        public void OnGet([FromRoute] int id)
+        {
+            Id = id;
+        }
+        [BindProperty]
+        public int Id { get; set; }
 
         [BindProperty]
         public IFormFile ImageFile { get; set; }
-        public async Task<IActionResult> OnPostCreateBuildingAsync()
+        public async Task<IActionResult> OnPostEditMappointAsync()
         {
 
             string imagesDirectory = Path.Combine(_webHostEnvironment.WebRootPath, "Images/Mappoint");
@@ -39,30 +44,9 @@ namespace AR_Navigation.Pages.Mappoints
             _logger.LogInformation($"Images directory: {imagesDirectory}");
 
 
-            return RedirectToPage("/Maps/list");
+            return RedirectToPage("/Mappoints/detail", new { id = Id });
         }
 
-        public async Task<IActionResult> OnPostEditBuildingAsync()
-        {
-
-            string imagesDirectory = Path.Combine(_webHostEnvironment.WebRootPath, "Images/Mappoint");
-
-            string uniqueFileName = null;
-            if (ImageFile != null && ImageFile.Length > 0)
-            {
-                uniqueFileName = ImageFile.FileName;
-
-                string filePath = Path.Combine(imagesDirectory, uniqueFileName);
-
-                using (var stream = new FileStream(filePath, FileMode.Create))
-                {
-                    await ImageFile.CopyToAsync(stream);
-                }
-            }
-            _logger.LogInformation($"Images directory: {imagesDirectory}");
-
-
-            return RedirectToPage("/Maps/list");
-        }
+     
     }
 }

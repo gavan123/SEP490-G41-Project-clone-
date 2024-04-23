@@ -62,7 +62,7 @@
     </div>
     <div id="edit-form" style="display: none;">
         <h3>Edit Mappoint</h3>
-        <form>
+        <form asp-page="/Mappoints/detail" asp-page-handler="EditMappoint" id="form-edit-mapapoint" method="post" enctype="multipart/form-data">
             <input type="hidden" class="form-control" id="mappointID" name="name">
             <input type="hidden" class="form-control" id="mapID" name="name">
             <input type="hidden" class="form-control" id="floorID" name="name">
@@ -174,7 +174,7 @@
                         title: 'Success',
                         text: 'Map point update successfully!'
                     }).then(function () {
-                        location.reload();
+                        $('#form-edit-mapapoint').submit();
                     });
                     $('#edit-form').hide();
                 },
