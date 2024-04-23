@@ -261,7 +261,7 @@
 
         // Get map point list from API
         $.ajax({
-            url: 'http://14.225.205.28:7391/api/mappoints',
+            url: 'https://finns.developvn.click/api/mappoints',
             type: 'GET',
             dataType: 'json',
             success: function (mapPoints) {
@@ -281,7 +281,7 @@
             const selectedFloorId = $('#mappoint-floor').val(); // Get the selected floorId
             const selectedDestination = $('#mappoint-destination-switch').is(':checked'); // Get the selected destination
 
-            let url = 'http://14.225.205.28:7391/api/mappoints';
+            let url = 'https://finns.developvn.click/api/mappoints';
             let filters = [];
 
             if (selectedBuildingId !== '0' && selectedBuildingId) {
@@ -321,7 +321,7 @@
         $(document).ready(function () {
             // Load danh sách các cơ sở ban đầu
             $.ajax({
-                url: 'http://14.225.205.28:7391/api/facilities',
+                url: 'https://finns.developvn.click/api/facilities',
                 type: 'GET',
                 success: function (response) {
                     response.forEach(function (facility) {
@@ -341,7 +341,7 @@
                 $('#mappoint-floor').empty(); // Xóa tất cả các tùy chọn tầng hiện có
 
                 // Tạo URL OData để lấy danh sách các tòa nhà từ facility đã chọn
-                var url = 'http://14.225.205.28:7391/api/buildings?$filter=facilityId eq ' + selectedFacilityId;
+                var url = 'https://finns.developvn.click/api/buildings?$filter=facilityId eq ' + selectedFacilityId;
 
                 // Gửi yêu cầu AJAX để lấy danh sách các tòa nhà từ facility đã chọn
                 $.ajax({
@@ -365,7 +365,7 @@
                 $('#mappoint-floor').empty(); // Xóa tất cả các tùy chọn tầng hiện có
 
                 // Tạo URL OData để lấy danh sách các tầng từ tòa nhà đã chọn
-                var url = 'http://14.225.205.28:7391/api/floors?$filter=buildingId eq ' + selectedBuildingId;
+                var url = 'https://finns.developvn.click/api/floors?$filter=buildingId eq ' + selectedBuildingId;
 
                 // Gửi yêu cầu AJAX để lấy danh sách các tầng từ tòa nhà đã chọn
                 $.ajax({
@@ -413,7 +413,7 @@
             formData.append('Image', image);
 
             $.ajax({
-                url: 'http://14.225.205.28:7391/api/mappoints',
+                url: 'https://finns.developvn.click/api/mappoints',
                 type: 'POST',
                 data: formData,
                 contentType: false,
@@ -454,7 +454,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: 'http://14.225.205.28:7391/api/mappoints/' + mapPointId,
+                        url: 'https://finns.developvn.click/api/mappoints/' + mapPointId,
                         type: 'DELETE',
                         success: function (response) {
                             Swal.fire(
@@ -485,7 +485,7 @@
 
         function showEditModal(mapPointId) {
             $.ajax({
-                url: 'http://14.225.205.28:7391/api/mappoints/' + mapPointId,
+                url: 'https://finns.developvn.click/api/mappoints/' + mapPointId,
                 type: 'GET',
                 dataType: 'json',
                 success: function (mapPoint) {
@@ -537,7 +537,7 @@
             formData.append('Image', image);
 
             $.ajax({
-                url: 'http://14.225.205.28:7391/api/mappoints/' + mapPointId,
+                url: 'https://finns.developvn.click/api/mappoints/' + mapPointId,
                 type: 'PUT',
                 data: formData,
                 contentType: false,
