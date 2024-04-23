@@ -58,7 +58,36 @@ namespace AR_NavigationAPI.Controllers
             return BadRequest("Password is incorrect!");
             
         }
-
+        [HttpPut("ResetPassword/{id}")]
+        public IActionResult ResetPassword(int id, string newpass)
+        {
+            var check = _memberRepository.ResetPassword(id, newpass);
+            if (check == true)
+            {
+                return Ok();
+            }
+            return BadRequest();
+        }
+        [HttpGet("GetMemberByEmail")]
+        public IActionResult GetMemberByEmail(string email)
+        {
+            var code = _memberRepository.GetMemberByEmail(email);
+            if (code == null)
+            {
+                return BadRequest();
+            }
+            return Ok(code);
+        }
+        [HttpGet("GetCode")]
+        public IActionResult GetCode(string email)
+        {
+            var code = _memberRepository.SendCode(email);
+            if (code == null)
+            {
+                return BadRequest();
+            }
+            return Ok(code);
+        }
         [HttpGet("Login")]
         public IActionResult Login(string username, string password)
         {

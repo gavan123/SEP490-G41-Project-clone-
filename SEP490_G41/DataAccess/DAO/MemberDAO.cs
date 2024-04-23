@@ -66,13 +66,18 @@ namespace DataAccess.DAO
         }
         #endregion
 
-        #region Search member by DoB
-        public List<Member> SearchMemberByDoB(DateTime date)
+        #region Get member by email
+        public Member GetMemberByEmail(string email)
         {
-            var list = _context.Members.Where(m => m.DoB == date).ToList();
-            return list;
+            var member = _context.Members.FirstOrDefault(m => m.Email == email);
+            if (member != null)
+            {
+                return member;
+            }
+            return null;
         }
         #endregion
+
 
         #region Search member by name
         public List<Member> SearchMemberByName(string name)
@@ -90,39 +95,57 @@ namespace DataAccess.DAO
         {
             return null;
         }
-        #region Send email
-        public bool SendEmail(string email)
+        #region Send code
+        public string SendCode(string email)
         {
-            // Thông tin tài khoản email gửi
-            string emailFrom = "catminh2k1@gmail.com";
-            string password = "xtgf kmfb bgtv rkqe";
-            try
+            var mem = _context.Members.FirstOrDefault(m => m.Email == email);
+            if (mem != null)
             {
-                // Tạo một đối tượng MailMessage
-                MailMessage mail = new MailMessage();
-                mail.From = new MailAddress(emailFrom);
-                mail.To.Add(email);
-                mail.IsBodyHtml = true;
-                mail.Subject = "Reset Code";
-                mail.Body = @"This is your reset code: " + validate.RandomCode();
+                // Thông tin tài khoản email gửi
+                string emailFrom = "catminh2k1@gmail.com";
+                string password = "xtgf kmfb bgtv rkqe";
+                string code = validate.RandomCode();
+                try
+                {
+                    // Tạo một đối tượng MailMessage
+                    MailMessage mail = new MailMessage();
+                    mail.From = new MailAddress(emailFrom);
+                    mail.To.Add(email);
+                    mail.IsBodyHtml = true;
+                    mail.Subject = "Reset Code";
+                    mail.Body = @"This is your reset code: " + code;
 
-                // Cấu hình SMTP client
-                SmtpClient smtpServer = new SmtpClient("smtp.gmail.com", 587);
-                smtpServer.Credentials = new NetworkCredential(emailFrom, password);
-                // Sử dụng SSL/TLS
-                smtpServer.EnableSsl = true;
-                // Gửi email
-                smtpServer.Send(mail);
-                return true;
+                    // Cấu hình SMTP client
+                    SmtpClient smtpServer = new SmtpClient("smtp.gmail.com", 587);
+                    smtpServer.Credentials = new NetworkCredential(emailFrom, password);
+                    // Sử dụng SSL/TLS
+                    smtpServer.EnableSsl = true;
+                    // Gửi email
+                    smtpServer.Send(mail);
+                    return code;
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception();
+                }
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.StackTrace);
-                return false;
-            }
+            return null;
         }
         #endregion
+        #region Reset password
+        public bool ResetPassword(int id, string newpass)
+        {
+            var memEx = _context.Members.FirstOrDefault(m => m.MemberId == id);
+            if (memEx != null)
+            {
+                memEx.Password = validate.EncodePassword(newpass);
+                _context.SaveChanges();
+                return true;
+            }
+            return false;
+        }
 
+        #endregion
         #region Change password
         public string ChangePassword(int id,ChangePasswordModel changePassword)
         {
@@ -162,6 +185,7 @@ namespace DataAccess.DAO
                 _context.SaveChanges();
             }
         }
+
     }
 }
 

@@ -14,10 +14,12 @@ namespace DataAccess.IRepository
         void AddNewMember(AddMemberDTO member);
         bool DeleteMember(int id);
         List<MemberDTO> SearchMemberByName(string name);
-        List<MemberDTO> SearchMemberByDoB(DateTime date);
+        public MemberDTO GetMemberByEmail(string email);
+        public string SendCode(string email);
         /*public List<MemberDTO> SearchMemberByStatus(string status);*/
         MemberDTO Login(string username, string password);
         string ChangePassword(int id, ChangePasswordModel changePass);
         void UpdateMemberStatus(MemberStatusDTO member);
+        public bool ResetPassword(int id, string newpass);
     }
 }
