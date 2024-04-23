@@ -82,7 +82,7 @@
         }
 
         $.ajax({
-            url: 'https://finnsapi.developvn.click/api/members',
+            url: 'http://14.225.205.28:7391/api/members',
             type: 'GET',
             contentType: 'application/json',
             success: function (members) {
@@ -168,7 +168,7 @@
 
             // Gọi API UpdateMemberStatus
             $.ajax({
-                url: 'https://finnsapi.developvn.click/api/members/updateStatus',
+                url: 'http://14.225.205.28:7391/api/members/updateStatus',
                 type: 'PUT',
                 contentType: 'application/json', // Đặt header Content-Type là JSON
                 data: JSON.stringify(data), // Chuyển đổi dữ liệu thành chuỗi JSON
