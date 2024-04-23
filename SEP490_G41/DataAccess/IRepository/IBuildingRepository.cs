@@ -1,4 +1,5 @@
 ﻿using BusinessObject.DTO;
+using DataAccess.DAO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,5 @@ namespace DataAccess.IRepository
         void AddBuilding(BuildingAddDTO building);
         void UpdateBuilding(BuildingUpdateDTO building);
         void DeleteBuilding(int buildingId);
-
-        
     }
 }

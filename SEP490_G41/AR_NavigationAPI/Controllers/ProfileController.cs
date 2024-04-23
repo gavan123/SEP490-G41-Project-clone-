@@ -1,6 +1,8 @@
 ﻿using BusinessObject.DTO;
+using BusinessObject.Validate;
 using DataAccess.IRepository;
 using DataAccess.IRepository.Repository;
+using K4os.Compression.LZ4.Internal;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Routing.Controllers;
 
@@ -11,12 +13,13 @@ namespace AR_NavigationAPI.Controllers
     public class ProfileController : ODataController
     {
         private readonly IProfileRepository _profileRepository;
+        Validate validate = new Validate();
         public ProfileController(IProfileRepository profileRepository)
         {
             _profileRepository = profileRepository;
         }
 
-        // GET: api/buildings/5
+        // GET: api/buildings/1
         [HttpGet("{id}")]
         public IActionResult GetMemberById(int id)
         {
@@ -29,9 +32,9 @@ namespace AR_NavigationAPI.Controllers
 
             return Ok(profile);
         }
-        // PUT: api/buildings/5
+        // PUT: api/buildings/1
         [HttpPut("{id}")]
-        public IActionResult UpdateProfileById(int id, MemberUpdateDTO progfile)
+        public IActionResult UpdateProfileById(int id,[FromForm] MemberUpdateDTO progfile)
         {
             var tmpProfile = _profileRepository.GetMemberById(id);
             if (tmpProfile == null)
@@ -42,5 +45,7 @@ namespace AR_NavigationAPI.Controllers
 
             return Ok();
         }
+   
+
     }
 }

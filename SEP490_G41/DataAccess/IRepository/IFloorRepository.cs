@@ -10,6 +10,7 @@ namespace DataAccess.IRepository
     public interface IFloorRepository
     {
         FloorDTO GetFloorById(int floorId);
+        List<FloorDTO> GetAllFloorsByBuildingId(int buildingId);
         List<FloorDTO> GetAllFloors();
         void AddFloor(FloorAddDTO floor);
         void UpdateFloor(FloorDTO floor);

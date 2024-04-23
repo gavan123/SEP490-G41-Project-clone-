@@ -10,13 +10,14 @@ namespace DataAccess.IRepository
 {
     public interface IMemberRepository
     {
-        public List<MemberDTO> GetAllMembers();
-        public void AddNewMember(AddMemberDTO member);
-        public bool DeleteMember(int id);
-        public List<MemberDTO> SearchMemberByName(string name);
-        public List<MemberDTO> SearchMemberByDoB(DateTime date);
-        public List<MemberDTO> SearchMemberByStatus(string status);
-        public MemberDTO Login(string username, string password);
-        public string ChangePassword(int id, string oldpass, string newpass, string re_newpass);
+        List<MemberDTO> GetAllMembers();
+        void AddNewMember(AddMemberDTO member);
+        bool DeleteMember(int id);
+        List<MemberDTO> SearchMemberByName(string name);
+        List<MemberDTO> SearchMemberByDoB(DateTime date);
+        /*public List<MemberDTO> SearchMemberByStatus(string status);*/
+        MemberDTO Login(string username, string password);
+        string ChangePassword(int id, ChangePasswordModel changePass);
+        void UpdateMemberStatus(MemberStatusDTO member);
     }
 }

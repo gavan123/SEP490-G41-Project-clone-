@@ -1,0 +1,201 @@
+﻿@page "{id:int}"
+@model AR_Navigation.Pages.Mappoints.detailModel
+@{
+    Layout = "_AdminLayout";
+}
+<head>
+
+</head>
+<style>
+   
+    .img-magnifier-glass {
+        position: absolute;
+        border: 3px solid #000;
+        border-radius: 50%;
+        cursor: none;
+        width: 100px;
+        height: 100px;
+    }
+
+    .selected-image-container2 {
+        width: 400px;
+        height: 200px;
+        border: 2px solid #ced4da;
+        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 10px;
+    }
+
+        .selected-image-container2 img {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 8px;
+        }
+
+    canvas {
+        width: 100%;
+        background-position: center;
+        background-size: 100%;
+        background-clip: border-box;
+        background-repeat: no-repeat;
+    }
+</style>
+<div class="page-header no-gutters">
+    <h1>Mappoint Detail</h1>
+    <div class="row align-items-md-center">
+        <div class="col-md-12">
+            <div class="text-md-right m-v-10" id="button-change">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="selected-image-container" id="map-images-container">
+        <canvas id="canvas_data" width="1065%"
+                onclick="pixelLocation(event), databaseLocation(event)">
+        </canvas>
+    </div>
+    <div class="selected-image-container2">
+        <img id="mappoint-image" src="" alt="Mappoint Image">
+    </div>
+    <div class="text-md-right m-v-10" id="button-change">
+        <button id="edit-btn" class="btn btn-primary">Edit</button>
+    </div>
+    <div id="edit-form" style="display: none;">
+        <h3>Edit Mappoint</h3>
+        <form>
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" class="form-control" id="name" name="name">
+            </div>
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea class="form-control" id="description" name="description"></textarea>
+            </div>
+            <!-- Thêm các trường khác tùy theo yêu cầu -->
+            <button type="button" id="save-btn" class="btn btn-primary">Save</button>
+            <button type="button" id="cancel-btn" class="btn btn-secondary">Cancel</button>
+        </form>
+    </div>
+</div>
+
+<!-- Content Wrapper END -->
+@* Modal Map Image*@
+<script src="/js/detailMappoint.js"></script>
+<script>
+
+    $(document).ready(function () {
+        // ...
+
+        $('#edit-btn').click(function () {
+            // Hiển thị form chỉnh sửa
+            $('#edit-form').show();
+
+            // Lấy thông tin mappoint từ API và điền vào form
+            $.ajax({
+                url: `https://finnsapi.developvn.click/api/mappoints/${mappointId}`,
+                type: 'GET',
+                dataType: 'json',
+                success: function (mapPoint) {
+                    $('#name').val(mapPoint.name);
+                    $('#description').val(mapPoint.description);
+                    // Điền các trường khác tùy theo yêu cầu
+                },
+                error: function (xhr, status, error) {
+                    console.log('Error loading mappoint from API: ' + error);
+                }
+            });
+        });
+
+        $('#save-btn').click(function () {
+            // Lấy dữ liệu từ form
+            const name = $('#name').val();
+            const description = $('#description').val();
+            // Lấy các trường khác tùy theo yêu cầu
+
+            // Gửi dữ liệu lên API
+            $.ajax({
+                url: `https://finnsapi.developvn.click/api/mappoints/${mappointId}`,
+                type: 'PUT',
+                data: JSON.stringify({ name, description /* Thêm các trường khác tùy theo yêu cầu */ }),
+                contentType: 'application/json',
+                success: function (response) {
+                    console.log('Mappoint updated successfully');
+                    // Ẩn form chỉnh sửa
+                    $('#edit-form').hide();
+                },
+                error: function (xhr, status, error) {
+                    console.log('Error updating mappoint: ' + error);
+                }
+            });
+        });
+
+        $('#cancel-btn').click(function () {
+            // Ẩn form chỉnh sửa
+            $('#edit-form').hide();
+        });
+
+    });
+    
+    $(document).ready(function () {
+        //session
+        var userJson = sessionStorage.getItem('user');
+        if (!userJson) {
+            window.location.href = '/Authen/Login';
+        } else {
+            var user = JSON.parse(userJson);
+            if (user.status !== "active") {
+                // Display SweetAlert message
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Access Denied',
+                    text: 'You do not have permission to access this page.',
+                    showConfirmButton: false,
+                    timer: 2000 // Close the alert after 2 seconds
+                }).then((result) => {
+                    // Redirect to login page after the alert is closed
+                    window.location.href = '/HomePage/Home';
+                });
+            }
+        }
+        var mappointId = window.location.pathname.split("/").pop();
+
+        $.ajax({
+            url: `https://finnsapi.developvn.click/api/mappoints/${mappointId}`,
+            type: 'GET',
+            dataType: 'json',
+            success: function (mapPoint) {
+                    const mapId = mapPoint.mapId;
+                $('#mappoint-image').attr('src', `/Images/${mapPoint.image}`);
+                    // Gọi API để lấy thông tin map theo mapId
+                    $.ajax({
+                        url: `https://finnsapi.developvn.click/api/maps/${mapId}`,
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function (map) {
+                            // Lấy mapImage2D từ map
+                            const mapImage2D = map.mapImage2D;
+                            getMapPointsByMapId(map.mapId, mappointId);
+                            // Sử dụng mapImage2D để hiển thị ảnh
+                            var imageSrc = `/Images/${mapImage2D}`;
+                            var canvas = document.getElementById('canvas_data');
+                            canvas.style.backgroundImage = `url(${imageSrc})`;
+                        },
+                        error: function (xhr, status, error) {
+                            console.log('Error loading map from API: ' + error);
+                        }
+                    });
+               
+            },
+            error: function (xhr, status, error) {
+                console.log('Error loading map points from API: ' + error);
+            }
+        });
+    });
+
+
+
+</script>
+

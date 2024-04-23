@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace BusinessObject.Models
@@ -12,7 +12,7 @@ namespace BusinessObject.Models
 
         public int RoleId { get; set; }
         public string RoleName { get; set; } = null!;
-        public string Description { get; set; } = null!;
+        public string? Description { get; set; }
 
         public virtual ICollection<Member> Members { get; set; }
     }

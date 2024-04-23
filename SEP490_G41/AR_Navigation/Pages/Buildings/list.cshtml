@@ -1,7 +1,7 @@
 ﻿@page
 @model AR_Navigation.Pages.Buildings.listModel
 @{
-    Layout = "_Layout1";
+    Layout = "_AdminLayout";
 }
 <style>
     /* Đặt kích thước cho container chứa ảnh */
@@ -68,6 +68,11 @@
         </div>
     </div>
 </div>
+<nav aria-label="Page navigation">
+    <ul class="pagination" id="pagination">
+        <!-- Các nút phân trang sẽ được tạo bởi JavaScript -->
+    </ul>
+</nav>
 
 @* Modal Create Building*@
 <div class="modal fade" id="create-new-building">
@@ -197,22 +202,47 @@
 
 
 <script>
-     $(document).ready(function () {
 
+    $(document).ready(function () {
+         var userJson = sessionStorage.getItem('user');
+        if (!userJson) {
+            window.location.href = '/Authen/Login';
+        } else {
+            var user = JSON.parse(userJson);
+            if (user.status !== "active") {
+                // Display SweetAlert message
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Access Denied',
+                    text: 'You do not have permission to access this page.',
+                    showConfirmButton: false,
+                    timer: 2000 // Close the alert after 2 seconds
+                }).then((result) => {
+                    // Redirect to login page after the alert is closed
+                    window.location.href = '/HomePage/Home';
+                });
+            }
+        }
+
+        var itemsPerPage = 5;
         //Buiding table
-        async function updateBuildingList(buildings) {
+        async function updateBuildingList(buildings, currentPage, itemsPerPage) {
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const buildingsToShow = buildings.slice(startIndex, endIndex);
+
             // Sắp xếp danh sách tòa nhà theo tên (buildingName)
             buildings.sort((a, b) => a.buildingName.localeCompare(b.buildingName));
 
             $('#building-list').empty();
 
-            for (const building of buildings) {
+            for (const building of buildingsToShow) {
                 const buildingId = building.buildingId;
 
                 try {
                     // Gửi yêu cầu AJAX để lấy thông tin của tòa nhà
                     const floors = await $.ajax({
-                        url: `https://localhost:7186/api/floors?$filter=buildingId eq ${buildingId}`,
+                        url: `https://finnsapi.developvn.click/api/floors?$filter=buildingId eq ${buildingId}`,
                         type: 'GET',
                         dataType: 'json'
                     });
@@ -220,52 +250,52 @@
                     const count = floors.length;
                     const countText = count > 0 ? `${count} Floor` : `${count} Floor <span class="btn btn-sm btn-info addFloor" data-id="${building.buildingId}"><i class="fa fa-plus"></i></span> `;
                     const buildingRow = `
-                    <tr>
-                        <td>
-                            <div class="media align-items-center">
-                                <div class="avatar avatar-image rounded">
-                                    <img src="/Images/${building.image}" alt="">
-                                </div>
-                                <div class="m-l-10">
-                                    <h5 class="m-b-0">${building.buildingName}</h5>
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                               <span id="floorCount">${countText}</span>
-                        </td>
-                        <td>
-                            <div class="d-flex align-items-center">
-                                <div class="badge badge-${building.status === 'active' ? 'success' : 'danger'} badge-dot m-r-10"></div>
-                                <div>${building.status}</div>
-                            </div>
-                        </td>
-                        <td>
-                            <span>${building.facilityName}</span>
-                        </td>
-                        <td class="text-right">
-                                <div class="dropdown dropdown-animated scale-left">
-                    <a class="text-gray font-size-18" href="javascript:void(0);" data-toggle="dropdown">
-                        <i class="anticon anticon-ellipsis"></i>
-                    </a>
-                       <div class="dropdown-menu">
-            <button class="dropdown-item btn btn-info btn-tone viewBuilding" type="button" data-id="${building.buildingId}">
-                <i class="anticon anticon-eye"></i>
-                <span class="m-l-10">View</span>
-            </button>
-                <button class="dropdown-item btn btn-warning btn-tone editBuilding" type="button" data-id="${building.buildingId}">
-                <i class="anticon anticon-edit"></i>
-                <span class="m-l-10">Edit</span>
-            </button>
-                <button class="dropdown-item btn btn-danger btn-tone deleteBuilding" type="button" data-id="${building.buildingId}">
-                <i class="anticon anticon-delete"></i>
-                <span class="m-l-10">Delete</span>
-            </button>
-        </div>
+                            <tr>
+                                <td>
+                                    <div class="media align-items-center">
+                                        <div class="avatar avatar-image rounded">
+                                            <img src="/Images/${building.image}" alt="">
+                                        </div>
+                                        <div class="m-l-10">
+                                            <h5 class="m-b-0">${building.buildingName}</h5>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                       <span id="floorCount">${countText}</span>
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="badge badge-${building.status === 'active' ? 'success' : 'danger'} badge-dot m-r-10"></div>
+                                        <div>${building.status}</div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span>${building.facilityName}</span>
+                                </td>
+                                <td class="text-right">
+                                        <div class="dropdown dropdown-animated scale-left">
+                            <a class="text-gray font-size-18" href="javascript:void(0);" data-toggle="dropdown">
+                                <i class="anticon anticon-ellipsis"></i>
+                            </a>
+                               <div class="dropdown-menu">
+                    <button class="dropdown-item btn btn-info btn-tone viewBuilding" type="button" data-id="${building.buildingId}">
+                        <i class="anticon anticon-eye"></i>
+                        <span class="m-l-10">View</span>
+                    </button>
+                        <button class="dropdown-item btn btn-warning btn-tone editBuilding" type="button" data-id="${building.buildingId}">
+                        <i class="anticon anticon-edit"></i>
+                        <span class="m-l-10">Edit</span>
+                    </button>
+                        <button class="dropdown-item btn btn-danger btn-tone deleteBuilding" type="button" data-id="${building.buildingId}">
+                        <i class="anticon anticon-delete"></i>
+                        <span class="m-l-10">Delete</span>
+                    </button>
                 </div>
-                        </td>
-                    </tr>
-                `;
+                        </div>
+                                </td>
+                            </tr>
+                        `;
 
                     $('#building-list').append(buildingRow);
                 } catch (error) {
@@ -274,58 +304,69 @@
             }
         }
 
+        //tạo phân trang
+        function createPagination(totalPages, buildings) {
+            var pagination = $('#pagination');
+            if (totalPages > 0) {
+                pagination.empty();
+                for (var i = 1; i <= totalPages; i++) {
+                    var li = $('<li class="page-item"><a class="page-link" href="#">' + i + '</a></li>');
+                    li.data('page', i);
+                    pagination.append(li);
+                }
+                pagination.show();
+            } else {
+                pagination.hide();
+            }
+
+            pagination.off('click').on('click', 'a', function (event) {
+                event.preventDefault();
+                var page = $(this).parent().data('page');
+                updateBuildingList(buildings, page, itemsPerPage);
+            });
+        }
+
         // Get building list from API
         $.ajax({
-            url: 'https://localhost:7186/api/buildings',
+            url: 'https://finnsapi.developvn.click/api/buildings',
             type: 'GET',
             dataType: 'json',
             success: async function (buildings) {
-                await updateBuildingList(buildings);
+                const totalPages = Math.ceil(buildings.length / itemsPerPage);
+                await updateBuildingList(buildings, 1, itemsPerPage);
+                createPagination(totalPages, buildings); // Truyền danh sách buildings vào hàm createPagination
             },
             error: function (xhr, status, error) {
                 console.log('Error loading buildings from API: ' + error);
             }
         });
 
-<<<<<<< Updated upstream
-=======
-        $('#building-facility').on('change', function () {
+        //Filter building by facility
+        $('#building-facility').on('change', async function () {
             const selectedFacilityId = $(this).val(); // Lấy facilityId của tùy chọn đã chọn
 
-            if (selectedFacilityId === '0' || !selectedFacilityId) {
-                const url = 'https://localhost:7186/api/buildings';
-
-                $.ajax({
+            let url = 'https://finnsapi.developvn.click/api/buildings';
+            if (selectedFacilityId !== '0' && selectedFacilityId) {
+                url += '?filter=facilityId eq ' + selectedFacilityId;
+            }
+            try {
+                const response = await $.ajax({
                     url: url,
                     type: 'GET',
-                    success: async function (response) {
-                        await updateBuildingList(response);
-                    },
-                    error: function (xhr, status, error) {
-                        console.error('Error:', error);
-                    }
+                    dataType: 'json'
                 });
-            } else {
-                const url = 'https://localhost:7186/api/buildings?filter=facilityId eq ' + selectedFacilityId;
-
-                // Gửi yêu cầu AJAX
-                $.ajax({
-                    url: url,
-                    type: 'GET',
-                    success: async function (response) {
-                        await updateBuildingList(response);
-                    },
-                    error: function (xhr, status, error) {
-                        console.error('Error:', error);
-                    }
-                });
+                const totalPages = Math.ceil(response.length / itemsPerPage);
+                await updateBuildingList(response, 1, itemsPerPage, totalPages);
+                createPagination(totalPages, response);
+            } catch (error) {
+                console.error('Error:', error);
             }
         });
->>>>>>> Stashed changes
+
 
         //API get facility
         $.ajax({
-            url: 'https://localhost:7186/api/facilities',
+            url: 'https://finnsapi.developvn.click/api/facilities',
             type: 'GET',
             success: function (response) {
                 response.forEach(function (facility) {
@@ -359,7 +400,7 @@
 
             // Send an AJAX POST request to the API
             $.ajax({
-                url: 'https://localhost:7186/api/buildings',
+                url: 'https://finnsapi.developvn.click/api/buildings',
                 type: 'POST',
                 data: formData,
                 processData: false,
@@ -404,7 +445,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: 'https://localhost:7186/api/buildings/' + buildingId,
+                        url: 'https://finnsapi.developvn.click/api/buildings/' + buildingId,
                         type: 'DELETE',
                         success: function (response) {
                             console.log(response);
@@ -438,7 +479,7 @@
         //Get building data by buildingId
         function showEditModal(buildingId) {
             $.ajax({
-                url: 'https://localhost:7186/api/buildings/' + buildingId,
+                url: 'https://finnsapi.developvn.click/api/buildings/' + buildingId,
                 type: 'GET',
                 success: function (response) {
                     $('#building-id').val(response.buildingId);
@@ -452,7 +493,7 @@
                     var facilityName = '';
                     //API get facilities by ID
                     $.ajax({
-                        url: 'https://localhost:7186/api/facilities/' + response.facilityId,
+                        url: 'https://finnsapi.developvn.click/api/facilities/' + response.facilityId,
                         type: 'GET',
                         async: false,
                         success: function (facilityResponse) {
@@ -491,7 +532,7 @@
             }
 
             $.ajax({
-                url: 'https://localhost:7186/api/buildings/' + $('#building-id').val(),
+                url: 'https://finnsapi.developvn.click/api/buildings/' + $('#building-id').val(),
                 type: 'PUT',
                 data: formData,
                 contentType: false,
@@ -528,26 +569,26 @@
 
             // Gửi AJAX request
             $('#add-floor-btn').click(function (event) {
-                event.preventDefault(); 
+                event.preventDefault();
 
                 var floorCount = $('#floor-number').val();
 
-                var formDataArray = []; 
+                var formDataArray = [];
 
                 for (var i = 1; i <= floorCount; i++) {
                     var floorData = {
-                        FloorName: 'Floor ' + i, 
-                        Greeting: 'Welcome to Floor '+ i,
-                        Status: 'active', 
+                        FloorName: 'Floor ' + i,
+                        Greeting: 'Welcome to Floor ' + i,
+                        Status: 'active',
                         BuildingId: buildingId
                     };
 
-                    formDataArray.push(floorData); 
+                    formDataArray.push(floorData);
                 }
 
 
                 $.ajax({
-                    url: 'https://localhost:7186/api/floors',
+                    url: 'https://finnsapi.developvn.click/api/floors',
                     type: 'POST',
                     data: JSON.stringify(formDataArray),
                     contentType: 'application/json',
@@ -579,6 +620,7 @@
             var buildingId = $(this).data('id');
             window.location.href = `Detail/${buildingId}`;
         });
+
     });
 
 
@@ -599,7 +641,8 @@
 
         reader.readAsDataURL(file);
     }
-   
+
+
 </script>
 
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,14 +34,31 @@ namespace DataAccess.IRepository.Repository
 
         public void UpdateProfile(MemberUpdateDTO profile)
         {
+            
             try
             {
-                _profileDAO.UpdateProfile(_mapper.Map<Member>(profile));
+                string uniqueFileName = profile.Avatar.FileName;
+
+                var profileModel = new Member
+                {
+                    MemberId = profile.MemberId,
+                    FullName = profile.FullName,
+                    DoB = profile.DoB,
+                    Address = profile.Address,
+                    Phone = profile.Phone,
+                    Email = profile.Email,
+                    Country = profile.Country,
+                    Avatar = uniqueFileName
+                };
+                //_profileDAO.UpdateProfile(profileModel);
+                _profileDAO.UpdateProfile(_mapper.Map<Member>(profileModel));
+
             }
             catch (Exception ex)
             {
                 throw new Exception("Error occurred while updating member.", ex);
             }
         }
+       
     }
 }

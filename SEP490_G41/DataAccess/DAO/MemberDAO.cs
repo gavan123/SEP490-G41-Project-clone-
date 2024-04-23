@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using BusinessObject.Validate;
 using MySqlX.XDevAPI;
 using System.Xml.Linq;
+using BusinessObject.DTO;
 
 namespace DataAccess.DAO
 {
@@ -123,16 +124,16 @@ namespace DataAccess.DAO
         #endregion
 
         #region Change password
-        public string ChangePassword(int id, string oldpass, string newpass, string re_newpass)
+        public string ChangePassword(int id,ChangePasswordModel changePassword)
         {
-            var mem = _context.Members.FirstOrDefault(m => m.MemberId == id && m.Password.Equals(validate.EncodePassword(oldpass)));
+            var mem = _context.Members.FirstOrDefault(m => m.MemberId == id && m.Password.Equals(validate.EncodePassword(changePassword.OldPassword)));
             if (mem != null)
             {
-                if (oldpass != newpass)
+                if (changePassword.OldPassword != changePassword.NewPassword)
                 {
-                    if (newpass == re_newpass)
+                    if (changePassword.NewPassword == changePassword.ReNewPassword)
                     {
-                        mem.Password = validate.EncodePassword(newpass);
+                        mem.Password = validate.EncodePassword(changePassword.NewPassword);
                         _context.SaveChanges();
                         return "Success";
                     }
@@ -143,6 +144,24 @@ namespace DataAccess.DAO
             return "Incorrect";
         }
         #endregion
+
+        // Cập nhật thông tin Profile
+        public void UpdateMemberStatus(Member member)
+        {
+            if (member == null)
+            {
+                throw new ArgumentNullException(nameof(member));
+            }
+            var existingMember = _context.Members.FirstOrDefault(m => m.MemberId == member.MemberId);
+
+            if (existingMember != null)
+            {
+                // Cập nhật trạng thái thành viên
+                existingMember.Status = member.Status;
+
+                _context.SaveChanges();
+            }
+        }
     }
 }
 

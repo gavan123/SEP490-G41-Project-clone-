@@ -1,4 +1,5 @@
-﻿using BusinessObject.DTO;
+﻿using AutoMapper.Execution;
+using BusinessObject.DTO;
 using DataAccess.IRepository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Query;
@@ -31,35 +32,41 @@ namespace AR_NavigationAPI.Controllers
         [HttpGet("{id}")]
         public IActionResult GetMapById(int id)
         {
-            var map = _mapRepository.GetMapById(id);
+            if (id <= 0)
+                return BadRequest("Map ID must be a positive integer.");
 
+            var map = _mapRepository.GetMapById(id);
             if (map == null)
-            {
                 return NotFound();
-            }
 
             return Ok(map);
         }
 
         // POST: api/maps
         [HttpPost]
-        public ActionResult<MapAddDTO> AddMap(MapAddDTO map)
+        public ActionResult<MapAddDTO> AddMap([FromForm] MapAddDTO map, int memberId)
         {
-            _mapRepository.AddMap(map);
+            if (map == null)
+                return BadRequest("Map cannot be null.");
+            _mapRepository.AddMap(map, memberId);
             return Ok(map);
         }
 
         // PUT: api/maps/5
         [HttpPut("{id}")]
-        public IActionResult UpdateMapById(int id, MapUpdateDTO map)
+        public IActionResult UpdateMapById(int id, [FromForm] MapUpdateDTO map)
         {
+            if (id <= 0)
+                return BadRequest("Map ID must be a positive integer.");
+
+            if (map == null)
+                return BadRequest("Map cannot be null.");
+
             var tmpMap = _mapRepository.GetMapById(id);
             if (tmpMap == null)
-            {
                 return NotFound();
-            }
-            _mapRepository.UpdateMap(map);
 
+            _mapRepository.UpdateMap(map);
             return Ok();
         }
 
@@ -67,15 +74,14 @@ namespace AR_NavigationAPI.Controllers
         [HttpDelete("{id}")]
         public IActionResult DeleteMapById(int id)
         {
-            var map = _mapRepository.GetMapById(id);
+            if (id <= 0)
+                return BadRequest("Map ID must be a positive integer.");
 
+            var map = _mapRepository.GetMapById(id);
             if (map == null)
-            {
                 return NotFound();
-            }
 
             _mapRepository.DeleteMap(id);
-
             return Ok();
         }
     }

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using BusinessObject.Models;
+using BusinessObject.Validate;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.DAO
@@ -14,6 +15,7 @@ namespace DataAccess.DAO
     public class ProfileDAO
     {
         private readonly finsContext _context;
+        Validate validate = new Validate();
         public ProfileDAO(finsContext context)
         {
             _context = context;
@@ -28,21 +30,26 @@ namespace DataAccess.DAO
         // Cập nhật thông tin Profile
         public void UpdateProfile(Member member)
         {
+            if (member == null)
+            {
+                throw new ArgumentNullException(nameof(member));
+            }
             var existingMember = _context.Members.FirstOrDefault(m => m.MemberId == member.MemberId);
 
             if (existingMember != null)
             {
+                existingMember.MemberId = member.MemberId;
                 existingMember.FullName = member.FullName;
                 existingMember.DoB = member.DoB;
                 existingMember.Address = member.Address;
                 existingMember.Phone = member.Phone;
                 existingMember.Email = member.Email;
-                existingMember.Username = member.Username;
-                existingMember.Password = member.Password;
-                existingMember.Status = member.Phone;      
-
+                existingMember.Country = member.Country;
+                existingMember.Avatar = member.Avatar;
                 _context.SaveChanges();
             }
         }
+       
+
     }
 }

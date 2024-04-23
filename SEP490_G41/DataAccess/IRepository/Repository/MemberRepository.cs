@@ -1,7 +1,4 @@
-<<<<<<< Updated upstream
-=======
 ﻿using BusinessObject.Models;
->>>>>>> Stashed changes
 ﻿using AutoMapper;
 using BusinessObject.DTO;
 using DataAccess.DAO;
@@ -11,15 +8,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper.Execution;
+using Microsoft.EntityFrameworkCore;
+using System.Diagnostics.Metrics;
 
 namespace DataAccess.IRepository.Repository
 {
     public class MemberRepository : IMemberRepository
     {
-<<<<<<< Updated upstream
-=======
         
->>>>>>> Stashed changes
         private readonly IMapper _mapper;
         private readonly MemberDAO _memberDAO;
 
@@ -52,11 +48,11 @@ namespace DataAccess.IRepository.Repository
                 throw new Exception("Can't add new member");
             }
         }
-        public string ChangePassword(int id, string oldpass, string newpass, string re_newpass)
+        public string ChangePassword(int id, ChangePasswordModel changePassword)
         {
             try
             {
-                var result = _memberDAO.ChangePassword(id, oldpass, newpass, re_newpass);
+                var result = _memberDAO.ChangePassword(id, changePassword);
                 return result;
             }catch (Exception ex)
             {
@@ -125,22 +121,21 @@ namespace DataAccess.IRepository.Repository
             }
         }
 
-        public List<MemberDTO> SearchMemberByStatus(string status)
+        public void UpdateMemberStatus(MemberStatusDTO member)
         {
-<<<<<<< Updated upstream
             try
             {
-                var members = _memberDAO.SearchMemberByStatus(status);
-                var memberDTOs = members.Select(m => _mapper.Map<MemberDTO>(m)).ToList();
-                return memberDTOs;
+                var memberModel = new BusinessObject.Models.Member
+                {
+                    MemberId = member.MemberId,
+                    Status = member.Status,
+                };
+                _memberDAO.UpdateMemberStatus(_mapper.Map<BusinessObject.Models.Member>(memberModel));
             }
             catch (Exception ex)
             {
-                throw new Exception("Something has wrong!");
+                throw new Exception("Error occurred while updating member status.", ex);
             }
-=======
-            throw new NotImplementedException();
->>>>>>> Stashed changes
         }
     }
 }
