@@ -19,5 +19,8 @@ namespace DataAccess.IRepository
         MemberDTO Login(string username, string password);
         string ChangePassword(int id, ChangePasswordModel changePass);
         void UpdateMemberStatus(MemberStatusDTO member);
+        public MemberDTO GetMemberByEmail(string email);
+        public bool ResetPassword(int id, string newpass);
+        public string SendCode(string email);
     }
 }
