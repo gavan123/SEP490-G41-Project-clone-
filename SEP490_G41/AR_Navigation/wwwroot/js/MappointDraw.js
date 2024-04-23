@@ -742,7 +742,7 @@ function addEdge(list) {
     list.forEach(function (edge) {
         // Tạo một AJAX request để thêm cạnh
         $.ajax({
-            url: 'https://finnsapi.developvn.click/api/edges',
+            url: 'http://14.225.205.28:7391/api/edges',
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(edge),
