@@ -28,7 +28,7 @@ public class MapPointAddDTO
     public string LocationApp { get; set; } = null!;
     public string LocationGps { get; set; }
     public int FloorId { get; set; }
-    public int BuildingId { get; set; }
+    public int BuildingId { get; set; }     
 
 }
 
