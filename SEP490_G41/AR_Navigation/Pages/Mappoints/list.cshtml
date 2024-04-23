@@ -242,7 +242,7 @@
         }
 
         //tạo phân trang
-        function createPagination(totalPages, list) {
+        function createPagination(totalPages, buildings) {
             var pagination = $('#pagination');
             var currentPage = 1; // Trang hiện tại
 
@@ -263,22 +263,15 @@
                 pagination.parent().hide(); // Ẩn phân trang và cha của nó nếu không có trang nào
             }
 
-            pagination.off('click').on('click', '#prevPage', function (event) {
+            pagination.off('click').on('click', '#prevPage, #nextPage', function (event) {
                 event.preventDefault();
-                if (currentPage > 1) {
+                if (this.id === "prevPage" && currentPage > 1) {
                     currentPage--;
-                    updatePagination();
-                    updateMapPointList(list, currentPage, itemsPerPage);
-                }
-            });
-
-            pagination.off('click').on('click', '#nextPage', function (event) {
-                event.preventDefault();
-                if (currentPage < totalPages) {
+                } else if (this.id === "nextPage" && currentPage < totalPages) {
                     currentPage++;
-                    updatePagination();
-                    updateMapPointList(list, currentPage, itemsPerPage);
                 }
+                updatePagination();
+                updateBuildingList(buildings, currentPage, itemsPerPage);
             });
 
             function updatePagination() {
