@@ -243,16 +243,30 @@
     $(document).ready(function () {
         //session
         var userJson = sessionStorage.getItem('user');
-        var user = JSON.parse(userJson);
         if (!userJson) {
             window.location.href = '/Authen/Login';
+        } else {
+            var user = JSON.parse(userJson);
+            if (user.status !== "active") {
+                // Display SweetAlert message
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Access Denied',
+                    text: 'You do not have permission to access this page.',
+                    showConfirmButton: false,
+                    timer: 2000 // Close the alert after 2 seconds
+                }).then((result) => {
+                    // Redirect to login page after the alert is closed
+                    window.location.href = '/HomePage/Home';
+                });
+            }
         }
 
         var buildingId = window.location.pathname.split("/").pop();
 
         //Get data builind Detail
         $.ajax({
-            url: `http://localhost:7199/api/buildings/${buildingId}`,
+            url: `https://finnsapi.developvn.click/api/buildings/${buildingId}`,
             type: 'GET',
             success: function (building) {
                 // Cập nhật tên tòa nhà
@@ -260,7 +274,7 @@
 
                 // Gửi AJAX request để lấy thông tin về các tầng của tòa nhà
                 $.ajax({
-                    url: `http://localhost:7199/api/floors?$filter=buildingId eq ${buildingId}`,
+                    url: `https://finnsapi.developvn.click/api/floors?$filter=buildingId eq ${buildingId}`,
                     type: 'GET',
                     success: function (floors) {
                         // Tạo danh sách các tầng
@@ -316,11 +330,11 @@
         //update map image by floor
         function updateMapImage(floorId) {
             $.ajax({
-                url: `http://localhost:7199/api/maps?$filter=floorId eq ${floorId}`,
+                url: `https://finnsapi.developvn.click/api/maps?$filter=floorId eq ${floorId}`,
                 type: 'GET',
                 success: function (maps) {
                     $.ajax({
-                        url: `http://localhost:7199/api/floors/${floorId}`,
+                        url: `https://finnsapi.developvn.click/api/floors/${floorId}`,
                         type: 'GET',
                         dataType: 'json',
                         success: function (floorData) {
@@ -395,7 +409,7 @@
                 formData.append('MapImage2D', imageFile);
             }
             $.ajax({
-                url: 'http://localhost:7199/api/maps?memberId=' + user.userid,
+                url: 'https://finnsapi.developvn.click/api/maps?memberId=' + user.userid,
                 type: 'POST',
                 data: formData,
                 contentType: false,
@@ -443,7 +457,7 @@
             }
 
             $.ajax({
-                url: `http://localhost:7199/api/maps/${mapId}`,
+                url: `https://finnsapi.developvn.click/api/maps/${mapId}`,
                 type: 'PUT',
                 data: formData,
                 contentType: false,
@@ -478,7 +492,7 @@
         //show map info
         function showEdit(mapId) {
             $.ajax({
-                url: `http://localhost:7199/api/maps/${mapId}`,
+                url: `https://finnsapi.developvn.click/api/maps/${mapId}`,
                 type: 'GET',
                 success: function (map) {
                     $('#new-map-name').val(map.mapName);

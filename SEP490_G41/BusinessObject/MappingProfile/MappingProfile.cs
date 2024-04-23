@@ -52,6 +52,7 @@ namespace BusinessObject.MappingProfile
            .ForMember(dest => dest.LocationGps, opt => opt.ConvertUsing(new PointConverter(), src => src.LocationGps));
 
             CreateMap<Member, MemberDTO>().ReverseMap();
+            CreateMap<Member, MemberStatusDTO>().ReverseMap();
             CreateMap<Member, MemberUpdateDTO>().ReverseMap();
             CreateMap<Member, ChangePasswordModel>().ReverseMap();
 

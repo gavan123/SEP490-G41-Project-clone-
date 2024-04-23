@@ -85,7 +85,7 @@
 
                 // Gửi yêu cầu đăng nhập qua API
                 $.ajax({
-                    url: 'http://localhost:7199/api/members/Login?username=' + username + '&password=' + password,
+                    url: 'https://finnsapi.developvn.click/api/members/Login?username=' + username + '&password=' + password,
                     type: 'GET',
                     success: function (response) {
                         console.log('Login successful');
@@ -98,9 +98,8 @@
                         });
                         console.log('User information:', response.username);
 
-                        var user = { userid: response.memberId, fullname: response.fullName, username: response.username, role: response.roleId, avatar: response.avatar };
+                        var user = { userid: response.memberId, fullname: response.fullName, username: response.username, role: response.roleId, avatar: response.avatar, status: response.status };
                         sessionStorage.setItem('user', JSON.stringify(user));
-                        console.log(sessionStorage.getItem('user'));
 
                         window.location.href = '/Buildings/list';
                     },

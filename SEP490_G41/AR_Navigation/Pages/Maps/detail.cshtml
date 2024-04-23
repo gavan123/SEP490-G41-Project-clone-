@@ -113,13 +113,28 @@
         var userJson = sessionStorage.getItem('user');
         if (!userJson) {
             window.location.href = '/Authen/Login';
+        } else {
+            var user = JSON.parse(userJson);
+            if (user.status !== "active") {
+                // Display SweetAlert message
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Access Denied',
+                    text: 'You do not have permission to access this page.',
+                    showConfirmButton: false,
+                    timer: 2000 // Close the alert after 2 seconds
+                }).then((result) => {
+                    // Redirect to login page after the alert is closed
+                    window.location.href = '/HomePage/Home';
+                });
+            }
         }
         // Lấy mapId từ URL
         var mapId = window.location.pathname.split("/").pop();
 
         //Get map data by mapId
         $.ajax({
-            url: `http://localhost:7199/api/maps/${mapId}`,
+            url: `https://finnsapi.developvn.click/api/maps/${mapId}`,
             type: 'GET',
             success: function (map) {
                 // Cập nhật tên bản đồ

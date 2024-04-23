@@ -88,5 +88,18 @@ namespace AR_NavigationAPI.Controllers
                 return NotFound();
             }
         }
+        [HttpPut("updateStatus")]
+        public IActionResult UpdateMemberStatus(MemberStatusDTO member)
+        {
+            try
+            {
+                _memberRepository.UpdateMemberStatus(member);
+                return Ok("Member status updated successfully.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An error occurred while updating member status.");
+            }
+        }
     }
 }
