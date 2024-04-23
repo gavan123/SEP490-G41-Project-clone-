@@ -51,12 +51,14 @@ namespace DataAccess.IRepository.Repository
             double rotate = NumberFomula(pos2.LocationApp.X,
                 pos2.LocationApp.Y, pos1.LocationApp.X,
                 pos1.LocationApp.Y);
+            int min = pos1.FloorId;
+            int max = pos2.FloorId;
             foreach (Mappoint find in listOfMapPoint)
             {
                 result = NumberFomula(find.LocationApp.X,
                     find.LocationApp.Y, pos1.LocationApp.X,
                     pos1.LocationApp.Y);
-                if (result <= rotate * multi && (find.FloorId == pos1.FloorId || find.FloorId == pos2.FloorId) )
+                if (result <= rotate * multi && find.FloorId>=min && find.FloorId<=max)
                 {
                     if (!pointInAreaList.Contains(find))
                     {
@@ -166,6 +168,61 @@ namespace DataAccess.IRepository.Repository
             }
             return edge1;
         }
+        //public List<Mappoint> ShortestPath(int inputPosition, int inputDestination, int multi)
+        //{
+        //    List<Mappoint> result = new List<Mappoint>();
+        //    List<Mappoint> resultHalf = new List<Mappoint>();
+        //    Mappoint position = _mappointDAO.GetMappointById(inputPosition);
+        //    Mappoint destination = _mappointDAO.GetMappointById(inputDestination);
+        //    if (position.FloorId == destination.FloorId) 
+        //    {
+        //      result = Dijkstra(inputPosition, inputDestination, multi);
+        //    }
+        //    else
+        //    {
+        //        int stairAtPosition = NearestStairOrElevator(position) ;
+        //        result = Dijkstra(inputPosition, stairAtPosition, multi);
+        //        int stairAtDestination = NextStair(stairAtPosition, destination.FloorId);
+        //        resultHalf = Dijkstra(stairAtDestination, inputDestination, multi);
+        //        foreach(Mappoint m in resultHalf)
+        //        {
+        //             result.Add(m);
+        //        }
+        //    }
+        //    return result; 
+        //}
+        //public int NextStair(int currentStairId, int destinationFloorId)
+        //{
+        //    int nextStair = -1;
+        //    Mappoint mappoint = _mappointDAO.GetMappointById(currentStairId);
+        //    String name = mappoint.MapPointName.Substring(0, mappoint.MapPointName.Length - 1) + destinationFloorId;
+        //    Mappoint mappoint1 = _mappointDAO.SearchByName(name);
+        //    nextStair = mappoint1.MapPointId;
+        //    return nextStair;
+        //}
+
+        //public int NearestStairOrElevator(Mappoint position)
+        //{
+        //    List<Mappoint> mappoints = _mappointDAO.GetAllMappoints();
+
+        //    var nearestMappoint = mappoints
+        //        .Where(m => m.MapPointName.Contains("stair") || m.MapPointName.Contains("elevator")) // Lọc các điểm chứa "stair" hoặc "elevator"
+        //        .GroupBy(m => m.Floor) // Nhóm các mappoint theo tầng
+        //        .Where(group => group.Any()) // Loại bỏ các tầng không có stair hoặc elevator
+        //        .SelectMany(group => group) // Giải nén các nhóm
+        //        .OrderBy(m => Math.Sqrt(Math.Pow(m.LocationWeb.X - position.LocationWeb.Y, 2) + Math.Pow(m.LocationWeb.Y - position.LocationWeb.Y, 2))) // Sắp xếp các điểm theo khoảng cách Euclide
+        //        .FirstOrDefault(); // Chọn điểm gần nhất
+
+        //    if (nearestMappoint != null)
+        //    {
+        //        return nearestMappoint.MapPointId;
+        //    }
+        //    else
+        //    {
+        //        // Trả về -1 hoặc giá trị mặc định khác nếu không tìm thấy điểm gần nhất
+        //        return -1;
+        //    }
+        //}
 
         public List<Mappoint> Dijkstra(int inputPosition, int inputDestination,int multi)
         {

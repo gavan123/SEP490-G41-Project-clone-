@@ -136,7 +136,7 @@
             const name = $('#mappointName').val();
             const locationWeb = $('#locationWeb').val();
             const locationApp = $('#locationApp').val();
-            const locationGps = $('#locationGPS').val(); // Nếu không có giá trị, đặt là null
+            const locationGps = `[0,0]`; // Nếu không có giá trị, đặt là null
             const floorId = $('#floorID').val();
             const buildingId = $('#buildingID').val();
             const image = $('#edit-map-image')[0].files[0]; // Lấy file ảnh từ input file
@@ -151,14 +151,8 @@
             formData.append('LocationGps', locationGps);
             formData.append('FloorId', floorId);
             formData.append('BuildingId', buildingId);
-
-            if (image) {
-                // Nếu người dùng đã chọn ảnh mới, thêm ảnh mới vào FormData
+ // Nếu người dùng đã chọn ảnh mới, thêm ảnh mới vào FormData
                 formData.append('Image', image);
-            } else {
-                // Nếu không có ảnh mới, gửi tên của ảnh cũ để lấy ảnh cũ từ server
-                formData.append('Image', originalImageFileName);
-            }
 
             // Gửi dữ liệu lên API
             $.ajax({

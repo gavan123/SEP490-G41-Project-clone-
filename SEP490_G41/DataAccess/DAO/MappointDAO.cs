@@ -88,7 +88,6 @@ namespace DataAccess.DAO
         }
 
         // Xóa mappoint bằng Id
-        // Xóa mappoint bằng Id
         public void DeleteMappoint(int mappointId)
         {
             if (mappointId <= 0)
@@ -134,5 +133,23 @@ namespace DataAccess.DAO
                 throw new Exception("Error occurred while getting all map points.", ex);
             }
         }
+
+        // Tìm kiếm mappoint bằng tên
+        public Mappoint SearchByName(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                throw new ArgumentException("Value cannot be null or empty.");
+
+            try
+            {
+                // Sử dụng LINQ để tìm kiếm mappoint theo tên
+                return _context.Mappoints.FirstOrDefault(mp => mp.MapPointName.ToLower() == value.ToLower());
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error occurred while searching for map point by name.", ex);
+            }
+        }
+
     }
 }
