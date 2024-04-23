@@ -226,6 +226,8 @@
         }
 
         var itemsPerPage = 5;
+        var currentPage = 1; // Khởi tạo trang hiện tại là 1
+
         //Buiding table
         async function updateBuildingList(buildings, currentPage, itemsPerPage) {
             const startIndex = (currentPage - 1) * itemsPerPage;
@@ -251,52 +253,49 @@
                     const count = floors.length;
                     const countText = count > 0 ? `${count} Floor` : `${count} Floor <span class="btn btn-sm btn-info addFloor" data-id="${building.buildingId}"><i class="fa fa-plus"></i></span> `;
                     const buildingRow = `
-                            <tr>
-                                <td>
-                                    <div class="media align-items-center">
-                                        <div class="avatar avatar-image rounded">
-                                                <img src="/Images/Building/${building.image}" alt="">
-                                        </div>
-                                        <div class="m-l-10">
-                                            <h5 class="m-b-0">${building.buildingName}</h5>
-                                        </div>
+                        <tr>
+                            <td>
+                                <div class="media align-items-center">
+                                    <div class="avatar avatar-image rounded">
+                                            <img src="/Images/Building/${building.image}" alt="">
                                     </div>
-                                </td>
-                                <td>
-                                       <span id="floorCount">${countText}</span>
-                                </td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="badge badge-${building.status === 'active' ? 'success' : 'danger'} badge-dot m-r-10"></div>
-                                        <div>${building.status}</div>
+                                    <div class="m-l-10">
+                                        <h5 class="m-b-0">${building.buildingName}</h5>
                                     </div>
-                                </td>
-                                <td>
-                                    <span>${building.facilityName}</span>
-                                </td>
-                                <td class="text-right">
-                                        <div class="dropdown dropdown-animated scale-left">
-                            <a class="text-gray font-size-18" href="javascript:void(0);" data-toggle="dropdown">
-                                <i class="anticon anticon-ellipsis"></i>
-                            </a>
-                               <div class="dropdown-menu">
-                    <button class="dropdown-item btn btn-info btn-tone viewBuilding" type="button" data-id="${building.buildingId}">
-                        <i class="anticon anticon-eye"></i>
-                        <span class="m-l-10">View</span>
-                    </button>
-                        <button class="dropdown-item btn btn-warning btn-tone editBuilding" type="button" data-id="${building.buildingId}">
-                        <i class="anticon anticon-edit"></i>
-                        <span class="m-l-10">Edit</span>
-                    </button>
-                        <button class="dropdown-item btn btn-danger btn-tone deleteBuilding" type="button" data-id="${building.buildingId}">
-                        <i class="anticon anticon-delete"></i>
-                        <span class="m-l-10">Delete</span>
-                    </button>
-                </div>
-                        </div>
-                                </td>
-                            </tr>
-                        `;
+                                </div>
+                            </td>
+                            <td>
+                                    <span id="floorCount">${countText}</span>
+                            </td>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <div class="badge badge-${building.status === 'active' ? 'success' : 'danger'} badge-dot m-r-10"></div>
+                                    <div>${building.status}</div>
+                                </div>
+                            </td>
+                            <td>
+                                <span>${building.facilityName}</span>
+                            </td>
+                            <td class="text-right">
+                                    <div class="dropdown dropdown-animated scale-left">
+                        <a class="text-gray font-size-18" href="javascript:void(0);" data-toggle="dropdown">
+                            <i class="anticon anticon-ellipsis"></i>
+                        </a>
+                         <div class="dropdown-menu">
+                <button class="dropdown-item btn btn-info btn-tone viewBuilding" type="button" data-id="${building.buildingId}">
+                    <span class="m-l-10">View</span>
+                </button>
+                    <button class="dropdown-item btn btn-warning btn-tone editBuilding" type="button" data-id="${building.buildingId}">
+                    <span class="m-l-10">Edit</span>
+                </button>
+                    <button class="dropdown-item btn btn-danger btn-tone deleteBuilding" type="button" data-id="${building.buildingId}">
+                    <span class="m-l-10">Delete</span>
+                </button>
+            </div>
+                    </div>
+                            </td>
+                        </tr>
+                    `;
 
                     $('#building-list').append(buildingRow);
                 } catch (error) {
@@ -308,42 +307,82 @@
         //tạo phân trang
         function createPagination(totalPages, buildings) {
             var pagination = $('#pagination');
-            var currentPage = 1; // Trang hiện tại
 
             if (totalPages > 0) {
                 pagination.empty();
 
-                // Nút "Previous"
-                pagination.append('<li class="page-item" id="prevPage"><a class="page-link" href="#" aria-label="Previous">&laquo;</a></li>');
+                // Nút "Prev"
+                var prevLi = $('<li class="page-item"><a class="page-link" href="#">Prev</a></li>');
+                if (currentPage === 1) {
+                    prevLi.addClass('disabled');
+                }
+                pagination.append(prevLi);
 
-                // Hiển thị trang hiện tại ở giữa
-                pagination.append('<li class="page-item active"><a class="page-link" href="#">' + currentPage + '</a></li>');
+                // Hiển thị trang hiện tại và 2 trang xung quanh
+                var startPage = Math.max(1, currentPage - 1);
+                var endPage = Math.min(totalPages, currentPage + 1);
+
+                for (var i = startPage; i <= endPage; i++) {
+                    var pageLi = $('<li class="page-item"><a class="page-link" href="#">' + i + '</a></li>');
+                    if (i === currentPage) {
+                        pageLi.addClass('active');
+                    }
+                    pagination.append(pageLi);
+                }
 
                 // Nút "Next"
-                pagination.append('<li class="page-item" id="nextPage"><a class="page-link" href="#" aria-label="Next">&raquo;</a></li>');
+                var nextLi = $('<li class="page-item"><a class="page-link" href="#">Next</a></li>');
+                if (currentPage === totalPages) {
+                    nextLi.addClass('disabled');
+                }
+                pagination.append(nextLi);
 
-                pagination.parent().show(); // Hiển thị phân trang và cha của nó
+                pagination.show();
             } else {
-                pagination.parent().hide(); // Ẩn phân trang và cha của nó nếu không có trang nào
+                pagination.hide();
             }
 
-            pagination.off('click').on('click', '#prevPage, #nextPage', function (event) {
+            pagination.off('click').on('click', 'a', function (event) {
                 event.preventDefault();
-                if (this.id === "prevPage" && currentPage > 1) {
+                var page = $(this).parent().text();
+                if (page === 'Prev' && currentPage > 1) {
                     currentPage--;
-                } else if (this.id === "nextPage" && currentPage < totalPages) {
+                } else if (page === 'Next' && currentPage < totalPages) {
                     currentPage++;
+                } else {
+                    currentPage = parseInt(page);
                 }
-                updatePagination();
+                updatePagination(totalPages, buildings);
                 updateBuildingList(buildings, currentPage, itemsPerPage);
             });
-
-            function updatePagination() {
-                pagination.find('.page-item.active').removeClass('active');
-                pagination.find('li:nth-child(2)').html('<a class="page-link" href="#">' + currentPage + '</a>').addClass('active');
-            }
         }
 
+        function updatePagination(totalPages, buildings) {
+            var pagination = $('#pagination');
+            pagination.find('li').removeClass('active disabled');
+
+            // Nút "Prev"
+            var prevLi = pagination.find('li:first');
+            if (currentPage === 1) {
+                prevLi.addClass('disabled');
+            }
+
+            // Hiển thị trang hiện tại và 2 trang xung quanh
+            var startPage = Math.max(1, currentPage - 1);
+            var endPage = Math.min(totalPages, currentPage + 1);
+
+            pagination.find('li:not(:first):not(:last)').each(function (index) {
+                var pageNumber = startPage + index;
+                $(this).toggleClass('active', pageNumber === currentPage);
+                $(this).find('a').text(pageNumber);
+            });
+
+            // Nút "Next"
+            var nextLi = pagination.find('li:last');
+            if (currentPage === totalPages) {
+                nextLi.addClass('disabled');
+            }
+        }
 
         // Get building list from API
         $.ajax({
@@ -352,7 +391,7 @@
             dataType: 'json',
             success: async function (buildings) {
                 const totalPages = Math.ceil(buildings.length / itemsPerPage);
-                await updateBuildingList(buildings, 1, itemsPerPage);
+                await updateBuildingList(buildings, currentPage, itemsPerPage);
                 createPagination(totalPages, buildings); // Truyền danh sách buildings vào hàm createPagination
             },
             error: function (xhr, status, error) {
