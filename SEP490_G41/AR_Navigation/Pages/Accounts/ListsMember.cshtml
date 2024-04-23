@@ -73,7 +73,7 @@
                     title: 'Access Denied',
                     text: 'You do not have permission to access this page.',
                     showConfirmButton: false,
-                    timer: 2000 // Close the alert after 2 http://14.225.205.28:7391
+                    timer: 2000 // Close the alert after 2 seconds
                 }).then((result) => {
                     // Redirect to login page after the alert is closed
                     window.location.href = '/Buildings/list';
@@ -82,7 +82,7 @@
         }
 
         $.ajax({
-            url: 'http://14.225.205.28:7391/api/members',
+            url: 'https://finnsapi.developvn.click/api/members',
             type: 'GET',
             contentType: 'application/json',
             success: function (members) {
@@ -168,7 +168,7 @@
 
             // Gọi API UpdateMemberStatus
             $.ajax({
-                url: 'http://14.225.205.28:7391/api/members/updateStatus',
+                url: 'https://finnsapi.developvn.click/api/members/updateStatus',
                 type: 'PUT',
                 contentType: 'application/json', // Đặt header Content-Type là JSON
                 data: JSON.stringify(data), // Chuyển đổi dữ liệu thành chuỗi JSON
