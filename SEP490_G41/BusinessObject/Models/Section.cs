@@ -8,14 +8,12 @@ namespace BusinessObject.Models
     {
         public int SectionId { get; set; }
         public int FloorId { get; set; }
-
-        public string SectionName { get; set; }
+        public string SectionName { get; set; } = null!;
         public int Long { get; set; }
         public int Width { get; set; }
-        public Point UpCorner { get; set; }
-        public Point DownCorner { get; set; }
+        public Point UpCorner { get; set; } = null!;
+        public Point DownCorner { get; set; } = null!;
 
-        public virtual Floor Floor { get; set; }
-
+        public virtual Floor Floor { get; set; } = null!;
     }
 }

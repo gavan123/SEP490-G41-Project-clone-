@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BusinessObject.DTO;
 using BusinessObject.Models;
 using DataAccess.DAO;
 using NetTopologySuite.Features;
@@ -13,10 +14,14 @@ namespace DataAccess.IRepository.Repository
     {
         private readonly MappointDAO _mappointDAO;
         private readonly IMapper _mapper;
+        private readonly FloorDAO _floorDAO;
+        private readonly BuildingDAO _buildingDAO;
 
-        public MapPointRepository(MappointDAO mappointDAO, IMapper mapper)
+        public MapPointRepository(MappointDAO mappointDAO,BuildingDAO buildingDAO, FloorDAO floorDAO, IMapper mapper)
         {
             _mappointDAO = mappointDAO;
+            _buildingDAO = buildingDAO;
+            _floorDAO = floorDAO;
             _mapper = mapper;
         }
         public MapPointDTO GetMapPointById(int mapPointId)
@@ -33,32 +38,27 @@ namespace DataAccess.IRepository.Repository
         {
             try
             {
-                var mapPoints = _mappointDAO.GetAllMappoints();
-                var mapPointDTOs = mapPoints.Select(mapPoint =>
-                {
-                    var mapPointDTO = new MapPointDTO();
-                    mapPointDTO.MapPointId = mapPoint.MapPointId;
-                    mapPointDTO.MapId = mapPoint.MapId;
-                    mapPointDTO.MappointName = mapPoint.MapPointName;
-                    var geoJson = ConvertPointToGeoJson(mapPoint.LocationWeb);
-                    var coordinatesJson = ExtractCoordinatesFromGeoJson(geoJson);
-                    mapPointDTO.LocationWeb = coordinatesJson;
+                var mapPoints = _mappointDAO.GetAllMappoints()
+                    .Join(_buildingDAO.GetAllBuildings(), mp => mp.BuildingId, b => b.BuildingId, (mp, b) => new { MapPoint = mp, Building = b })
+                    .Join(_floorDAO.GetAllFloors(), mpb => mpb.MapPoint.FloorId, f => f.FloorId, (mpb, f) => new { mpb.MapPoint, mpb.Building, Floor = f });
 
-                    var geoJson1 = ConvertPointToGeoJson(mapPoint.LocationGps);
-                    var LocationGps = ExtractCoordinatesFromGeoJson(geoJson1);
-                    mapPointDTO.LocationGps = LocationGps;
-
-                    var geoJson2 = ConvertPointToGeoJson(mapPoint.LocationApp);
-                    var LocationApp = ExtractCoordinatesFromGeoJson(geoJson2);
-                    mapPointDTO.LocationApp = LocationApp;
-
-                    mapPointDTO.FloorId = mapPoint.FloorId;
-                    mapPointDTO.BuildingId = mapPoint.BuildingId;
-                    mapPointDTO.Image = mapPoint.Image;
-                    mapPointDTO.Destination = (bool)mapPoint.Destination;
-
-                    return mapPointDTO;
-                }).ToList();
+                var mapPointDTOs = mapPoints
+                    .Select(mpbf => new MapPointDTO
+                    {
+                        MapPointId = mpbf.MapPoint.MapPointId,
+                        MapId = mpbf.MapPoint.MapId,
+                        MappointName = mpbf.MapPoint.MapPointName,
+                        LocationWeb = ExtractCoordinatesFromGeoJson(ConvertPointToGeoJson(mpbf.MapPoint.LocationWeb)),
+                        LocationGps = ExtractCoordinatesFromGeoJson(ConvertPointToGeoJson(mpbf.MapPoint.LocationGps ?? GeometryFactory.Default.CreatePoint(new Coordinate(0, 0)))),
+                        LocationApp = ExtractCoordinatesFromGeoJson(ConvertPointToGeoJson(mpbf.MapPoint.LocationApp)),
+                        FloorId = mpbf.MapPoint.FloorId,
+                        BuildingId = mpbf.MapPoint.BuildingId,
+                        Image = mpbf.MapPoint.Image,
+                        Destination = mpbf.MapPoint.Destination ?? false,
+                        BuildingName = mpbf.Building.BuildingName,
+                        FloorName = mpbf.Floor.FloorName
+                    })
+                    .ToList();
 
                 return mapPointDTOs;
             }
@@ -163,13 +163,14 @@ namespace DataAccess.IRepository.Repository
 
             try
             {
+
                 // Get the existing Mappoint entity
                 var existingMapPoint = _mappointDAO.GetMappointById(mapPoint.MapPointId);
                 if (existingMapPoint == null)
                 {
                     throw new Exception($"MapPoint with ID {mapPoint.MapPointId} not found.");
                 }
-
+                string uniqueFileName = mapPoint.Image.FileName;
                 // Update the properties of the existing entity
                 string[] coordinates = mapPoint.LocationWeb.Trim('[', ']').Split(',');
                 double latitude = double.Parse(coordinates[0].Trim());
@@ -189,7 +190,7 @@ namespace DataAccess.IRepository.Repository
                 existingMapPoint.MapPointName = mapPoint.MappointName;
                 existingMapPoint.FloorId = mapPoint.FloorId;
                 existingMapPoint.BuildingId = mapPoint.BuildingId;
-                existingMapPoint.Image = mapPoint.Image;
+                existingMapPoint.Image = uniqueFileName;
                 existingMapPoint.MapId = mapPoint.MapId;
 
                 // Update the entity in the database

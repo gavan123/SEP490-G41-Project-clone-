@@ -1,0 +1,158 @@
+﻿@page "{id:int}"
+@model AR_Navigation.Pages.Mappoints.detailModel
+@{
+    Layout = "_AdminLayout";
+}
+<head>
+
+</head>
+<style>
+    .selected-image-container {
+        width: 1300px;
+        height: 400px;
+        border: 2px solid #ced4da;
+        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 10px;
+        position: relative;
+    }
+
+        .selected-image-container img {
+            width: 100%;
+            height: 260px;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+
+
+    .zoom-btn {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        padding: 5px;
+        margin-right: 5px;
+        cursor: pointer;
+    }
+
+    .img-magnifier-glass {
+        position: absolute;
+        border: 3px solid #000;
+        border-radius: 50%;
+        cursor: none;
+        width: 100px;
+        height: 100px;
+    }
+
+    .selected-image-container2 {
+        width: 400px;
+        height: 200px;
+        border: 2px solid #ced4da;
+        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 10px;
+    }
+
+        .selected-image-container2 img {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 8px;
+        }
+
+    canvas {
+        width: 100%;
+        background-position: center;
+        background-size: 100%;
+        background-clip: border-box;
+        background-repeat: no-repeat;
+    }
+</style>
+<div class="page-header no-gutters">
+    <h1>Mappoint Detail</h1>
+    <div class="row align-items-md-center">
+        <div class="col-md-12">
+            <div class="text-md-right m-v-10" id="button-change">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+  
+
+    <!-- Map Image -->
+    <button type="button" id="setRootButton" onclick="setRoot()">Set Root</button>
+    <button type="button" id="getMPButton" onclick="renderPoints()">Get Mappoints</button>
+    <button type="button" id="connectEdgeButton" onclick="setEdge()">Connect Edge</button>
+    <button type="button" id="undoButton" onclick="undo(1)">Undo</button>
+    <button type="button" id="newMappointButton" onclick="newMappoint()">New Mappoint</button>
+    <input type="text" id="searchMappoint" placeholder="Search by ID">
+    <button type="button" id="submitSearch" onclick="search()">Search</button>
+    <div class="selected-image-container" id="map-images-container">
+        <canvas id="canvas_data" width="1065%"
+                onclick="drawLine(event,this),pixelLocation(event), databaseLocation(event), count()">
+        </canvas>
+    </div>
+    <div id="demo"></div>
+    <div id="demo1"></div>
+    <button id="clear-canvas-btn">Delete draw</button>
+</div>
+
+<!-- Content Wrapper END -->
+@* Modal Map Image*@
+<script src="/js/MappointDraw.js"></script>
+<script>
+    document.getElementById('getMPButton').addEventListener('click', function () {
+        // Gọi hàm renderPoints từ tệp JavaScript MappointDraw.js và truyền vào mappointList
+        renderPoints(mappointList);
+    });
+    // Delete draw line
+    document.getElementById("clear-canvas-btn").addEventListener("click", function () {
+        var canvas = document.getElementById('canvas_data');
+        var context = canvas.getContext('2d');
+        context.clearRect(0, 0, canvas.width, canvas.height); // Xóa tất cả các đường vẽ trên canvas
+    });
+    $(document).ready(function () {
+        //session
+        var userJson = sessionStorage.getItem('user');
+        if (!userJson) {
+            window.location.href = '/Authen/Login';
+        }
+        var mappointId = window.location.pathname.split("/").pop();
+
+        $.ajax({
+            url: `https://finnsapi.developvn.click/api/mappoints/${mappointId}`,
+            type: 'GET',
+            dataType: 'json',
+            success: function (mapPoint) {
+                    const mapId = mapPoint.mapId;
+                    // Gọi API để lấy thông tin map theo mapId
+                    $.ajax({
+                        url: `https://finnsapi.developvn.click/api/maps/${mapId}`,
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function (map) {
+                            // Lấy mapImage2D từ map
+                            const mapImage2D = map.mapImage2D;
+
+                            // Sử dụng mapImage2D để hiển thị ảnh
+                            var imageSrc = `/Images/${mapImage2D}`;
+                            var canvas = document.getElementById('canvas_data');
+                            canvas.style.backgroundImage = `url(${imageSrc})`;
+                        },
+                        error: function (xhr, status, error) {
+                            console.log('Error loading map from API: ' + error);
+                        }
+                    });
+               
+            },
+            error: function (xhr, status, error) {
+                console.log('Error loading map points from API: ' + error);
+            }
+        });
+    });
+
+</script>
+

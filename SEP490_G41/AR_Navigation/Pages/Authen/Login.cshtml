@@ -1,183 +1,91 @@
 ﻿@page
 @model AR_Navigation.Pages.Authen.LoginModel
 @{
-}
-@{
     Layout = null;
 }
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>FinNS</title>
-    <link rel="shortcut icon" href="/Images/Logo.jpg">
-
-    <!-- page css -->
-    <!-- Core css -->
+    <title>FinS</title>
+    <link rel="shortcut icon" href="/Images/Logo.jpg" type="image/x-icon">
+    <link href="/assets/css/app.min.css" rel="stylesheet">
     <!-- Include ApexCharts CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/apexcharts@3.27.1/dist/apexcharts.min.css" rel="stylesheet">
+    <link href="/assets/vendors/datatables/dataTables.bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- SweetAlert CDN -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-
-    <style>
-        .app {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-            background-color: #f5f5f5; /* Màu nền cho toàn bộ ứng dụng */
-        }
-
-        .container {
-            width: 500px; /* Điều chỉnh độ rộng của form */
-            margin: 0 auto;
-        }
-
-        .card {
-            border: none; /* Loại bỏ viền của card */
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-            background-color: #fff; /* Màu nền của card */
-        }
-
-        .card-body {
-            padding: 40px;
-        }
-
-        h2 {
-            font-size: 28px;
-            font-weight: bold;
-            margin-bottom: 50px; /* Thêm khoảng cách dưới tiêu đề */
-            color: #333; /* Màu chữ cho tiêu đề */
-        }
-
-        p {
-            font-size: 16px;
-            margin-bottom: 30px;
-            color: #666; /* Màu chữ cho đoạn văn bản */
-        }
-
-        .form-group {
-            margin-bottom: 30px; /* Thêm khoảng cách giữa các input */
-        }
-
-        .label {
-            font-weight: bold;
-            color: #555; /* Màu chữ cho nhãn */
-        }
-
-        .input-affix input {
-            width: 100%; /* Đặt chiều rộng của input là 100% */
-            padding-left: 10px;
-            height: 40px;
-            border: 1px solid #ddd; /* Viền input */
-            border-radius: 5px; /* Bo tròn góc input */
-        }
-
-
-        .input-affix .prefix-icon {
-            position: absolute;
-            top: 50%;
-            left: 15px;
-            transform: translateY(-50%);
-            color: #999; /* Màu của icon */
-        }
-
-        .float-right {
-            float: right;
-        }
-
-        .btn-primary {
-            background-color: #007bff;
-            border-color: #007bff;
-            width: 100%; /* Đặt chiều rộng của nút là 100% */
-            height: 30px;
-        }
-
-            .btn-primary:hover {
-                background-color: #0056b3;
-                border-color: #0056b3;
-            }
-
-            .btn-primary:focus {
-                box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
-            }
-
-        .dh-logo {
-            width: 150px; /* Điều chỉnh kích thước của ảnh */
-            height: auto; /* Đảm bảo tỷ lệ khung hình không bị thay đổi */
-            display: block; /* Để căn giữa theo chiều ngang */
-            margin-left: auto; /* Để căn giữa theo chiều ngang */
-            margin-right: auto; /* Để căn giữa theo chiều ngang */
-        }
-
-    </style>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.27.1/dist/apexcharts.min.js"></script>
+    <script src="/assets/vendors/chartjs/Chart.min.js"></script>
 </head>
-
 <body>
-    <div class="app">
-        <div class="container-fluid">
-            <div class="d-flex full-height p-v-15 flex-column justify-content-between">
-                <div class="container">
-                    <div class="row align-items-center">
-                        <div class="col-md-6">
-                            <div class="card">
-                                <div class="card-body text-center">
-                                    <img src="/Images/Logo.jpg" alt="Logo" class="dh-logo">
-                                    <h2 class="m-t-20" style="text-align:center;">FPT Indoor Navigation System</h2>
-                                    <form asp-page="/Authen/Login" asp-page-handler="Login" id="form-login" method="post">
-                                        <div class="form-group">
-                                            <label class="font-weight-semibold" for="userName">Username:</label>
-                                            <div class="input-affix">
-                                                <i class="prefix-icon anticon anticon-user"></i>
-                                                <input type="text" class="form-control" id="userName" placeholder="Enter Username">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="font-weight-semibold" for="password">Password:</label>
-                                            <a class="float-right font-size-13 text-muted" href="">Forget Password?</a>
-                                            <div class="input-affix m-b-10">
-                                                <i class="prefix-icon anticon anticon-lock"></i>
-                                                <input type="password" class="form-control" id="password" placeholder="Password">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="d-flex align-items-center justify-content-between">
-                                                <span class="font-size-13 text-muted">
-                                                    Don't have an account?
-                                                    <a class="small" href=""> Signup</a>
-                                                </span>
-                                                <button class="btn btn-primary" id="login-btn" style="margin-top:10px;">Sign In</button>
-                                            </div>
-                                        </div>
-                                    </form>
+<style>
+    .app {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+</style>
+<div class="app">
+    <div class="container-fluid">
+        <div class="row justify-content-center align-items-center" style="height: 100vh;">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <div style="display: inline-block; text-decoration: none;">
+                            <img src="/Images/Logo.jpg" alt="Logo" style=" max-width: 40px; max-height: 40px;vertical-align: middle;">
+                            <h3 style="display: inline-block; font-weight: bold; margin-left: 10px; margin-top: 10px; vertical-align: middle;">FPT INDOOR NAVIGATION</h3>
+                        </div>
+                        <h2 class="m-t-20">Sign In</h2>
+                        <p class="m-b-30">Enter your credential to get access</p>
+                        <form asp-page="/Authen/Login" asp-page-handler="Login" id="form-login" method="post">
+                            <div class="form-group">
+                                <label class="font-weight-semibold" for="userName">Username:</label>
+                                <div class="input-affix">
+                                    <i class="prefix-icon anticon anticon-user"></i>
+                                    <input type="text" class="form-control" id="userName" placeholder="Username">
                                 </div>
                             </div>
-                        </div>
+                            <div class="form-group">
+                                <label class="font-weight-semibold" for="password">Password:</label>
+                                <a class="float-right font-size-13 text-muted" href="">Forget Password?</a>
+                                <div class="input-affix m-b-10">
+                                    <i class="prefix-icon anticon anticon-lock"></i>
+                                    <input type="password" class="form-control" id="password" placeholder="Password">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <span class="font-size-13 text-muted">
+                                        Don't have an account?
+                                        <a class="small" href=""> Signup</a>
+                                    </span>
+                                    <button class="btn btn-primary" id="login-btn">Sign In</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Core Vendors JS -->
-    <script src="/assets/js/vendors.min.js"></script>
-    <!-- page js -->
-    <script src="/assets/vendors/chartjs/Chart.min.js"></script>
-    <script src="/assets/js/pages/dashboard-default.js"></script>
-    <script src="/assets/js/pages/project-list.js"></script>
-    <!-- Core JS -->
-    <script src="/assets/js/app.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('#login-btn').click(function (event) {
-                event.preventDefault(); // Ngăn chặn form submit mặc định
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $('#login-btn').click(function (event) {
+            event.preventDefault(); // Ngăn chặn form submit mặc định
 
                 var username = $('#userName').val();
                 var password = $('#password').val();
 
                 // Gửi yêu cầu đăng nhập qua API
                 $.ajax({
-                    url: 'https://localhost:7186/api/members/Login?username=' + username + '&password=' + password,
+                    url: 'https://finnsapi.developvn.click/api/members/Login?username=' + username + '&password=' + password,
                     type: 'GET',
                     success: function (response) {
                         console.log('Login successful');

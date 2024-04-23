@@ -11,7 +11,9 @@ namespace BusinessObject.DTO
     {
         public int EdgeId { get; set; }
         public int MapPointA { get; set; }
+        public string MapPointAName { get; set; } = null!;
         public int MapPointB { get; set; }
+        public string MapPointBName { get; set; } = null!;
         public int Direction { get; set; }
         public double Distance { get; set; }
     }

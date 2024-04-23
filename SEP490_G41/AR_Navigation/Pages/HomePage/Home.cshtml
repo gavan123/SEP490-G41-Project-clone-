@@ -614,9 +614,9 @@
             var user = JSON.parse(userJson);
             console.log('Username:', user.username);
             console.log('Role:', user.role);
-            console.log('UserID:', user.userid);
+            
 
-            $('#navbar-head').append('<li class="nav-item"><a class="nav-link" id="logout-link" href="/HomePage/Home">Logout</a></li>');
+            $('#navbar-head').append('<li class="nav-item"><a class="nav-link" id="logout-link">Logout</a></li>');
             $('#navbar-head').append('<li class="nav-item"><a class="nav-link" href="/Buildings/list">Building</a></li>');
         } else {
             $('#navbar-head').append('<li class="nav-item"><a class="nav-link" href="/Authen/Login">Login</a></li>');
@@ -624,7 +624,6 @@
         $('#navbar-head').on('click', '#logout-link', function (e) {
             e.preventDefault();
             sessionStorage.removeItem('user');
-
             window.location.href = $(this).attr('href');
         });
     });

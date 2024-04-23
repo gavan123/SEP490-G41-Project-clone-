@@ -92,7 +92,10 @@ namespace DataAccess.DAO
         // Lấy danh sách tất cả các edges
         public List<Edge> GetAllEdges()
         {
-            return _context.Edges.ToList();
+            return _context.Edges
+                .Include(b => b.MapPointANavigation)
+                .Include(b => b.MapPointANavigation)
+                .ToList();
         }
     }
 }

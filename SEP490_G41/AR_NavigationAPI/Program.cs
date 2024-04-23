@@ -27,6 +27,10 @@ static IEdmModel GetEdmModel()
 }
 var builder = WebApplication.CreateBuilder(args);
 
+builder.WebHost.ConfigureKestrel(serverOptions =>
+{
+    serverOptions.ListenAnyIP(7199);
+});
 // Add services to the container.
 
 builder.Services.AddControllers().AddOData(option => option.Select()
@@ -57,11 +61,12 @@ builder.Services.AddScoped<MapDAO>();
 builder.Services.AddScoped<MappointDAO>();
 builder.Services.AddScoped<FloorDAO>();
 builder.Services.AddScoped<MemberDAO>();
-
-builder.Services.AddScoped<ProfileDAO>();
-
 builder.Services.AddScoped<MapManageDAO>();
 builder.Services.AddScoped<EdgeDAO>();
+builder.Services.AddScoped<ProfileDAO>();
+builder.Services.AddScoped<PathShortest>();
+
+
 
 
 builder.Services.AddScoped<IBuildingRepository, BuildingRepository>();
@@ -88,11 +93,10 @@ builder.Services.AddHttpContextAccessor();
 var app = builder.Build();
 app.UseSession();
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+
+app.UseSwagger();
+app.UseSwaggerUI();
+
 app.UseCors("AllowAll");
 
 app.UseAuthorization();

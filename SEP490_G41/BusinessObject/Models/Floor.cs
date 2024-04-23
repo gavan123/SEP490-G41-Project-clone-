@@ -19,7 +19,6 @@ namespace BusinessObject.Models
         public int BuildingId { get; set; }
 
         public virtual Building Building { get; set; } = null!;
-
         public virtual ICollection<Mappoint> Mappoints { get; set; }
         public virtual ICollection<Map> Maps { get; set; }
         public virtual ICollection<Section> Sections { get; set; }

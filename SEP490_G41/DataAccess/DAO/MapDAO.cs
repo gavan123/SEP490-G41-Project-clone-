@@ -21,7 +21,7 @@ namespace DataAccess.DAO
 
 
         // Thêm mới bản đồ
-        public void AddMap(Map map, Member member)
+        public void AddMap(Map map, int memberID)
         {
             if (map == null)
                 throw new ArgumentNullException(nameof(map));
@@ -43,7 +43,7 @@ namespace DataAccess.DAO
             var mapManage = new Mapmanage
             {
                 MapId = map.MapId,
-                MemberId = 2,
+                MemberId = memberID,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now
             };

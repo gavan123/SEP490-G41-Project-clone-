@@ -4,49 +4,9 @@
     Layout = "_AdminLayout";
 }
 <head>
-    <script src="/assets/vendors/datatables/jquery.dataTables.min.js"></script>
-    <script src="/assets/vendors/datatables/dataTables.bootstrap.min.js"></script>
-    <script src="/js/MappointDraw.js"></script>
+
 </head>
 <style>
-    .selected-image-container {
-        width: 1300px;
-        height: 400px;
-        border: 2px solid #ced4da;
-        border-radius: 10px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-top: 10px;
-        position: relative;
-    }
-
-        .selected-image-container img {
-            width: 100%;
-            height: 260px;
-            display: block;
-            margin-bottom: 10px;
-        }
-
-
-
-    .zoom-btn {
-        background-color: #fff;
-        border: 1px solid #ddd;
-        padding: 5px;
-        margin-right: 5px;
-        cursor: pointer;
-    }
-
-    .img-magnifier-glass {
-        position: absolute;
-        border: 3px solid #000;
-        border-radius: 50%;
-        cursor: none;
-        width: 100px;
-        height: 100px;
-    }
-
     .selected-image-container2 {
         width: 400px;
         height: 200px;
@@ -65,13 +25,25 @@
         }
 
     canvas {
-        width:100%;
-        background-image: url("/Images/Alpha_tang1.jpg");
+        width: 100%;
         background-position: center;
         background-size: 100%;
         background-clip: border-box;
         background-repeat: no-repeat;
     }
+
+    .btn-with-border {
+        border: 1px solid #000;
+    }
+
+
+    #searchMappoint {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+        width: 170px;
+    }
+
 </style>
 <div class="page-header no-gutters">
     <h1>Building Detail</h1>
@@ -97,13 +69,35 @@
     </div>
 
     <!-- Map Image -->
+    <div class="row mb-1">
+        <div class="col-md-4">
+            <input type="text" style="width:110%" class="form-control" id="searchMappoint" placeholder="Search by Name">
+        </div>
+        <div class="col-md-2">
+            <button type="button" class="btn btn-light btn-with-border btn-block" onclick="search()">Search</button>
+        </div>
+    </div>
+    <button type="button" id="setRootButton" class="btn btn-light btn-with-border" onclick="setRoot()">Set Root</button>
+    <button type="button" id="getMPButton" class="btn btn-light btn-with-border">Get Mappoints</button>
+    <button type="button" id="undoButton" class="btn btn-light btn-with-border" onclick="undo()">Undo</button>
+    <button type="button" id="newMappointButton" class="btn btn-light btn-with-border" onclick="newMappoint()">Choose Mappoint</button>
+
+    @* trường cho canvas *@
     <div class="selected-image-container" id="map-images-container">
-        <canvas id="canvas_data" width="1065%"
-                onclick="drawLine(event,this),renderPoints(event,this),pixelLocation(event), databaseLocation(event), count()">
+        <canvas id="canvas_data" style="border: 1px, black;" width="1065%"
+                onclick="databaseLocation(event)">
         </canvas>
     </div>
-    <div id="demo"></div>
-    <button id="clear-canvas-btn">Delete draw</button>
+    @* Hiện tọa dộ trên ảnh và database *@
+    <p id="demo"></p>
+    <p id="demo1"></p>
+    <p id="demo2"></p>
+    <p id="editInfo"></p>
+
+    <button id="clear-canvas-btn" class="btn btn-light btn-with-border">Delete draw</button>
+    <button id="add-mappoint-btn" class="btn btn-light btn-with-border" onclick="showSelectedPointInAddForm()">Add</button>
+    <button type="button" class="btn btn-light btn-with-border" onclick="setEditmappoint()">Edit</button>
+    <button type="button" class="btn btn-light btn-with-border" onclick="setDeleteMappoint()">Delete</button>
 </div>
 <!-- Content Wrapper START -->
 <div class="main-content">
@@ -111,7 +105,7 @@
         <div class="card-body">
             <div class="row m-b-30">
                 <div class="col-lg-12 text-right">
-                    <button class="btn btn-danger" id="delete-selected">
+                    <button class="btn btn-danger" id="delete-selected-mappoint">
                         <i class="anticon anticon-delete"></i>
                         <span>Delete</span>
                     </button>
@@ -129,30 +123,6 @@
                             </tr>
                         </thead>
                         <tbody id="map-list">
-                            <tr>
-                                <td><input type="checkbox" class="checkbox"></td>
-                                <td>
-                                    #5375
-                                </td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="avatar avatar-image avatar-sm m-r-10">
-                                            <img src="assets/images/avatars/thumb-2.jpg" alt="">
-                                        </div>
-                                        <h6 class="m-b-0">Darryl Day</h6>
-                                    </div>
-                                </td>
-                                <td>6 May 2019</td>
-                                <td>$322.00</td>
-                                <td class="text-right">
-                                    <button class="btn btn-icon btn-warning btn-hover btn-sm btn-rounded pull-right">
-                                        <i class="anticon anticon-edit"></i>
-                                    </button>
-                                    <button class="btn btn-icon btn-danger btn-hover btn-sm btn-rounded">
-                                        <i class="anticon anticon-delete"></i>
-                                    </button>
-                                </td>
-                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -195,28 +165,94 @@
     </div>
 </div>
 
-<script>
-    $('#data-table').DataTable();
+@* Modal add Mapppoint*@
+<div class="modal fade" id="add-MapPoint-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Map Point</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <i class="anticon anticon-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="form-add-mapPoint" method="post">
+                    <div class="form-group">
+                        <label for="mapPointName">Map Point Name</label>
+                        <input type="text" class="form-control" id="mapPointName" placeholder="Enter Map Point Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="mapPointX">X Coordinate</label>
+                        <input type="text" class="form-control" id="mapPointX" placeholder="Enter X Coordinate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="mapPointY">Y Coordinate</label>
+                        <input type="text" class="form-control" id="mapPointY" placeholder="Enter Y Coordinate" required>
+                    </div>
+                    <button type="button" class="btn btn-primary" id="add-mapPoint-btn" onclick="addMapPoint()">Save</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
-    // Delete draw line
-    document.getElementById("clear-canvas-btn").addEventListener("click", function () {
-        var canvas = document.getElementById('canvas_data');
-        var context = canvas.getContext('2d');
-        context.clearRect(0, 0, canvas.width, canvas.height); // Xóa tất cả các đường vẽ trên canvas
-    });
+@* Modal edit Mapppoint*@
+<div class="modal fade" id="update-MapPoint-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Update Map Point</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <i class="anticon anticon-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form asp-page="/Buildings/Detail" asp-page-handler="EditMappoint" id="form-update-mapPoint" method="post" enctype="multipart/form-data">
+                    <input type="text" class="form-control" id="update-mapPointId" readonly>
+                    <div class="form-group">
+                        <label for="update-mapPointName">Map Point Name</label>
+                        <input type="text" class="form-control" id="update-mapPointName" placeholder="Enter Map Point Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="update-mapPointImage">Image</label>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="update-mapPointImage" onchange="previewImage()">
+                            <label class="custom-file-label" for="update-mapPointImage">Choose file</label>
+                        </div>
+                        <img id="imagePreview" src="#" alt="Image preview" style="display: none; max-width: 100px; max-height: 100px; margin-top: 10px;">
+                    </div>
+                    <div class="form-group">
+                        <label for="update-mapPointLocationApp">Old Location</label>
+                        <input type="text" class="form-control" id="update-mapPointOldLocation" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="update-mapPointLocationWeb">X Coordinate</label>
+                        <input type="text" class="form-control" id="update-mapPointXCoordinate" placeholder="Enter New location" required>
+                        <label for="update-mapPointLocationWeb">Y Coordinate</label>
+                        <input type="text" class="form-control" id="update-mapPointYCoordinate" placeholder="Enter New location" required>
+                    </div>
+                    <button type="button" class="btn btn-primary" id="update-mapPoint-btn" onclick="editMapPoint()">Update</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
     $(document).ready(function () {
         //session
         var userJson = sessionStorage.getItem('user');
+        var user = JSON.parse(userJson);
         if (!userJson) {
             window.location.href = '/Authen/Login';
-            return;
         }
 
         var buildingId = window.location.pathname.split("/").pop();
 
         //Get data builind Detail
         $.ajax({
-            url: `https://localhost:7186/api/buildings/${buildingId}`,
+            url: `https://finnsapi.developvn.click/api/buildings/${buildingId}`,
             type: 'GET',
             success: function (building) {
                 // Cập nhật tên tòa nhà
@@ -224,7 +260,7 @@
 
                 // Gửi AJAX request để lấy thông tin về các tầng của tòa nhà
                 $.ajax({
-                    url: `https://localhost:7186/api/floors?$filter=buildingId eq ${buildingId}`,
+                    url: `https://finnsapi.developvn.click/api/floors?$filter=buildingId eq ${buildingId}`,
                     type: 'GET',
                     success: function (floors) {
                         // Tạo danh sách các tầng
@@ -269,43 +305,68 @@
         // Event that listens when the user selects a new floor
         $('#floor-select').change(function () {
             var selectedFloorId = $(this).val();
+            reloadCanvas();
             updateMapImage(selectedFloorId);
         });
 
+        function reloadCanvas() {
+            var canvas = document.getElementById('canvas_data');
+            canvas.width = canvas.width; // Tải lại canvas bằng cách reset width
+        }
         //update map image by floor
         function updateMapImage(floorId) {
             $.ajax({
-                url: `https://localhost:7186/api/maps?$filter=floorId eq ${floorId}`,
+                url: `https://finnsapi.developvn.click/api/maps?$filter=floorId eq ${floorId}`,
                 type: 'GET',
                 success: function (maps) {
-                    if (maps.length > 0) {
-                        var imageSrc = `/Images/${maps[0].mapImage2D}`; // Đường dẫn đến hình ảnh
+                    $.ajax({
+                        url: `https://finnsapi.developvn.click/api/floors/${floorId}`,
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function (floorData) {
+                            const buildingId = floorData.buildingId;
 
-                        var canvas = document.getElementById('canvas_data');
-                        canvas.style.backgroundImage = `url(${imageSrc})`;
-                        // Cập nhật nút chỉnh sửa bản đồ
-                        $('#button-change').html(`
-                            <button class="btn btn-primary" id="edit-map-button" data-id="${maps[0].mapId}" data-toggle="modal" data-target="#add-edit-MapImage">
-                                <i class="anticon anticon-edit"></i>
-                                <span class="m-l-5">Edit Map</span>
-                            </button>
-                        `);
-                        $('#add-edit-map-btn').click(function () {
-                            var mapid = maps[0].mapid;
-                            editmap(mapid);
-                        });
-                    } else {
-                        $('#button-change').html(`
-                            <button class="btn btn-primary" id="add-map-button" data-toggle="modal" data-target="#add-edit-MapImage">
-                                <i class="anticon anticon-plus"></i>
-                                <span class="m-l-5">Add Map</span>
-                            </button>
-                        `);
-                        console.log('No map found for the specified floor.');
-                        $('#add-edit-map-btn').click(function () {
-                            addNewMap();
-                        });
-                    }
+                            if (maps.length > 0) {
+                                var canvas = document.getElementById('canvas_data');
+                                var context = canvas.getContext('2d');
+                                context.clearRect(0, 0, canvas.width, canvas.height);
+                                var imageSrc = `/Images/${maps[0].mapImage2D}`; // Đường dẫn đến hình ảnh
+                                console.log(maps[0].mapImage2D);
+                                canvas.style.backgroundImage = `url(${imageSrc})`;
+                                // Cập nhật nút chỉnh sửa bản đồ
+                                $('#button-change').html(`
+                                                                <button class="btn btn-primary" id="edit-map-button" data-id="${maps[0].mapId}" data-toggle="modal" data-target="#add-edit-MapImage">
+                                                                    <i class="anticon anticon-edit"></i>
+                                                                    <span class="m-l-5">Edit Map</span>
+                                                                </button>
+                                                            `);
+                                $('#add-edit-map-btn').click(function () {
+                                    var mapid = maps[0].mapId;
+                                    editmap(mapid);
+                                });
+                                getMapPointsByMapId(maps[0].mapId, buildingId, maps[0].floorId);
+                            } else {
+                                $('#button-change').html(`
+                                                                <button class="btn btn-primary" id="add-map-button" data-toggle="modal" data-target="#add-edit-MapImage">
+                                                                    <i class="anticon anticon-plus"></i>
+                                                                    <span class="m-l-5">Add Map</span>
+                                                                </button>
+                                                            `);
+                                console.log('No map found for the specified floor.');
+                                $('#add-edit-map-btn').click(function () {
+                                    addNewMap();
+                                });
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            console.error('Error fetching floor details:', error);
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: 'An error occurred while loading floor details.'
+                            });
+                        }
+                    });
                 },
                 error: function (xhr, status, error) {
                     console.error('Error fetching map details:', error);
@@ -331,10 +392,10 @@
             formData.append('FloorId', floorId);
             if (imageInput[0].files.length > 0) {
                 var imageFile = imageInput[0].files[0];
-                formData.append('Image2D', imageFile);
+                formData.append('MapImage2D', imageFile);
             }
             $.ajax({
-                url: 'https://localhost:7186/api/maps',
+                url: 'https://finnsapi.developvn.click/api/maps?memberId=' + user.userid,
                 type: 'POST',
                 data: formData,
                 contentType: false,
@@ -378,11 +439,11 @@
             formData.append('MapId', mapId);
             if (imageInput[0].files.length > 0) {
                 var imageFile = imageInput[0].files[0];
-                formData.append('Image2D', imageFile);
+                formData.append('MapImage2D', imageFile);
             }
 
             $.ajax({
-                url: `https://localhost:7186/api/maps/${mapId}`,
+                url: `https://finnsapi.developvn.click/api/maps/${mapId}`,
                 type: 'PUT',
                 data: formData,
                 contentType: false,
@@ -417,7 +478,7 @@
         //show map info
         function showEdit(mapId) {
             $.ajax({
-                url: `https://localhost:7186/api/maps/${mapId}`,
+                url: `https://finnsapi.developvn.click/api/maps/${mapId}`,
                 type: 'GET',
                 success: function (map) {
                     $('#new-map-name').val(map.mapName);
@@ -429,47 +490,7 @@
             });
         }
 
-    
 
-
-        //get mapppoint list
-        $.ajax({
-            url: 'https://localhost:7186/api/mappoints',
-            method: "get",
-        }).then(function (mappointdata) {
-            $('#map-list').empty();
-
-            mappointdata.foreach(function (mappoint) {
-                    const mappointrow = `
-                         <tr>
-                             <td><input type="checkbox" class="checkbox"></td>
-                             <td>#${mappoint.mappointid}</td>
-                             <td>
-                                 <div class="d-flex align-items-center">
-                                     <div class="avatar avatar-image avatar-sm m-r-10">
-                                         <img src="${mappoint.image}" alt="">
-                                     </div>
-                                  <h6 class="m-b-0">${mappoint.mappointName}</h6>
-                                 </div>
-                             </td>
-                             <td>${mappoint.locationWeb}</td>
-                             <td>${mappoint.locationApp}</td>
-                             <td class="text-right">
-                                 <button class="btn btn-icon btn-warning btn-hover btn-sm btn-rounded pull-right">
-                                     <i class="anticon anticon-edit"></i>
-                                 </button>
-                                 <button class="btn btn-icon btn-danger btn-hover btn-sm btn-rounded">
-                                     <i class="anticon anticon-delete"></i>
-                                 </button>
-                             </td>
-                         </tr>
-                     `;
-                    // thêm hàng mới vào tbody
-                    $('#map-list').append(mappointrow);
-            });
-        }).catch(function (error) {
-            console.error("error occurred while fetching mappoint data:", error);
-        });
     });
 
     //get image when selected
@@ -489,5 +510,39 @@
 
         reader.readAsDataURL(file);
     }
+    function previewImage() {
+        var input = document.getElementById('update-mapPointImage');
+        var preview = document.getElementById('imagePreview');
+        var file = input.files[0];
+        var reader = new FileReader();
+
+        reader.onloadend = function () {
+            preview.src = reader.result;
+            preview.style.display = 'block';
+        }
+
+        if (file) {
+            reader.readAsDataURL(file);
+        } else {
+            preview.src = '';
+        }
+    }
+</script>
+
+<script src="/js/MappointDraw.js"></script>
+
+<script>
+    document.getElementById('getMPButton').addEventListener('click', function () {
+        // Gọi hàm renderPoints từ tệp JavaScript MappointDraw.js và truyền vào mappointList
+        renderPoints(mappointList);
+    });
+    // Delete draw line
+    document.getElementById("clear-canvas-btn").addEventListener("click", function () {
+        var canvas = document.getElementById('canvas_data');
+        var context = canvas.getContext('2d');
+        context.clearRect(0, 0, canvas.width, canvas.height); // Xóa tất cả các đường vẽ trên canvas
+    });
+
+
 
 </script>
