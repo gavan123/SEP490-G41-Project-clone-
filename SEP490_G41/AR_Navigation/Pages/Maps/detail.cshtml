@@ -54,7 +54,6 @@
     <button type="button" id="setRootButton" class="btn btn-light btn-with-border" onclick="setRoot()">Set Root</button>
     <button type="button" id="getMPButton" class="btn btn-light btn-with-border">Get Mappoints</button>
     <button type="button" id="getEDButton" class="btn btn-light btn-with-border">Get Edges</button>
-    <button type="button" id="connectEdgeButton" class="btn btn-light btn-with-border">Connect Edge</button>
     <button type="button" id="undoButton" class="btn btn-light btn-with-border" onclick="undo()">Undo</button>
     <button type="button" id="newMappointButton" class="btn btn-light btn-with-border" onclick="newMappoint()">Choose Mappoint</button>
 
@@ -71,10 +70,8 @@
     <p id="editInfo"></p>
 
     <button id="clear-canvas-btn" class="btn btn-light btn-with-border">Delete draw</button>
-    <button id="add-mappoint-btn" class="btn btn-light btn-with-border" onclick="showSelectedPointInAddForm()">Add</button>
-    <button type="button" class="btn btn-light btn-with-border" onclick="setEditmappoint()">Edit</button>
-    <button type="button" class="btn btn-light btn-with-border" onclick="setDeleteMappoint()">Delete</button>
-
+    <button type="button" id="connectEdgeButton" class="btn btn-light btn-with-border">Connect Edge</button>
+    <button id="add-mappoint-btn" class="btn btn-light btn-with-border" onclick="addEdgeConfirm()">Add Edge</button>
 
     
 </div>
@@ -111,18 +108,37 @@
 
 <script>
     $(document).ready(function () {
+        var userJson = sessionStorage.getItem('user');
+        if (!userJson) {
+            window.location.href = '/Authen/Login';
+        } else {
+            var user = JSON.parse(userJson);
+            if (user.status !== "active") {
+                // Display SweetAlert message
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Access Denied',
+                    text: 'You do not have permission to access this page.',
+                    showConfirmButton: false,
+                    timer: 2000 // Close the alert after 2 seconds
+                }).then((result) => {
+                    // Redirect to login page after the alert is closed
+                    window.location.href = '/HomePage/Home';
+                });
+            }
+        }
         // Lấy mapId từ URL
         var mapId = window.location.pathname.split("/").pop();
 
         //Get map data by mapId
         $.ajax({
-            url: `http://localhost:7199/api/maps/${mapId}`,
+            url: `https://finnsapi.developvn.click/api/maps/${mapId}`,
             type: 'GET',
             success: function (map) {
                 // Cập nhật tên bản đồ
                 $('#map-name').text(map.mapName);
                 $('#floor-name').text(map.floorName);
-                var imageSrc = `/Images/${map.mapImage2D}`; 
+                var imageSrc = `/Images/Map/${map.mapImage2D}`; 
                 var canvas = document.getElementById('canvas_data');
                 canvas.style.backgroundImage = `url(${imageSrc})`;
 
@@ -165,5 +181,6 @@
         var canvas = document.getElementById('canvas_data');
         var context = canvas.getContext('2d');
         context.clearRect(0, 0, canvas.width, canvas.height); // Xóa tất cả các đường vẽ trên canvas
+        edgeAddList = [];
     });
 </script>

@@ -11,7 +11,7 @@ var edgeAddList = [];
 var edgeCount = 0;
 function getMapPointsByMapId(mapId, buildingid, floorid) {
     $.ajax({
-        url: `http://localhost:7199/api/mappoints?filter=mapId eq ${mapId}`,
+        url: `https://finnsapi.developvn.click/api/mappoints?filter=mapId eq ${mapId}`,
         method: "get",
     }).then(function (mappointdata) {
         $('#map-list').empty();
@@ -32,7 +32,7 @@ function getMapPointsByMapId(mapId, buildingid, floorid) {
                          <td>
                        <div class="d-flex align-items-center">
                          <div class="avatar avatar-image avatar-sm m-r-10">
-                               <img src="/Images/${mappoint.image}" alt="">
+                               <img src="/Images/Mappoint/${mappoint.image}" alt="">
                                  </div>
                              <h6 class="m-b-0">${mappoint.mappointName}</h6>
                                  </div>
@@ -71,7 +71,7 @@ function getMapPointsByMapId(mapId, buildingid, floorid) {
 async function getEdgesByMapPointAOrB(mapPointId) {
     try {
         const response = await $.ajax({
-            url: 'http://localhost:7199/api/edges?$filter=mapPointA eq ' + mapPointId + ' or mapPointB eq ' + mapPointId,
+            url: 'https://finnsapi.developvn.click/api/edges?$filter=mapPointA eq ' + mapPointId + ' or mapPointB eq ' + mapPointId,
             type: 'GET'
         });
 
@@ -268,7 +268,7 @@ $(document).on('click', '#delete-selected-egde', function () {
 //function delete mappoint
 function deleteMapPoint(mapPointId) {
     $.ajax({
-        url: `http://localhost:7199/api/mappoints/${mapPointId}`,
+        url: `https://finnsapi.developvn.click/api/mappoints/${mapPointId}`,
         type: 'DELETE',
         success: function (response) {
             console.log('Map point deleted successfully:', response);
@@ -297,7 +297,7 @@ function deleteMapPoint(mapPointId) {
 //function delete edges
 function deleteEdge(edgeId) {
     $.ajax({
-        url: `http://localhost:7199/api/edges/${edgeId}`,
+        url: `https://finnsapi.developvn.click/api/edges/${edgeId}`,
         type: 'DELETE',
         success: function (response) {
             console.log('Edge deleted successfully:', response);
@@ -344,7 +344,7 @@ function addMapPoint() {
     formData.append('MapId', mapidTake);
 
     $.ajax({
-        url: 'http://localhost:7199/api/mappoints',
+        url: 'https://finnsapi.developvn.click/api/mappoints',
         type: 'POST',
         processData: false,
         contentType: false,
@@ -409,7 +409,7 @@ const sampleEdge = {
     pointId1: "", pointId2: "", direction: 2, edgeLength: 0
 }
 const sampleEdgeAdd = {
-    mappointA: "", mappointB: "", direction: 2, distance: 0
+    mapPointA: "", mapPointB: "", direction: 2, distance: 0
 }
 //=============================================================================================================================
 
@@ -587,7 +587,7 @@ function editMapPoint() {
     }
 
     $.ajax({
-        url: 'http://localhost:7199/api/mappoints/' + mappointId,
+        url: 'https://finnsapi.developvn.click/api/mappoints/' + mappointId,
         type: 'PUT',
         processData: false,
         contentType: false,
@@ -702,6 +702,61 @@ function findCoordinatesById(id, mappointList) {
         }
     }
     return null; // Trả về null nếu không tìm thấy id trong mảng
+}
+
+
+//add edge button
+function addEdgeConfirm() {
+    // Kiểm tra xem edgeAddList có dữ liệu không
+    if (edgeAddList.length > 0) {
+        // Nếu có dữ liệu, hiển thị cảnh báo
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'You are about to add these edges. This action cannot be undone.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, add it!',
+            cancelButtonText: 'No, cancel!',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Nếu người dùng xác nhận, thực hiện hàm addEdge
+                addEdge(edgeAddList);
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                // Nếu người dùng hủy, hiển thị thông báo hủy
+                Swal.fire('Cancelled', 'Your action was cancelled :)', 'info');
+            }
+        });
+    } else {
+        Swal.fire({
+            title: 'No edges to add',
+            icon: 'warning',
+            timer: 1500
+        });
+        console.log('No edges to add');
+    }
+}
+
+//add edge function
+function addEdge(list) {
+    list.forEach(function (edge) {
+        // Tạo một AJAX request để thêm cạnh
+        $.ajax({
+            url: 'https://finnsapi.developvn.click/api/edges',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(edge),
+            success: function (response) {
+                // Xử lý khi request thành công
+                console.log('Edge added successfully:', response);
+                location.reload();
+            },
+            error: function (xhr, status, error) {
+                // Xử lý khi request gặp lỗi
+                console.error('Error adding edge:', error);
+            }
+        });
+    });
 }
 
 
@@ -845,11 +900,12 @@ function saveEdge(point1, point2) {
         pointId1: point1.name, pointId2: point2.name, direction: 2, edgeLength: getDistance(point1, point2)
     }
     var edgeAdd = {
-        mappointA: point1.id, mappointB: point2.id, direction: 2, distance: getDistance(point1, point2)
+        mapPointA: point1.id, mapPointB: point2.id, direction: 2, distance: getDistance(point1, point2)
     }
     edgeAddList.push(edgeAdd);
     allEdges.push(edge);
 
+    edgeAdd = sampleEdgeAdd;
     edge = sampleEdge;
     //luu lai canh vua moi ve
     // const imgData = context.getImageData(0,0,canvas.width,canvas.height);
@@ -997,7 +1053,7 @@ function getRatio() {
 function resize() {
     var canvas1 = new fabric.Canvas('canvas_data1');
     // Load the background image (you can replace 'your-image.jpg' with your actual image URL)
-    fabric.Image.fromURL('/Images/Alpha_tang1.jpg', function (img) {
+    fabric.Image.fromURL('/Images/Map/Alpha_tang1.jpg', function (img) {
         // Access the image dimensions
         var scale = canvas1.width / img.width;
 
@@ -1054,7 +1110,7 @@ function search() {
         return;
     } else {
         mappointList.forEach(a => {
-            if (a.name.toLowerCase() === inputId) { // So sánh cả 2 ở dạng chữ thường
+            if (a.name.toLowerCase().includes(inputId)) { // So sánh cả 2 ở dạng chữ thường
                 context.beginPath();
                 // Convert coordinates from image pixels to database coordinates
                 let pixelX = a.x * ratio + root.x;

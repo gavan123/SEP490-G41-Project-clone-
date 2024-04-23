@@ -4,7 +4,7 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>FinNS</title>
-    <link rel="shortcut icon" href="/Images/Logo.jpg">
+    <link rel="shortcut icon" href="/Images/Other/Logo.jpg">
 
     <!-- page css -->
     <!-- Core css -->
@@ -35,15 +35,16 @@
             <div class="header">
                 <div class="logo logo-dark">
                     <a href="#" style="display: inline-block; text-decoration: none;">
-                        <img src="/Images/Logo.jpg" alt="Logo" style="vertical-align: middle;">
+                        <img src="/Images/Other/Logo.jpg" alt="Logo" style="vertical-align: middle;">
                         <h3 style="display: inline-block; font-weight: bold; margin-left: 10px; vertical-align: middle;">FinNS</h3>
                     </a>
 
                 </div>
                 <div class="logo logo-white">
                     <a href="#">
-                        <img src="/assets/images/logo/logo-white.png" alt="Logo">
-                        <img class="logo-fold" src="/Images/Logo.jpg" alt="Logo">
+                        <img src="/Images/Other/Logo.jpg" alt="Logo">
+                        <img class="logo-fold" src="/Images/Other/Logo.jpg" alt="Logo">
+                        <h3 style="display: inline-block; font-weight: bold; margin-left: 10px; vertical-align: middle; color: white;">FinNS</h3>
                     </a>
                 </div>
                 <div class="nav-wrap">
@@ -63,7 +64,7 @@
                         <li class="dropdown dropdown-animated scale-left">
                             <div class="pointer" data-toggle="dropdown">
                                 <div class="avatar avatar-image  m-h-10 m-r-15">
-                                    <img id="userImage" src="/Images/Tuyen.jpg" alt="tuyen">
+                                    <img id="userImage" src="/Images/Avatar/Tuyen.jpg" alt="tuyen">
                                 </div>
                             </div>
                             <div class="p-b-15 p-t-20 dropdown-menu pop-profile">
@@ -73,7 +74,7 @@
                                             <img id="userImage2" src="/assets/images/avatars/thumb-3.jpg" alt="">
                                         </div>
                                         <div class="m-l-10">
-                                            <p id="user_name" class="m-b-0 text-dark font-weight-semibold">Nguyễn Văn Tuyên</p>                                       
+                                            <p id="user_name" class="m-b-0 text-dark font-weight-semibold">Nguyễn Văn Tuyên</p>
                                         </div>
                                     </div>
                                 </div>
@@ -110,6 +111,7 @@
             <div class="side-nav">
                 <div class="side-nav-inner">
                     <ul class="side-nav-menu scrollable">
+
                         <li class="nav-item">
                             <a href="/HomePage/Home" class="nav-link">
                                 <span class="icon-holder">
@@ -118,10 +120,12 @@
                                 <span class="title">Home</span>
                             </a>
                         </li>
+                        <li class="nav-item" id="account-link">
+                        </li>
                         <li class="nav-item">
                             <a href="/Dashboard" class="nav-link">
                                 <span class="icon-holder">
-                                    <i class="anticon anticon-dashboard"></i>
+                                    <i class="fas fa-tachometer-alt"></i>
                                 </span>
                                 <span class="title">Dashboard</span>
                             </a>
@@ -129,7 +133,7 @@
                         <li class="nav-item">
                             <a href="/Buildings/list" class="nav-link">
                                 <span class="icon-holder">
-                                    <i class="far fa-building"></i>
+                                    <i class="fas fa-building"></i>
                                 </span>
                                 <span class="title">Building</span>
                             </a>
@@ -163,17 +167,6 @@
                     @RenderBody()
                 </div>
                 <!-- Content Wrapper END -->
-                <!-- Footer START -->
-                <footer class="footer">
-                    <div class="footer-content">
-                        <p class="m-b-0">Copyright © 2024 Theme_Nate. All rights reserved.</p>
-                        <span>
-                            <a href="" class="text-gray m-r-15">Term &amp; Conditions</a>
-                            <a href="" class="text-gray">Privacy &amp; Policy</a>
-                        </span>
-                    </div>
-                </footer>
-                <!-- Footer END -->
 
             </div>
             <!-- Page Container END -->
@@ -258,6 +251,26 @@
             var user = JSON.parse(userJson);
             var fullname = user.fullname; // Lấy tên người dùng từ sessionStorage
 
+            if (user.role === 1) {
+                // Tạo liên kết mới
+                var accountLink = document.createElement('a');
+                accountLink.href = '/Accounts/ListsMember';
+                accountLink.classList.add('nav-link');
+
+                // Thêm nội dung vào liên kết
+                accountLink.innerHTML = `
+                        <span class="icon-holder">
+                            <i class="fas fa-users"></i>
+                        </span>
+                        <span class="title">Account</span>
+                    `;
+
+                // Lấy phần tử có id là account-link
+                var accountListItem = document.getElementById('account-link');
+                // Thêm liên kết vào phần tử
+                accountListItem.appendChild(accountLink);
+            }
+
             // Thay đổi nội dung của phần tử HTML
             var profileName = document.getElementById('user_name');
             if (profileName) {
@@ -271,12 +284,12 @@
             var userImage = document.getElementById('userImage');
             var userImage2 = document.getElementById('userImage2');
             if (userImage) {
-                userImage.src = "/Images/" + avatar;
+                userImage.src = "/Images/Avatar/" + avatar;
             } else {
                 console.log("Image element with id 'userImage' not found");
             }
             if (userImage2) {
-                userImage2.src = "/Images/" + avatar;
+                userImage2.src = "/Images/Avatar/" + avatar;
             } else {
                 console.log("Image element with id 'userImage' not found");
             }

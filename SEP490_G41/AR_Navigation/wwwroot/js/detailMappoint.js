@@ -8,7 +8,7 @@ var flooridTake;
 var buildingidTake;
 function getMapPointsByMapId(mapId, mappointid) {
     $.ajax({
-        url: `http://localhost:7199/api/mappoints?filter=mapId eq ${mapId}`,
+        url: `https://finnsapi.developvn.click/api/mappoints?filter=mapId eq ${mapId}`,
         method: "get",
     }).then(function (mappointdata) {
         $('#map-list').empty();
@@ -29,7 +29,7 @@ function getMapPointsByMapId(mapId, mappointid) {
                          <td>
                        <div class="d-flex align-items-center">
                          <div class="avatar avatar-image avatar-sm m-r-10">
-                               <img src="/Images/${mappoint.image}" alt="">
+                               <img src="/Images/Mappoint/${mappoint.image}" alt="">
                                  </div>
                              <h6 class="m-b-0">${mappoint.mappointName}</h6>
                                  </div>
@@ -88,7 +88,7 @@ $(document).on('click', '.mappoint-delete', function () {
 //function delete
 function deleteMapPoint(mapPointId) {
     $.ajax({
-        url: `http://localhost:7199/api/mappoints/${mapPointId}`,
+        url: `https://finnsapi.developvn.click/api/mappoints/${mapPointId}`,
         type: 'DELETE',
         success: function (response) {
             console.log('Map point deleted successfully:', response);
@@ -112,6 +112,55 @@ function deleteMapPoint(mapPointId) {
         }
     });
 
+}
+
+
+//add mappoint
+function addMapPoint() {
+    var mappointName = $('#mapPointName').val();
+    var xCoordinate = $('#mapPointX').val();
+    var yCoordinate = $('#mapPointY').val();
+
+    //Lưu ý t để ngược bởi vì khi cho vào data base thì x với y bị đảo ngược
+    var coordinatesString = '[' + yCoordinate + ',' + xCoordinate + ']';
+
+    var formData = new FormData();
+    // Thêm các trường dữ liệu vào formData
+    formData.append('MappointName', mappointName);
+    formData.append('LocationWeb', coordinatesString);
+    formData.append('LocationApp', coordinatesString);
+    formData.append('LocationGps', '[0,0]');
+    formData.append('FloorId', flooridTake);
+    formData.append('BuildingId', buildingidTake);
+    formData.append('MapId', mapidTake);
+
+    $.ajax({
+        url: 'https://finnsapi.developvn.click/api/mappoints',
+        type: 'POST',
+        processData: false,
+        contentType: false,
+        data: formData,
+        success: function (response) {
+            console.log('Map point added successfully:', response);
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: 'Map point added successfully!'
+            }).then(function () {
+                location.reload();
+            });
+            $('#add-MapPoint-modal').modal('hide');
+        },
+        error: function (xhr, status, error) {
+            console.error('Error adding map point:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Failed to add map point. Please try again later.'
+            });
+            // Xử lý lỗi khi không thể thêm map point
+        }
+    });
 }
 
 //show Coordinate in addform
@@ -324,7 +373,7 @@ function editMapPoint() {
     }
 
     $.ajax({
-        url: 'http://localhost:7199/api/mappoints/' + mappointId,
+        url: 'https://finnsapi.developvn.click/api/mappoints/' + mappointId,
         type: 'PUT',
         processData: false,
         contentType: false,
@@ -573,7 +622,7 @@ function ChooseDeleteMappoint(event) {
 }
 function filterMapPointsByName(name) {
     $.ajax({
-        url: `http://localhost:7199/api/mappoints?filter=mappointName eq ${name}`,
+        url: `https://finnsapi.developvn.click/api/mappoints?filter=mappointName eq ${name}`,
         type: 'GET',
         success: function (data) {
             data.forEach(function (mapPoint) {
@@ -869,7 +918,7 @@ function getRatio() {
 function resize() {
     var canvas1 = new fabric.Canvas('canvas_data1');
     // Load the background image (you can replace 'your-image.jpg' with your actual image URL)
-    fabric.Image.fromURL('/Images/Alpha_tang1.jpg', function (img) {
+    fabric.Image.fromURL('/Images/Map/Alpha_tang1.jpg', function (img) {
         // Access the image dimensions
         var scale = canvas1.width / img.width;
 
@@ -921,6 +970,40 @@ function chooseMappoint(event) {
 
     console.log("Map point selected - X:", x, ", Y:", y);
     canvas.setAttribute("onclick", "undo(false),chooseMappoint(event)");
+}
+
+
+//chức năng search mappoint theo name
+function search() {
+    var ok = false;
+    var inputId = document.getElementById("searchMappoint").value.trim().toLowerCase(); // Sử dụng trim và chuyển đổi thành chữ thường
+    if (inputId == "") {
+        console.log("1111");
+        return;
+    } else {
+        mappointList.forEach(a => {
+            if (a.name.toLowerCase().includes(inputId)) { // So sánh cả 2 ở dạng chữ thường
+                context.beginPath();
+                // Convert coordinates from image pixels to database coordinates
+                let pixelX = a.x * ratio + root.x;
+                let pixelY = -a.y * ratio + root.y;
+
+                context.arc(pixelX, pixelY, radius, 0, 2 * Math.PI, false);
+                context.fillStyle = 'red';
+                context.fill();
+                context.closePath();
+                saveCanvasState();
+                ok = true;
+                document.getElementById("searchMappoint").value = "";
+                return;
+            }
+        });
+    }
+    if (!ok) {
+        alert("Couldn't find Map point id");
+    } else {
+        canvas.setAttribute("onclick", "undo(2)");
+    }
 }
 
 
