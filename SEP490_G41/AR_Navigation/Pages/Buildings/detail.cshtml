@@ -274,7 +274,7 @@
 
                 // Gửi AJAX request để lấy thông tin về các tầng của tòa nhà
                 $.ajax({
-                    url: `https://finnsapi.developvn.click/floors?$filter=buildingId eq ${buildingId}`,
+                    url: `https://finnsapi.developvn.click/api/floors?$filter=buildingId eq ${buildingId}`,
                     type: 'GET',
                     success: function (floors) {
                         // Tạo danh sách các tầng
