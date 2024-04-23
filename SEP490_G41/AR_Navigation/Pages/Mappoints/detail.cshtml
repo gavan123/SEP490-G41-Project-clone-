@@ -270,7 +270,7 @@
             dataType: 'json',
             success: function (mapPoint) {
                     const mapId = mapPoint.mapId;
-                    originalImageSrc = `/Images/${mapPoint.image}`;
+                    originalImageSrc = `/Images/Mappoint/${mapPoint.image}`;
                     originalImageFileName = mapPoint.image;// Lưu đường dẫn ảnh ban đầu
                      $('#mappoint-image').attr('src', originalImageSrc);
                 // Gọi API để lấy thông tin map theo mapId
@@ -283,7 +283,7 @@
                             const mapImage2D = map.mapImage2D;
                             getMapPointsByMapId(map.mapId, mappointId);
                             // Sử dụng mapImage2D để hiển thị ảnh
-                            var imageSrc = `/Images/${mapImage2D}`;
+                            var imageSrc = `/Images/Map/${mapImage2D}`;
                             var canvas = document.getElementById('canvas_data');
                             canvas.style.backgroundImage = `url(${imageSrc})`;
                         },

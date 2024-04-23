@@ -29,7 +29,7 @@ function getMapPointsByMapId(mapId, mappointid) {
                          <td>
                        <div class="d-flex align-items-center">
                          <div class="avatar avatar-image avatar-sm m-r-10">
-                               <img src="/Images/${mappoint.image}" alt="">
+                               <img src="/Images/Mappoint/${mappoint.image}" alt="">
                                  </div>
                              <h6 class="m-b-0">${mappoint.mappointName}</h6>
                                  </div>
@@ -918,7 +918,7 @@ function getRatio() {
 function resize() {
     var canvas1 = new fabric.Canvas('canvas_data1');
     // Load the background image (you can replace 'your-image.jpg' with your actual image URL)
-    fabric.Image.fromURL('/Images/Alpha_tang1.jpg', function (img) {
+    fabric.Image.fromURL('/Images/Map/Alpha_tang1.jpg', function (img) {
         // Access the image dimensions
         var scale = canvas1.width / img.width;
 
