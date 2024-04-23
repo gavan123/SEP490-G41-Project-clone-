@@ -203,7 +203,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: `http://localhost:7199/api/mappoints/${mappointId}`,
+                        url: `https://finnsapi.developvn.click/api/mappoints/${mappointId}`,
                         type: 'DELETE',
                         success: function (response) {
                             Swal.fire(
@@ -265,7 +265,7 @@
         var mappointId = window.location.pathname.split("/").pop();
 
         $.ajax({
-            url: `http://localhost:7199/api/mappoints/${mappointId}`,
+            url: `https://finnsapi.developvn.click/api/mappoints/${mappointId}`,
             type: 'GET',
             dataType: 'json',
             success: function (mapPoint) {

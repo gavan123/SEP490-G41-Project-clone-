@@ -139,8 +139,8 @@
         // Gửi yêu cầu AJAX để lấy thông tin profile từ API
         $.ajax
             ({
-                //url: 'http://localhost:7199/api/profiles/1',
-                url: 'http://localhost:7199/api/profiles/' + userid, // Thay đổi số 1 thành memberId thực tế của bạn
+                
+                url: 'https://finnsapi.developvn.click/api/profiles/' + userid, // Thay đổi số 1 thành memberId thực tế của bạn
                 type: 'GET',
                 success: function (data) {
                     // Hiển thị thông tin profile trên trang view profile
@@ -167,7 +167,7 @@
         $('.edit-profile').click(function () {
             // Lấy và hiển thị thông tin profile trong form chỉnh sửa
             $.ajax({
-                url: 'http://localhost:7199/api/profiles/' + userid,
+                url: 'https://finnsapi.developvn.click/api/profiles/' + userid,
                 type: 'GET',
                 success: function (data) {
                     $('#edit-profile-name').val(data.fullName);
@@ -213,7 +213,7 @@
          
 
             $.ajax({
-                url: 'http://localhost:7199/api/profiles/' + userid,
+                url: 'https://finnsapi.developvn.click/api/profiles/' + userid,
                 type: 'PUT',
                 data: formData,
                 contentType: false,
