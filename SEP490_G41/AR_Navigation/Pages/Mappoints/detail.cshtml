@@ -95,7 +95,7 @@
 
             // Lấy thông tin mappoint từ API và điền vào form
             $.ajax({
-                url: `https://finns.developvn.click/api/mappoints/${mappointId}`,
+                url: `https://finnsapi.developvn.click/api/mappoints/${mappointId}`,
                 type: 'GET',
                 dataType: 'json',
                 success: function (mapPoint) {
@@ -117,7 +117,7 @@
 
             // Gửi dữ liệu lên API
             $.ajax({
-                url: `https://finns.developvn.click/api/mappoints/${mappointId}`,
+                url: `https://finnsapi.developvn.click/api/mappoints/${mappointId}`,
                 type: 'PUT',
                 data: JSON.stringify({ name, description /* Thêm các trường khác tùy theo yêu cầu */ }),
                 contentType: 'application/json',
@@ -163,7 +163,7 @@
         var mappointId = window.location.pathname.split("/").pop();
 
         $.ajax({
-            url: `https://finns.developvn.click/api/mappoints/${mappointId}`,
+            url: `https://finnsapi.developvn.click/api/mappoints/${mappointId}`,
             type: 'GET',
             dataType: 'json',
             success: function (mapPoint) {
@@ -171,7 +171,7 @@
                 $('#mappoint-image').attr('src', `/Images/${mapPoint.image}`);
                     // Gọi API để lấy thông tin map theo mapId
                     $.ajax({
-                        url: `https://finns.developvn.click/api/maps/${mapId}`,
+                        url: `https://finnsapi.developvn.click/api/maps/${mapId}`,
                         type: 'GET',
                         dataType: 'json',
                         success: function (map) {
