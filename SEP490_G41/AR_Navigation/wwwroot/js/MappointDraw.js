@@ -419,7 +419,7 @@ const context = canvas.getContext("2d");
 var allEdges = [];
 
 
-
+//9.86363636364
 //ratio of image's width, length vs image's pixels
 var ratio = 8.682926829;
 var root = { id: "root", x: 628, y: 160 };
