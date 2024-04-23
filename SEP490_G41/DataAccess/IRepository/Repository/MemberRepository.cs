@@ -8,6 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper.Execution;
+using Microsoft.EntityFrameworkCore;
+using System.Diagnostics.Metrics;
 
 namespace DataAccess.IRepository.Repository
 {
@@ -119,19 +121,21 @@ namespace DataAccess.IRepository.Repository
             }
         }
 
-        /*public List<MemberDTO> SearchMemberByStatus(string status)
+        public void UpdateMemberStatus(MemberStatusDTO member)
         {
             try
             {
-                var members = _memberDAO.SearchMemberByStatus(status);
-                var memberDTOs = members.Select(m => _mapper.Map<MemberDTO>(m)).ToList();
-                return memberDTOs;
+                var memberModel = new BusinessObject.Models.Member
+                {
+                    MemberId = member.MemberId,
+                    Status = member.Status,
+                };
+                _memberDAO.UpdateMemberStatus(_mapper.Map<BusinessObject.Models.Member>(memberModel));
             }
             catch (Exception ex)
             {
-                throw new Exception("Something has wrong!");
+                throw new Exception("Error occurred while updating member status.", ex);
             }
-            throw new NotImplementedException();
-        }*/
+        }
     }
 }

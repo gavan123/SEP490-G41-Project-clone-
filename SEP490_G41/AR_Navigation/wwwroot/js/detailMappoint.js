@@ -1019,7 +1019,7 @@ function search() {
         return;
     } else {
         mappointList.forEach(a => {
-            if (a.name.toLowerCase() === inputId) { // So sánh cả 2 ở dạng chữ thường
+            if (a.name.toLowerCase().includes(inputId)) { // So sánh cả 2 ở dạng chữ thường
                 context.beginPath();
                 // Convert coordinates from image pixels to database coordinates
                 let pixelX = a.x * ratio + root.x;
@@ -1042,3 +1042,5 @@ function search() {
         canvas.setAttribute("onclick", "undo(2)");
     }
 }
+
+

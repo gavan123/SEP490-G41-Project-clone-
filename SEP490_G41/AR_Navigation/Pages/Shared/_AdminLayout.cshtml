@@ -73,7 +73,7 @@
                                             <img id="userImage2" src="/assets/images/avatars/thumb-3.jpg" alt="">
                                         </div>
                                         <div class="m-l-10">
-                                            <p id="user_name" class="m-b-0 text-dark font-weight-semibold">Nguyễn Văn Tuyên</p>                                       
+                                            <p id="user_name" class="m-b-0 text-dark font-weight-semibold">Nguyễn Văn Tuyên</p>
                                         </div>
                                     </div>
                                 </div>
@@ -110,6 +110,7 @@
             <div class="side-nav">
                 <div class="side-nav-inner">
                     <ul class="side-nav-menu scrollable">
+
                         <li class="nav-item">
                             <a href="/HomePage/Home" class="nav-link">
                                 <span class="icon-holder">
@@ -118,10 +119,12 @@
                                 <span class="title">Home</span>
                             </a>
                         </li>
+                        <li class="nav-item" id="account-link">
+                        </li>
                         <li class="nav-item">
                             <a href="/Dashboard" class="nav-link">
                                 <span class="icon-holder">
-                                    <i class="anticon anticon-dashboard"></i>
+                                    <i class="fas fa-tachometer-alt"></i>
                                 </span>
                                 <span class="title">Dashboard</span>
                             </a>
@@ -129,7 +132,7 @@
                         <li class="nav-item">
                             <a href="/Buildings/list" class="nav-link">
                                 <span class="icon-holder">
-                                    <i class="far fa-building"></i>
+                                    <i class="fas fa-building"></i>
                                 </span>
                                 <span class="title">Building</span>
                             </a>
@@ -257,6 +260,26 @@
         if (userJson) {
             var user = JSON.parse(userJson);
             var fullname = user.fullname; // Lấy tên người dùng từ sessionStorage
+
+            if (user.role === 1) {
+                // Tạo liên kết mới
+                var accountLink = document.createElement('a');
+                accountLink.href = '/Accounts/ListsMember';
+                accountLink.classList.add('nav-link');
+
+                // Thêm nội dung vào liên kết
+                accountLink.innerHTML = `
+                    <span class="icon-holder">
+                        <i class="fas fa-users"></i>
+                    </span>
+                    <span class="title">Account</span>
+                `;
+
+                // Lấy phần tử có id là account-link
+                var accountListItem = document.getElementById('account-link');
+                // Thêm liên kết vào phần tử
+                accountListItem.appendChild(accountLink);
+            }
 
             // Thay đổi nội dung của phần tử HTML
             var profileName = document.getElementById('user_name');

@@ -71,8 +71,7 @@
     <p id="editInfo"></p>
 
     <button id="clear-canvas-btn" class="btn btn-light btn-with-border">Delete draw</button>
-    <button id="add-mappoint-btn" class="btn btn-light btn-with-border" onclick="showSelectedPointInAddForm()">Add</button>
-    <button type="button" class="btn btn-light btn-with-border" onclick="setEditmappoint()">Edit</button>
+    <button id="add-mappoint-btn" class="btn btn-light btn-with-border" onclick="addEdgeConfirm()">Add Edge</button>
     <button type="button" class="btn btn-light btn-with-border" onclick="setDeleteMappoint()">Delete</button>
 
 
@@ -111,6 +110,25 @@
 
 <script>
     $(document).ready(function () {
+        var userJson = sessionStorage.getItem('user');
+        if (!userJson) {
+            window.location.href = '/Authen/Login';
+        } else {
+            var user = JSON.parse(userJson);
+            if (user.status !== "active") {
+                // Display SweetAlert message
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Access Denied',
+                    text: 'You do not have permission to access this page.',
+                    showConfirmButton: false,
+                    timer: 2000 // Close the alert after 2 seconds
+                }).then((result) => {
+                    // Redirect to login page after the alert is closed
+                    window.location.href = '/HomePage/Home';
+                });
+            }
+        }
         // Lấy mapId từ URL
         var mapId = window.location.pathname.split("/").pop();
 
@@ -165,5 +183,6 @@
         var canvas = document.getElementById('canvas_data');
         var context = canvas.getContext('2d');
         context.clearRect(0, 0, canvas.width, canvas.height); // Xóa tất cả các đường vẽ trên canvas
+        edgeAddList = [];
     });
 </script>

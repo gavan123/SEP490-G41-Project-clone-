@@ -144,6 +144,24 @@ namespace DataAccess.DAO
             return "Incorrect";
         }
         #endregion
+
+        // Cập nhật thông tin Profile
+        public void UpdateMemberStatus(Member member)
+        {
+            if (member == null)
+            {
+                throw new ArgumentNullException(nameof(member));
+            }
+            var existingMember = _context.Members.FirstOrDefault(m => m.MemberId == member.MemberId);
+
+            if (existingMember != null)
+            {
+                // Cập nhật trạng thái thành viên
+                existingMember.Status = member.Status;
+
+                _context.SaveChanges();
+            }
+        }
     }
 }
 
