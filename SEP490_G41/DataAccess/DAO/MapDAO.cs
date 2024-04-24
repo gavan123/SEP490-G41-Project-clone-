@@ -1,4 +1,5 @@
-﻿using BusinessObject.Models;
+﻿using BusinessObject.DTO;
+using BusinessObject.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ namespace DataAccess.DAO
         }
         public MapDAO()
         {
-            _context = new finsContext(); 
+            _context = new finsContext();
         }
 
 
@@ -56,82 +57,103 @@ namespace DataAccess.DAO
         }
 
         // Đọc thông tin bản đồ bằng Id
-        public virtual  Map GetMapById(int mapId)
+        public virtual Map GetMapById(int mapId)
         {
             if (mapId <= 0)
                 throw new ArgumentException("Map ID must be a positive integer.");
 
-            var map =  _context.Maps.Include(m => m.Floor).FirstOrDefault(m => m.MapId == mapId);
+            var map = _context.Maps.Include(m => m.Floor).FirstOrDefault(m => m.MapId == mapId);
             return map;
         }
 
         // Cập nhật thông tin bản đồ
-        public void UpdateMap(Map map)
+        public void UpdateMap(MapUpdateDTO mapDto)
         {
-            if (map == null)
-                throw new ArgumentNullException(nameof(map));
+            if (mapDto == null)
+                throw new ArgumentNullException(nameof(mapDto));
 
-            if (map.MapId <= 0)
+            if (mapDto.MapId <= 0)
                 throw new ArgumentException("Map ID must be a positive integer.");
 
-            if (string.IsNullOrWhiteSpace(map.MapName))
+            if (string.IsNullOrWhiteSpace(mapDto.MapName))
                 throw new ArgumentException("Map name cannot be null or empty.");
 
-            if (map.MapImage2D == null)
+            if (mapDto.MapImage2D == null)
                 throw new ArgumentException("2D image cannot be null.");
 
-            if (map.FloorId <= 0)
+            if (mapDto.FloorId <= 0)
                 throw new ArgumentException("Floor ID must be a positive integer.");
 
-            var existingMap = _context.Maps.FirstOrDefault(m => m.MapId == map.MapId);
-            if (existingMap != null)
+            try
             {
-                existingMap.MapName = map.MapName;
-                existingMap.MapImage2D = map.MapImage2D;
-                existingMap.MapImage3D = map.MapImage3D;
-                existingMap.FloorId = map.FloorId;
-                _context.SaveChanges();
-                _context.Dispose();
+                var map = _context.Maps.FirstOrDefault(m => m.MapId == mapDto.MapId);
+                if (map != null)
+                {
+                    string uniqueFileName = mapDto.MapImage2D.FileName;
+
+                    map.MapName = mapDto.MapName;
+                    map.MapImage2D = uniqueFileName;
+                    map.FloorId = mapDto.FloorId;
+
+                    _context.SaveChanges();
+                    _context.Dispose();
+                }
+                else
+                {
+                    throw new ArgumentException($"Map with ID {mapDto.MapId} does not exist.");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                throw new ArgumentException($"Map with ID {map.MapId} does not exist.");
+                throw new Exception("Error occurred while updating map.", ex);
             }
-            
         }
 
+
         // Xóa bản đồ bằng Id
-        public void DeleteMap(int mapId)
+        public string DeleteMap(int mapId)
         {
             if (mapId <= 0)
                 throw new ArgumentException("Map ID must be a positive integer.");
 
-            var map = _context.Maps.FirstOrDefault(m => m.MapId == mapId);
-            if (map != null)
+            using (var context = new finsContext())
             {
-                // Xóa thông tin trong bảng Mapmanage
-                var mapManages = _context.Mapmanages.Where(mm => mm.MapId == mapId);
-                _context.Mapmanages.RemoveRange(mapManages);
+                var map = context.Maps.FirstOrDefault(m => m.MapId == mapId);
+                if (map != null)
+                {
+                    // Xóa thông tin trong bảng Mapmanage
+                    var mapManages = context.Mapmanages.Where(mm => mm.MapId == mapId);
+                    context.Mapmanages.RemoveRange(mapManages);
 
-                // Xóa bản đồ từ bảng Maps
-                _context.Maps.Remove(map);
+                    // Xóa bản đồ từ bảng Maps
+                    context.Maps.Remove(map);
 
-                // Lưu thay đổi
-                _context.SaveChanges();
-                _context.Dispose();
+                    // Lưu thay đổi
+                    context.SaveChanges();
+                    _context.Dispose();
+                    // Trả về thông báo xóa thành công
+                    return $"Map with ID {mapId} has been successfully deleted.";
+                }
+                else
+                {
+                    throw new ArgumentException($"Map with ID {mapId} does not exist.");
+                }
             }
-            else
-            {
-                throw new ArgumentException($"Map with ID {mapId} does not exist.");
-            }
-            
         }
+
+
 
 
         // Lấy danh sách tất cả các bản đồ
         public virtual List<Map> GetAllMaps()
         {
-            var maps = _context.Maps.Include(m => m.Floor).ToList();
+            var maps = _context.Maps
+       .Include(m => m.Floor)
+           .ThenInclude(f => f.Building)
+       .Include(m => m.Mapmanages)
+           .ThenInclude(mm => mm.Member)
+       .Include(m => m.Mappoints)
+       .ToList();
             _context.Dispose();
             return maps;
         }

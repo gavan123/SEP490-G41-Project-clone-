@@ -537,7 +537,7 @@
         //Get building data by buildingId
         function showEditModal(buildingId) {
             $.ajax({
-                url: 'https://finnsapi.developvn.click/api/buildings/' + buildingId,
+                url: 'https://finnsapi.developvn.click/api/buildings?filter=buildingId eq ' + buildingId,
                 type: 'GET',
                 success: function (response) {
                     $('#building-id').val(response.buildingId);
@@ -551,7 +551,7 @@
                     var facilityName = '';
                     //API get facilities by ID
                     $.ajax({
-                        url: 'https://finnsapi.developvn.click/api/facilities/' + response.facilityId,
+                        url: 'https://finnsapi.developvn.click/api/facilities?filter=facilityId eq' + response.facilityId,
                         type: 'GET',
                         async: false,
                         success: function (facilityResponse) {
@@ -590,7 +590,7 @@
             }
 
             $.ajax({
-                url: 'https://finnsapi.developvn.click/api/buildings/' + $('#building-id').val(),
+                url: 'https://finnsapi.developvn.click/api/buildings/',
                 type: 'PUT',
                 data: formData,
                 contentType: false,

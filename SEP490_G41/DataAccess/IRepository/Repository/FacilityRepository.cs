@@ -59,7 +59,7 @@ namespace DataAccess.IRepository.Repository
             }
         }
 
-        public void UpdateFacility(FacilityUpdateDTO facility)
+     /*   public void UpdateFacility(FacilityUpdateDTO facility)
         {
             try
             {
@@ -81,6 +81,6 @@ namespace DataAccess.IRepository.Repository
             {
                 throw new Exception("Error occurred while deleting facility.", ex);
             }
-        }
+        }*/
     }
 }

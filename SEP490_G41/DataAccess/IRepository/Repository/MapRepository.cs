@@ -55,24 +55,19 @@ namespace DataAccess.IRepository.Repository
             try
             {
                 var maps = _mapDAO.GetAllMaps();
-                var mapDTOs = (from m in maps
-                               join mm in _mapmanageDAO.GetAllMapManages() on m.MapId equals mm.MapId
-                               join mem in _memberDAO.GetAllMembers() on mm.MemberId equals mem.MemberId
-                               join f in _floorDAO.GetAllFloors() on m.FloorId equals f.FloorId
-                               join b in _buildingDAO.GetAllBuildings() on f.BuildingId equals b.BuildingId
-                               select new MapDTO
-                               {
-                                   MapId = m.MapId,
-                                   MapName = m.MapName,
-                                   MapImage2D = m.MapImage2D,
-                                   MapImage3D = m.MapImage3D,
-                                   FloorId = m.FloorId,
-                                   FloorName = f.FloorName,
-                                   BuildingName = b.BuildingName,
-                                   ManagerFullName = mem.FullName,
-                                   BuildingImg = b.Image,
-                                   BuildingId = b.BuildingId
-                               }).ToList();
+                var mapDTOs = maps.Select(m => new MapDTO
+                {
+                    MapId = m.MapId,
+                    MapName = m.MapName,
+                    MapImage2D = m.MapImage2D,
+                    MapImage3D = m.MapImage3D,
+                    FloorId = m.FloorId,
+                    FloorName = m.Floor.FloorName,
+                    BuildingName = m.Floor.Building.BuildingName,
+                    ManagerFullName = m.Mapmanages.FirstOrDefault()?.Member.FullName,
+                    BuildingImg = m.Floor.Building.Image,
+                    BuildingId = m.Floor.Building.BuildingId
+                }).ToList();
 
                 return mapDTOs;
             }
@@ -81,6 +76,7 @@ namespace DataAccess.IRepository.Repository
                 throw new Exception("Error occurred while getting all maps.", ex);
             }
         }
+
 
 
         public void AddMap(MapAddDTO mapAddDTO, int memberId)
@@ -108,43 +104,28 @@ namespace DataAccess.IRepository.Repository
 
         public void UpdateMap(MapUpdateDTO mapUpdateDTO)
         {
-            if (mapUpdateDTO == null)
-                throw new ArgumentNullException(nameof(mapUpdateDTO));
 
-            if (mapUpdateDTO.MapId <= 0)
-                throw new ArgumentException("Map ID must be a positive integer.");
             try
             {
-                string uniqueFileName = mapUpdateDTO.MapImage2D.FileName;
-
-                var map = new Map
-                {
-                    MapId = mapUpdateDTO.MapId,
-                    MapName = mapUpdateDTO.MapName,
-                    MapImage2D = uniqueFileName,
-                    FloorId = mapUpdateDTO.FloorId
-                };
-
-                _mapDAO.UpdateMap(map);
+                _mapDAO.UpdateMap(mapUpdateDTO);
             }
             catch (Exception ex)
             {
                 throw new Exception("Error occurred while updating map.", ex);
             }
         }
-        public void DeleteMap(int mapId)
+        public string DeleteMap(int mapId)
         {
-            if (mapId <= 0)
-                throw new ArgumentException("Map ID must be a positive integer.");
-
             try
             {
-                _mapDAO.DeleteMap(mapId);
+                return _mapDAO.DeleteMap(mapId);
             }
             catch (Exception ex)
             {
                 throw new Exception("Error occurred while deleting map.", ex);
+                return "Error occurred while deleting map: " + ex.Message;
             }
+
         }
 
     }

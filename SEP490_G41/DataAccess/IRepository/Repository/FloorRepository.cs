@@ -72,7 +72,7 @@ namespace DataAccess.IRepository.Repository
             }
         }
 
-        public void UpdateFloor(FloorDTO floor)
+       /* public void UpdateFloor(FloorDTO floor)
         {
             try
             {
@@ -94,6 +94,6 @@ namespace DataAccess.IRepository.Repository
             {
                 throw new Exception("Error occurred while deleting floor.", ex);
             }
-        }
+        }*/
     }
 }

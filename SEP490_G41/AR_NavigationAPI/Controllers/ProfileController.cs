@@ -33,14 +33,9 @@ namespace AR_NavigationAPI.Controllers
             return Ok(profile);
         }
         // PUT: api/buildings/1
-        [HttpPut("{id}")]
-        public IActionResult UpdateProfileById(int id,[FromForm] MemberUpdateDTO progfile)
+        [HttpPut]
+        public IActionResult UpdateProfileById([FromForm] MemberUpdateDTO progfile)
         {
-            var tmpProfile = _profileRepository.GetMemberById(id);
-            if (tmpProfile == null)
-            {
-                return NotFound();
-            }
             _profileRepository.UpdateProfile(progfile);
 
             return Ok();

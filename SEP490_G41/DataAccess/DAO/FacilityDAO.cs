@@ -38,11 +38,12 @@ namespace DataAccess.DAO
             }
 
             var facility = _context.Facilities.FirstOrDefault(f => f.FacilityId == facilityId);
+            _context.Dispose();
             return facility;
         }
 
        
-
+/*
         public void UpdateFacility(Facility facility)
         {
             if (facility == null)
@@ -80,7 +81,7 @@ namespace DataAccess.DAO
             _context.Facilities.Remove(facility);
             _context.SaveChanges();
             _context.Dispose();
-        }
+        }*/
 
         public List<Facility> GetAllFacilities()
         {
