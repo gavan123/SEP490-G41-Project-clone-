@@ -71,10 +71,10 @@ namespace DataAccess.DAO
             string uniqueFileName = dto.Image.FileName;
             building.BuildingId = dto.BuildingId;
             building.BuildingName = dto.BuildingName;
-                building.Status = dto.Status;
-                building.FacilityId = dto.FacilityId;
-                building.Image = uniqueFileName;
-            
+            building.Status = dto.Status;
+            building.FacilityId = dto.FacilityId;
+            building.Image = uniqueFileName;
+
             _context.Update(building);
             _context.SaveChanges();
             _context.Dispose();

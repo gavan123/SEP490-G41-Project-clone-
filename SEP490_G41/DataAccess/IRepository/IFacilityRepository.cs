@@ -12,8 +12,8 @@ namespace DataAccess.IRepository
         FacilityDTO GetFacilityById(int facilityId);
         List<FacilityDTO> GetAllFacilities();
         void AddFacility(FacilityAddDTO facility);
-        void UpdateFacility(FacilityUpdateDTO facility);
-        void DeleteFacility(int facilityId);
+       /* void UpdateFacility(FacilityUpdateDTO facility);
+        void DeleteFacility(int facilityId);*/
 
     }
 }

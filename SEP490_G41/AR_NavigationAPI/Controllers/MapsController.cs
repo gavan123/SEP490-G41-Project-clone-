@@ -1,6 +1,7 @@
 ﻿using AutoMapper.Execution;
 using BusinessObject.DTO;
 using DataAccess.IRepository;
+using DataAccess.IRepository.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Query;
 using Microsoft.AspNetCore.OData.Routing.Controllers;
@@ -53,18 +54,14 @@ namespace AR_NavigationAPI.Controllers
         }
 
         // PUT: api/maps/5
-        [HttpPut("{id}")]
-        public IActionResult UpdateMapById(int id, [FromForm] MapUpdateDTO map)
+        [HttpPut]
+        public IActionResult UpdateMapById([FromForm] MapUpdateDTO map)
         {
-            if (id <= 0)
+            if (map.MapId <= 0)
                 return BadRequest("Map ID must be a positive integer.");
 
             if (map == null)
                 return BadRequest("Map cannot be null.");
-
-            var tmpMap = _mapRepository.GetMapById(id);
-            if (tmpMap == null)
-                return NotFound();
 
             _mapRepository.UpdateMap(map);
             return Ok();
@@ -74,14 +71,8 @@ namespace AR_NavigationAPI.Controllers
         [HttpDelete("{id}")]
         public IActionResult DeleteMapById(int id)
         {
-            if (id <= 0)
-                return BadRequest("Map ID must be a positive integer.");
+            string mess = _mapRepository.DeleteMap(id);
 
-            var map = _mapRepository.GetMapById(id);
-            if (map == null)
-                return NotFound();
-
-            _mapRepository.DeleteMap(id);
             return Ok();
         }
     }

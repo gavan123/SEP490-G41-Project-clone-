@@ -48,7 +48,7 @@ namespace AR_NavigationAPI.Controllers
             return Ok(facility);
         }
 
-        // PUT: api/facilities/5
+       /* // PUT: api/facilities/5
         [HttpPut("{id}")]
         public IActionResult UpdateFacility(int id, [FromBody] FacilityUpdateDTO facility)
         {
@@ -76,6 +76,6 @@ namespace AR_NavigationAPI.Controllers
             _facilityRepository.DeleteFacility(id);
 
             return Ok();
-        }
+        }*/
     }
 }

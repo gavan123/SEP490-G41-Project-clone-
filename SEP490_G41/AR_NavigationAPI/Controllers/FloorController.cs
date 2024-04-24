@@ -60,7 +60,7 @@ namespace AR_NavigationAPI.Controllers
             return Ok("Floors added successfully");
         }
 
-        // PUT: api/floors/5
+      /*  // PUT: api/floors/5
         [HttpPut("{id}")]
         public IActionResult UpdateFloorById(int id, FloorDTO floor)
         {
@@ -88,6 +88,6 @@ namespace AR_NavigationAPI.Controllers
             _floorRepository.DeleteFloor(id);
 
             return Ok();
-        }
+        }*/
     }
 }
