@@ -24,7 +24,7 @@ namespace DataAccess.IRepository.Repository
 
         public EdgeDTO GetEdgeById(int edgeId)
         {
-            var edge = _edgeDAO.GetEdgeById(edgeId);
+            var edge = _edgeDAO.GetEdgeDetailById(edgeId);
             if (edge == null)
             {                                                                                                                    
                 throw new Exception("Edge not found");

@@ -48,10 +48,10 @@ namespace DataAccess.DAO
                 throw new ArgumentException("Mappoint ID must be a positive integer.");
 
             var mappoint = _context.Mappoints.FirstOrDefault(mp => mp.MapPointId == mappointId);
-            _context.Dispose();
+          
             return mappoint;
         }
-
+      
         // Cập nhật thông tin mappoint
         public void UpdateMappoint(Mappoint mappoint)
         {
@@ -132,7 +132,7 @@ namespace DataAccess.DAO
         {
             try
             {
-                var mappoints = _context.Mappoints.ToList();
+                var mappoints = _context.Mappoints.Include(x=>x.Building).Include(x => x.Floor).ToList();
                 _context.Dispose();
                 return mappoints;
             }
