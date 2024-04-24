@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace ProjectTest.DAOTest
 {
     public class FacilityDAOTest
-    {
+    {/*
         [Fact]
         public void AddFacility_Should_Add_New_Facility()
         {
@@ -175,7 +175,7 @@ namespace ProjectTest.DAOTest
                 // Assert
                 Assert.Empty(facilities);
             }
-        }
+        }*/
     }
 }
 

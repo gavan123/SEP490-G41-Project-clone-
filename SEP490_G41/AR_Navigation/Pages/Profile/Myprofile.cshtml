@@ -84,7 +84,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="form-edit-profile" asp-page="/Profile/Myprofile" asp-page-handler="EditProfile">
+                <form id="form-edit-profile" asp-page="/Profile/Myprofile" asp-page-handler="EditProfile" method="post" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="edit-profile-image">Profile Image</label>
                         <input type="file" name="ImageFile" class="form-control-file" id="edit-profile-image" aria-describedby="inputGroupFileAddon" onchange="displaySelectedImage(this, 'edit-selected-image-container')">
@@ -140,7 +140,7 @@
         $.ajax
             ({
                 
-                url: 'https://finnsapi.developvn.click/api/profiles/' + userid, // Thay đổi số 1 thành memberId thực tế của bạn
+                url: 'http://localhost:7199/api/profiles/' + userid, // Thay đổi số 1 thành memberId thực tế của bạn
                 type: 'GET',
                 success: function (data) {
                     // Hiển thị thông tin profile trên trang view profile
@@ -167,7 +167,7 @@
         $('.edit-profile').click(function () {
             // Lấy và hiển thị thông tin profile trong form chỉnh sửa
             $.ajax({
-                url: 'https://finnsapi.developvn.click/api/profiles/' + userid,
+                url: 'http://localhost:7199/api/profiles/' + userid,
                 type: 'GET',
                 success: function (data) {
                     $('#edit-profile-name').val(data.fullName);
@@ -213,7 +213,7 @@
          
 
             $.ajax({
-                url: 'https://finnsapi.developvn.click/api/profiles',
+                url: 'http://localhost:7199/api/profiles',
                 type: 'PUT',
                 data: formData,
                 contentType: false,

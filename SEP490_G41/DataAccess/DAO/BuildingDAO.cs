@@ -77,7 +77,6 @@ namespace DataAccess.DAO
 
             _context.Update(building);
             _context.SaveChanges();
-            _context.Dispose();
 
         }
 

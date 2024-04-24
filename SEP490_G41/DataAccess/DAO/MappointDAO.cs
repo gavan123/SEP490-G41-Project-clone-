@@ -94,7 +94,6 @@ namespace DataAccess.DAO
 
 			_context.Update(mapPoint);
 			_context.SaveChanges();
-			_context.Dispose();
 
 		}
 

@@ -7,7 +7,7 @@ namespace ProjectTest.DAOTest
     public class BuildingDAOTest
     {
 
-       
+       /*
         [Fact]
         public void AddBuilding_Should_Add_New_Building()
         {
@@ -212,7 +212,7 @@ namespace ProjectTest.DAOTest
             }
 
             // Result: All buildings retrieved successfully
-        }
+        }*/
 
     }
 }

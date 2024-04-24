@@ -27,7 +27,6 @@ namespace DataAccess.DAO
 
             _context.Floors.Add(floor);
             _context.SaveChanges();
-            _context.Dispose();
         }
         // Đọc thông tin tầng bằng Id
         public Floor GetFloorById(int floorId)

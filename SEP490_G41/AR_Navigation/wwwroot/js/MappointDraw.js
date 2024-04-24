@@ -11,7 +11,7 @@ var edgeAddList = [];
 var edgeCount = 0;
 function getMapPointsByMapId(mapId, buildingid, floorid) {
     $.ajax({
-        url: `https://finnsapi.developvn.click/api/mappoints?filter=mapId eq ${mapId}`,
+        url: `http://localhost:7199/api/mappoints?filter=mapId eq ${mapId}`,
         method: "get",
     }).then(function (mappointdata) {
         $('#map-list').empty();
@@ -71,7 +71,7 @@ function getMapPointsByMapId(mapId, buildingid, floorid) {
 async function getEdgesByMapPointAOrB(mapPointId) {
     try {
         const response = await $.ajax({
-            url: 'https://finnsapi.developvn.click/api/edges?$filter=mapPointA eq ' + mapPointId + ' or mapPointB eq ' + mapPointId,
+            url: 'http://localhost:7199/api/edges?$filter=mapPointA eq ' + mapPointId + ' or mapPointB eq ' + mapPointId,
             type: 'GET'
         });
 
@@ -268,7 +268,7 @@ $(document).on('click', '#delete-selected-egde', function () {
 //function delete mappoint
 function deleteMapPoint(mapPointId) {
     $.ajax({
-        url: `https://finnsapi.developvn.click/api/mappoints/${mapPointId}`,
+        url: `http://localhost:7199/api/mappoints/${mapPointId}`,
         type: 'DELETE',
         success: function (response) {
             console.log('Map point deleted successfully:', response);
@@ -297,7 +297,7 @@ function deleteMapPoint(mapPointId) {
 //function delete edges
 function deleteEdge(edgeId) {
     $.ajax({
-        url: `https://finnsapi.developvn.click/api/edges/${edgeId}`,
+        url: `http://localhost:7199/api/edges/${edgeId}`,
         type: 'DELETE',
         success: function (response) {
             console.log('Edge deleted successfully:', response);
@@ -344,7 +344,7 @@ function addMapPoint() {
     formData.append('MapId', mapidTake);
 
     $.ajax({
-        url: 'https://finnsapi.developvn.click/api/mappoints',
+        url: 'http://localhost:7199/api/mappoints',
         type: 'POST',
         processData: false,
         contentType: false,
@@ -570,7 +570,7 @@ function editMapPoint() {
     var newLocation = $('#update-mapPointNewLocation').val();
     var imageInput = $('#update-mapPointImage');
 
-    var coordinatesString = '[' + yCoordinate + ',' + xCoordinate + ']';
+    var coordinatesString = '[' + xCoordinate + ',' + yCoordinate + ']';
     var formData = new FormData();
     // Thêm các trường dữ liệu vào formData
     formData.append('MapPointId', mappointId);
@@ -587,7 +587,7 @@ function editMapPoint() {
     }
 
     $.ajax({
-        url: 'https://finnsapi.developvn.click/api/mappoints/' + mappointId,
+        url: 'http://localhost:7199/api/mappoints/' + mappointId,
         type: 'PUT',
         processData: false,
         contentType: false,
@@ -742,7 +742,7 @@ function addEdge(list) {
     list.forEach(function (edge) {
         // Tạo một AJAX request để thêm cạnh
         $.ajax({
-            url: 'http://14.225.205.28:7391/api/edges',
+            url: 'http://localhost:7199/api/edges',
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(edge),

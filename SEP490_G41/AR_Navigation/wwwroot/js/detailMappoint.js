@@ -8,7 +8,7 @@ var flooridTake;
 var buildingidTake;
 function getMapPointsByMapId(mapId, mappointid) {
     $.ajax({
-        url: `https://finnsapi.developvn.click/api/mappoints?filter=mapId eq ${mapId}`,
+        url: `http://localhost:7199/api/mappoints?filter=mapId eq ${mapId}`,
         method: "get",
     }).then(function (mappointdata) {
         $('#map-list').empty();
@@ -88,7 +88,7 @@ $(document).on('click', '.mappoint-delete', function () {
 //function delete
 function deleteMapPoint(mapPointId) {
     $.ajax({
-        url: `https://finnsapi.developvn.click/api/mappoints/${mapPointId}`,
+        url: `http://localhost:7199/api/mappoints/${mapPointId}`,
         type: 'DELETE',
         success: function (response) {
             console.log('Map point deleted successfully:', response);
@@ -135,7 +135,7 @@ function addMapPoint() {
     formData.append('MapId', mapidTake);
 
     $.ajax({
-        url: 'https://finnsapi.developvn.click/api/mappoints',
+        url: 'http://localhost:7199/api/mappoints',
         type: 'POST',
         processData: false,
         contentType: false,
@@ -373,7 +373,7 @@ function editMapPoint() {
     }
 
     $.ajax({
-        url: 'https://finnsapi.developvn.click/api/mappoints/' + mappointId,
+        url: 'http://localhost:7199/api/mappoints/' + mappointId,
         type: 'PUT',
         processData: false,
         contentType: false,
@@ -622,7 +622,7 @@ function ChooseDeleteMappoint(event) {
 }
 function filterMapPointsByName(name) {
     $.ajax({
-        url: `https://finnsapi.developvn.click/api/mappoints?filter=mappointName eq ${name}`,
+        url: `http://localhost:7199/api/mappoints?filter=mappointName eq ${name}`,
         type: 'GET',
         success: function (data) {
             data.forEach(function (mapPoint) {

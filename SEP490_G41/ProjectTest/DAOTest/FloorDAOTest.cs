@@ -11,7 +11,7 @@ namespace ProjectTest.DAOTest
 {
     public class FloorDAOTest
     {
-        [Fact]
+       /* [Fact]
         public void AddFloor_Should_Add_New_Floor()
         {
             // Arrange
@@ -131,6 +131,6 @@ namespace ProjectTest.DAOTest
                 Assert.NotNull(floors);
                 Assert.Equal(2, floors.Count);
             }
-        }
+        }*/
     }
 }

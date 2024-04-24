@@ -99,7 +99,7 @@
 
             function GetCode(email) {
                 $.ajax({
-                    url: 'https://finnsapi.developvn.click/api/members/GetCode?email=' + email,
+                    url: 'http://localhost:7199/api/members/GetCode?email=' + email,
                     method: 'GET',
                     success: function (response) {
                         if (response) {
@@ -123,7 +123,7 @@
                 }
 
                 $.ajax({
-                    url: 'https://finnsapi.developvn.click/api/members/GetMemberByEmail?email=' + email,
+                    url: 'http://localhost:7199/api/members/GetMemberByEmail?email=' + email,
                     method: 'GET',
                     success: function (response) {
                         if (response) {
@@ -174,7 +174,7 @@
                 }
 
                 $.ajax({
-                    url: 'https://finnsapi.developvn.click/api/members/ResetPassword/' + id + '?newpass=' + newpass,
+                    url: 'http://localhost:7199/api/members/ResetPassword/' + id + '?newpass=' + newpass,
                     method: 'PUT',
                     success: function (response) {
                         $("#mess3").hide();

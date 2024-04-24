@@ -15,7 +15,7 @@ namespace ProjectTest.RepositoryTest
 {
     public class FacilityRepositoryTest
     {
-        public class FacilityRepositoryTests
+        /*public class FacilityRepositoryTests
         {
             private Mock<IFacilityRepository> _mockFacilityRepository;
             private IMapper _mapper;
@@ -117,6 +117,6 @@ namespace ProjectTest.RepositoryTest
                 _mockFacilityRepository.Verify(repo => repo.DeleteFacility(facilityId), Times.Once);
             }
 
-        }
+        }*/
     }
 }

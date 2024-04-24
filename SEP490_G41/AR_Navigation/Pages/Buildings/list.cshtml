@@ -245,7 +245,7 @@
                 try {
                     // Gửi yêu cầu AJAX để lấy thông tin của tòa nhà
                     const floors = await $.ajax({
-                        url: `https://finnsapi.developvn.click/api/floors?$filter=buildingId eq ${buildingId}`,
+                        url: `http://localhost:7199/api/floors?$filter=buildingId eq ${buildingId}`,
                         type: 'GET',
                         dataType: 'json'
                     });
@@ -386,7 +386,7 @@
 
         // Get building list from API
         $.ajax({
-            url: 'https://finnsapi.developvn.click/api/buildings',
+            url: 'http://localhost:7199/api/buildings',
             type: 'GET',
             dataType: 'json',
             success: async function (buildings) {
@@ -403,7 +403,7 @@
         $('#building-facility').on('change', async function () {
             const selectedFacilityId = $(this).val(); // Lấy facilityId của tùy chọn đã chọn
 
-            let url = 'https://finnsapi.developvn.click/api/buildings';
+            let url = 'http://localhost:7199/api/buildings';
             if (selectedFacilityId !== '0' && selectedFacilityId) {
                 url += '?filter=facilityId eq ' + selectedFacilityId;
             }
@@ -424,7 +424,7 @@
 
         //API get facility
         $.ajax({
-            url: 'https://finnsapi.developvn.click/api/facilities',
+            url: 'http://localhost:7199/api/facilities',
             type: 'GET',
             success: function (response) {
                 response.forEach(function (facility) {
@@ -458,7 +458,7 @@
 
             // Send an AJAX POST request to the API
             $.ajax({
-                url: 'https://finnsapi.developvn.click/api/buildings',
+                url: 'http://localhost:7199/api/buildings',
                 type: 'POST',
                 data: formData,
                 processData: false,
@@ -503,7 +503,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: 'https://finnsapi.developvn.click/api/buildings/' + buildingId,
+                        url: 'http://localhost:7199/api/buildings/' + buildingId,
                         type: 'DELETE',
                         success: function (response) {
                             console.log(response);
@@ -537,12 +537,12 @@
         //Get building data by buildingId
         function showEditModal(buildingId) {
             $.ajax({
-                url: 'https://finnsapi.developvn.click/api/buildings?filter=buildingId eq ' + buildingId,
+                url: 'http://localhost:7199/api/buildings?filter=buildingId eq ' + buildingId,
                 type: 'GET',
                 success: function (response) {
-                    $('#building-id').val(response.buildingId);
-                    $('#edit-building-name').val(response.buildingName);
-                    if (response.status === 'active') {
+                    $('#building-id').val(response[0].buildingId);
+                    $('#edit-building-name').val(response[0].buildingName);
+                    if (response[0].status === 'active') {
                         $('#edit-statusActive').prop('checked', true);
                     } else {
                         $('#edit-statusDeactive').prop('checked', true);
@@ -551,11 +551,11 @@
                     var facilityName = '';
                     //API get facilities by ID
                     $.ajax({
-                        url: 'https://finnsapi.developvn.click/api/facilities?filter=facilityId eq' + response.facilityId,
+                        url: 'http://localhost:7199/api/facilities?filter=facilityId eq' + response.facilityId,
                         type: 'GET',
                         async: false,
                         success: function (facilityResponse) {
-                            facilityId = facilityResponse.facilityId;
+                            facilityId = facilityResponse[0].facilityId;
                         },
                         error: function (xhr, status, error) {
                             console.error('Error fetching facility details:', error);
@@ -590,7 +590,7 @@
             }
 
             $.ajax({
-                url: 'https://finnsapi.developvn.click/api/buildings/',
+                url: 'http://localhost:7199/api/buildings',
                 type: 'PUT',
                 data: formData,
                 contentType: false,
@@ -646,7 +646,7 @@
 
 
                 $.ajax({
-                    url: 'https://finnsapi.developvn.click/api/floors',
+                    url: 'http://localhost:7199/api/floors',
                     type: 'POST',
                     data: JSON.stringify(formDataArray),
                     contentType: 'application/json',
