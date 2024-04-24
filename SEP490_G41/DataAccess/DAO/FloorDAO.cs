@@ -1,4 +1,5 @@
 ﻿using BusinessObject.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -55,7 +56,7 @@ namespace DataAccess.DAO
         }
 
 
-        public void UpdateFloor(Floor floor)
+       /* public void UpdateFloor(Floor floor)
         {
             if (floor == null)
             {
@@ -90,10 +91,12 @@ namespace DataAccess.DAO
                 _context.SaveChanges();
                 _context.Dispose();
             }
-        }
+        }*/
         public List<Floor> GetAllFloors()
         {
-            var floors = _context.Floors.ToList();
+            var floors = _context.Floors
+                .Include(m => m.Building)
+                .ToList();
             _context.Dispose();
             return floors;
         }

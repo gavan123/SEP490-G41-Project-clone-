@@ -52,8 +52,8 @@ namespace AR_NavigationAPI.Controllers
         }
 
         // PUT: api/buildings/5
-        [HttpPut("{id}")]
-        public IActionResult UpdateBuildingById(int id, [FromForm] BuildingUpdateDTO building)
+        [HttpPut]
+        public IActionResult UpdateBuildingById([FromForm] BuildingUpdateDTO building)
         {
             
             _buildingRepository.UpdateBuilding(building);
@@ -67,7 +67,7 @@ namespace AR_NavigationAPI.Controllers
         {
            
 
-          string mess =   _buildingRepository.DeleteBuilding(id);
+          string mess =  _buildingRepository.DeleteBuilding(id);
 
             return Ok();
         }

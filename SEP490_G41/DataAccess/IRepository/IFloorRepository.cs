@@ -13,8 +13,8 @@ namespace DataAccess.IRepository
         List<FloorDTO> GetAllFloorsByBuildingId(int buildingId);
         List<FloorDTO> GetAllFloors();
         void AddFloor(FloorAddDTO floor);
-        void UpdateFloor(FloorDTO floor);
-        void DeleteFloor(int floorId);
+      /*  void UpdateFloor(FloorDTO floor);
+        void DeleteFloor(int floorId);*/
 
        
     }
