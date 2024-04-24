@@ -47,53 +47,59 @@ namespace DataAccess.DAO
             if (mappointId <= 0)
                 throw new ArgumentException("Mappoint ID must be a positive integer.");
 
-            var mappoint = _context.Mappoints.FirstOrDefault(mp => mp.MapPointId == mappointId);
-          
-            return mappoint;
+            var mappoint = _context.Mappoints.Include(mp => mp.Map).Include(mp => mp.Building).Include(mp => mp.Floor).FirstOrDefault(mp => mp.MapPointId == mappointId);
+            _context.Dispose();
+			return mappoint;
         }
-      
-        // Cập nhật thông tin mappoint
-        public void UpdateMappoint(Mappoint mappoint)
-        {
-            if (mappoint == null)
-                throw new ArgumentNullException(nameof(mappoint));
+		// Cập nhật thông tin mappoint
+		public void UpdateMappoint(MapPointUpdateDTO dto)
+		{
+			var mapPointId = dto.MapPointId;
+			if (mapPointId <= 0)
+			{
+				throw new ArgumentException("Invalid map point ID", nameof(mapPointId));
+			}
 
-            if (mappoint.MapPointId <= 0)
-                throw new ArgumentException("Mappoint ID must be a positive integer.");
+			var mapPoint = _context.Mappoints.FirstOrDefault(mp => mp.MapPointId == mapPointId);
+			if (mapPoint == null)
+			{
+				throw new ArgumentException("This map point does not exist");
+			}
 
-            if (mappoint.MapId <= 0)
-                throw new ArgumentException("Map ID must be a positive integer.");
+			string uniqueFileName = dto.Image?.FileName;
 
-            if (mappoint.LocationWeb == null)
-                throw new ArgumentException("LocationWeb cannot be null.");
+			mapPoint.MapPointId = dto.MapPointId;
+			mapPoint.MapPointName = dto.MappointName;
 
-            if (mappoint.LocationApp == null)
-                throw new ArgumentException("LocationWeb cannot be null.");
 
-            var existingMappoint = _context.Mappoints.FirstOrDefault(mp => mp.MapPointId == mappoint.MapPointId);
-            if (existingMappoint != null)
-            {
-                existingMappoint.MapId = mappoint.MapId;
-                existingMappoint.MapPointName = mappoint.MapPointName;
-                existingMappoint.LocationWeb = mappoint.LocationWeb;
-                existingMappoint.LocationApp = mappoint.LocationApp;
-                existingMappoint.LocationGps = mappoint.LocationGps;
-                existingMappoint.FloorId = mappoint.FloorId;
-                existingMappoint.BuildingId = mappoint.BuildingId;
-                existingMappoint.Image = mappoint.Image;
-                existingMappoint.Destination = mappoint.Destination;
-                _context.SaveChanges();
-                _context.Dispose();
-            }
-            else
-            {
-                throw new ArgumentException($"Mappoint with ID {mappoint.MapPointId} does not exist.");
-            }
-        }
+			string[] coordinates = dto.LocationWeb.Trim('[', ']').Split(',');
+			double latitude = double.Parse(coordinates[0].Trim());
+			double longitude = double.Parse(coordinates[1].Trim());
+			mapPoint.LocationWeb = new NetTopologySuite.Geometries.Point (latitude, longitude);
 
-        // Xóa mappoint bằng Id
-        // Xóa mappoint bằng Id
-        public void DeleteMappoint(int mappointId)
+			string[] coordinates1 = dto.LocationWeb.Trim('[', ']').Split(',');
+			double latitude1 = double.Parse(coordinates1[0].Trim());
+			double longitude1 = double.Parse(coordinates1[1].Trim());
+			mapPoint.LocationApp = new NetTopologySuite.Geometries.Point(latitude1, longitude1);
+
+			string[] coordinates2 = dto.LocationWeb.Trim('[', ']').Split(',');
+			double latitude2 = double.Parse(coordinates2[0].Trim());
+			double longitude2 = double.Parse(coordinates2[1].Trim());
+			mapPoint.LocationGps = new NetTopologySuite.Geometries.Point(latitude2, longitude2);
+
+			mapPoint.FloorId = dto.FloorId;
+			mapPoint.BuildingId = dto.BuildingId;
+			mapPoint.Image = uniqueFileName;
+			mapPoint.MapId = dto.MapId;
+
+			_context.Update(mapPoint);
+			_context.SaveChanges();
+			_context.Dispose();
+
+		}
+
+		// Xóa mappoint bằng Id
+		public void DeleteMappoint(int mappointId)
         {
             if (mappointId <= 0)
                 throw new ArgumentException("Mappoint ID must be a positive integer.");
