@@ -101,5 +101,14 @@ namespace DataAccess.DAO
             return floors;
         }
 
-    }
+		public List<Floor> GetFloorsByIds(List<int> floorIds)
+		{
+			using (var context = new finsContext())
+			{
+				return context.Floors
+					.Where(f => floorIds.Contains(f.FloorId))
+					.ToList();
+			}
+		}
+	}
 }

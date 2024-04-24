@@ -162,5 +162,15 @@ namespace DataAccess.DAO
             return buildings;
         }
 
-    }
+		public List<Building> GetBuildingsByIds(List<int> buildingIds)
+		{
+			using (var context = new finsContext())
+			{
+				return context.Buildings
+					.Where(b => buildingIds.Contains(b.BuildingId))
+					.ToList();
+			}
+		}
+		
+	}
 }

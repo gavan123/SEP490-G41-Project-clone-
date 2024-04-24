@@ -28,35 +28,33 @@ namespace DataAccess.IRepository.Repository
             _pathShortest = pathShortest;
 
         }
-        public MapPointDTO GetMapPointById(int mapPointId)
-        {
-            var mapPoint = _mappointDAO.GetMappointById(mapPointId);
-            if (mapPoint == null)
-            {
-                throw new Exception("MapPoint not found");
-            }
+		public MapPointDTO GetMapPointById(int mapPointId)
+		{
+			var mapPoint = _mappointDAO.GetMappointById(mapPointId);
 
-            var building = _buildingDAO.GetBuildingById(mapPoint.BuildingId);
-            var floor = _floorDAO.GetFloorById(mapPoint.FloorId);
+			if (mapPoint == null)
+			{
+				throw new Exception("MapPoint not found");
+			}
 
-            return new MapPointDTO
-            {
-                MapPointId = mapPoint.MapPointId,
-                MapId = mapPoint.MapId,
-                MappointName = mapPoint.MapPointName,
-                LocationWeb = FormatCoordinates(mapPoint.LocationWeb),
-                LocationApp = FormatCoordinates(mapPoint.LocationApp),
-                LocationGps = mapPoint.LocationGps == null ? null : FormatCoordinates(mapPoint.LocationGps),
-                FloorId = mapPoint.FloorId,
-                BuildingId = mapPoint.BuildingId,
-                Image = mapPoint.Image,
-                Destination = mapPoint.Destination ?? false,
-                BuildingName = building?.BuildingName,
-                FloorName = floor?.FloorName
-            };
-        }
+			return new MapPointDTO
+			{
+				MapPointId = mapPoint.MapPointId,
+				MapId = mapPoint.MapId,
+				MappointName = mapPoint.MapPointName,
+				LocationWeb = FormatCoordinates(mapPoint.LocationWeb),
+				LocationApp = FormatCoordinates(mapPoint.LocationApp),
+				LocationGps = mapPoint.LocationGps == null ? null : FormatCoordinates(mapPoint.LocationGps),
+				FloorId = mapPoint.FloorId,
+				BuildingId = mapPoint.BuildingId,
+				Image = mapPoint.Image,
+				Destination = mapPoint.Destination ?? false,
+				BuildingName = mapPoint.Building?.BuildingName,
+				FloorName = mapPoint.Floor?.FloorName
+			};
+		}
 
-        private string FormatCoordinates(Point point)
+		private string FormatCoordinates(Point point)
         {
             if (point == null)
                 return null;
@@ -100,50 +98,68 @@ namespace DataAccess.IRepository.Repository
                 throw new Exception("Error occurred while getting all map points.", ex);
             }
         }
-        public List<MapPointDTO> GetAllMapPointsPath(int inputPosition, int inputDestination)
+		public List<MapPointDTO> GetAllMapPointsPath(int inputPosition, int inputDestination)
+		{
+			try
+			{
+				int multi = 1;
+				var mapPoints = _pathShortest.Dijkstra(inputPosition, inputDestination, multi)
+					.Join(GetAllBuildings(), mp => mp.BuildingId, b => b.BuildingId, (mp, b) => new { MapPoint = mp, Building = b })
+					.Join(GetAllFloors(), mpb => mpb.MapPoint.FloorId, f => f.FloorId, (mpb, f) => new { mpb.MapPoint, mpb.Building, Floor = f });
+
+				while (mapPoints.Count() == 1)
+				{
+					multi++;
+					mapPoints = _pathShortest.Dijkstra(inputPosition, inputDestination, multi)
+						.Join(GetAllBuildings(), mp => mp.BuildingId, b => b.BuildingId, (mp, b) => new { MapPoint = mp, Building = b })
+						.Join(GetAllFloors(), mpb => mpb.MapPoint.FloorId, f => f.FloorId, (mpb, f) => new { mpb.MapPoint, mpb.Building, Floor = f });
+				}
+
+				var mapPointDTOs = mapPoints
+					.Select(mpbf => new MapPointDTO
+					{
+						MapPointId = mpbf.MapPoint.MapPointId,
+						MapId = mpbf.MapPoint.MapId,
+						MappointName = mpbf.MapPoint.MapPointName,
+						LocationWeb = ExtractCoordinatesFromGeoJson(ConvertPointToGeoJson(mpbf.MapPoint.LocationWeb)),
+						LocationGps = ExtractCoordinatesFromGeoJson(ConvertPointToGeoJson(mpbf.MapPoint.LocationGps ?? GeometryFactory.Default.CreatePoint(new Coordinate(0, 0)))),
+						LocationApp = ExtractCoordinatesFromGeoJson(ConvertPointToGeoJson(mpbf.MapPoint.LocationApp)),
+						FloorId = mpbf.MapPoint.FloorId,
+						BuildingId = mpbf.MapPoint.BuildingId,
+						Image = mpbf.MapPoint.Image,
+						Destination = mpbf.MapPoint.Destination ?? false,
+						BuildingName = mpbf.Building.BuildingName,
+						FloorName = mpbf.Floor.FloorName
+					})
+					.ToList();
+
+				return mapPointDTOs;
+			}
+			catch (Exception ex)
+			{
+				throw new Exception("Error occurred while getting all map points.", ex);
+			}
+		}
+
+        // Định nghĩa phương thức để truy vấn tất cả các tòa nhà và tầng mà không dispose
+        private IEnumerable<Building> GetAllBuildings()
         {
-            try
+            using (var context = new finsContext())
             {
-                int multi = 1;
-                var mapPoints = _pathShortest.Dijkstra(inputPosition, inputDestination, multi)
-                    .Join(_buildingDAO.GetAllBuildings(), mp => mp.BuildingId, b => b.BuildingId, (mp, b) => new { MapPoint = mp, Building = b })
-                    .Join(_floorDAO.GetAllFloors(), mpb => mpb.MapPoint.FloorId, f => f.FloorId, (mpb, f) => new { mpb.MapPoint, mpb.Building, Floor = f }); ;
-
-                while (mapPoints.Count() == 1)
-                {
-                    multi++;
-                    mapPoints = _pathShortest.Dijkstra(inputPosition, inputDestination, multi)
-                    .Join(_buildingDAO.GetAllBuildings(), mp => mp.BuildingId, b => b.BuildingId, (mp, b) => new { MapPoint = mp, Building = b })
-                    .Join(_floorDAO.GetAllFloors(), mpb => mpb.MapPoint.FloorId, f => f.FloorId, (mpb, f) => new { mpb.MapPoint, mpb.Building, Floor = f });
-                }
-
-
-
-                var mapPointDTOs = mapPoints
-                    .Select(mpbf => new MapPointDTO
-                    {
-                        MapPointId = mpbf.MapPoint.MapPointId,
-                        MapId = mpbf.MapPoint.MapId,
-                        MappointName = mpbf.MapPoint.MapPointName,
-                        LocationWeb = ExtractCoordinatesFromGeoJson(ConvertPointToGeoJson(mpbf.MapPoint.LocationWeb)),
-                        LocationGps = ExtractCoordinatesFromGeoJson(ConvertPointToGeoJson(mpbf.MapPoint.LocationGps ?? GeometryFactory.Default.CreatePoint(new Coordinate(0, 0)))),
-                        LocationApp = ExtractCoordinatesFromGeoJson(ConvertPointToGeoJson(mpbf.MapPoint.LocationApp)),
-                        FloorId = mpbf.MapPoint.FloorId,
-                        BuildingId = mpbf.MapPoint.BuildingId,
-                        Image = mpbf.MapPoint.Image,
-                        Destination = mpbf.MapPoint.Destination ?? false,
-                        BuildingName = mpbf.Building.BuildingName,
-                        FloorName = mpbf.Floor.FloorName
-                    })
-                    .ToList();
-
-                return mapPointDTOs;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error occurred while getting all map points.", ex);
+                // Thực hiện truy vấn tất cả các tòa nhà
+                return context.Buildings.ToList(); // Trả về danh sách tất cả các tòa nhà từ context tạm thời
             }
         }
+
+        private IEnumerable<Floor> GetAllFloors()
+        {
+            using (var context = new finsContext())
+            {
+                // Thực hiện truy vấn tất cả các tầng
+                return context.Floors.ToList(); // Trả về danh sách tất cả các tầng từ context tạm thời
+            }
+        }
+
         private string ConvertPointToGeoJson(Point point)
         {
             var feature = new NetTopologySuite.Features.Feature(point, new AttributesTable());
@@ -240,38 +256,7 @@ namespace DataAccess.IRepository.Repository
 
             try
             {
-
-                // Get the existing Mappoint entity
-                var existingMapPoint = _mappointDAO.GetMappointById(mapPoint.MapPointId);
-                if (existingMapPoint == null)
-                {
-                    throw new Exception($"MapPoint with ID {mapPoint.MapPointId} not found.");
-                }
-                string uniqueFileName = mapPoint.Image.FileName;
-                // Update the properties of the existing entity
-                string[] coordinates = mapPoint.LocationWeb.Trim('[', ']').Split(',');
-                double latitude = double.Parse(coordinates[0].Trim());
-                double longitude = double.Parse(coordinates[1].Trim());
-                existingMapPoint.LocationWeb = new Point(latitude,longitude);
-
-                string[] coordinates1 = mapPoint.LocationApp.Trim('[', ']').Split(',');
-                double latitude1 = double.Parse(coordinates1[0].Trim());
-                double longitude1 = double.Parse(coordinates1[1].Trim());
-                existingMapPoint.LocationApp = new Point(latitude1, longitude1);
-
-                string[] coordinates2 = mapPoint.LocationGps.Trim('[', ']').Split(',');
-                double latitude2 = double.Parse(coordinates2[0].Trim());
-                double longitude2 = double.Parse(coordinates2[1].Trim());
-                existingMapPoint.LocationGps = new Point(latitude2, longitude2);
-
-                existingMapPoint.MapPointName = mapPoint.MappointName;
-                existingMapPoint.FloorId = mapPoint.FloorId;
-                existingMapPoint.BuildingId = mapPoint.BuildingId;
-                existingMapPoint.Image = uniqueFileName;
-                existingMapPoint.MapId = mapPoint.MapId;
-
-                // Update the entity in the database
-                _mappointDAO.UpdateMappoint(existingMapPoint);
+                _mappointDAO.UpdateMappoint(mapPoint);
             }
             catch (Exception ex)
             {
