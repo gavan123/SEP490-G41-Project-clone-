@@ -540,9 +540,9 @@
                 url: 'https://finnsapi.developvn.click/api/buildings?filter=buildingId eq ' + buildingId,
                 type: 'GET',
                 success: function (response) {
-                    $('#building-id').val(response.buildingId);
-                    $('#edit-building-name').val(response.buildingName);
-                    if (response.status === 'active') {
+                    $('#building-id').val(response[0].buildingId);
+                    $('#edit-building-name').val(response[0].buildingName);
+                    if (response[0].status === 'active') {
                         $('#edit-statusActive').prop('checked', true);
                     } else {
                         $('#edit-statusDeactive').prop('checked', true);
@@ -555,7 +555,7 @@
                         type: 'GET',
                         async: false,
                         success: function (facilityResponse) {
-                            facilityId = facilityResponse.facilityId;
+                            facilityId = facilityResponse[0].facilityId;
                         },
                         error: function (xhr, status, error) {
                             console.error('Error fetching facility details:', error);
@@ -590,7 +590,7 @@
             }
 
             $.ajax({
-                url: 'https://finnsapi.developvn.click/api/buildings/',
+                url: 'https://finnsapi.developvn.click/api/buildings',
                 type: 'PUT',
                 data: formData,
                 contentType: false,

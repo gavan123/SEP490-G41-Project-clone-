@@ -96,7 +96,6 @@ namespace DataAccess.DAO
                     map.FloorId = mapDto.FloorId;
 
                     _context.SaveChanges();
-                    _context.Dispose();
                 }
                 else
                 {

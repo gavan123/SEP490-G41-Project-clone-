@@ -570,7 +570,7 @@ function editMapPoint() {
     var newLocation = $('#update-mapPointNewLocation').val();
     var imageInput = $('#update-mapPointImage');
 
-    var coordinatesString = '[' + yCoordinate + ',' + xCoordinate + ']';
+    var coordinatesString = '[' + xCoordinate + ',' + yCoordinate + ']';
     var formData = new FormData();
     // Thêm các trường dữ liệu vào formData
     formData.append('MapPointId', mappointId);
