@@ -34,7 +34,7 @@ let path;
 let alert = 0;
 
 const fontLoader = new FontLoader();
-let VCRFontInfo = {fontObj: new Font(), fontLoader: fontLoader, fontPath: "./VCROSDMono.json"}; //Font for 3D text models
+let VCRFontInfo = {fontObj: new Font(), fontLoader: fontLoader, fontPath: "/path/VCROSDMono.json"}; //Font for 3D text models
 VCRFontInfo.fontObj.data = undefined;
 
 let modelLoader;
