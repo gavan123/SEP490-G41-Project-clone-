@@ -32,6 +32,7 @@ namespace DataAccess.DAO
 
             _context.Buildings.Add(building);
             _context.SaveChanges();
+            _context.Dispose();
         }
 
         // Đọc thông tin tòa nhà bằng Id
@@ -41,8 +42,9 @@ namespace DataAccess.DAO
             {
                 throw new ArgumentException("Invalid building ID", nameof(buildingId));
             }
-
-            return _context.Buildings.FirstOrDefault(b => b.BuildingId == buildingId);
+            var building = _context.Buildings.FirstOrDefault(b => b.BuildingId == buildingId);
+            _context.Dispose();
+            return building;
         }
 
         // Cập nhật thông tin tòa nhà
@@ -63,6 +65,7 @@ namespace DataAccess.DAO
                 existingBuilding.FacilityId = building.FacilityId;
 
                 _context.SaveChanges();
+                _context.Dispose();
             }
             else
             {
@@ -117,6 +120,7 @@ namespace DataAccess.DAO
                 {
                     _context.Buildings.Remove(building);
                     _context.SaveChanges();
+                    _context.Dispose();
                 }
                 else
                 {
@@ -134,9 +138,11 @@ namespace DataAccess.DAO
         // Lấy danh sách tất cả các tòa nhà
         public List<Building> GetAllBuildings()
         {
-            return _context.Buildings
+            var buildings =  _context.Buildings
                    .Include(b => b.Facility)
                    .ToList();
+            _context.Dispose();
+            return buildings;
         }
 
     }

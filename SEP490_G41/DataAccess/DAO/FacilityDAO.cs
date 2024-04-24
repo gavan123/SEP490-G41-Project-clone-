@@ -26,6 +26,7 @@ namespace DataAccess.DAO
 
             _context.Facilities.Add(facility);
             _context.SaveChanges();
+            _context.Dispose();
         }
 
         // Đọc thông tin tòa nhà bằng Id
@@ -36,7 +37,9 @@ namespace DataAccess.DAO
                 throw new ArgumentException("Invalid facility ID", nameof(facilityId));
             }
 
-            return _context.Facilities.FirstOrDefault(f => f.FacilityId == facilityId);
+            var facility = _context.Facilities.FirstOrDefault(f => f.FacilityId == facilityId);
+            _context.Dispose();
+            return facility;
         }
 
         public void UpdateFacility(Facility facility)
@@ -57,6 +60,7 @@ namespace DataAccess.DAO
             existingFacility.Status = facility.Status;
 
             _context.SaveChanges();
+            _context.Dispose();
         }
 
         public void DeleteFacility(int facilityId)
@@ -74,11 +78,13 @@ namespace DataAccess.DAO
 
             _context.Facilities.Remove(facility);
             _context.SaveChanges();
+            _context.Dispose();
         }
 
         public List<Facility> GetAllFacilities()
         {
-            return _context.Facilities.ToList();
+            var facilities = _context.Facilities.ToList();
+            _context.Dispose(); return facilities;
         }
 
     }

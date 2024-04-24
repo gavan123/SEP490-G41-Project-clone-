@@ -52,6 +52,7 @@ namespace DataAccess.DAO
 
             // Lưu thay đổi
             _context.SaveChanges();
+            _context.Dispose();
         }
 
         // Đọc thông tin bản đồ bằng Id
@@ -60,7 +61,9 @@ namespace DataAccess.DAO
             if (mapId <= 0)
                 throw new ArgumentException("Map ID must be a positive integer.");
 
-            return _context.Maps.Include(m => m.Floor).FirstOrDefault(m => m.MapId == mapId);
+            var map =  _context.Maps.Include(m => m.Floor).FirstOrDefault(m => m.MapId == mapId);
+            _context.Dispose();
+            return map;
         }
 
         // Cập nhật thông tin bản đồ
@@ -89,11 +92,13 @@ namespace DataAccess.DAO
                 existingMap.MapImage3D = map.MapImage3D;
                 existingMap.FloorId = map.FloorId;
                 _context.SaveChanges();
+                _context.Dispose();
             }
             else
             {
                 throw new ArgumentException($"Map with ID {map.MapId} does not exist.");
             }
+            
         }
 
         // Xóa bản đồ bằng Id
@@ -114,18 +119,22 @@ namespace DataAccess.DAO
 
                 // Lưu thay đổi
                 _context.SaveChanges();
+                _context.Dispose();
             }
             else
             {
                 throw new ArgumentException($"Map with ID {mapId} does not exist.");
             }
+            
         }
 
 
         // Lấy danh sách tất cả các bản đồ
         public virtual List<Map> GetAllMaps()
         {
-            return _context.Maps.Include(m => m.Floor).ToList();
+            var maps = _context.Maps.Include(m => m.Floor).ToList();
+            _context.Dispose();
+            return maps;
         }
 
         // Tìm kiếm bản đồ theo tên
@@ -137,7 +146,7 @@ namespace DataAccess.DAO
             var maps = _context.Maps
                 .Where(m => m.MapName.Contains(keyword))
                 .ToList();
-
+            _context.Dispose();
             return maps;
         }
     }

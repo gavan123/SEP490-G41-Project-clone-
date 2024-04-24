@@ -25,6 +25,7 @@ namespace DataAccess.DAO
 
             _context.Mapmanages.Add(mapManage);
             _context.SaveChanges();
+            _context.Dispose();
         }
 
         public Mapmanage GetMapManageById(int mapId)
@@ -34,7 +35,9 @@ namespace DataAccess.DAO
                 throw new ArgumentException("Invalid map ID", nameof(mapId));
             }
 
-            return _context.Mapmanages.FirstOrDefault(m => m.MapId == mapId);
+            var mapmange = _context.Mapmanages.FirstOrDefault(m => m.MapId == mapId);
+            _context.Dispose();
+            return mapmange;
         }
 
         public void UpdateMapManage(Mapmanage mapManage)
@@ -53,6 +56,7 @@ namespace DataAccess.DAO
                 existingMapManage.UpdateDate = mapManage.UpdateDate;
 
                 _context.SaveChanges();
+                _context.Dispose();
             }
         }
 
@@ -68,12 +72,15 @@ namespace DataAccess.DAO
             {
                 _context.Mapmanages.Remove(mapManage);
                 _context.SaveChanges();
+                _context.Dispose();
             }
         }
 
         public List<Mapmanage> GetAllMapManages()
         {
-            return _context.Mapmanages.ToList();
+            var mapmanage = _context.Mapmanages.ToList();
+            _context.Dispose(); 
+            return mapmanage;
         }
     }
 }

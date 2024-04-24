@@ -38,6 +38,7 @@ namespace DataAccess.DAO
 
             _context.Mappoints.Add(mappoint);
             _context.SaveChanges();
+            _context.Dispose();
         }
 
         // Đọc thông tin mappoint bằng Id
@@ -46,7 +47,9 @@ namespace DataAccess.DAO
             if (mappointId <= 0)
                 throw new ArgumentException("Mappoint ID must be a positive integer.");
 
-            return _context.Mappoints.FirstOrDefault(mp => mp.MapPointId == mappointId);
+            var mappoint = _context.Mappoints.FirstOrDefault(mp => mp.MapPointId == mappointId);
+            _context.Dispose();
+            return mappoint;
         }
 
         // Cập nhật thông tin mappoint
@@ -80,6 +83,7 @@ namespace DataAccess.DAO
                 existingMappoint.Image = mappoint.Image;
                 existingMappoint.Destination = mappoint.Destination;
                 _context.SaveChanges();
+                _context.Dispose();
             }
             else
             {
@@ -114,6 +118,7 @@ namespace DataAccess.DAO
                 // Remove the map point itself
                 _context.Mappoints.Remove(mappoint);
                 _context.SaveChanges();
+                _context.Dispose();
             }
             else
             {
@@ -127,7 +132,9 @@ namespace DataAccess.DAO
         {
             try
             {
-                return _context.Mappoints.ToList();
+                var mappoints = _context.Mappoints.ToList();
+                _context.Dispose();
+                return mappoints;
             }
             catch (Exception ex)
             {

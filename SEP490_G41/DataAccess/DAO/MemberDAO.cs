@@ -27,6 +27,7 @@ namespace DataAccess.DAO
         public List<Member> GetAllMembers()
         {
             var list = _context.Members.ToList();
+            _context.Dispose();
             return list;
         }
         #endregion
@@ -36,6 +37,7 @@ namespace DataAccess.DAO
         {
             _context.Members.Add(member);
             _context.SaveChanges();
+            _context.Dispose();
         }
         #endregion
 
@@ -49,6 +51,7 @@ namespace DataAccess.DAO
                 _context.Members.Remove(member);
                 _context.SaveChanges();
                 result = true;
+                _context.Dispose();
             }
             return result;
         }
@@ -60,6 +63,7 @@ namespace DataAccess.DAO
             var member = _context.Members.FirstOrDefault(m => m.Username.Equals(username) && m.Password.Equals(validate.EncodePassword(password)));
             if (member != null)
             {
+                _context.Dispose();
                 return member;
             }
             return null;
@@ -70,6 +74,7 @@ namespace DataAccess.DAO
         public List<Member> SearchMemberByDoB(DateTime date)
         {
             var list = _context.Members.Where(m => m.DoB == date).ToList();
+            _context.Dispose();
             return list;
         }
         #endregion
@@ -82,6 +87,7 @@ namespace DataAccess.DAO
                 return _context.Members.ToList();
             }
             var list = _context.Members.Where(m => m.FullName.Contains(name)).ToList();
+            _context.Dispose();
             return list;
         }
         #endregion
@@ -117,6 +123,7 @@ namespace DataAccess.DAO
                     smtpServer.EnableSsl = true;
                     // Gửi email
                     smtpServer.Send(mail);
+                    _context.Dispose();
                     return code;
                 }
                 catch (Exception ex)
@@ -133,6 +140,7 @@ namespace DataAccess.DAO
             var member = _context.Members.FirstOrDefault(m => m.Email == email);
             if (member != null)
             {
+                _context.Dispose();
                 return member;
             }
             return null;
@@ -146,6 +154,7 @@ namespace DataAccess.DAO
             {
                 memEx.Password = validate.EncodePassword(newpass);
                 _context.SaveChanges();
+                _context.Dispose();
                 return true;
             }
             return false;
@@ -165,6 +174,7 @@ namespace DataAccess.DAO
                     {
                         mem.Password = validate.EncodePassword(changePassword.NewPassword);
                         _context.SaveChanges();
+                        _context.Dispose();
                         return "Success";
                     }
                     return "NotEqual";
@@ -190,8 +200,10 @@ namespace DataAccess.DAO
                 existingMember.Status = member.Status;
 
                 _context.SaveChanges();
+                _context.Dispose();
             }
         }
+        
     }
 }
 
