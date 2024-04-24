@@ -18,10 +18,10 @@ namespace AR_Navigation.Pages.Maps
 
         [BindProperty]
         public IFormFile ImageFile { get; set; }
-        public async Task<IActionResult> OnPostCreateBuildingAsync()
+        public async Task<IActionResult> OnPostCreateMapAsync()
         {
 
-            string imagesDirectory = Path.Combine(_webHostEnvironment.WebRootPath, "Images");
+            string imagesDirectory = Path.Combine(_webHostEnvironment.WebRootPath, "Images/Map");
 
             string uniqueFileName = null;
             if (ImageFile != null && ImageFile.Length > 0)
@@ -41,10 +41,10 @@ namespace AR_Navigation.Pages.Maps
             return RedirectToPage("/Maps/list");
         }
 
-        public async Task<IActionResult> OnPostEditBuildingAsync()
+        public async Task<IActionResult> OnPostEditMapAsync()
         {
 
-            string imagesDirectory = Path.Combine(_webHostEnvironment.WebRootPath, "Images");
+            string imagesDirectory = Path.Combine(_webHostEnvironment.WebRootPath, "Images/Map");
 
             string uniqueFileName = null;
             if (ImageFile != null && ImageFile.Length > 0)

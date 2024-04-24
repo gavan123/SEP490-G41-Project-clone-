@@ -30,6 +30,7 @@ namespace DataAccess.DAO
 
             _context.Edges.Add(edge);
             _context.SaveChanges();
+            _context.Dispose();
         }
 
         // Đọc thông tin edge bằng Id
@@ -40,7 +41,9 @@ namespace DataAccess.DAO
                 throw new ArgumentException("Invalid edge ID", nameof(edgeId));
             }
 
-            return _context.Edges.FirstOrDefault(e => e.EdgeId == edgeId);
+            var edge = _context.Edges.FirstOrDefault(e => e.EdgeId == edgeId);
+            _context.Dispose();
+            return edge;
         }
 
         // Cập nhật thông tin edge
@@ -61,6 +64,7 @@ namespace DataAccess.DAO
                 existingEdge.Distance = edge.Distance;
 
                 _context.SaveChanges();
+                _context.Dispose();
             }
             else
             {
@@ -82,6 +86,7 @@ namespace DataAccess.DAO
             {
                 _context.Edges.Remove(edge);
                 _context.SaveChanges();
+                _context.Dispose();
             }
             else
             {
@@ -92,10 +97,12 @@ namespace DataAccess.DAO
         // Lấy danh sách tất cả các edges
         public List<Edge> GetAllEdges()
         {
-            return _context.Edges
+            var edges = _context.Edges
                 .Include(b => b.MapPointANavigation)
                 .Include(b => b.MapPointANavigation)
                 .ToList();
+            _context.Dispose ();
+            return edges;
         }
     }
 }

@@ -7,6 +7,7 @@ namespace AR_Navigation.Pages.Mappoints
     {
         public void OnGet()
         {
+
         }
     }
 }

@@ -60,7 +60,43 @@ namespace DataAccess.IRepository.Repository
             }
             
         }
+        public MemberDTO GetMemberByEmail(string email)
+        {
+            try
+            {
+                var member = _memberDAO.GetMemberByEmail(email);
+                return _mapper.Map<MemberDTO>(member);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
 
+        }
+        public bool ResetPassword(int id, string newpass)
+        {
+            try
+            {
+                var result = _memberDAO.ResetPassword(id, newpass);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception();
+            }
+        }
+        public string SendCode(string email)
+        {
+            try
+            {
+                string code = _memberDAO.SendCode(email);
+                return code;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception();
+            }
+        }
         public bool DeleteMember(int id)
         {
             throw new Exception();

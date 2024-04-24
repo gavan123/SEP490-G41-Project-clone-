@@ -24,7 +24,9 @@ namespace DataAccess.DAO
         // Đọc thông profile members nhà bằng Id
         public Member GetMemberById(int memberid)
         {
-            return _context.Members.FirstOrDefault(m => m.MemberId == memberid);
+           var member =  _context.Members.FirstOrDefault(m => m.MemberId == memberid);
+            _context.Dispose();
+            return member;
         }
 
         // Cập nhật thông tin Profile
@@ -47,6 +49,8 @@ namespace DataAccess.DAO
                 existingMember.Country = member.Country;
                 existingMember.Avatar = member.Avatar;
                 _context.SaveChanges();
+                _context.Dispose();
+
             }
         }
        

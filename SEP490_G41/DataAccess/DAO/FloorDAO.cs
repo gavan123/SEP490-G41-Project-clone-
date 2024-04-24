@@ -26,6 +26,7 @@ namespace DataAccess.DAO
 
             _context.Floors.Add(floor);
             _context.SaveChanges();
+            _context.Dispose();
         }
         // Đọc thông tin tầng bằng Id
         public Floor GetFloorById(int floorId)
@@ -35,7 +36,10 @@ namespace DataAccess.DAO
                 throw new ArgumentException("Invalid floor ID", nameof(floorId));
             }
 
-            return _context.Floors.FirstOrDefault(f => f.FloorId == floorId);
+            var floor =  _context.Floors.FirstOrDefault(f => f.FloorId == floorId);
+            _context.Dispose();
+            return floor;
+
         }
 
         public List<Floor> GetAllFloorsByBuildingId(int buildingId)
@@ -45,7 +49,9 @@ namespace DataAccess.DAO
                 throw new ArgumentException("Invalid building ID", nameof(buildingId));
             }
 
-            return _context.Floors.Where(f => f.BuildingId == buildingId).ToList();
+            var floors = _context.Floors.Where(f => f.BuildingId == buildingId).ToList();
+            _context.Dispose();
+            return floors;
         }
 
 
@@ -66,6 +72,7 @@ namespace DataAccess.DAO
                 existingFloor.BuildingId = floor.BuildingId;
 
                 _context.SaveChanges();
+                _context.Dispose();
             }
         }
 
@@ -81,11 +88,14 @@ namespace DataAccess.DAO
             {
                 _context.Floors.Remove(floor);
                 _context.SaveChanges();
+                _context.Dispose();
             }
         }
         public List<Floor> GetAllFloors()
         {
-            return _context.Floors.ToList();
+            var floors = _context.Floors.ToList();
+            _context.Dispose();
+            return floors;
         }
 
     }

@@ -117,19 +117,19 @@
                     <div class="form-group">
                         <label for="new-map-building">Facility</label>
                         <select class="form-control" id="new-map-facility">
-                            <!-- Options will be created by JavaScript -->
+                            <option value="0" disabled selected>Select by facility</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="new-map-building">Building</label>
                         <select class="form-control" id="new-map-building">
-                            <!-- Options will be created by JavaScript -->
+                            <option value="0" disabled selected>Select by building</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="new-map-floor">Floor</label>
                         <select class="form-control" id="new-map-floor">
-                            <!-- Options will be created by JavaScript -->
+                            <option value="0" disabled selected>Select by floor</option>
                         </select>
                     </div>
                     <button type="button" class="btn btn-primary" id="create-map-btn">Create Map</button>
@@ -198,6 +198,7 @@
             }
         }
         var itemsPerPage = 5;
+        var currentPage = 1; // Khởi tạo trang hiện tại là 1
 
         // Get map list from API
         function updateMapList(maps, currentPage, itemsPerPage) {
@@ -212,105 +213,137 @@
 
             for (const map of mapsToShow) {
                 const mapRow = `
-                    <tr>
-                        <td>
-                            <div class="media align-items-center">
-                                <div class="m-l-10">
-                                    <h5 class="m-b-0">${map.mapName}</h5>
-                                </div>
+                <tr>
+                    <td>
+                        <div class="media align-items-center">
+                            <div class="m-l-10">
+                                <h5 class="m-b-0">${map.mapName}</h5>
                             </div>
-                        </td>
-                        <td>
-                            <div class="media align-items-center">
-                                        <div class="avatar avatar-image rounded">
-                                                <img src="/Images/${map.buildingImg}" alt="">
-                                        </div>
-                                        <div class="m-l-10">
-                                            <h5 class="m-b-0">${map.buildingName}</h5>
-                                        </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="media align-items-center">
+                                    <div class="avatar avatar-image rounded">
+                                            <img src="/Images/Building/${map.buildingImg}" alt="">
                                     </div>
-                        </td>
-                        <td>
-                            <span>${map.floorName}</span>
-                        </td>
-                            <td>
-                                    <span>${map.managerFullName}</span>
-                            </td>
-                        <td>
-                                <div class="avatar avatar-image rounded">
-                                                        <img src="/Images/${map.mapImage2D}" alt="">
-                                </div>  
-                        </td>
-                        <td class="text-right">
-                            <div class="dropdown dropdown-animated scale-left">
-                                <a class="text-gray font-size-18" href="javascript:void(0);" data-toggle="dropdown">
-                                    <i class="anticon anticon-ellipsis"></i>
-                                </a>
-                                <div class="dropdown-menu">
-                                        <button class="dropdown-item btn btn-info btn-tone viewMap" type="button" data-id="${map.mapId}">
-                                        <i class="anticon anticon-eye"></i>
-                                        <span class="m-l-10">View</span>
-                                    </button>
-                                    <button class="dropdown-item btn btn-warning btn-tone editMap" type="button" data-id="${map.mapId}">
-                                        <i class="anticon anticon-edit"></i>
-                                        <span class="m-l-10">Edit</span>
-                                    </button>
-                                    <button class="dropdown-item btn btn-danger btn-tone deleteMap" type="button" data-id="${map.mapId}">
-                                        <i class="anticon anticon-delete"></i>
-                                        <span class="m-l-10">Delete</span>
-                                    </button>
+                                    <div class="m-l-10">
+                                        <h5 class="m-b-0">${map.buildingName}</h5>
+                                    </div>
                                 </div>
-                            </div>
+                    </td>
+                    <td>
+                        <span>${map.floorName}</span>
+                    </td>
+                        <td>
+                                <span>${map.managerFullName}</span>
                         </td>
-                    </tr>
-                `;
+                    <td>
+                            <div class="avatar avatar-image rounded">
+                                                    <img src="/Images/Map/${map.mapImage2D}" alt="">
+                            </div>
+                    </td>
+                    <td class="text-right">
+                        <div class="dropdown dropdown-animated scale-left">
+                            <a class="text-gray font-size-18" href="javascript:void(0);" data-toggle="dropdown">
+                                <i class="anticon anticon-ellipsis"></i>
+                            </a>
+                            <div class="dropdown-menu">
+                                    <button class="dropdown-item btn btn-info btn-tone viewMap" type="button" data-id="${map.mapId}">
+                                    <span class="m-l-10">View</span>
+                                </button>
+                                <button class="dropdown-item btn btn-warning btn-tone editMap" type="button" data-id="${map.mapId}">
+                                    <span class="m-l-10">Edit</span>
+                                </button>
+                                <button class="dropdown-item btn btn-danger btn-tone deleteMap" type="button" data-id="${map.mapId}">
+                                    <span class="m-l-10">Delete</span>
+                                </button>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            `;
 
                 $('#map-list').append(mapRow);
             }
         }
 
-        function createPagination(totalPages, list) {
+        //tạo phân trang
+        function createPagination(totalPages, maps) {
             var pagination = $('#pagination');
-            var currentPage = 1; // Trang hiện tại
 
             if (totalPages > 0) {
                 pagination.empty();
 
-                // Nút "Previous"
-                pagination.append('<li class="page-item" id="prevPage"><a class="page-link" href="#" aria-label="Previous">&laquo;</a></li>');
+                // Nút "Prev"
+                var prevLi = $('<li class="page-item"><a class="page-link" href="#">Prev</a></li>');
+                if (currentPage === 1) {
+                    prevLi.addClass('disabled');
+                }
+                pagination.append(prevLi);
 
-                // Hiển thị trang hiện tại ở giữa
-                pagination.append('<li class="page-item active"><a class="page-link" href="#">' + currentPage + '</a></li>');
+                // Hiển thị trang hiện tại và 2 trang xung quanh
+                var startPage = Math.max(1, currentPage - 1);
+                var endPage = Math.min(totalPages, currentPage + 1);
+
+                for (var i = startPage; i <= endPage; i++) {
+                    var pageLi = $('<li class="page-item"><a class="page-link" href="#">' + i + '</a></li>');
+                    if (i === currentPage) {
+                        pageLi.addClass('active');
+                    }
+                    pagination.append(pageLi);
+                }
 
                 // Nút "Next"
-                pagination.append('<li class="page-item" id="nextPage"><a class="page-link" href="#" aria-label="Next">&raquo;</a></li>');
+                var nextLi = $('<li class="page-item"><a class="page-link" href="#">Next</a></li>');
+                if (currentPage === totalPages) {
+                    nextLi.addClass('disabled');
+                }
+                pagination.append(nextLi);
 
-                pagination.parent().show(); // Hiển thị phân trang và cha của nó
+                pagination.show();
             } else {
-                pagination.parent().hide(); // Ẩn phân trang và cha của nó nếu không có trang nào
+                pagination.hide();
             }
 
-            pagination.off('click').on('click', '#prevPage', function (event) {
+            pagination.off('click').on('click', 'a', function (event) {
                 event.preventDefault();
-                if (currentPage > 1) {
+                var page = $(this).parent().text();
+                if (page === 'Prev' && currentPage > 1) {
                     currentPage--;
-                    updatePagination();
-                    updateMapList(list, currentPage, itemsPerPage);
-                }
-            });
-
-            pagination.off('click').on('click', '#nextPage', function (event) {
-                event.preventDefault();
-                if (currentPage < totalPages) {
+                } else if (page === 'Next' && currentPage < totalPages) {
                     currentPage++;
-                    updatePagination();
-                    updateMapList(list, currentPage, itemsPerPage);
+                } else {
+                    currentPage = parseInt(page);
                 }
+                updatePagination(totalPages, maps);
+                updateMapList(maps, currentPage, itemsPerPage);
+            });
+        }
+
+        function updatePagination(totalPages, maps) {
+            var pagination = $('#pagination');
+            pagination.find('li').removeClass('active disabled');
+
+            // Nút "Prev"
+            var prevLi = pagination.find('li:first');
+            if (currentPage === 1) {
+                prevLi.addClass('disabled');
+            }
+
+            // Hiển thị trang hiện tại và 2 trang xung quanh
+            var startPage = Math.max(1, currentPage - 1);
+            var endPage = Math.min(totalPages, currentPage + 1);
+
+            pagination.find('li:not(:first):not(:last)').each(function (index) {
+                var pageNumber = startPage + index;
+                $(this).toggleClass('active', pageNumber === currentPage);
+                $(this).find('a').text(pageNumber);
             });
 
-            function updatePagination() {
-                pagination.find('.page-item.active').removeClass('active');
-                pagination.find('li:nth-child(2)').html('<a class="page-link" href="#">' + currentPage + '</a>').addClass('active');
+            // Nút "Next"
+            var nextLi = pagination.find('li:last');
+            if (currentPage === totalPages) {
+                nextLi.addClass('disabled');
             }
         }
 
@@ -321,7 +354,7 @@
             dataType: 'json',
             success: function (maps) {
                 const totalPages = Math.ceil(maps.length / itemsPerPage);
-                updateMapList(maps, 1, itemsPerPage);
+                updateMapList(maps, currentPage, itemsPerPage);
                 createPagination(totalPages, maps);
             },
             error: function (xhr, status, error) {
@@ -382,6 +415,7 @@
             $('#map-facility').change(function () {
                 var selectedFacilityId = $(this).val(); // Lấy giá trị của facility đã chọn
                 $('#map-building').empty(); // Xóa tất cả các tùy chọn tòa nhà hiện có
+                $('#map-building').append('<option value="0" disabled selected>Select by building</option>');
 
                 // Tạo URL OData để lấy danh sách các tòa nhà từ facility đã chọn
                 var url = 'https://finnsapi.developvn.click/api/buildings?$filter=facilityId eq ' + selectedFacilityId;
@@ -405,6 +439,7 @@
         $('#new-map-facility').change(function () {
             var selectedFacilityId = $(this).val();
             $('#new-map-building').empty();
+            $('#new-map-building').append('<option value="0" disabled selected>Select by building</option>');
 
             if (selectedFacilityId !== '0') {
                 var url = 'https://finnsapi.developvn.click/api/buildings?$filter=facilityId eq ' + selectedFacilityId;
@@ -427,6 +462,7 @@
         $('#edit-map-facility').change(function () {
             var selectedFacilityId = $(this).val();
             $('#edit-map-building').empty();
+            $('#edit-map-building').append('<option value="0" disabled selected>Select by building</option>');
 
             if (selectedFacilityId !== '0') {
                 var url = 'https://finnsapi.developvn.click/api/buildings?$filter=facilityId eq ' + selectedFacilityId;
@@ -455,6 +491,7 @@
                 type: 'GET',
                 success: function (response) {
                     $('#new-map-floor').empty(); // Clear existing options
+                    $('#new-map-floor').append('<option value="0" disabled selected>Select by floor</option>');
                     response.forEach(function (floor) {
                         $('#new-map-floor').append('<option value="' + floor.floorId + '">' + floor.floorName + '</option>');
                     });

@@ -27,6 +27,7 @@ namespace DataAccess.DAO
         public List<Member> GetAllMembers()
         {
             var list = _context.Members.ToList();
+            _context.Dispose();
             return list;
         }
         #endregion
@@ -36,6 +37,7 @@ namespace DataAccess.DAO
         {
             _context.Members.Add(member);
             _context.SaveChanges();
+            _context.Dispose();
         }
         #endregion
 
@@ -49,6 +51,7 @@ namespace DataAccess.DAO
                 _context.Members.Remove(member);
                 _context.SaveChanges();
                 result = true;
+                _context.Dispose();
             }
             return result;
         }
@@ -60,6 +63,7 @@ namespace DataAccess.DAO
             var member = _context.Members.FirstOrDefault(m => m.Username.Equals(username) && m.Password.Equals(validate.EncodePassword(password)));
             if (member != null)
             {
+                _context.Dispose();
                 return member;
             }
             return null;
@@ -70,6 +74,7 @@ namespace DataAccess.DAO
         public List<Member> SearchMemberByDoB(DateTime date)
         {
             var list = _context.Members.Where(m => m.DoB == date).ToList();
+            _context.Dispose();
             return list;
         }
         #endregion
@@ -82,6 +87,7 @@ namespace DataAccess.DAO
                 return _context.Members.ToList();
             }
             var list = _context.Members.Where(m => m.FullName.Contains(name)).ToList();
+            _context.Dispose();
             return list;
         }
         #endregion
@@ -90,37 +96,70 @@ namespace DataAccess.DAO
         {
             return null;
         }
-        #region Send email
-        public bool SendEmail(string email)
+        #region Send code
+        public string SendCode(string email)
         {
-            // Thông tin tài khoản email gửi
-            string emailFrom = "catminh2k1@gmail.com";
-            string password = "xtgf kmfb bgtv rkqe";
-            try
+            var mem = _context.Members.FirstOrDefault(m => m.Email == email);
+            if (mem != null)
             {
-                // Tạo một đối tượng MailMessage
-                MailMessage mail = new MailMessage();
-                mail.From = new MailAddress(emailFrom);
-                mail.To.Add(email);
-                mail.IsBodyHtml = true;
-                mail.Subject = "Reset Code";
-                mail.Body = @"This is your reset code: " + validate.RandomCode();
+                // Thông tin tài khoản email gửi
+                string emailFrom = "catminh2k1@gmail.com";
+                string password = "xtgf kmfb bgtv rkqe";
+                string code = validate.RandomCode();
+                try
+                {
+                    // Tạo một đối tượng MailMessage
+                    MailMessage mail = new MailMessage();
+                    mail.From = new MailAddress(emailFrom);
+                    mail.To.Add(email);
+                    mail.IsBodyHtml = true;
+                    mail.Subject = "Reset Code";
+                    mail.Body = @"This is your reset code: " + code;
 
-                // Cấu hình SMTP client
-                SmtpClient smtpServer = new SmtpClient("smtp.gmail.com", 587);
-                smtpServer.Credentials = new NetworkCredential(emailFrom, password);
-                // Sử dụng SSL/TLS
-                smtpServer.EnableSsl = true;
-                // Gửi email
-                smtpServer.Send(mail);
+                    // Cấu hình SMTP client
+                    SmtpClient smtpServer = new SmtpClient("smtp.gmail.com", 587);
+                    smtpServer.Credentials = new NetworkCredential(emailFrom, password);
+                    // Sử dụng SSL/TLS
+                    smtpServer.EnableSsl = true;
+                    // Gửi email
+                    smtpServer.Send(mail);
+                    _context.Dispose();
+                    return code;
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception();
+                }
+            }
+            return null;
+        }
+        #endregion
+        #region Get member by email
+        public Member GetMemberByEmail(string email)
+        {
+            var member = _context.Members.FirstOrDefault(m => m.Email == email);
+            if (member != null)
+            {
+                _context.Dispose();
+                return member;
+            }
+            return null;
+        }
+        #endregion
+        #region Reset password
+        public bool ResetPassword(int id, string newpass)
+        {
+            var memEx = _context.Members.FirstOrDefault(m => m.MemberId == id);
+            if (memEx != null)
+            {
+                memEx.Password = validate.EncodePassword(newpass);
+                _context.SaveChanges();
+                _context.Dispose();
                 return true;
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.StackTrace);
-                return false;
-            }
+            return false;
         }
+
         #endregion
 
         #region Change password
@@ -135,6 +174,7 @@ namespace DataAccess.DAO
                     {
                         mem.Password = validate.EncodePassword(changePassword.NewPassword);
                         _context.SaveChanges();
+                        _context.Dispose();
                         return "Success";
                     }
                     return "NotEqual";
@@ -160,8 +200,10 @@ namespace DataAccess.DAO
                 existingMember.Status = member.Status;
 
                 _context.SaveChanges();
+                _context.Dispose();
             }
         }
+        
     }
 }
 
