@@ -177,6 +177,7 @@
                     url: 'https://finnsapi.developvn.click/api/members/ResetPassword/' + id + '?newpass=' + newpass,
                     method: 'PUT',
                     success: function (response) {
+                        $("#mess3").hide();
                         alert("Your password had been reset");
                         window.location.href = '/Authen/Login';
 
