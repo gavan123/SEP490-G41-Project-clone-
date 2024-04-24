@@ -55,11 +55,7 @@ namespace AR_NavigationAPI.Controllers
         [HttpPut("{id}")]
         public IActionResult UpdateBuildingById(int id, [FromForm] BuildingUpdateDTO building)
         {
-            var tmpBuilding = _buildingRepository.GetBuildingById(id);
-            if (tmpBuilding == null)
-            {
-                return NotFound();
-            }
+            
             _buildingRepository.UpdateBuilding(building);
 
             return Ok();
@@ -69,14 +65,9 @@ namespace AR_NavigationAPI.Controllers
         [HttpDelete("{id}")]
         public IActionResult DeleteBuildingById(int id)
         {
-            var building = _buildingRepository.GetBuildingById(id);
+           
 
-            if (building == null)
-            {
-                return NotFound();
-            }
-
-            _buildingRepository.DeleteBuilding(id);
+          string mess =   _buildingRepository.DeleteBuilding(id);
 
             return Ok();
         }

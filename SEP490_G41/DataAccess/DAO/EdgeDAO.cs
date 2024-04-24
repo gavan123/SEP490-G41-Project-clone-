@@ -42,7 +42,16 @@ namespace DataAccess.DAO
             }
 
             var edge = _context.Edges.FirstOrDefault(e => e.EdgeId == edgeId);
-            _context.Dispose();
+            return edge;
+        }
+        public Edge GetEdgeDetailById(int edgeId)
+        {
+            if (edgeId <= 0)
+            {
+                throw new ArgumentException("Invalid edge ID", nameof(edgeId));
+            }
+
+            var edge = _context.Edges.FirstOrDefault(e => e.EdgeId == edgeId);
             return edge;
         }
 

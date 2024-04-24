@@ -62,7 +62,6 @@ namespace DataAccess.DAO
                 throw new ArgumentException("Map ID must be a positive integer.");
 
             var map =  _context.Maps.Include(m => m.Floor).FirstOrDefault(m => m.MapId == mapId);
-            _context.Dispose();
             return map;
         }
 

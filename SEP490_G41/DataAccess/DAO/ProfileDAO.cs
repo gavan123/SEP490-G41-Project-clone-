@@ -25,7 +25,6 @@ namespace DataAccess.DAO
         public Member GetMemberById(int memberid)
         {
            var member =  _context.Members.FirstOrDefault(m => m.MemberId == memberid);
-            _context.Dispose();
             return member;
         }
 

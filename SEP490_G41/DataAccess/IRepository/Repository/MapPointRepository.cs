@@ -71,23 +71,23 @@ namespace DataAccess.IRepository.Repository
         {
             try
             {
-                var mapPoints = _mappointDAO.GetAllMappoints()
-                    .Join(_buildingDAO.GetAllBuildings(), mp => mp.BuildingId, b => b.BuildingId, (mp, b) => new { MapPoint = mp, Building = b })
-                    .Join(_floorDAO.GetAllFloors(), mpb => mpb.MapPoint.FloorId, f => f.FloorId, (mpb, f) => new { mpb.MapPoint, mpb.Building, Floor = f });
+                var mapPoints = _mappointDAO.GetAllMappoints();
+                  //  .Join(_buildingDAO.GetAllBuildings(), mp => mp.BuildingId, b => b.BuildingId, (mp, b) => new { MapPoint = mp, Building = b })
+                  //  .Join(_floorDAO.GetAllFloors(), mpb => mpb.MapPoint.FloorId, f => f.FloorId, (mpb, f) => new { mpb.MapPoint, mpb.Building, Floor = f });
 
                 var mapPointDTOs = mapPoints
                     .Select(mpbf => new MapPointDTO
                     {
-                        MapPointId = mpbf.MapPoint.MapPointId,
-                        MapId = mpbf.MapPoint.MapId,
-                        MappointName = mpbf.MapPoint.MapPointName,
-                        LocationWeb = ExtractCoordinatesFromGeoJson(ConvertPointToGeoJson(mpbf.MapPoint.LocationWeb)),
-                        LocationGps = ExtractCoordinatesFromGeoJson(ConvertPointToGeoJson(mpbf.MapPoint.LocationGps ?? GeometryFactory.Default.CreatePoint(new Coordinate(0, 0)))),
-                        LocationApp = ExtractCoordinatesFromGeoJson(ConvertPointToGeoJson(mpbf.MapPoint.LocationApp)),
-                        FloorId = mpbf.MapPoint.FloorId,
-                        BuildingId = mpbf.MapPoint.BuildingId,
-                        Image = mpbf.MapPoint.Image,
-                        Destination = mpbf.MapPoint.Destination ?? false,
+                        MapPointId = mpbf.MapPointId,
+                        MapId = mpbf.MapId,
+                        MappointName = mpbf.MapPointName,
+                        LocationWeb = ExtractCoordinatesFromGeoJson(ConvertPointToGeoJson(mpbf.LocationWeb)),
+                        LocationGps = ExtractCoordinatesFromGeoJson(ConvertPointToGeoJson(mpbf.LocationGps ?? GeometryFactory.Default.CreatePoint(new Coordinate(0, 0)))),
+                        LocationApp = ExtractCoordinatesFromGeoJson(ConvertPointToGeoJson(mpbf.LocationApp)),
+                        FloorId = mpbf.FloorId,
+                        BuildingId = mpbf.BuildingId,
+                        Image = mpbf.Image,
+                        Destination = mpbf.Destination ?? false,
                         BuildingName = mpbf.Building.BuildingName,
                         FloorName = mpbf.Floor.FloorName
                     })

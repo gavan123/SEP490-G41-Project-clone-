@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 using static System.Net.Mime.MediaTypeNames;
@@ -75,17 +76,8 @@ namespace DataAccess.IRepository.Repository
         {
             try
             {
-                string uniqueFileName = building.Image.FileName;
-
-                var buildingModel = new Building
-                {
-                    BuildingId = building.BuildingId,
-                    BuildingName = building.BuildingName,
-                    Status = building.Status,
-                    FacilityId = building.FacilityId,
-                    Image = uniqueFileName
-                };
-                _buildingDAO.UpdateBuilding(_mapper.Map<Building>(buildingModel));
+               
+                _buildingDAO.UpdateBuilding(building);
             }
             catch (Exception ex)
             {
@@ -93,15 +85,16 @@ namespace DataAccess.IRepository.Repository
             }
         }
 
-        public void DeleteBuilding(int buildingId)
+        public string DeleteBuilding(int buildingId)
         {
             try
             {
-                _buildingDAO.DeleteBuilding(buildingId);
+             return _buildingDAO.DeleteBuilding(buildingId);
             }
             catch (Exception ex)
             {
                 throw new Exception("Error occurred while deleting building.", ex);
+                return "Error occurred while deleting building: " + ex.Message;
             }
         }
 

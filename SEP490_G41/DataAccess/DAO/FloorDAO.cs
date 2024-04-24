@@ -37,7 +37,7 @@ namespace DataAccess.DAO
             }
 
             var floor =  _context.Floors.FirstOrDefault(f => f.FloorId == floorId);
-            _context.Dispose();
+           
             return floor;
 
         }

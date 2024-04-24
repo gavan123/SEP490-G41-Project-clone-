@@ -36,7 +36,6 @@ namespace DataAccess.DAO
             }
 
             var mapmange = _context.Mapmanages.FirstOrDefault(m => m.MapId == mapId);
-            _context.Dispose();
             return mapmange;
         }
 
