@@ -54,6 +54,13 @@ namespace DataAccess.DAO
             var edge = _context.Edges.FirstOrDefault(e => e.EdgeId == edgeId);
             return edge;
         }
+        public Edge GetEdgeDetailById2(int p1, int p2)
+        {
+            var edge = _context.Edges.FirstOrDefault(e =>
+          (e.MapPointA == p1 && e.MapPointB == p2) || (e.MapPointA == p2 && e.MapPointB == p1));
+            _context.Dispose();
+            return edge;
+        }
 
         // Cập nhật thông tin edge
         public void UpdateEdge(Edge edge)
@@ -108,7 +115,9 @@ namespace DataAccess.DAO
         {
             var edges = _context.Edges
                 .Include(b => b.MapPointANavigation)
+                 .ThenInclude(f => f.Building)
                 .Include(b => b.MapPointANavigation)
+                 .ThenInclude(f => f.Building)
                 .ToList();
             _context.Dispose ();
             return edges;

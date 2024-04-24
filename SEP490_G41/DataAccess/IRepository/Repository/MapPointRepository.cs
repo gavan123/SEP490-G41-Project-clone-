@@ -141,20 +141,26 @@ namespace DataAccess.IRepository.Repository
 			}
 		}
 
-		// Định nghĩa phương thức để truy vấn tất cả các tòa nhà và tầng mà không dispose
-		private IEnumerable<Building> GetAllBuildings()
-		{
-			// Thực hiện truy vấn tất cả các tòa nhà
-			return _buildingDAO.GetAllBuildings().ToList(); // ToList() để lấy dữ liệu vào bộ nhớ
-		}
+        // Định nghĩa phương thức để truy vấn tất cả các tòa nhà và tầng mà không dispose
+        private IEnumerable<Building> GetAllBuildings()
+        {
+            using (var context = new finsContext())
+            {
+                // Thực hiện truy vấn tất cả các tòa nhà
+                return context.Buildings.ToList(); // Trả về danh sách tất cả các tòa nhà từ context tạm thời
+            }
+        }
 
-		private IEnumerable<Floor> GetAllFloors()
-		{
-			// Thực hiện truy vấn tất cả các tầng
-			return _floorDAO.GetAllFloors().ToList(); // ToList() để lấy dữ liệu vào bộ nhớ
-		}
+        private IEnumerable<Floor> GetAllFloors()
+        {
+            using (var context = new finsContext())
+            {
+                // Thực hiện truy vấn tất cả các tầng
+                return context.Floors.ToList(); // Trả về danh sách tất cả các tầng từ context tạm thời
+            }
+        }
 
-		private string ConvertPointToGeoJson(Point point)
+        private string ConvertPointToGeoJson(Point point)
         {
             var feature = new NetTopologySuite.Features.Feature(point, new AttributesTable());
             var writer = new GeoJsonWriter();
