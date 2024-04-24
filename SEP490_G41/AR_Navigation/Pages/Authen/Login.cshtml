@@ -51,7 +51,6 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="font-weight-semibold" for="password">Password:</label>
-                                    <a class="float-right font-size-13 text-muted" href="">Forget Password?</a>
                                     <div class="input-affix m-b-10">
                                         <i class="prefix-icon anticon anticon-lock"></i>
                                         <input type="password" class="form-control" id="password" placeholder="Password">
@@ -100,7 +99,7 @@
                         var user = { userid: response.memberId, fullname: response.fullName, username: response.username, role: response.roleId, avatar: response.avatar, status: response.status };
                         sessionStorage.setItem('user', JSON.stringify(user));
 
-                        window.location.href = '/Buildings/list';
+                        window.location.href = '/HomePage/Home';
                     },
                     error: function (xhr, status, error) {
                         console.error('Error while logging in:', error);
