@@ -26,9 +26,9 @@ namespace DataAccess.DAO
         #region Get all members
         public List<Member> GetAllMembers()
         {
-            var list = _context.Members.ToList();
+            var lists = _context.Members.ToList();
             _context.Dispose();
-            return list;
+            return lists;
         }
         #endregion
 
