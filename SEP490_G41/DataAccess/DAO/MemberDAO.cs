@@ -33,12 +33,12 @@ namespace DataAccess.DAO
         #endregion
 
         #region Add new member
-        public void AddNewMember(Member member)
-        {
-            _context.Members.Add(member);
-            _context.SaveChanges();
-            _context.Dispose();
-        }
+        //public void AddNewMember(Member member)
+        //{
+        //    _context.Members.Add(member);
+        //    _context.SaveChanges();
+        //    _context.Dispose();
+        //}
         #endregion
 
         #region Delete member
