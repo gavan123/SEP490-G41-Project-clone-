@@ -68,11 +68,12 @@
         </div>
     </div>
 </div>
-<nav aria-label="Page navigation">
-    <ul class="pagination" id="pagination">
-        <!-- Các nút phân trang sẽ được tạo bởi JavaScript -->
-    </ul>
-</nav>
+<div class="row justify-content-center">
+    <nav>
+        <ul id="pagination" class="pagination"></ul>
+    </nav>
+</div>
+
 
 @* Modal Create Building*@
 <div class="modal fade" id="create-new-building">
@@ -242,7 +243,7 @@
                 try {
                     // Gửi yêu cầu AJAX để lấy thông tin của tòa nhà
                     const floors = await $.ajax({
-                        url: `http://14.225.205.28:7391/api/floors?$filter=buildingId eq ${buildingId}`,
+                        url: `https://finnsapi.developvn.click/api/floors?$filter=buildingId eq ${buildingId}`,
                         type: 'GET',
                         dataType: 'json'
                     });
@@ -307,28 +308,53 @@
         //tạo phân trang
         function createPagination(totalPages, buildings) {
             var pagination = $('#pagination');
+            var currentPage = 1; // Trang hiện tại
+
             if (totalPages > 0) {
                 pagination.empty();
-                for (var i = 1; i <= totalPages; i++) {
-                    var li = $('<li class="page-item"><a class="page-link" href="#">' + i + '</a></li>');
-                    li.data('page', i);
-                    pagination.append(li);
-                }
-                pagination.show();
+
+                // Nút "Previous"
+                pagination.append('<li class="page-item" id="prevPage"><a class="page-link" href="#" aria-label="Previous">&laquo;</a></li>');
+
+                // Hiển thị trang hiện tại ở giữa
+                pagination.append('<li class="page-item active"><a class="page-link" href="#">' + currentPage + '</a></li>');
+
+                // Nút "Next"
+                pagination.append('<li class="page-item" id="nextPage"><a class="page-link" href="#" aria-label="Next">&raquo;</a></li>');
+
+                pagination.parent().show(); // Hiển thị phân trang và cha của nó
             } else {
-                pagination.hide();
+                pagination.parent().hide(); // Ẩn phân trang và cha của nó nếu không có trang nào
             }
 
-            pagination.off('click').on('click', 'a', function (event) {
+            pagination.off('click').on('click', '#prevPage', function (event) {
                 event.preventDefault();
-                var page = $(this).parent().data('page');
-                updateBuildingList(buildings, page, itemsPerPage);
+                if (currentPage > 1) {
+                    currentPage--;
+                    updatePagination();
+                    updateBuildingList(buildings, currentPage, itemsPerPage);
+                }
             });
+
+            pagination.off('click').on('click', '#nextPage', function (event) {
+                event.preventDefault();
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    updatePagination();
+                    updateBuildingList(buildings, currentPage, itemsPerPage);
+                }
+            });
+
+            function updatePagination() {
+                pagination.find('.page-item.active').removeClass('active');
+                pagination.find('li:nth-child(2)').html('<a class="page-link" href="#">' + currentPage + '</a>').addClass('active');
+            }
         }
+
 
         // Get building list from API
         $.ajax({
-            url: 'http://14.225.205.28:7391/api/buildings',
+            url: 'https://finnsapi.developvn.click/api/buildings',
             type: 'GET',
             dataType: 'json',
             success: async function (buildings) {
@@ -345,7 +371,7 @@
         $('#building-facility').on('change', async function () {
             const selectedFacilityId = $(this).val(); // Lấy facilityId của tùy chọn đã chọn
 
-            let url = 'http://14.225.205.28:7391/api/buildings';
+            let url = 'https://finnsapi.developvn.click/api/buildings';
             if (selectedFacilityId !== '0' && selectedFacilityId) {
                 url += '?filter=facilityId eq ' + selectedFacilityId;
             }
@@ -366,7 +392,7 @@
 
         //API get facility
         $.ajax({
-            url: 'http://14.225.205.28:7391/api/facilities',
+            url: 'https://finnsapi.developvn.click/api/facilities',
             type: 'GET',
             success: function (response) {
                 response.forEach(function (facility) {
@@ -400,7 +426,7 @@
 
             // Send an AJAX POST request to the API
             $.ajax({
-                url: 'http://14.225.205.28:7391/api/buildings',
+                url: 'https://finnsapi.developvn.click/api/buildings',
                 type: 'POST',
                 data: formData,
                 processData: false,
@@ -445,7 +471,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: 'http://14.225.205.28:7391/api/buildings/' + buildingId,
+                        url: 'https://finnsapi.developvn.click/api/buildings/' + buildingId,
                         type: 'DELETE',
                         success: function (response) {
                             console.log(response);
@@ -479,7 +505,7 @@
         //Get building data by buildingId
         function showEditModal(buildingId) {
             $.ajax({
-                url: 'http://14.225.205.28:7391/api/buildings/' + buildingId,
+                url: 'https://finnsapi.developvn.click/api/buildings/' + buildingId,
                 type: 'GET',
                 success: function (response) {
                     $('#building-id').val(response.buildingId);
@@ -493,7 +519,7 @@
                     var facilityName = '';
                     //API get facilities by ID
                     $.ajax({
-                        url: 'http://14.225.205.28:7391/api/facilities/' + response.facilityId,
+                        url: 'https://finnsapi.developvn.click/api/facilities/' + response.facilityId,
                         type: 'GET',
                         async: false,
                         success: function (facilityResponse) {
@@ -532,7 +558,7 @@
             }
 
             $.ajax({
-                url: 'http://14.225.205.28:7391/api/buildings/' + $('#building-id').val(),
+                url: 'https://finnsapi.developvn.click/api/buildings/' + $('#building-id').val(),
                 type: 'PUT',
                 data: formData,
                 contentType: false,
@@ -588,7 +614,7 @@
 
 
                 $.ajax({
-                    url: 'http://14.225.205.28:7391/api/floors',
+                    url: 'https://finnsapi.developvn.click/api/floors',
                     type: 'POST',
                     data: JSON.stringify(formDataArray),
                     contentType: 'application/json',

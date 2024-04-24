@@ -8,7 +8,7 @@ var flooridTake;
 var buildingidTake;
 function getMapPointsByMapId(mapId, mappointid) {
     $.ajax({
-        url: `http://14.225.205.28:7391/api/mappoints?filter=mapId eq ${mapId}`,
+        url: `https://finnsapi.developvn.click/api/mappoints?filter=mapId eq ${mapId}`,
         method: "get",
     }).then(function (mappointdata) {
         $('#map-list').empty();
@@ -85,54 +85,10 @@ $(document).on('click', '.mappoint-delete', function () {
     });
 });
 
-//Delete mappoint select
-$(document).on('click', '#delete-selected', function () {
-    var selectedMapPointIds = [];
-    // Lặp qua tất cả các checkbox
-    $('.checkbox').each(function () {
-        // Kiểm tra nếu checkbox được chọn
-        if ($(this).is(':checked')) {
-            // Lấy mapPointId của checkbox được chọn và thêm vào mảng selectedMapPointIds
-            var mapPointId = $(this).closest('tr').find('.mappoint-delete').data('id');
-            selectedMapPointIds.push(mapPointId);
-        }
-    });
-
-    // Kiểm tra xem có mapPointId được chọn hay không
-    if (selectedMapPointIds.length === 0) {
-        // Hiển thị thông báo cho người dùng nếu không có mappoint nào được chọn
-        Swal.fire({
-            icon: 'warning',
-            title: 'No map point selected',
-            text: 'Please select at least one map point to delete.'
-        });
-    } else {
-        // Xác nhận xóa từ người dùng
-        Swal.fire({
-            title: 'Are you sure?',
-            text: 'You are about to delete selected map points. This action cannot be undone.',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Yes, delete them!',
-            cancelButtonText: 'No, cancel!',
-            reverseButtons: true
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // Gửi yêu cầu DELETE cho từng mappoint được chọn
-                selectedMapPointIds.forEach(function (mapPointId) {
-                    deleteMapPoint(mapPointId);
-                });
-            } else if (result.dismiss === Swal.DismissReason.cancel) {
-                Swal.fire('Cancelled', 'Your map points are safe :)', 'info');
-            }
-        });
-    }
-});
-
 //function delete
 function deleteMapPoint(mapPointId) {
     $.ajax({
-        url: `http://14.225.205.28:7391/api/mappoints/${mapPointId}`,
+        url: `https://finnsapi.developvn.click/api/mappoints/${mapPointId}`,
         type: 'DELETE',
         success: function (response) {
             console.log('Map point deleted successfully:', response);
@@ -179,7 +135,7 @@ function addMapPoint() {
     formData.append('MapId', mapidTake);
 
     $.ajax({
-        url: 'http://14.225.205.28:7391/api/mappoints',
+        url: 'https://finnsapi.developvn.click/api/mappoints',
         type: 'POST',
         processData: false,
         contentType: false,
@@ -417,7 +373,7 @@ function editMapPoint() {
     }
 
     $.ajax({
-        url: 'http://14.225.205.28:7391/api/mappoints/' + mappointId,
+        url: 'https://finnsapi.developvn.click/api/mappoints/' + mappointId,
         type: 'PUT',
         processData: false,
         contentType: false,
@@ -666,7 +622,7 @@ function ChooseDeleteMappoint(event) {
 }
 function filterMapPointsByName(name) {
     $.ajax({
-        url: `http://14.225.205.28:7391/api/mappoints?filter=mappointName eq ${name}`,
+        url: `https://finnsapi.developvn.click/api/mappoints?filter=mappointName eq ${name}`,
         type: 'GET',
         success: function (data) {
             data.forEach(function (mapPoint) {
@@ -993,18 +949,25 @@ var newPoint = { id: "", x: 0, y: 0 };
 
 function chooseMappoint(event) {
     saveCanvasState();
-    document.getElementById("demo2").innerHTML = "Toa do tren anh: x: " + event.offsetX + ", y: " +
-        event.offsetY + "<br> Toa do tren database: x: " + -(event.offsetX - root.x) / ratio + ", y: " +
-        (event.offsetY - root.y) / ratio;
+
     let x = (event.offsetX - root.x) / ratio;
     let y = -(event.offsetY - root.y) / ratio;
+
+    let canvasCoordinates = `${event.offsetX}, ${event.offsetY}`;
+    let databaseCoordinates = `${x.toFixed(2)}, ${y.toFixed(2)}`;
+
+    document.getElementById("locationWeb").value = `[${event.offsetX}, ${event.offsetY}]`;
+    document.getElementById("locationApp").value = `[${x.toFixed(2)}, ${y.toFixed(2)}]`;
+
     context.beginPath();
     context.arc(event.offsetX, event.offsetY, radius, 0, 2 * Math.PI, false);
     context.fillStyle = 'red';
     context.fill();
     context.closePath();
+
     newPoint = { id: "", x: x, y: y };
     selectedPoint = { x: x, y: y };
+
     console.log("Map point selected - X:", x, ", Y:", y);
     canvas.setAttribute("onclick", "undo(false),chooseMappoint(event)");
 }

@@ -77,11 +77,11 @@
 </div>
 
 
-<nav aria-label="Page navigation">
-    <ul class="pagination" id="pagination">
-        <!-- Pagination buttons will be created by JavaScript -->
-    </ul>
-</nav>
+<div class="row justify-content-center">
+    <nav>
+        <ul id="pagination" class="pagination"></ul>
+    </nav>
+</div>
 
 @* Modal Create Map *@
 <div class="modal fade" id="create-new-map">
@@ -226,22 +226,11 @@
                             </td>
                             <td class="text-right">
                                         <div class="dropdown dropdown-animated scale-left">
-                            <a class="text-gray font-size-18" href="javascript:void(0);" data-toggle="dropdown">
-                                <i class="anticon anticon-ellipsis"></i>
-                            </a>
-                               <div class="dropdown-menu">
-                            <button class="dropdown-item btn btn-info btn-tone viewMappoint" type="button" data-id="${mapPoint.mapPointId}">
-                        <i class="anticon anticon-eye"></i>
-                        <span class="m-l-10">View</span>
-                    </button>
-                                    <button class="dropdown-item btn btn-warning btn-tone edit-map-point" type="button" data-id="${mapPoint.mapPointId}">
-                        <i class="anticon anticon-edit"></i>
-                        <span class="m-l-10">Edit</span>
-                    </button>
-                                        <button class="dropdown-item btn btn-danger btn-tone delete-map-point" type="button" data-id="${mapPoint.mapPointId}">
-                        <i class="anticon anticon-delete"></i>
-                        <span class="m-l-10">Delete</span>
-                    </button>
+                            
+
+                            <button class="btn btn-primary viewMappoint"" type="button"  data-id="${mapPoint.mapPointId}">View Detail</button>
+
+                                    
                 </div>
                         </div>
                                 </td>
@@ -252,30 +241,56 @@
             }
         }
 
-        function createPagination(totalPages, mapPoints) {
+        //tạo phân trang
+        function createPagination(totalPages, list) {
             var pagination = $('#pagination');
+            var currentPage = 1; // Trang hiện tại
+
             if (totalPages > 0) {
                 pagination.empty();
-                for (var i = 1; i <= totalPages; i++) {
-                    var li = $('<li class="page-item"><a class="page-link" href="#">' + i + '</a></li>');
-                    li.data('page', i);
-                    pagination.append(li);
-                }
-                pagination.show();
+
+                // Nút "Previous"
+                pagination.append('<li class="page-item" id="prevPage"><a class="page-link" href="#" aria-label="Previous">&laquo;</a></li>');
+
+                // Hiển thị trang hiện tại ở giữa
+                pagination.append('<li class="page-item active"><a class="page-link" href="#">' + currentPage + '</a></li>');
+
+                // Nút "Next"
+                pagination.append('<li class="page-item" id="nextPage"><a class="page-link" href="#" aria-label="Next">&raquo;</a></li>');
+
+                pagination.parent().show(); // Hiển thị phân trang và cha của nó
             } else {
-                pagination.hide();
+                pagination.parent().hide(); // Ẩn phân trang và cha của nó nếu không có trang nào
             }
 
-            pagination.off('click').on('click', 'a', function (event) {
+            pagination.off('click').on('click', '#prevPage', function (event) {
                 event.preventDefault();
-                var page = $(this).parent().data('page');
-                updateMapPointList(mapPoints, page, itemsPerPage);
+                if (currentPage > 1) {
+                    currentPage--;
+                    updatePagination();
+                    updateMapPointList(list, currentPage, itemsPerPage);
+                }
             });
+
+            pagination.off('click').on('click', '#nextPage', function (event) {
+                event.preventDefault();
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    updatePagination();
+                    updateMapPointList(list, currentPage, itemsPerPage);
+                }
+            });
+
+            function updatePagination() {
+                pagination.find('.page-item.active').removeClass('active');
+                pagination.find('li:nth-child(2)').html('<a class="page-link" href="#">' + currentPage + '</a>').addClass('active');
+            }
         }
+
 
         // Get map point list from API
         $.ajax({
-            url: 'http://14.225.205.28:7391/api/mappoints',
+            url: 'http://localhost:7199/api/mappoints',
             type: 'GET',
             dataType: 'json',
             success: function (mapPoints) {
@@ -295,7 +310,7 @@
             const selectedFloorId = $('#mappoint-floor').val(); // Get the selected floorId
             const selectedDestination = $('#mappoint-destination-switch').is(':checked'); // Get the selected destination
 
-            let url = 'http://14.225.205.28:7391/api/mappoints';
+            let url = 'http://localhost:7199/api/mappoints';
             let filters = [];
 
             if (selectedBuildingId !== '0' && selectedBuildingId) {
@@ -335,7 +350,7 @@
         $(document).ready(function () {
             // Load danh sách các cơ sở ban đầu
             $.ajax({
-                url: 'http://14.225.205.28:7391/api/facilities',
+                url: 'http://localhost:7199/api/facilities',
                 type: 'GET',
                 success: function (response) {
                     response.forEach(function (facility) {
@@ -355,7 +370,7 @@
                 $('#mappoint-floor').empty(); // Xóa tất cả các tùy chọn tầng hiện có
 
                 // Tạo URL OData để lấy danh sách các tòa nhà từ facility đã chọn
-                var url = 'http://14.225.205.28:7391/api/buildings?$filter=facilityId eq ' + selectedFacilityId;
+                var url = 'http://localhost:7199/api/buildings?$filter=facilityId eq ' + selectedFacilityId;
 
                 // Gửi yêu cầu AJAX để lấy danh sách các tòa nhà từ facility đã chọn
                 $.ajax({
@@ -379,7 +394,7 @@
                 $('#mappoint-floor').empty(); // Xóa tất cả các tùy chọn tầng hiện có
 
                 // Tạo URL OData để lấy danh sách các tầng từ tòa nhà đã chọn
-                var url = 'http://14.225.205.28:7391/api/floors?$filter=buildingId eq ' + selectedBuildingId;
+                var url = 'http://localhost:7199/api/floors?$filter=buildingId eq ' + selectedBuildingId;
 
                 // Gửi yêu cầu AJAX để lấy danh sách các tầng từ tòa nhà đã chọn
                 $.ajax({
@@ -427,7 +442,7 @@
             formData.append('Image', image);
 
             $.ajax({
-                url: 'http://14.225.205.28:7391/api/mappoints',
+                url: 'http://localhost:7199/api/mappoints',
                 type: 'POST',
                 data: formData,
                 contentType: false,
@@ -454,42 +469,7 @@
         });
 
         // Delete MapPoint API
-        $(document).on('click', '.delete-map-point', function () {
-            var mapPointId = $(this).data('id');
-
-            Swal.fire({
-                title: 'Are you sure?',
-                text: 'You will not be able to recover this MapPoint!',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        url: 'http://14.225.205.28:7391/api/mappoints/' + mapPointId,
-                        type: 'DELETE',
-                        success: function (response) {
-                            Swal.fire(
-                                'Deleted!',
-                                'MapPoint has been deleted.',
-                                'success'
-                            ).then(() => {
-                                location.reload();
-                            });
-                        },
-                        error: function (xhr, status, error) {
-                            Swal.fire(
-                                'Error!',
-                                'Failed to delete MapPoint. Please try again later.',
-                                'error'
-                            );
-                        }
-                    });
-                }
-            });
-        });
+       
 
         // Show edit modal with data by mapPointId
         $(document).on('click', '.edit-map-point', function () {
@@ -499,7 +479,7 @@
 
         function showEditModal(mapPointId) {
             $.ajax({
-                url: 'http://14.225.205.28:7391/api/mappoints/' + mapPointId,
+                url: 'http://localhost:7199/api/mappoints/' + mapPointId,
                 type: 'GET',
                 dataType: 'json',
                 success: function (mapPoint) {
@@ -551,7 +531,7 @@
             formData.append('Image', image);
 
             $.ajax({
-                url: 'http://14.225.205.28:7391/api/mappoints/' + mapPointId,
+                url: 'http://localhost:7199/api/mappoints/' + mapPointId,
                 type: 'PUT',
                 data: formData,
                 contentType: false,

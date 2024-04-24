@@ -35,7 +35,36 @@ namespace DataAccess.IRepository.Repository
             {
                 throw new Exception("MapPoint not found");
             }
-            return _mapper.Map<MapPointDTO>(mapPoint);
+
+            var building = _buildingDAO.GetBuildingById(mapPoint.BuildingId);
+            var floor = _floorDAO.GetFloorById(mapPoint.FloorId);
+
+            return new MapPointDTO
+            {
+                MapPointId = mapPoint.MapPointId,
+                MapId = mapPoint.MapId,
+                MappointName = mapPoint.MapPointName,
+                LocationWeb = FormatCoordinates(mapPoint.LocationWeb),
+                LocationApp = FormatCoordinates(mapPoint.LocationApp),
+                LocationGps = mapPoint.LocationGps == null ? null : FormatCoordinates(mapPoint.LocationGps),
+                FloorId = mapPoint.FloorId,
+                BuildingId = mapPoint.BuildingId,
+                Image = mapPoint.Image,
+                Destination = mapPoint.Destination ?? false,
+                BuildingName = building?.BuildingName,
+                FloorName = floor?.FloorName
+            };
+        }
+
+        private string FormatCoordinates(Point point)
+        {
+            if (point == null)
+                return null;
+
+            var x = point.X.ToString("0.00");
+            var y = point.Y.ToString("0.00");
+
+            return $"[{x},{y}]";
         }
 
         public List<MapPointDTO> GetAllMapPoints()
@@ -223,17 +252,17 @@ namespace DataAccess.IRepository.Repository
                 string[] coordinates = mapPoint.LocationWeb.Trim('[', ']').Split(',');
                 double latitude = double.Parse(coordinates[0].Trim());
                 double longitude = double.Parse(coordinates[1].Trim());
-                existingMapPoint.LocationWeb = new Point(longitude, latitude);
+                existingMapPoint.LocationWeb = new Point(latitude,longitude);
 
                 string[] coordinates1 = mapPoint.LocationApp.Trim('[', ']').Split(',');
                 double latitude1 = double.Parse(coordinates1[0].Trim());
                 double longitude1 = double.Parse(coordinates1[1].Trim());
-                existingMapPoint.LocationApp = new Point(longitude1, latitude1);
+                existingMapPoint.LocationApp = new Point(latitude1, longitude1);
 
                 string[] coordinates2 = mapPoint.LocationGps.Trim('[', ']').Split(',');
                 double latitude2 = double.Parse(coordinates2[0].Trim());
                 double longitude2 = double.Parse(coordinates2[1].Trim());
-                existingMapPoint.LocationGps = new Point(longitude2, latitude2);
+                existingMapPoint.LocationGps = new Point(latitude2, longitude2);
 
                 existingMapPoint.MapPointName = mapPoint.MappointName;
                 existingMapPoint.FloorId = mapPoint.FloorId;
