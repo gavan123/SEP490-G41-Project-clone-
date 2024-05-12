@@ -43,7 +43,7 @@ namespace DataAccess.IRepository.Repository
                 };
                 _memberDAO.AddNewMember(memberModel);*/
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw new Exception("Can't add new member");
             }
@@ -54,7 +54,7 @@ namespace DataAccess.IRepository.Repository
             {
                 var result = _memberDAO.ChangePassword(id, changePassword);
                 return result;
-            }catch (Exception ex)
+            }catch (Exception)
             {
                 throw new Exception("Error");
             }
@@ -80,7 +80,7 @@ namespace DataAccess.IRepository.Repository
                 var result = _memberDAO.ResetPassword(id, newpass);
                 return result;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw new Exception();
             }
@@ -89,10 +89,10 @@ namespace DataAccess.IRepository.Repository
         {
             try
             {
-                string code = _memberDAO.SendCode(email);
+                string code = _memberDAO.SendCode(email)!;
                 return code;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw new Exception();
             }
@@ -110,7 +110,7 @@ namespace DataAccess.IRepository.Repository
                 var memberDTOs = members.Select(m => _mapper.Map<MemberDTO>(m)).ToList();
                 return memberDTOs;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw new Exception("Something has wrong!");
             }
@@ -123,7 +123,7 @@ namespace DataAccess.IRepository.Repository
                 var member = _memberDAO.Login(username, password);
                 return _mapper.Map<MemberDTO>(member);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw new Exception();
             }
@@ -151,7 +151,7 @@ namespace DataAccess.IRepository.Repository
                 var memberDTOs = members.Select(m => _mapper.Map<MemberDTO>(m)).ToList();
                 return memberDTOs;
             }
-            catch (Exception ex)
+            catch (Exception )
             {
                 throw new Exception("Something has wrong!");
             }

@@ -137,7 +137,6 @@ namespace DataAccess.DAO
                 else
                 {
                     throw new ArgumentException("Building not found", nameof(buildingId));
-                    return "Building not found";
 
                 }
             }

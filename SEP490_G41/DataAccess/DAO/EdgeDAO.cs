@@ -34,7 +34,7 @@ namespace DataAccess.DAO
         }
 
         // Đọc thông tin edge bằng Id
-        public Edge GetEdgeById(int edgeId)
+        public Edge? GetEdgeById(int edgeId)
         {
             if (edgeId <= 0)
             {
@@ -44,7 +44,7 @@ namespace DataAccess.DAO
             var edge = _context.Edges.FirstOrDefault(e => e.EdgeId == edgeId);
             return edge;
         }
-        public Edge GetEdgeDetailById(int edgeId)
+        public Edge? GetEdgeDetailById(int edgeId)
         {
             if (edgeId <= 0)
             {
@@ -54,7 +54,7 @@ namespace DataAccess.DAO
             var edge = _context.Edges.FirstOrDefault(e => e.EdgeId == edgeId);
             return edge;
         }
-        public Edge GetEdgeDetailById2(int p1, int p2)
+        public Edge? GetEdgeDetailById2(int p1, int p2)
         {
             var edge = _context.Edges.FirstOrDefault(e =>
           (e.MapPointA == p1 && e.MapPointB == p2) || (e.MapPointA == p2 && e.MapPointB == p1));

@@ -44,17 +44,17 @@ namespace DataAccess.IRepository.Repository
 				MappointName = mapPoint.MapPointName,
 				LocationWeb = FormatCoordinates(mapPoint.LocationWeb),
 				LocationApp = FormatCoordinates(mapPoint.LocationApp),
-				LocationGps = mapPoint.LocationGps == null ? null : FormatCoordinates(mapPoint.LocationGps),
+				LocationGps = mapPoint.LocationGps != null ? null : FormatCoordinates(mapPoint.LocationGps),
 				FloorId = mapPoint.FloorId,
 				BuildingId = mapPoint.BuildingId,
-				Image = mapPoint.Image,
+				Image = mapPoint.Image!,
 				Destination = mapPoint.Destination ?? false,
 				BuildingName = mapPoint.Building?.BuildingName,
 				FloorName = mapPoint.Floor?.FloorName
 			};
 		}
 
-		private string FormatCoordinates(Point point)
+		private string? FormatCoordinates(Point point)
         {
             if (point == null)
                 return null;
@@ -84,7 +84,7 @@ namespace DataAccess.IRepository.Repository
                         LocationApp = ExtractCoordinatesFromGeoJson(ConvertPointToGeoJson(mpbf.LocationApp)),
                         FloorId = mpbf.FloorId,
                         BuildingId = mpbf.BuildingId,
-                        Image = mpbf.Image,
+                        Image = mpbf.Image!,
                         Destination = mpbf.Destination ?? false,
                         BuildingName = mpbf.Building.BuildingName,
                         FloorName = mpbf.Floor.FloorName
@@ -126,7 +126,7 @@ namespace DataAccess.IRepository.Repository
 						LocationApp = ExtractCoordinatesFromGeoJson(ConvertPointToGeoJson(mpbf.MapPoint.LocationApp)),
 						FloorId = mpbf.MapPoint.FloorId,
 						BuildingId = mpbf.MapPoint.BuildingId,
-						Image = mpbf.MapPoint.Image,
+						Image = mpbf.MapPoint.Image!,
 						Destination = mpbf.MapPoint.Destination ?? false,
 						BuildingName = mpbf.Building.BuildingName,
 						FloorName = mpbf.Floor.FloorName
@@ -166,7 +166,7 @@ namespace DataAccess.IRepository.Repository
             var writer = new GeoJsonWriter();
             return writer.Write(feature);
         }
-        private string ExtractCoordinatesFromGeoJson(string geoJson)
+        private string? ExtractCoordinatesFromGeoJson(string geoJson)
         {
             // Kiểm tra xem đầu vào có phải là null hay không
             if (string.IsNullOrEmpty(geoJson))
@@ -180,7 +180,7 @@ namespace DataAccess.IRepository.Repository
                 var jObject = JObject.Parse(geoJson);
 
                 // Trích xuất giá trị của trường 'coordinates' và chuyển đổi thành chuỗi
-                string coordinatesJson = jObject["geometry"]["coordinates"].ToString();
+                string coordinatesJson = jObject["geometry"]!["coordinates"]!.ToString();
 
                 // Loại bỏ các ký tự xuống dòng và khoảng trắng
                 coordinatesJson = coordinatesJson.Replace("\r\n", "").Replace(" ", "");
@@ -211,7 +211,7 @@ namespace DataAccess.IRepository.Repository
                 double latitude1 = double.Parse(coordinates1[0].Trim());
                 double longitude1 = double.Parse(coordinates1[1].Trim());
 
-                string[] coordinates2 = mapPoint.LocationGps.Trim('[', ']').Split(',');
+                string[] coordinates2 = mapPoint.LocationGps!.Trim('[', ']').Split(',');
                 double latitude2 = double.Parse(coordinates2[0].Trim());
                 double longitude2 = double.Parse(coordinates2[1].Trim());
 

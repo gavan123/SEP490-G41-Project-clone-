@@ -119,7 +119,7 @@
             <div class="col-md-6 px-0">
                 <div class="detail-box">
                     <div class="heading_container ">
-                        <h6  style="margin-top:-10px;margin-bottom:10px;">
+                        <h6 style="margin-top:-10px;margin-bottom:10px;">
                             <i class="fa fa-heart-o" aria-hidden="true"> About Us</i>
                         </h6>
                         <h2>
@@ -419,7 +419,7 @@
                 <div class="detail-box">
                     <div class="heading_container ">
                         <h6 id="aboutUsSection" style="margin-top:-10px;margin-bottom:10px;">
-                            <i class="fa fa-question-circle" aria-hidden="true"></i> FAQ Question</i>
+                            <i class="fa fa-question-circle" aria-hidden="true"></i> FAQ Question
                         </h6>
                         <h2>
                             Frequently asked questions
@@ -435,7 +435,7 @@
                         </button>
                     </div>
 
-                    <div id="fullContent5" style="display: none;">                 
+                    <div id="fullContent5" style="display: none;">
                         <p style="display: inline-block; margin-right: 5px; position: relative;">
                             Currently, the app supports indoor positioning and navigation at buildings like:
                             shopping mall A, airport B, hospital C, ....
@@ -443,10 +443,10 @@
                             <span style="position: absolute; bottom: -4px; left: 0; width: 100%; border-bottom: 1px solid black;"></span> <!-- Thanh ngang -->
                         </p>
                     </div>
-                   @*  <div class="btn-box" id="buttonContainer5">
-                        <button onclick="toggleContent5()" id="toggleButton5" style="background-color: red; color: white; border: none; padding: 10px 20px; cursor: pointer;">
-                            <i class="fa fa-plus"></i> <!-- Biểu tượng dấu cộng từ Font Awesome -->
-                        </button>
+                    @*  <div class="btn-box" id="buttonContainer5">
+                    <button onclick="toggleContent5()" id="toggleButton5" style="background-color: red; color: white; border: none; padding: 10px 20px; cursor: pointer;">
+                    <i class="fa fa-plus"></i> <!-- Biểu tượng dấu cộng từ Font Awesome -->
+                    </button>
                     </div> *@
                     <div id="moreContent6">
                         <p style="display: inline-block; margin-right: 5px; font-size:0.95rem;">
@@ -455,13 +455,13 @@
                         </p>
                         <button onclick="toggleContent6()" id="toggleButton6" style="background-color: red; color: white; border: none; padding: 0 10px; cursor: pointer;">
                             <i class="fa fa-plus"></i> <!-- Biểu tượng dấu cộng từ Font Awesome -->
-                        </button>                            
-                        
+                        </button>
+
                     </div>
                     <div id="fullContent6" style="display: none;">
                         <p style=" position: relative;">
-                            Offer a basic version of the service for free. 
-                            This could include features like basic navigation 
+                            Offer a basic version of the service for free.
+                            This could include features like basic navigation
                             and point-of-interest (POI) search.
                             <span style="position: absolute; bottom: -4px; left: 0; width: 100%; border-bottom: 1px solid black;"></span> <!-- Thanh ngang -->
                         </p>
@@ -477,7 +477,7 @@
                     </div>
                     <div id="fullContent7" style="display: none;">
                         <p style=" position: relative;">
-                            Floor number indicators: Most buildings will have floor number indicators displayed prominently near elevators and stairwells. These can be digital displays, 
+                            Floor number indicators: Most buildings will have floor number indicators displayed prominently near elevators and stairwells. These can be digital displays,
                             engraved signs, or even simple painted numbers on the wall.
                             <span style="position: absolute; bottom: -4px; left: 0; width: 100%; border-bottom: 1px solid black;"></span> <!-- Thanh ngang -->
                         </p>
@@ -493,7 +493,7 @@
                     </div>
                     <div id="fullContent8" style="display: none;">
                         <p style=" position: relative;">
-                            Our application is improving to integrate voice with the hope that it will 
+                            Our application is improving to integrate voice with the hope that it will
                             support navigation for the visually impaired in the future.
                             <span style="position: absolute; bottom: -4px; left: 0; width: 100%; border-bottom: 1px solid black;"></span> <!-- Thanh ngang -->
                         </p>
@@ -506,8 +506,6 @@
 
 <!-- end client section -->
 <!-- team section -->
-
-
 <!-- end team section -->
 <!-- info section -->
 <section class="info_section ">
@@ -520,7 +518,7 @@
                         <span style="vertical-align: middle;font-size:35px;">FinNS</span>
                     </b>
                     <p>
-                        Our activities in developing indoor navigation and positioning projects date back to 2024. The idea originated from the need 
+                        Our activities in developing indoor navigation and positioning projects date back to 2024. The idea originated from the need
                         for an application that helps users navigate easily in complex buildings miscellaneous.
                     </p>
                 </div>
@@ -533,9 +531,9 @@
                     <ul>
                         <li>
                             <a href="">
-                               FPT University
+                                FPT University
                             </a>
-                        </li>                   
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -546,7 +544,7 @@
                     </h5>
                 </div>
                 <div class="info_contact">
-                    <a href ="https://daihoc.fpt.edu.vn/" class="">
+                    <a href="https://daihoc.fpt.edu.vn/" class="">
                         <i class="fa fa-map-marker" aria-hidden="true"></i>
                         <span style="font-size:15px;">
                             FPT Thach That, Hoa Lac ,Ha Noi
@@ -561,7 +559,7 @@
                     <a href="" class="">
                         <i class="fa fa-envelope" aria-hidden="true"></i>
                         <span style="font-size:15px;">
-                           tuyennvhe150819@fpt.edu.vn
+                            tuyennvhe150819@fpt.edu.vn
                         </span>
                     </a>
                 </div>
@@ -607,14 +605,14 @@
 <!-- footer section -->
 
 <script>
-    $(document).ready(function () {
+    $(() => {
         // Lấy dữ liệu từ sessionStorage
         var userJson = sessionStorage.getItem('user');
         if (userJson) {
             var user = JSON.parse(userJson);
             console.log('Username:', user.username);
             console.log('Role:', user.role);
-            
+
 
             $('#navbar-head').append('<li class="nav-item"><a class="nav-link" id="logout-link">Logout</a></li>');
             $('#navbar-head').append('<li class="nav-item"><a class="nav-link" href="/Dashboard/Index">Dashboard</a></li>');
@@ -639,7 +637,7 @@
         var contactUsSection = document.getElementById("contactUsSection");
         contactUsSection.scrollIntoView({ behavior: "smooth", block: "start" });
     }
-    
+
     var clicked = false;
     var clicked2 = false;
     var clicked3 = false;

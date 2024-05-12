@@ -74,8 +74,8 @@ namespace AR_NavigationAPI.Controllers
         public IActionResult CheckSession([FromServices] IHttpContextAccessor httpContextAccessor)
         {
             // Lấy giá trị từ session
-            var username = httpContextAccessor.HttpContext.Session.GetString("Username");
-            var role = httpContextAccessor.HttpContext.Session.GetString("Role");
+            var username = httpContextAccessor.HttpContext?.Session.GetString("Username");
+            var role = httpContextAccessor.HttpContext?.Session.GetString("Role");
 
             if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(role))
             {
@@ -96,7 +96,7 @@ namespace AR_NavigationAPI.Controllers
                 _memberRepository.UpdateMemberStatus(member);
                 return Ok("Member status updated successfully.");
             }
-            catch (Exception ex)
+            catch (Exception )
             {
                 return StatusCode(500, "An error occurred while updating member status.");
             }

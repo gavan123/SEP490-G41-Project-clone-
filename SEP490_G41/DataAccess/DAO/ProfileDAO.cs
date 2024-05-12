@@ -22,7 +22,7 @@ namespace DataAccess.DAO
         }
 
         // Đọc thông profile members nhà bằng Id
-        public Member GetMemberById(int memberid)
+        public Member? GetMemberById(int memberid)
         {
            var member =  _context.Members.FirstOrDefault(m => m.MemberId == memberid);
             return member;

@@ -23,7 +23,7 @@ namespace BusinessObject.Models
         public string Status { get; set; } = null!;
         public string? Avatar { get; set; }
 
-        public virtual Role Role { get; set; }
+        public virtual Role? Role { get; set; }
         public virtual ICollection<Mapmanage> Mapmanages { get; set; }
     }
 }

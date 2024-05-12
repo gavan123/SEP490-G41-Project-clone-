@@ -17,13 +17,13 @@ namespace AR_Navigation.Pages.Maps
 
 
         [BindProperty]
-        public IFormFile ImageFile { get; set; }
+        public IFormFile? ImageFile { get; set; }
         public async Task<IActionResult> OnPostCreateMapAsync()
         {
 
             string imagesDirectory = Path.Combine(_webHostEnvironment.WebRootPath, "Images/Map");
 
-            string uniqueFileName = null;
+            string uniqueFileName = "";
             if (ImageFile != null && ImageFile.Length > 0)
             {
                 uniqueFileName = ImageFile.FileName;
@@ -46,7 +46,7 @@ namespace AR_Navigation.Pages.Maps
 
             string imagesDirectory = Path.Combine(_webHostEnvironment.WebRootPath, "Images/Map");
 
-            string uniqueFileName = null;
+            string uniqueFileName = "";
             if (ImageFile != null && ImageFile.Length > 0)
             {
                 uniqueFileName = ImageFile.FileName;

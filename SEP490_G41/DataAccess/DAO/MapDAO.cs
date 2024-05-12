@@ -57,7 +57,7 @@ namespace DataAccess.DAO
         }
 
         // Đọc thông tin bản đồ bằng Id
-        public virtual Map GetMapById(int mapId)
+        public virtual Map? GetMapById(int mapId)
         {
             if (mapId <= 0)
                 throw new ArgumentException("Map ID must be a positive integer.");
@@ -96,6 +96,7 @@ namespace DataAccess.DAO
                     map.FloorId = mapDto.FloorId;
 
                     _context.SaveChanges();
+                    _context.Dispose();
                 }
                 else
                 {
@@ -148,7 +149,7 @@ namespace DataAccess.DAO
         {
             var maps = _context.Maps
        .Include(m => m.Floor)
-           .ThenInclude(f => f.Building)
+           .ThenInclude(f => f!.Building)
        .Include(m => m.Mapmanages)
            .ThenInclude(mm => mm.Member)
        .Include(m => m.Mappoints)

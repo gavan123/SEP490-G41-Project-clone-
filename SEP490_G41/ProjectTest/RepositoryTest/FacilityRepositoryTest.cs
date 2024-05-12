@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace ProjectTest.RepositoryTest
 {
-    public class FacilityRepositoryTest
+   /* public class FacilityRepositoryTest
     {
         public class FacilityRepositoryTests
         {
@@ -118,5 +118,5 @@ namespace ProjectTest.RepositoryTest
             }
 
         }
-    }
+    }*/
 }

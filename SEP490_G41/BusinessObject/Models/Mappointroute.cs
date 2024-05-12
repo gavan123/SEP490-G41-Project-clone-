@@ -9,7 +9,7 @@ namespace BusinessObject.Models
         public int RouteId { get; set; }
         public int MpOrder { get; set; }
 
-        public virtual Mappoint MapPoint { get; set; }
-        public virtual Route Route { get; set; }
+        public virtual Mappoint? MapPoint { get; set; }
+        public virtual Route? Route { get; set; }
     }
 }

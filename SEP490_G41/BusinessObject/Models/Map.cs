@@ -17,7 +17,7 @@ namespace BusinessObject.Models
         public string MapImage2D { get; set; } = null!;
         public string? MapImage3D { get; set; }
 
-        public virtual Floor Floor { get; set; }
+        public virtual Floor? Floor { get; set; }
         public virtual ICollection<Mapmanage> Mapmanages { get; set; }
         public virtual ICollection<Mappoint> Mappoints { get; set; }
     }

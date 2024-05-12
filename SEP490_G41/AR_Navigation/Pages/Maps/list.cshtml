@@ -73,8 +73,6 @@
                         </tr>
                     </thead>
                     <tbody id="map-list">
-                        
-
                     </tbody>
                 </table>
             </div>
@@ -166,9 +164,9 @@
                         </div>
                         <div id="edit-selected-image-container" class="selected-image-container" style="margin-top: 10px;"></div>
                     </div>
-                  
-                        <input type="hidden" id="edit-map-floor">
-                       
+
+                    <input type="hidden" id="edit-map-floor">
+
                     <button type="button" class="btn btn-primary" id="edit-map-btn">Save Changes</button>
                 </form>
             </div>
@@ -177,116 +175,116 @@
 </div>
 
 <script>
-    $(document).ready(function () {
-        var userJson = sessionStorage.getItem('user');
+    $(document).ready(() => {
+        const userJson = sessionStorage.getItem('user');
         if (!userJson) {
             window.location.href = '/Authen/Login';
         } else {
-            var user = JSON.parse(userJson);
+            const user = JSON.parse(userJson);
             if (user.status !== "active") {
-                // Display SweetAlert message
+                // Hiển thị thông báo SweetAlert
                 Swal.fire({
                     icon: 'error',
                     title: 'Access Denied',
                     text: 'You do not have permission to access this page.',
                     showConfirmButton: false,
-                    timer: 2000 // Close the alert after 2 seconds
+                    timer: 2000 // Đóng thông báo sau 2 giây
                 }).then((result) => {
-                    // Redirect to login page after the alert is closed
+                    // Chuyển hướng đến trang đăng nhập sau khi thông báo đóng
                     window.location.href = '/HomePage/Home';
                 });
             }
         }
-        var itemsPerPage = 5;
-        var currentPage = 1; // Khởi tạo trang hiện tại là 1
+        const itemsPerPage = 5;
+        let currentPage = 1; // Khởi tạo trang hiện tại là 1
 
-        // Get map list from API
-        function updateMapList(maps, currentPage, itemsPerPage) {
+        // Cập nhật danh sách bản đồ từ API
+        const updateMapList = (maps, currentPage, itemsPerPage) => {
             const startIndex = (currentPage - 1) * itemsPerPage;
             const endIndex = startIndex + itemsPerPage;
             const mapsToShow = maps.slice(startIndex, endIndex);
 
-            // Sort the map list by name (mapName)
+            // Sắp xếp danh sách bản đồ theo tên (mapName)
             maps.sort((a, b) => a.mapName.localeCompare(b.mapName));
 
             $('#map-list').empty();
 
             for (const map of mapsToShow) {
                 const mapRow = `
-                <tr>
-                    <td>
-                        <div class="media align-items-center">
-                            <div class="m-l-10">
-                                <h5 class="m-b-0">${map.mapName}</h5>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="media align-items-center">
-                                    <div class="avatar avatar-image rounded">
-                                            <img src="/Images/Building/${map.buildingImg}" alt="">
-                                    </div>
-                                    <div class="m-l-10">
-                                        <h5 class="m-b-0">${map.buildingName}</h5>
-                                    </div>
-                                </div>
-                    </td>
-                    <td>
-                        <span>${map.floorName}</span>
-                    </td>
-                        <td>
-                                <span>${map.managerFullName}</span>
-                        </td>
-                    <td>
-                            <div class="avatar avatar-image rounded">
-                                                    <img src="/Images/Map/${map.mapImage2D}" alt="">
-                            </div>
-                    </td>
-                    <td class="text-right">
-                        <div class="dropdown dropdown-animated scale-left">
-                            <a class="text-gray font-size-18" href="javascript:void(0);" data-toggle="dropdown">
-                                <i class="anticon anticon-ellipsis"></i>
-                            </a>
-                            <div class="dropdown-menu">
-                                    <button class="dropdown-item btn btn-info btn-tone viewMap" type="button" data-id="${map.mapId}">
-                                    <span class="m-l-10">View</span>
-                                </button>
-                                <button class="dropdown-item btn btn-warning btn-tone editMap" type="button" data-id="${map.mapId}">
-                                    <span class="m-l-10">Edit</span>
-                                </button>
-                                <button class="dropdown-item btn btn-danger btn-tone deleteMap" type="button" data-id="${map.mapId}">
-                                    <span class="m-l-10">Delete</span>
-                                </button>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-            `;
+                                                                     <tr>
+                                                                         <td>
+                                                                             <div class="media align-items-center">
+                                                                                 <div class="m-l-10">
+                                                                                     <h5 class="m-b-0">${map.mapName}</h5>
+                                                                                 </div>
+                                                                             </div>
+                                                                         </td>
+                                                                         <td>
+                                                                             <div class="media align-items-center">
+                                                                                 <div class="avatar avatar-image rounded">
+                                                                                     <img src="/Images/Building/${map.buildingImg}" alt="">
+                                                                                 </div>
+                                                                                 <div class="m-l-10">
+                                                                                     <h5 class="m-b-0">${map.buildingName}</h5>
+                                                                                 </div>
+                                                                             </div>
+                                                                         </td>
+                                                                         <td>
+                                                                             <span>${map.floorName}</span>
+                                                                         </td>
+                                                                         <td>
+                                                                             <span>${map.managerFullName}</span>
+                                                                         </td>
+                                                                         <td>
+                                                                             <div class="avatar avatar-image rounded">
+                                                                                 <img src="/Images/Map/${map.mapImage2D}" alt="">
+                                                                             </div>
+                                                                         </td>
+                                                                         <td class="text-right">
+                                                                             <div class="dropdown dropdown-animated scale-left">
+                                                                                 <a class="text-gray font-size-18" href="javascript:void(0);" data-toggle="dropdown">
+                                                                                     <i class="anticon anticon-ellipsis"></i>
+                                                                                 </a>
+                                                                                 <div class="dropdown-menu">
+                                                                                     <button class="dropdown-item btn btn-info btn-tone viewMap" type="button" data-id="${map.mapId}">
+                                                                                         <span class="m-l-10">View</span>
+                                                                                     </button>
+                                                                                     <button class="dropdown-item btn btn-warning btn-tone editMap" type="button" data-id="${map.mapId}">
+                                                                                         <span class="m-l-10">Edit</span>
+                                                                                     </button>
+                                                                                     <button class="dropdown-item btn btn-danger btn-tone deleteMap" type="button" data-id="${map.mapId}">
+                                                                                         <span class="m-l-10">Delete</span>
+                                                                                     </button>
+                                                                                 </div>
+                                                                             </div>
+                                                                         </td>
+                                                                     </tr>
+                                                                 `;
 
                 $('#map-list').append(mapRow);
             }
-        }
+        };
 
-        //tạo phân trang
-        function createPagination(totalPages, maps) {
-            var pagination = $('#pagination');
+        // Tạo phân trang
+        const createPagination = (totalPages, maps) => {
+            const pagination = $('#pagination');
 
             if (totalPages > 0) {
                 pagination.empty();
 
                 // Nút "Prev"
-                var prevLi = $('<li class="page-item"><a class="page-link" href="#">Prev</a></li>');
+                const prevLi = $('<li class="page-item"><a class="page-link" href="#">Prev</a></li>');
                 if (currentPage === 1) {
                     prevLi.addClass('disabled');
                 }
                 pagination.append(prevLi);
 
                 // Hiển thị trang hiện tại và 2 trang xung quanh
-                var startPage = Math.max(1, currentPage - 1);
-                var endPage = Math.min(totalPages, currentPage + 1);
+                const startPage = Math.max(1, currentPage - 1);
+                const endPage = Math.min(totalPages, currentPage + 1);
 
-                for (var i = startPage; i <= endPage; i++) {
-                    var pageLi = $('<li class="page-item"><a class="page-link" href="#">' + i + '</a></li>');
+                for (let i = startPage; i <= endPage; i++) {
+                    const pageLi = $(`<li class="page-item"><a class="page-link" href="#">${i}</a></li>`);
                     if (i === currentPage) {
                         pageLi.addClass('active');
                     }
@@ -294,7 +292,7 @@
                 }
 
                 // Nút "Next"
-                var nextLi = $('<li class="page-item"><a class="page-link" href="#">Next</a></li>');
+                const nextLi = $('<li class="page-item"><a class="page-link" href="#">Next</a></li>');
                 if (currentPage === totalPages) {
                     nextLi.addClass('disabled');
                 }
@@ -305,9 +303,9 @@
                 pagination.hide();
             }
 
-            pagination.off('click').on('click', 'a', function (event) {
+            pagination.off('click').on('click', 'a', (event) => {
                 event.preventDefault();
-                var page = $(this).parent().text();
+                const page = $(event.target).parent().text();
                 if (page === 'Prev' && currentPage > 1) {
                     currentPage--;
                 } else if (page === 'Next' && currentPage < totalPages) {
@@ -318,53 +316,54 @@
                 updatePagination(totalPages, maps);
                 updateMapList(maps, currentPage, itemsPerPage);
             });
-        }
+        };
 
-        function updatePagination(totalPages, maps) {
-            var pagination = $('#pagination');
+        const updatePagination = (totalPages, maps) => {
+            const pagination = $('#pagination');
             pagination.find('li').removeClass('active disabled');
 
             // Nút "Prev"
-            var prevLi = pagination.find('li:first');
+            const prevLi = pagination.find('li:first');
             if (currentPage === 1) {
                 prevLi.addClass('disabled');
             }
 
             // Hiển thị trang hiện tại và 2 trang xung quanh
-            var startPage = Math.max(1, currentPage - 1);
-            var endPage = Math.min(totalPages, currentPage + 1);
+            const startPage = Math.max(1, currentPage - 1);
+            const endPage = Math.min(totalPages, currentPage + 1);
 
-            pagination.find('li:not(:first):not(:last)').each(function (index) {
-                var pageNumber = startPage + index;
-                $(this).toggleClass('active', pageNumber === currentPage);
-                $(this).find('a').text(pageNumber);
+            pagination.find('li:not(:first):not(:last)').each((index) => {
+                const pageNumber = startPage + index;
+                const listItem = $(this);
+                listItem.toggleClass('active', pageNumber === currentPage);
+                listItem.find('a').text(pageNumber);
             });
 
             // Nút "Next"
-            var nextLi = pagination.find('li:last');
+            const nextLi = pagination.find('li:last');
             if (currentPage === totalPages) {
                 nextLi.addClass('disabled');
             }
-        }
+        };
 
-        // Get map list from API
+        // Lấy danh sách bản đồ từ API
         $.ajax({
             url: 'https://finnsapi.developvn.click/api/maps',
             type: 'GET',
             dataType: 'json',
-            success: function (maps) {
+            success: (maps) => {
                 const totalPages = Math.ceil(maps.length / itemsPerPage);
                 updateMapList(maps, currentPage, itemsPerPage);
                 createPagination(totalPages, maps);
             },
-            error: function (xhr, status, error) {
+            error: (xhr, status, error) => {
                 console.log('Error loading maps from API: ' + error);
             }
         });
 
-        // Filter maps by building
-        $('#map-building').on('change', function () {
-            const selectedBuildingId = $(this).val(); // Get the selected buildingId
+        // Lọc bản đồ theo tòa nhà
+        $('#map-building').on('change', () => {
+            const selectedBuildingId = $(this).val(); // Lấy buildingId đã chọn
 
             let url = 'https://finnsapi.developvn.click/api/maps';
             if (selectedBuildingId !== '0' && selectedBuildingId) {
@@ -375,83 +374,77 @@
                 url: url,
                 type: 'GET',
                 dataType: 'json',
-                success: function (maps) {
+                success: (maps) => {
                     const totalPages = Math.ceil(maps.length / itemsPerPage);
                     updateMapList(maps, 1, itemsPerPage);
                     createPagination(totalPages, maps);
                 },
-                error: function (xhr, status, error) {
+                error: (xhr, status, error) => {
                     console.error('Error:', error);
                 }
             });
         });
 
-
-
-
-
-
-        $(document).ready(function () {
+        $(document).ready(() => {
             // Load danh sách các cơ sở ban đầu
             $.ajax({
                 url: 'https://finnsapi.developvn.click/api/facilities',
                 type: 'GET',
-                success: function (response) {
-                    response.forEach(function (facility) {
+                success: (response) => {
+                    response.forEach((facility) => {
                         // Thêm tùy chọn cho mỗi cơ sở
                         $('#map-facility').append('<option value="' + facility.facilityId + '">' + facility.facilityName + '</option>');
                         $('#new-map-facility').append('<option value="' + facility.facilityId + '">' + facility.facilityName + '</option>');
                         $('#edit-map-facility').append('<option value="' + facility.facilityId + '">' + facility.facilityName + '</option>');
                     });
                 },
-                error: function (xhr, status, error) {
+                error: (xhr, status, error) => {
                     console.error(error);
                 }
             });
 
-
-
             // Sự kiện change cho phần tử select của facility
-            $('#map-facility').change(function () {
-                var selectedFacilityId = $(this).val(); // Lấy giá trị của facility đã chọn
+            $('#map-facility').change(() => {
+                const selectedFacilityId = $(this).val(); // Lấy giá trị của facility đã chọn
                 $('#map-building').empty(); // Xóa tất cả các tùy chọn tòa nhà hiện có
                 $('#map-building').append('<option value="0" disabled selected>Select by building</option>');
 
                 // Tạo URL OData để lấy danh sách các tòa nhà từ facility đã chọn
-                var url = 'https://finnsapi.developvn.click/api/buildings?$filter=facilityId eq ' + selectedFacilityId;
+                const url = 'https://finnsapi.developvn.click/api/buildings?$filter=facilityId eq ' + selectedFacilityId;
 
                 // Gửi yêu cầu AJAX để lấy danh sách các tòa nhà từ facility đã chọn
                 $.ajax({
                     url: url,
                     type: 'GET',
-                    success: function (response) {
+                    success: (response) => {
                         // Thêm tùy chọn cho mỗi tòa nhà từ response
-                        response.forEach(function (building) {
+                        response.forEach((building) => {
                             $('#map-building').append('<option value="' + building.buildingId + '">' + building.buildingName + '</option>');
                         });
                     },
-                    error: function (xhr, status, error) {
+                    error: (xhr, status, error) => {
                         console.error(error);
                     }
                 });
             });
         });
-        $('#new-map-facility').change(function () {
-            var selectedFacilityId = $(this).val();
+
+        $('#new-map-facility').change(() => {
+            const selectedFacilityId = $(this).val();
             $('#new-map-building').empty();
             $('#new-map-building').append('<option value="0" disabled selected>Select by building</option>');
 
             if (selectedFacilityId !== '0') {
-                var url = 'https://finnsapi.developvn.click/api/buildings?$filter=facilityId eq ' + selectedFacilityId;
+                const url = 'https://finnsapi.developvn.click/api/buildings?$filter=facilityId eq ' + selectedFacilityId;
                 $.ajax({
                     url: url,
                     type: 'GET',
-                    success: function (response) {
-                        response.forEach(function (building) {
+                    success: (response) => {
+                        response.forEach((building) => {
                             $('#new-map-building').append('<option value="' + building.buildingId + '">' + building.buildingName + '</option>');
                         });
                     },
-                    error: function (xhr, status, error) {
+                    error: (xhr, status, error) => {
                         console.error(error);
                     }
                 });
@@ -459,90 +452,86 @@
         });
 
         // Load building options based on selected facility for edit modal
-        $('#edit-map-facility').change(function () {
-            var selectedFacilityId = $(this).val();
+        $('#edit-map-facility').change(() => {
+            const selectedFacilityId = $(this).val();
             $('#edit-map-building').empty();
             $('#edit-map-building').append('<option value="0" disabled selected>Select by building</option>');
 
             if (selectedFacilityId !== '0') {
-                var url = 'https://finnsapi.developvn.click/api/buildings?$filter=facilityId eq ' + selectedFacilityId;
+                const url = 'https://finnsapi.developvn.click/api/buildings?$filter=facilityId eq ' + selectedFacilityId;
                 $.ajax({
                     url: url,
                     type: 'GET',
-                    success: function (response) {
-                        response.forEach(function (building) {
+                    success: (response) => {
+                        response.forEach((building) => {
                             $('#edit-map-building').append('<option value="' + building.buildingId + '">' + building.buildingName + '</option>');
                         });
                     },
-                    error: function (xhr, status, error) {
+                    error: (xhr, status, error) => {
                         console.error(error);
                     }
                 });
             }
         });
 
-
-
-
-        $('#new-map-building').change(function () {
-            var buildingId = $(this).val();
+        $('#new-map-building').change(() => {
+            const buildingId = $(this).val();
             $.ajax({
                 url: 'https://finnsapi.developvn.click/api/floors/building/' + buildingId,
                 type: 'GET',
-                success: function (response) {
-                    $('#new-map-floor').empty(); // Clear existing options
+                success: (response) => {
+                    $('#new-map-floor').empty(); // Xóa tất cả các tùy chọn hiện có
                     $('#new-map-floor').append('<option value="0" disabled selected>Select by floor</option>');
-                    response.forEach(function (floor) {
+                    response.forEach((floor) => {
                         $('#new-map-floor').append('<option value="' + floor.floorId + '">' + floor.floorName + '</option>');
                     });
                 },
-                error: function (xhr, status, error) {
+                error: (xhr, status, error) => {
                     console.error(error);
                 }
             });
         });
-        $('#edit-map-building').change(function () {
-            var buildingId = $(this).val();
+
+        $('#edit-map-building').change(() => {
+            const buildingId = $(this).val();
             $.ajax({
                 url: 'https://finnsapi.developvn.click/api/floors/building/' + buildingId,
                 type: 'GET',
-                success: function (response) {
-                    $('#edit-map-floor').empty(); // Clear existing options
-                    response.forEach(function (floor) {
+                success: (response) => {
+                    $('#edit-map-floor').empty(); // Xóa tất cả các tùy chọn hiện có
+                    response.forEach((floor) => {
                         $('#edit-map-floor').append('<option value="' + floor.floorId + '">' + floor.floorName + '</option>');
                     });
                 },
-                error: function (xhr, status, error) {
+                error: (xhr, status, error) => {
                     console.error(error);
                 }
             });
         });
 
+        $('#create-map-btn').click(() => {
+            const mapName = $('#new-map-name').val();
+            const floorId = $('#new-map-floor').val();
+            const imageInput = $('#new-building-image');
+            const userJson = sessionStorage.getItem('user');
+            const user = JSON.parse(userJson); // Parse userJson thành đối tượng JavaScript
 
-
-        $('#create-map-btn').click(function () {
-            var mapName = $('#new-map-name').val();
-            var floorId = $('#new-map-floor').val();
-            var imageInput = $('#new-building-image');
-            var userJson = sessionStorage.getItem('user');
-            var user = JSON.parse(userJson); // Parse userJson thành đối tượng JavaScript
-
-            var formData = new FormData();
+            const formData = new FormData();
             formData.append('MapName', mapName);
             formData.append('FloorId', floorId);
             if (imageInput[0].files.length > 0) {
-                var imageFile = imageInput[0].files[0];
+                const imageFile = imageInput[0].files[0];
                 formData.append('mapImage2D', imageFile);
             }
 
-            // Send an AJAX POST request to the API
+            // Gửi yêu cầu AJAX POST đến API
             $.ajax({
                 url: 'https://finnsapi.developvn.click/api/maps?memberId=' + user.userid,
                 type: 'POST',
                 data: formData,
                 processData: false,
                 contentType: false,
-                success: function (response) {
+                success: (response) => {
                     Swal.fire({
                         icon: 'success',
                         title: 'Map added successfully!',
@@ -553,7 +542,7 @@
                     });
                     $('#create-new-map').modal('hide');
                 },
-                error: function (xhr, status, error) {
+                error: (xhr, status, error) => {
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
@@ -561,11 +550,12 @@
                     });
                 }
             });
+
         });
 
-        // Delete Map API
+        // Xóa Map API
         $(document).on('click', '.deleteMap', function () {
-            var mapId = $(this).data('id');
+            const mapId = $(this).data('id');
 
             Swal.fire({
                 title: 'Are you sure?',
@@ -580,7 +570,7 @@
                     $.ajax({
                         url: 'https://finnsapi.developvn.click/api/maps/' + mapId,
                         type: 'DELETE',
-                        success: function (response) {
+                        success: (response) => {
                             Swal.fire(
                                 'Deleted!',
                                 'Map has been deleted.',
@@ -589,7 +579,7 @@
                                 location.reload();
                             });
                         },
-                        error: function (xhr, status, error) {
+                        error: (xhr, status, error) => {
                             Swal.fire(
                                 'Error!',
                                 'Failed to delete map. Please try again later.',
@@ -601,41 +591,41 @@
             });
         });
 
-        // Show edit modal with data by mapId
-        $(document).on('click', '.editMap', function () {
-            var mapId = $(this).data('id');
+        // Hiển thị modal chỉnh sửa với dữ liệu theo mapId
+        $(document).on('click', '.editMap', () => {
+            const mapId = $(this).data('id');
             showEditModal(mapId);
         });
 
-        function showEditModal(mapId) {
+        const showEditModal = (mapId) => {
             $.ajax({
                 url: 'https://finnsapi.developvn.click/api/maps/' + mapId,
                 type: 'GET',
-                success: function (response) {
+                success: (response) => {
                     $('#map-id').val(response.mapId);
                     $('#edit-map-name').val(response.mapName);
                     $('#edit-map-floor').val(response.floorId);
                     // Hiển thị modal chỉnh sửa
                     $('#edit-map').modal('show');
                 },
-                error: function (xhr, status, error) {
+                error: (xhr, status, error) => {
                     console.error('Error fetching map details:', error);
                 }
             });
-        }
+        };
 
-        $('#edit-map-btn').click(function () {
-            var mapId = $('#map-id').val();
-            var mapName = $('#edit-map-name').val();
-            var floorId = $('#edit-map-floor').val();
-            var imageInput = $('#edit-map-image');
+        $('#edit-map-btn').click(() => {
+            const mapId = $('#map-id').val();
+            const mapName = $('#edit-map-name').val();
+            const floorId = $('#edit-map-floor').val();
+            const imageInput = $('#edit-map-image');
 
-            var formData = new FormData();
+            const formData = new FormData();
             formData.append('MapId', mapId);
             formData.append('MapName', mapName);
             formData.append('FloorId', floorId);
             if (imageInput[0].files.length > 0) {
-                var imageFile = imageInput[0].files[0];
+                const imageFile = imageInput[0].files[0];
                 formData.append('MapImage2D', imageFile);
             }
 
@@ -645,7 +635,7 @@
                 data: formData,
                 contentType: false,
                 processData: false,
-                success: function (response) {
+                success: (response) => {
                     Swal.fire({
                         icon: 'success',
                         title: 'Map Updated',
@@ -658,7 +648,7 @@
                     $('#edit-map').modal('hide');
                     console.log('Map updated successfully:', response);
                 },
-                error: function (xhr, status, error) {
+                error: (xhr, status, error) => {
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
@@ -669,29 +659,28 @@
             });
         });
 
-        //Redirect maps detail
-        $(document).on('click', '.viewMap', function () {
-            var mapId = $(this).data('id');
+        // Chuyển hướng đến trang chi tiết bản đồ
+        $(document).on('click', '.viewMap', () => {
+            const mapId = $(this).data('id');
             window.location.href = `Detail/${mapId}`;
         });
-
-
     });
 
-    function displaySelectedImage(input, containerId) {
-        var file = input.files[0];
-        var reader = new FileReader();
 
-        reader.onload = function (e) {
-            var imgElement = document.createElement('img');
+    const displaySelectedImage = (input, containerId) => {
+        const file = input.files[0];
+        const reader = new FileReader();
+
+        reader.onload = (e) => {
+            const imgElement = document.createElement('img');
             imgElement.src = e.target.result;
             imgElement.className = "img-fluid rounded";
 
-            var selectedImageContainer = document.getElementById(containerId);
+            const selectedImageContainer = document.getElementById(containerId);
             selectedImageContainer.innerHTML = '';
             selectedImageContainer.appendChild(imgElement);
-        }
+        };
 
         reader.readAsDataURL(file);
-    }
+    };
 </script>

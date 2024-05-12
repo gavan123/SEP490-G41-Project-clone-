@@ -30,7 +30,7 @@ namespace DataAccess.DAO
         }
 
         // Đọc thông tin tòa nhà bằng Id
-        public Facility GetFacilityById(int facilityId)
+        public Facility? GetFacilityById(int facilityId)
         {
             if (facilityId <= 0)
             {

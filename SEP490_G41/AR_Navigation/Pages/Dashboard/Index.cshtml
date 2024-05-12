@@ -67,71 +67,82 @@
 </div>
 <canvas class="chart" id="line-chart"></canvas>
 <script>
-    $(document).ready(function () {
-        var userJson = sessionStorage.getItem('user');
+    $(() => {
+        const userJson = sessionStorage.getItem('user');
         if (!userJson) {
             window.location.href = '/Authen/Login';
-            return; 
+            return;
         }
-        // Gọi API để lấy dữ liệu của Facility
-        $.ajax({
-            url: 'https://finnsapi.developvn.click/api/facilities',
-            method: "GET",
-            dataType: 'json',
-            success: function (data) {
-                var facilityCount = data.length;
-                $("#facility-count").text(facilityCount);
-                console.log(facilityCount);
-            },
-            error: function (xhr, status, error) {
-                console.log("Error occurred while fetching facility data:", error);
-            }
-        });
 
-        // Gọi API để lấy dữ liệu của Building
-        $.ajax({
-            url: 'https://finnsapi.developvn.click/api/buildings',
-            method: "GET",
-            dataType: 'json',
-            success: function (data) {
-                var buildingCount = data.length;
-                $("#building-count").text(buildingCount);
-                console.log(buildingCount);
-            },
-            error: function (xhr, status, error) {
-                console.log("Error occurred while fetching building data:", error);
-            }
-        });
+        const fetchFacilityData = () => {
+            $.ajax({
+                url: 'https://finnsapi.developvn.click/api/facilities',
+                method: "GET",
+                dataType: 'json',
+                success: (data) => {
+                    const facilityCount = data.length;
+                    $("#facility-count").text(facilityCount);
+                    console.log(facilityCount);
+                },
+                error: (xhr, status, error) => {
+                    console.log("Error occurred while fetching facility data:", error);
+                }
+            });
+        };
 
-        // Gọi API để lấy dữ liệu của Mappoint
-        $.ajax({
-            url: 'https://finnsapi.developvn.click/api/mappoints',
-            method: "GET",
-            dataType: 'json',
-            success: function (data) {
-                var mappointCount = data.length;
-                $("#mappoint-count").text(mappointCount);
-                console.log(mappointCount);
-            },
-            error: function (xhr, status, error) {
-                console.log("Error occurred while fetching mappoint data:", error);
-            }
-        });
+        const fetchBuildingData = () => {
+            $.ajax({
+                url: 'https://finnsapi.developvn.click/api/buildings',
+                method: "GET",
+                dataType: 'json',
+                success: (data) => {
+                    const buildingCount = data.length;
+                    $("#building-count").text(buildingCount);
+                    console.log(buildingCount);
+                },
+                error: (xhr, status, error) => {
+                    console.log("Error occurred while fetching building data:", error);
+                }
+            });
+        };
 
-        // Gọi API để lấy dữ liệu của Designer
-        $.ajax({
-            url: 'https://finnsapi.developvn.click/api/members',
-            method: "GET",
-            dataType: 'json',
-            success: function (data) {
-                var designerCount = data.length;
-                $("#member-count").text(designerCount);
-                console.log(designerCount);
-            },
-            error: function (xhr, status, error) {
-                console.log("Error occurred while fetching designer data:", error);
-            }
-        });
+        const fetchMappointData = () => {
+            $.ajax({
+                url: 'https://finnsapi.developvn.click/api/mappoints',
+                method: "GET",
+                dataType: 'json',
+                success: (data) => {
+                    const mappointCount = data.length;
+                    $("#mappoint-count").text(mappointCount);
+                    console.log(mappointCount);
+                },
+                error: (xhr, status, error) => {
+                    console.log("Error occurred while fetching mappoint data:", error);
+                }
+            });
+        };
+
+        const fetchDesignerData = () => {
+            $.ajax({
+                url: 'https://finnsapi.developvn.click/api/members',
+                method: "GET",
+                dataType: 'json',
+                success: (data) => {
+                    const designerCount = data.length;
+                    $("#member-count").text(designerCount);
+                    console.log(designerCount);
+                },
+                error: (xhr, status, error) => {
+                    console.log("Error occurred while fetching designer data:", error);
+                }
+            });
+        };
+
+        // Gọi các hàm để lấy dữ liệu từ API
+        fetchFacilityData();
+        fetchBuildingData();
+        fetchMappointData();
+        fetchDesignerData();
     });
     function drawChart() {
         //Line Chart

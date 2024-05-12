@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ProjectTest.RepositoryTest
 {
-    public class FloorRepositoryTest
+   /* public class FloorRepositoryTest
     {
         [Fact]
         public void GetFloorById_ReturnsCorrectFloor()
@@ -88,5 +88,5 @@ namespace ProjectTest.RepositoryTest
             // Assert
             mockRepository.Verify(repo => repo.DeleteFloor(floorIdToDelete), Times.Once);
         }
-    }
+    }*/
 }

@@ -15,13 +15,13 @@ namespace AR_Navigation.Pages.Profile
         }
 
         [BindProperty]
-        public IFormFile ImageFile { get; set; }
+        public IFormFile? ImageFile { get; set; }
         public async Task<IActionResult> OnPostEditProfileAsync()
         {
 
             string imagesDirectory = Path.Combine(_webHostEnvironment.WebRootPath, "Images/Avatar");
 
-            string uniqueFileName = null;
+            string uniqueFileName = "";
             if (ImageFile != null && ImageFile.Length > 0)
             {
                 uniqueFileName = ImageFile.FileName;

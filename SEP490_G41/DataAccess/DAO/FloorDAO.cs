@@ -29,7 +29,7 @@ namespace DataAccess.DAO
             _context.SaveChanges();
         }
         // Đọc thông tin tầng bằng Id
-        public Floor GetFloorById(int floorId)
+        public Floor? GetFloorById(int floorId)
         {
             if (floorId <= 0)
             {

@@ -93,7 +93,6 @@ namespace DataAccess.IRepository.Repository
             }
             catch (Exception ex)
             {
-                throw new Exception("Error occurred while deleting building.", ex);
                 return "Error occurred while deleting building: " + ex.Message;
             }
         }

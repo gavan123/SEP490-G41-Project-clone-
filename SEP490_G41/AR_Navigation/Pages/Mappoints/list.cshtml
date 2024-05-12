@@ -68,7 +68,6 @@
                         </tr>
                     </thead>
                     <tbody id="map-list">
-                        
                     </tbody>
                 </table>
             </div>
@@ -182,12 +181,12 @@
 
 
 <script>
-    $(document).ready(function () {
-        var userJson = sessionStorage.getItem('user');
+    $(() => {
+        const userJson = sessionStorage.getItem('user');
         if (!userJson) {
             window.location.href = '/Authen/Login';
         } else {
-            var user = JSON.parse(userJson);
+            const user = JSON.parse(userJson);
             if (user.status !== "active") {
                 // Display SweetAlert message
                 Swal.fire({
@@ -196,17 +195,17 @@
                     text: 'You do not have permission to access this page.',
                     showConfirmButton: false,
                     timer: 2000 // Close the alert after 2 seconds
-                }).then((result) => {
+                }).then(() => {
                     // Redirect to login page after the alert is closed
                     window.location.href = '/HomePage/Home';
                 });
             }
         }
 
-        var currentPage = 1;
-        var itemsPerPage = 5;
+        let currentPage = 1;
+        const itemsPerPage = 5;
 
-        function updateMapPointList(mapPoints, currentPage, itemsPerPage) {
+        const updateMapPointList = (mapPoints, currentPage, itemsPerPage) => {
             const startIndex = (currentPage - 1) * itemsPerPage;
             const endIndex = Math.min(startIndex + itemsPerPage, mapPoints.length);
             const mapPointsToShow = mapPoints.slice(startIndex, endIndex);
@@ -215,44 +214,43 @@
 
             for (const mapPoint of mapPointsToShow) {
                 const mapPointRow = `
-                <tr>
-                    <td>${mapPoint.mappointName}</td>
-                    <td>${mapPoint.locationWeb}</td>
-                    <td>${mapPoint.locationApp}</td>
-                    <td>${mapPoint.locationGps}</td>
-                    <td>${mapPoint.floorName}</td>
-                    <td>${mapPoint.buildingName}</td>
-                    <td>
-                        <div class="avatar avatar-image rounded"><img src="/Images/Mappoint/${mapPoint.image}" alt=""> </div>
-                    </td>
-                    <td class="text-right">
-                        <div class="dropdown dropdown-animated scale-left">
-                            <button class="btn btn-primary viewMappoint" type="button" data-id="${mapPoint.mapPointId}">View Detail</button>
-                        </div>
-                    </td>
-                </tr>
-            `;
+                                                                    <tr>
+                                                                        <td>${mapPoint.mappointName}</td>
+                                                                        <td>${mapPoint.locationWeb}</td>
+                                                                        <td>${mapPoint.locationApp}</td>
+                                                                        <td>${mapPoint.locationGps}</td>
+                                                                        <td>${mapPoint.floorName}</td>
+                                                                        <td>${mapPoint.buildingName}</td>
+                                                                        <td>
+                                                                            <div class="avatar avatar-image rounded"><img src="/Images/Mappoint/${mapPoint.image}" alt=""> </div>
+                                                                        </td>
+                                                                        <td class="text-right">
+                                                                            <div class="dropdown dropdown-animated scale-left">
+                                                                                <button class="btn btn-primary viewMappoint" type="button" data-id="${mapPoint.mapPointId}">View Detail</button>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                `;
 
                 $('#map-list').append(mapPointRow);
             }
-        }
+        };
 
-
-        function createPagination(totalPages, mapPoints) {
-            var pagination = $('#pagination');
+        const createPagination = (totalPages, mapPoints) => {
+            const pagination = $('#pagination');
             if (totalPages > 0) {
                 pagination.empty();
-                var startPage = Math.max(1, currentPage - 2);
-                var endPage = Math.min(totalPages, currentPage + 2);
+                const startPage = Math.max(1, currentPage - 2);
+                const endPage = Math.min(totalPages, currentPage + 2);
 
-                // Thêm nút "Prev"
-                var prevLi = $('<li class="page-item"><a class="page-link" href="#">Prev</a></li>');
+                // Add "Prev" button
+                const prevLi = $('<li class="page-item"><a class="page-link" href="#">Prev</a></li>');
                 prevLi.data('page', 'Prev');
                 pagination.append(prevLi);
 
-                // Tạo các nút phân trang
-                for (var i = startPage; i <= endPage; i++) {
-                    var li = $('<li class="page-item"><a class="page-link" href="#">' + i + '</a></li>');
+                // Create pagination buttons
+                for (let i = startPage; i <= endPage; i++) {
+                    const li = $(`<li class="page-item"><a class="page-link" href="#">${i}</a></li>`);
                     li.data('page', i);
                     if (i === currentPage) {
                         li.addClass('active');
@@ -260,8 +258,8 @@
                     pagination.append(li);
                 }
 
-                // Thêm nút "Next"
-                var nextLi = $('<li class="page-item"><a class="page-link" href="#">Next</a></li>');
+                // Add "Next" button
+                const nextLi = $('<li class="page-item"><a class="page-link" href="#">Next</a></li>');
                 nextLi.data('page', 'Next');
                 pagination.append(nextLi);
 
@@ -272,7 +270,7 @@
 
             pagination.off('click').on('click', 'a', function (event) {
                 event.preventDefault();
-                var page = $(this).parent().data('page');
+                const page = $(this).parent().data('page');
                 if (page === 'Next') {
                     currentPage = Math.min(currentPage + 1, totalPages);
                 } else if (page === 'Prev') {
@@ -283,27 +281,27 @@
                 updatePagination(totalPages, mapPoints);
                 updateMapPointList(mapPoints, currentPage, itemsPerPage);
             });
-        }
+        };
 
-        function updatePagination(totalPages, mapPoints) {
-            var pagination = $('#pagination');
-            var startPage = Math.max(1, currentPage - 2);
-            var endPage = Math.min(totalPages, currentPage + 2);
+        const updatePagination = (totalPages, mapPoints) => {
+            const pagination = $('#pagination');
+            const startPage = Math.max(1, currentPage - 2);
+            const endPage = Math.min(totalPages, currentPage + 2);
 
-            // Cập nhật nút "Prev"
-            var prevLi = pagination.find('li:first');
+            // Update "Prev" button
+            const prevLi = pagination.find('li:first');
             if (currentPage === 1) {
                 prevLi.addClass('disabled');
             } else {
                 prevLi.removeClass('disabled');
             }
 
-            // Cập nhật các nút phân trang
-            var pageLinks = pagination.find('li:not(:first):not(:last)');
+            // Update pagination buttons
+            const pageLinks = pagination.find('li:not(:first):not(:last)');
             pageLinks.removeClass('active');
-            for (var i = 0; i < pageLinks.length; i++) {
-                var pageLink = $(pageLinks[i]);
-                var page = startPage + i;
+            for (let i = 0; i < pageLinks.length; i++) {
+                const pageLink = $(pageLinks[i]);
+                const page = startPage + i;
                 pageLink.find('a').text(page);
                 pageLink.data('page', page);
                 if (page === currentPage) {
@@ -311,35 +309,32 @@
                 }
             }
 
-            // Cập nhật nút "Next"
-            var nextLi = pagination.find('li:last');
+            // Update "Next" button
+            const nextLi = pagination.find('li:last');
             if (currentPage === totalPages) {
                 nextLi.addClass('disabled');
             } else {
                 nextLi.removeClass('disabled');
             }
-        }
-
-       
+        };
 
         // Get map point list from API
         $.ajax({
             url: 'https://finnsapi.developvn.click/api/mappoints',
             type: 'GET',
             dataType: 'json',
-            success: function (mapPoints) {
+            success: (mapPoints) => {
                 const totalPages = Math.ceil(mapPoints.length / itemsPerPage);
                 updateMapPointList(mapPoints, 1, itemsPerPage);
                 createPagination(totalPages, mapPoints);
             },
-            error: function (xhr, status, error) {
+            error: (xhr, status, error) => {
                 console.log('Error loading map points from API: ' + error);
             }
         });
 
-       
-        // Filter mappoint points by building, floor and destination
-        $('#mappoint-building, #mappoint-floor, #mappoint-destination-switch').on('change', function () {
+        // Filter mappoint points by building, floor, and destination
+        $('#mappoint-building, #mappoint-floor, #mappoint-destination-switch').on('change', () => {
             const selectedBuildingId = $('#mappoint-building').val(); // Get the selected buildingId
             const selectedFloorId = $('#mappoint-floor').val(); // Get the selected floorId
             const selectedDestination = $('#mappoint-destination-switch').is(':checked'); // Get the selected destination
@@ -367,108 +362,102 @@
                 url: url,
                 type: 'GET',
                 dataType: 'json',
-                success: function (mapPoints) {
+                success: (mapPoints) => {
                     const totalPages = Math.ceil(mapPoints.length / itemsPerPage);
                     updateMapPointList(mapPoints, 1, itemsPerPage);
                     createPagination(totalPages, mapPoints);
                 },
-                error: function (xhr, status, error) {
+                error: (xhr, status, error) => {
                     console.error('Error:', error);
                 }
             });
         });
 
+        // Load initial list of facilities
+        $.ajax({
+            url: 'https://finnsapi.developvn.click/api/facilities',
+            type: 'GET',
+            success: (response) => {
+                response.forEach((facility) => {
+                    // Add options for each facility
+                    $('#mappoint-facility').append(`<option value="${facility.facilityId}">${facility.facilityName}</option>`);
+                });
+            },
+            error: (xhr, status, error) => {
+                console.error(error);
+            }
+        });
 
+        // Change event for facility select element
+        $('#mappoint-facility').change(function()  {
+            const selectedFacilityId = $(this).val(); // Get the selected facilityId
+            $('#mappoint-building').empty(); // Clear all existing building options
+            $('#mappoint-floor').empty(); // Clear all existing floor options
+            $('#mappoint-building').append('<option value="0" disabled selected>Select by building</option>');
 
+            // Create OData URL to get list of buildings from selected facility
+            const url = 'https://finnsapi.developvn.click/api/buildings?$filter=facilityId eq ' + selectedFacilityId;
 
-        $(document).ready(function () {
-            // Load danh sách các cơ sở ban đầu
+            // Send AJAX request to get list of buildings from selected facility
             $.ajax({
-                url: 'https://finnsapi.developvn.click/api/facilities',
+                url: url,
                 type: 'GET',
-                success: function (response) {
-                    response.forEach(function (facility) {
-                        // Thêm tùy chọn cho mỗi cơ sở
-                        $('#mappoint-facility').append('<option value="' + facility.facilityId + '">' + facility.facilityName + '</option>');
+                success: (response) => {
+                    // Add options for each building from response
+                    response.forEach((building) => {
+                        $('#mappoint-building').append(`<option value="${building.buildingId}">${building.buildingName}</option>`);
                     });
                 },
-                error: function (xhr, status, error) {
+                error: (xhr, status, error) => {
                     console.error(error);
                 }
             });
+        });
 
-            // Sự kiện change cho phần tử select của facility
-            $('#mappoint-facility').change(function () {
-                var selectedFacilityId = $(this).val(); // Lấy giá trị của facility đã chọn
-                $('#mappoint-building').empty(); // Xóa tất cả các tùy chọn tòa nhà hiện có
-                $('#mappoint-floor').empty(); // Xóa tất cả các tùy chọn tầng hiện có
-                $('#mappoint-building').append('<option value="0" disabled selected>Select by building</option>');
+        // Change event for building select element
+        $('#mappoint-building').change(function ()  {
+            const selectedBuildingId = $(this).val(); // Get the selected buildingId
+            $('#mappoint-floor').empty(); // Clear all existing floor options
+            $('#mappoint-floor').append('<option value="0" disabled selected>Select by floor</option>');
+            // Create OData URL to get list of floors from selected building
+            const url = 'https://finnsapi.developvn.click/api/floors?$filter=buildingId eq ' + selectedBuildingId;
 
-
-                // Tạo URL OData để lấy danh sách các tòa nhà từ facility đã chọn
-                var url = 'https://finnsapi.developvn.click/api/buildings?$filter=facilityId eq ' + selectedFacilityId;
-
-                // Gửi yêu cầu AJAX để lấy danh sách các tòa nhà từ facility đã chọn
-                $.ajax({
-                    url: url,
-                    type: 'GET',
-                    success: function (response) {
-                        // Thêm tùy chọn cho mỗi tòa nhà từ response
-                        response.forEach(function (building) {
-                            $('#mappoint-building').append('<option value="' + building.buildingId + '">' + building.buildingName + '</option>');
-                        });
-                    },
-                    error: function (xhr, status, error) {
-                        console.error(error);
-                    }
-                });
-            });
-
-            // Sự kiện change cho phần tử select của building
-            $('#mappoint-building').change(function () {
-                var selectedBuildingId = $(this).val(); // Lấy giá trị của tòa nhà đã chọn
-                $('#mappoint-floor').empty(); // Xóa tất cả các tùy chọn tầng hiện có
-                $('#mappoint-floor').append('<option value="0" disabled selected>Select by floor</option>');
-                // Tạo URL OData để lấy danh sách các tầng từ tòa nhà đã chọn
-                var url = 'https://finnsapi.developvn.click/api/floors?$filter=buildingId eq ' + selectedBuildingId;
-
-                // Gửi yêu cầu AJAX để lấy danh sách các tầng từ tòa nhà đã chọn
-                $.ajax({
-                    url: url,
-                    type: 'GET',
-                    success: function (response) {
-                        // Thêm tùy chọn cho mỗi tầng từ response
-                        response.forEach(function (floor) {
-                            $('#mappoint-floor').append('<option value="' + floor.floorId + '">' + floor.floorName + '</option>');
-                        });
-                    },
-                    error: function (xhr, status, error) {
-                        console.error(error);
-                    }
-                });
+            // Send AJAX request to get list of floors from selected building
+            $.ajax({
+                url: url,
+                type: 'GET',
+                success: (response) => {
+                    // Add options for each floor from response
+                    response.forEach((floor) => {
+                        $('#mappoint-floor').append(`<option value="${floor.floorId}">${floor.floorName}</option>`);
+                    });
+                },
+                error: (xhr, status, error) => {
+                    console.error(error);
+                }
             });
         });
 
         // Create MapPoint API
-        $('#create-map-point-btn').click(function () {
-            var mapPointName = $('#new-map-point-name').val();
-            var locationWeb = {
+        $('#create-map-point-btn').click(() => {
+            const mapPointName = $('#new-map-point-name').val();
+            const locationWeb = {
                 X: parseFloat($('#new-map-point-location-web').val().split(', ')[0]),
                 Y: parseFloat($('#new-map-point-location-web').val().split(', ')[1])
             };
-            var locationApp = {
+            const locationApp = {
                 X: parseFloat($('#new-map-point-location-app').val().split(', ')[0]),
                 Y: parseFloat($('#new-map-point-location-app').val().split(', ')[1])
             };
-            var locationGPS = {
+            const locationGPS = {
                 X: parseFloat($('#new-map-point-location-gps').val().split(', ')[0]),
                 Y: parseFloat($('#new-map-point-location-gps').val().split(', ')[1])
             };
-            var floorID = $('#new-map-point-floor').val();
-            var buildingID = $('#new-map-point-building').val();
-            var image = $('#new-map-point-image')[0].files[0];
+            const floorID = $('#new-map-point-floor').val();
+            const buildingID = $('#new-map-point-building').val();
+            const image = $('#new-map-point-image')[0].files[0];
 
-            var formData = new FormData();
+            const formData = new FormData();
             formData.append('MapPointName', mapPointName);
             formData.append('LocationWeb', JSON.stringify(locationWeb));
             formData.append('LocationApp', JSON.stringify(locationApp));
@@ -483,7 +472,7 @@
                 data: formData,
                 contentType: false,
                 processData: false,
-                success: function (response) {
+                success: (response) => {
                     Swal.fire({
                         icon: 'success',
                         title: 'MapPoint added successfully!',
@@ -494,7 +483,7 @@
                     });
                     $('#create-new-map').modal('hide');
                 },
-                error: function (xhr, status, error) {
+                error: (xhr, status, error) => {
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
@@ -504,21 +493,18 @@
             });
         });
 
-        // Delete MapPoint API
-       
-
         // Show edit modal with data by mapPointId
-        $(document).on('click', '.edit-map-point', function () {
-            var mapPointId = $(this).data('id');
+        $(document).on('click', '.edit-map-point', function ()  {
+            const mapPointId = $(this).data('id');
             showEditModal(mapPointId);
         });
 
-        function showEditModal(mapPointId) {
+        const showEditModal = (mapPointId) => {
             $.ajax({
                 url: 'https://finnsapi.developvn.click/api/mappoints/' + mapPointId,
                 type: 'GET',
                 dataType: 'json',
-                success: function (mapPoint) {
+                success: (mapPoint) => {
                     $('#map-point-id').val(mapPoint.ID);
                     $('#edit-map-point-name').val(mapPoint.MapPointName);
                     $('#edit-map-point-location-web').val(`${mapPoint.LocationWeb.X}, ${mapPoint.LocationWeb.Y}`);
@@ -530,33 +516,33 @@
 
                     $('#edit-map').modal('show');
                 },
-                error: function (xhr, status, error) {
+                error: (xhr, status, error) => {
                     console.error('Error:', error);
                 }
             });
-        }
+        };
 
         // Save changes for MapPoint
-        $('#edit-map-point-btn').click(function () {
-            var mapPointId = $('#map-point-id').val();
-            var mapPointName = $('#edit-map-point-name').val();
-            var locationWeb = {
+        $('#edit-map-point-btn').click(() => {
+            const mapPointId = $('#map-point-id').val();
+            const mapPointName = $('#edit-map-point-name').val();
+            const locationWeb = {
                 X: parseFloat($('#edit-map-point-location-web').val().split(', ')[0]),
                 Y: parseFloat($('#edit-map-point-location-web').val().split(', ')[1])
             };
-            var locationApp = {
+            const locationApp = {
                 X: parseFloat($('#edit-map-point-location-app').val().split(', ')[0]),
                 Y: parseFloat($('#edit-map-point-location-app').val().split(', ')[1])
             };
-            var locationGPS = {
+            const locationGPS = {
                 X: parseFloat($('#edit-map-point-location-gps').val().split(', ')[0]),
                 Y: parseFloat($('#edit-map-point-location-gps').val().split(', ')[1])
             };
-            var floorID = $('#edit-map-point-floor').val();
-            var buildingID = $('#edit-map-point-building').val();
-            var image = $('#edit-map-point-image')[0].files[0];
+            const floorID = $('#edit-map-point-floor').val();
+            const buildingID = $('#edit-map-point-building').val();
+            const image = $('#edit-map-point-image')[0].files[0];
 
-            var formData = new FormData();
+            const formData = new FormData();
             formData.append('ID', mapPointId);
             formData.append('MapPointName', mapPointName);
             formData.append('LocationWeb', JSON.stringify(locationWeb));
@@ -572,7 +558,7 @@
                 data: formData,
                 contentType: false,
                 processData: false,
-                success: function (response) {
+                success: (response) => {
                     Swal.fire({
                         icon: 'success',
                         title: 'MapPoint updated successfully!',
@@ -583,7 +569,7 @@
                     });
                     $('#edit-map').modal('hide');
                 },
-                error: function (xhr, status, error) {
+                error: (xhr, status, error) => {
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
@@ -593,9 +579,9 @@
             });
         });
 
-        //Redirect mappoints detail
-        $(document).on('click', '.viewMappoint', function () {
-            var mapPointId = $(this).data('id');
+        // Redirect mappoints detail
+        $(document).on('click', '.viewMappoint', function ()  {
+            const mapPointId = $(this).data('id');
             window.location.href = `Detail/${mapPointId}`;
         });
     });

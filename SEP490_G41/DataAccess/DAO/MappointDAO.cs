@@ -42,7 +42,7 @@ namespace DataAccess.DAO
         }
 
         // Đọc thông tin mappoint bằng Id
-        public Mappoint GetMappointById(int mappointId)
+        public Mappoint? GetMappointById(int mappointId)
         {
             if (mappointId <= 0)
                 throw new ArgumentException("Mappoint ID must be a positive integer.");
@@ -66,7 +66,7 @@ namespace DataAccess.DAO
 				throw new ArgumentException("This map point does not exist");
 			}
 
-			string uniqueFileName = dto.Image?.FileName;
+			string uniqueFileName = dto.Image.FileName;
 
 			mapPoint.MapPointId = dto.MapPointId;
 			mapPoint.MapPointName = dto.MappointName;

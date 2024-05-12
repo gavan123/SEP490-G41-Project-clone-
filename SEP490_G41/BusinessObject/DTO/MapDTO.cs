@@ -15,10 +15,10 @@ namespace BusinessObject.DTO
         public string? MapImage3D { get; set; } = null!;
         public int FloorId { get; set; }
         public int BuildingId { get; set; }
-        public string FloorName { get; set; }
-        public string BuildingName { get; set; }
-        public string ManagerFullName { get; set; }
-        public string BuildingImg { get; set; }
+        public string? FloorName { get; set; }
+        public string? BuildingName { get; set; }
+        public string? ManagerFullName { get; set; }
+        public string? BuildingImg { get; set; }
     }
 
     public class MapAddDTO
