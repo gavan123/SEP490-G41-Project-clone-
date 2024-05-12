@@ -26,13 +26,13 @@ namespace AR_Navigation.Pages.Buildings
         public int Id { get; set; }
 
         [BindProperty]
-        public IFormFile? ImageFile { get; set; }
+        public IFormFile ImageFile { get; set; }
         public async Task<IActionResult> OnPostAddOrEditMapAsync()
         {
 
             string imagesDirectory = Path.Combine(_webHostEnvironment.WebRootPath, "Images/Map");
 
-            string uniqueFileName = "";
+            string uniqueFileName = null;
             if (ImageFile != null && ImageFile.Length > 0)
             {
                 uniqueFileName = ImageFile.FileName;
@@ -55,7 +55,7 @@ namespace AR_Navigation.Pages.Buildings
 
             string imagesDirectory = Path.Combine(_webHostEnvironment.WebRootPath, "Images/Map");
 
-            string uniqueFileName = "";
+            string uniqueFileName = null;
             if (ImageFile != null && ImageFile.Length > 0)
             {
                 uniqueFileName = ImageFile.FileName;

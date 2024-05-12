@@ -1,6 +1,14 @@
 ﻿using AutoMapper;
 using BusinessObject.DTO;
 using BusinessObject.Models;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using NetTopologySuite.Geometries;
+using System.Drawing;
 using Point = NetTopologySuite.Geometries.Point;
 
 namespace BusinessObject.MappingProfile
@@ -13,7 +21,7 @@ namespace BusinessObject.MappingProfile
 
             CreateMap<Building, BuildingAddDTO>().ReverseMap();
             CreateMap<Building, BuildingDTO>()
-               .ForMember(x => x.FacilityName, y => y.MapFrom(src => src.Facility!.FacilityName)).ReverseMap();
+               .ForMember(x => x.FacilityName, y => y.MapFrom(src => src.Facility.FacilityName)).ReverseMap();
             CreateMap<Building, BuildingUpdateDTO>().ReverseMap();
 
             CreateMap<Facility, FacilityAddDTO>().ReverseMap();
@@ -26,9 +34,9 @@ namespace BusinessObject.MappingProfile
 
 
             CreateMap<Map, MapDTO>()
-               .ForMember(dest => dest.FloorName, opt => opt.MapFrom(src => src.Floor!.FloorName))
-               .ForMember(dest => dest.BuildingName, opt => opt.MapFrom(src => src.Floor!.Building.BuildingName))
-               .ForMember(dest => dest.BuildingId, opt => opt.MapFrom(src => src.Floor!.Building.BuildingId))
+               .ForMember(dest => dest.FloorName, opt => opt.MapFrom(src => src.Floor.FloorName))
+               .ForMember(dest => dest.BuildingName, opt => opt.MapFrom(src => src.Floor.Building.BuildingName))
+               .ForMember(dest => dest.BuildingId, opt => opt.MapFrom(src => src.Floor.Building.BuildingId))
                .ReverseMap();
             CreateMap<Map, MapAddDTO>().ReverseMap();
             CreateMap<Map, MapUpdateDTO>().ReverseMap();

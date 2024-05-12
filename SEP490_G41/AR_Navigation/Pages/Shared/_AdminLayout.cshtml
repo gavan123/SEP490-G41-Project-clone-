@@ -19,14 +19,14 @@
     <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.27.1/dist/apexcharts.min.js"></script>
     <script src="/assets/vendors/chartjs/Chart.min.js"></script>
 
-    <style>
-        .logo img {
-            max-width: 70px; /* Kích thước tối đa của hình ảnh */
-            max-height: 70px;
-        }
-    </style>
-</head>
 
+</head>
+<style>
+    .logo img {
+        max-width: 70px; /* Kích thước tối đa của hình ảnh */
+        max-height: 70px;
+    }
+</style>
 <body>
 
     <div class="app">
@@ -244,45 +244,45 @@
 <!-- Core JS -->
 <script src="/assets/js/app.min.js"></script>
 <script>
-    $(document).ready(() => {
+    $(document).ready(function () {
         // Lấy dữ liệu từ sessionStorage
-        const userJson = sessionStorage.getItem('user');
+        var userJson = sessionStorage.getItem('user');
         if (userJson) {
-            const user = JSON.parse(userJson);
-            const fullname = user.fullname; // Lấy tên người dùng từ sessionStorage
+            var user = JSON.parse(userJson);
+            var fullname = user.fullname; // Lấy tên người dùng từ sessionStorage
 
             if (user.role === 1) {
                 // Tạo liên kết mới
-                const accountLink = document.createElement('a');
+                var accountLink = document.createElement('a');
                 accountLink.href = '/Accounts/ListsMember';
                 accountLink.classList.add('nav-link');
 
                 // Thêm nội dung vào liên kết
                 accountLink.innerHTML = `
-                            <span class="icon-holder">
-                                <i class="fas fa-users"></i>
-                            </span>
-                            <span class="title">Account</span>
-                        `;
+                        <span class="icon-holder">
+                            <i class="fas fa-users"></i>
+                        </span>
+                        <span class="title">Account</span>
+                    `;
 
                 // Lấy phần tử có id là account-link
-                const accountListItem = document.getElementById('account-link');
+                var accountListItem = document.getElementById('account-link');
                 // Thêm liên kết vào phần tử
                 accountListItem.appendChild(accountLink);
             }
 
             // Thay đổi nội dung của phần tử HTML
-            const profileName = document.getElementById('user_name');
+            var profileName = document.getElementById('user_name');
             if (profileName) {
                 profileName.innerText = fullname;
             } else {
                 console.log("Element with class 'font-weight-semibold' not found in '.pop-profile'");
             }
-            const avatar = user.avatar; // Lấy đường dẫn hình ảnh của người dùng từ sessionStorage
+            var avatar = user.avatar; // Lấy đường dẫn hình ảnh của người dùng từ sessionStorage
 
             // Thay đổi đường dẫn hình ảnh trong thẻ img có id là "userImage"
-            const userImage = document.getElementById('userImage');
-            const userImage2 = document.getElementById('userImage2');
+            var userImage = document.getElementById('userImage');
+            var userImage2 = document.getElementById('userImage2');
             if (userImage) {
                 userImage.src = "/Images/Avatar/" + avatar;
             } else {
@@ -308,14 +308,13 @@
             window.location.href = $(this).attr('href');
         });
     });
-
-    $(document).ready(() => {
-        $('#logout-link').click((e) => {
+    $(document).ready(function () {
+        $('#logout-link').click(function (e) {
             e.preventDefault();
             sessionStorage.removeItem('user');
             window.location.href = '/HomePage/Home';
         });
-    });
 
+    });
 </script>
 

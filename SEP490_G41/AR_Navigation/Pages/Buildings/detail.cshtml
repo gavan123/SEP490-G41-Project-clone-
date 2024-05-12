@@ -84,7 +84,7 @@
 
     @* trường cho canvas *@
     <div class="selected-image-container" id="map-images-container">
-        <canvas id="canvas_data" style="border: 1px solid black; width: 1065%;"
+        <canvas id="canvas_data" style="border: 1px, black;" width="1065%"
                 onclick="databaseLocation(event)">
         </canvas>
     </div>
@@ -240,13 +240,13 @@
 
 
 <script>
-    $(() => {
+    $(document).ready(function () {
         //session
-        const userJson = sessionStorage.getItem('user');
+        var userJson = sessionStorage.getItem('user');
         if (!userJson) {
             window.location.href = '/Authen/Login';
         } else {
-            const user = JSON.parse(userJson);
+            var user = JSON.parse(userJson);
             if (user.status !== "active") {
                 // Display SweetAlert message
                 Swal.fire({
@@ -262,35 +262,35 @@
             }
         }
 
-        const buildingId = window.location.pathname.split("/").pop();
+        var buildingId = window.location.pathname.split("/").pop();
 
-        //Get data building Detail
+        //Get data builind Detail
         $.ajax({
             url: `https://finnsapi.developvn.click/api/buildings/${buildingId}`,
             type: 'GET',
-            success: (building) => {
-                // Update building name
+            success: function (building) {
+                // Cập nhật tên tòa nhà
                 $('#building-name').text(building.buildingName);
 
-                // AJAX request to get information about building's floors
+                // Gửi AJAX request để lấy thông tin về các tầng của tòa nhà
                 $.ajax({
                     url: `https://finnsapi.developvn.click/api/floors?$filter=buildingId eq ${buildingId}`,
                     type: 'GET',
-                    success: (floors) => {
-                        // Create floor options list
-                        let floorOptions = '';
-                        floors.forEach((floor) => {
+                    success: function (floors) {
+                        // Tạo danh sách các tầng
+                        var floorOptions = '';
+                        floors.forEach(function (floor) {
                             floorOptions += `<option value="${floor.floorId}">${floor.floorName}</option>`;
                         });
                         $('#floor-select').html(floorOptions);
 
-                        // Select the first floor by default
+                        // Chọn tầng đầu tiên mặc định
                         if (floors.length > 0) {
-                            const defaultFloorId = floors[0].floorId;
-                            updateMapImage(defaultFloorId); // Call the updateMapImage function here
+                            var defaultFloorId = floors[0].floorId;
+                            updateMapImage(defaultFloorId); // Gọi hàm updateMapImage ở đây
                         }
                     },
-                    error: (xhr, status, error) => {
+                    error: function (xhr, status, error) {
                         console.error('Error fetching floors:', error);
                         Swal.fire({
                             icon: 'error',
@@ -300,9 +300,9 @@
                     }
                 });
             },
-            error: (xhr, status, error) => {
+            error: function (xhr, status, error) {
                 console.error(xhr.responseText);
-                // Handle error if any
+                // Xử lý lỗi nếu có
                 Swal.fire({
                     icon: 'error',
                     title: 'Error',
@@ -311,69 +311,68 @@
             }
         });
 
-        $('#button-change').on('click', () => {
+        $('#button-change').on('click', function () {
             // Open the modal
             $('#add-edit-MapImage-modal').modal('show');
         });
 
-        // Event listener for when the user selects a new floor
-        $('#floor-select').change(() => {
-            const selectedFloorId = $(this).val();
+        // Event that listens when the user selects a new floor
+        $('#floor-select').change(function () {
+            var selectedFloorId = $(this).val();
             reloadCanvas();
             updateMapImage(selectedFloorId);
         });
 
         function reloadCanvas() {
-            const canvas = document.getElementById('canvas_data');
-            canvas.width = canvas.width; // Reload canvas by resetting width
+            var canvas = document.getElementById('canvas_data');
+            canvas.width = canvas.width; // Tải lại canvas bằng cách reset width
         }
-
         //update map image by floor
         function updateMapImage(floorId) {
             $.ajax({
                 url: `https://finnsapi.developvn.click/api/maps?$filter=floorId eq ${floorId}`,
                 type: 'GET',
-                success: (maps) => {
+                success: function (maps) {
                     $.ajax({
                         url: `https://finnsapi.developvn.click/api/floors/${floorId}`,
                         type: 'GET',
                         dataType: 'json',
-                        success: (floorData) => {
+                        success: function (floorData) {
                             const buildingId = floorData.buildingId;
 
                             if (maps.length > 0) {
-                                const canvas = document.getElementById('canvas_data');
-                                const context = canvas.getContext('2d');
+                                var canvas = document.getElementById('canvas_data');
+                                var context = canvas.getContext('2d');
                                 context.clearRect(0, 0, canvas.width, canvas.height);
-                                const imageSrc = `/Images/Map/${maps[0].mapImage2D}`; // Path to the image
+                                var imageSrc = `/Images/Map/${maps[0].mapImage2D}`; // Đường dẫn đến hình ảnh
                                 console.log(maps[0].mapImage2D);
                                 canvas.style.backgroundImage = `url(${imageSrc})`;
-                                // Update map edit button
+                                // Cập nhật nút chỉnh sửa bản đồ
                                 $('#button-change').html(`
-                                                <button class="btn btn-primary" id="edit-map-button" data-id="${maps[0].mapId}" data-toggle="modal" data-target="#add-edit-MapImage">
-                                                    <i class="anticon anticon-edit"></i>
-                                                    <span class="m-l-5">Edit Map</span>
-                                                </button>
-                                            `);
-                                $('#add-edit-map-btn').click(() => {
-                                    const mapid = maps[0].mapId;
+                                                                    <button class="btn btn-primary" id="edit-map-button" data-id="${maps[0].mapId}" data-toggle="modal" data-target="#add-edit-MapImage">
+                                                                        <i class="anticon anticon-edit"></i>
+                                                                        <span class="m-l-5">Edit Map</span>
+                                                                    </button>
+                                                                `);
+                                $('#add-edit-map-btn').click(function () {
+                                    var mapid = maps[0].mapId;
                                     editmap(mapid);
                                 });
                                 getMapPointsByMapId(maps[0].mapId, buildingId, maps[0].floorId);
                             } else {
                                 $('#button-change').html(`
-                                                <button class="btn btn-primary" id="add-map-button" data-toggle="modal" data-target="#add-edit-MapImage">
-                                                    <i class="anticon anticon-plus"></i>
-                                                    <span class="m-l-5">Add Map</span>
-                                                </button>
-                                            `);
+                                                                    <button class="btn btn-primary" id="add-map-button" data-toggle="modal" data-target="#add-edit-MapImage">
+                                                                        <i class="anticon anticon-plus"></i>
+                                                                        <span class="m-l-5">Add Map</span>
+                                                                    </button>
+                                                                `);
                                 console.log('No map found for the specified floor.');
-                                $('#add-edit-map-btn').click(() => {
+                                $('#add-edit-map-btn').click(function () {
                                     addNewMap();
                                 });
                             }
                         },
-                        error: (xhr, status, error) => {
+                        error: function (xhr, status, error) {
                             console.error('Error fetching floor details:', error);
                             Swal.fire({
                                 icon: 'error',
@@ -383,7 +382,7 @@
                         }
                     });
                 },
-                error: (xhr, status, error) => {
+                error: function (xhr, status, error) {
                     console.error('Error fetching map details:', error);
                     Swal.fire({
                         icon: 'error',
@@ -394,18 +393,19 @@
             });
         }
 
-        //Add new Map
-        const addNewMap = () => {
-            const mapName = $('#new-map-name').val();
-            const floorId = $('#floor-select').val();
-            const imageInput = $('#add-edit-mapImage');
 
-            const formData = new FormData();
+        //Add new Map
+        function addNewMap() {
+            var mapName = $('#new-map-name').val();
+            var floorId = $('#floor-select').val();
+            var imageInput = $('#add-edit-mapImage');
+
+            var formData = new FormData();
 
             formData.append('MapName', mapName);
             formData.append('FloorId', floorId);
             if (imageInput[0].files.length > 0) {
-                const imageFile = imageInput[0].files[0];
+                var imageFile = imageInput[0].files[0];
                 formData.append('MapImage2D', imageFile);
             }
             $.ajax({
@@ -414,7 +414,7 @@
                 data: formData,
                 contentType: false,
                 processData: false,
-                success: (response) => {
+                success: function (response) {
                     console.log('Map added successfully:', response);
                     Swal.fire({
                         icon: 'success',
@@ -426,7 +426,7 @@
                     });
                     $('#add-edit-MapImage-modal').modal('hide');
                 },
-                error: (xhr, status, error) => {
+                error: function (xhr, status, error) {
                     console.error('Error adding map:', error);
                     Swal.fire({
                         icon: 'error',
@@ -435,26 +435,24 @@
                     });
                 }
             });
-        };
-
-        // When clicking save
-        $('#add-edit-map-btn').click(() => {
-            const mapId = $('#edit-map-button').data('id');
+        }
+        //Khi ấn save
+        $('#add-edit-map-btn').click(function () {
+            var mapId = $('#edit-map-button').data('id');
             editMap(mapId);
         });
-
         //Edit Map
-        const editMap = (mapId) => {
-            const mapName = $('#new-map-name').val();
-            const floorId = $('#floor-select').val();
-            const imageInput = $('#add-edit-mapImage');
+        function editMap(mapId) {
+            var mapName = $('#new-map-name').val();
+            var floorId = $('#floor-select').val();
+            var imageInput = $('#add-edit-mapImage');
 
-            const formData = new FormData();
+            var formData = new FormData();
             formData.append('MapName', mapName);
             formData.append('FloorId', floorId);
             formData.append('MapId', mapId);
             if (imageInput[0].files.length > 0) {
-                const imageFile = imageInput[0].files[0];
+                var imageFile = imageInput[0].files[0];
                 formData.append('MapImage2D', imageFile);
             }
 
@@ -464,7 +462,7 @@
                 data: formData,
                 contentType: false,
                 processData: false,
-                success: (mapDetails) => {
+                success: function (mapDetails) {
                     console.log('Map update successfully:', mapDetails);
                     Swal.fire({
                         icon: 'success',
@@ -475,7 +473,7 @@
                         $('#form-add-edit-mapImage').submit();
                     });
                 },
-                error: (xhr, status, error) => {
+                error: function (xhr, status, error) {
                     console.error('Error fetching map details for editing:', error);
                     Swal.fire({
                         icon: 'error',
@@ -484,37 +482,37 @@
                     });
                 }
             });
-        };
+        }
 
         //open Edit
-        $(document).on('click', '#edit-map-button', () => {
-            const mapId = $(this).data('id');
+        $(document).on('click', '#edit-map-button', function () {
+            var mapId = $(this).data('id');
             showEdit(mapId);
         });
-
         //show map info
-        const showEdit = (mapId) => {
+        function showEdit(mapId) {
             $.ajax({
                 url: `https://finnsapi.developvn.click/api/maps/${mapId}`,
                 type: 'GET',
-                success: (map) => {
+                success: function (map) {
                     $('#new-map-name').val(map.mapName);
                 },
-                error: (xhr, status, error) => {
+                error: function (xhr, status, error) {
                     console.error('Error fetching map details:', error);
                     alert('An error occurred while fetching map details.');
                 }
             });
-        };
+        }
+
+
     });
 
-
     //get image when selected
-    const displaySelectedImage = (input, containerId) => {
+    function displaySelectedImage(input, containerId) {
         var file = input.files[0];
         var reader = new FileReader();
 
-        reader.onload = (e) => {
+        reader.onload = function (e) {
             var imgElement = document.createElement('img');
             imgElement.src = e.target.result;
             imgElement.className = "img-fluid rounded";
@@ -522,20 +520,20 @@
             var selectedImageContainer = document.getElementById(containerId);
             selectedImageContainer.innerHTML = '';
             selectedImageContainer.appendChild(imgElement);
-        };
+        }
 
         reader.readAsDataURL(file);
     }
-    const previewImage = () => {
+    function previewImage() {
         var input = document.getElementById('update-mapPointImage');
         var preview = document.getElementById('imagePreview');
         var file = input.files[0];
         var reader = new FileReader();
 
-        reader.onloadend = () => {
+        reader.onloadend = function () {
             preview.src = reader.result;
             preview.style.display = 'block';
-        };
+        }
 
         if (file) {
             reader.readAsDataURL(file);
@@ -548,15 +546,14 @@
 <script src="/js/MappointDraw.js"></script>
 
 <script>
-    document.getElementById('getMPButton').addEventListener('click', () => {
+    document.getElementById('getMPButton').addEventListener('click', function () {
         // Gọi hàm renderPoints từ tệp JavaScript MappointDraw.js và truyền vào mappointList
         renderPoints(mappointList);
     });
-
     // Delete draw line
-    document.getElementById("clear-canvas-btn").addEventListener("click", () => {
-        const canvas = document.getElementById('canvas_data');
-        const context = canvas.getContext('2d');
+    document.getElementById("clear-canvas-btn").addEventListener("click", function () {
+        var canvas = document.getElementById('canvas_data');
+        var context = canvas.getContext('2d');
         context.clearRect(0, 0, canvas.width, canvas.height); // Xóa tất cả các đường vẽ trên canvas
         beginPoint = { id: "", x: 0, y: 0 };
         endPoint = { id: "", x: 0, y: 0 };

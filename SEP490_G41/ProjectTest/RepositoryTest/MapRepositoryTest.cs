@@ -10,7 +10,7 @@ using Xunit;
 
 namespace ProjectTest.RepositoryTest
 {
-/*    public class MapRepositoryTests
+    public class MapRepositoryTests
     {
         private readonly Mock<MapDAO> _mockMapDAO;
         private readonly Mock<IMapper> _mockMapper;
@@ -110,4 +110,4 @@ namespace ProjectTest.RepositoryTest
             Assert.Throws<ArgumentException>(() => _mapRepository.DeleteMap(invalidMapId));
         }
     }
-*/}
+}

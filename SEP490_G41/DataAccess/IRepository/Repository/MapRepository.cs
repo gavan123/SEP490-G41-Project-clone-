@@ -1,7 +1,13 @@
 ﻿using AutoMapper;
+using AutoMapper.Execution;
 using BusinessObject.DTO;
 using BusinessObject.Models;
 using DataAccess.DAO;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.Metrics;
+using System.Linq;
 
 namespace DataAccess.IRepository.Repository
 {
@@ -9,6 +15,22 @@ namespace DataAccess.IRepository.Repository
     {
         private readonly MapDAO _mapDAO;
         private readonly IMapper _mapper;
+        private readonly FloorDAO _floorDAO;
+        private readonly BuildingDAO _buildingDAO;
+        private readonly MemberDAO _memberDAO;
+        private readonly MapManageDAO _mapmanageDAO;
+
+
+
+        public MapRepository(MapDAO mapDAO, IMapper mapper, FloorDAO floorDAO, BuildingDAO buildingDAO, MemberDAO memberDAO, MapManageDAO mapManageDAO)
+        {
+            _mapDAO = mapDAO;
+            _mapper = mapper;
+            _floorDAO = floorDAO;
+            _buildingDAO = buildingDAO;
+            _memberDAO = memberDAO;
+            _mapmanageDAO = mapManageDAO;
+        }
 
         public MapRepository(MapDAO mapDAO, IMapper mapper)
         {
@@ -40,9 +62,9 @@ namespace DataAccess.IRepository.Repository
                     MapImage2D = m.MapImage2D,
                     MapImage3D = m.MapImage3D,
                     FloorId = m.FloorId,
-                    FloorName = m.Floor!.FloorName,
+                    FloorName = m.Floor.FloorName,
                     BuildingName = m.Floor.Building.BuildingName,
-                    ManagerFullName = m.Mapmanages.FirstOrDefault()?.Member!.FullName,
+                    ManagerFullName = m.Mapmanages.FirstOrDefault()?.Member.FullName,
                     BuildingImg = m.Floor.Building.Image,
                     BuildingId = m.Floor.Building.BuildingId
                 }).ToList();
@@ -100,6 +122,7 @@ namespace DataAccess.IRepository.Repository
             }
             catch (Exception ex)
             {
+                throw new Exception("Error occurred while deleting map.", ex);
                 return "Error occurred while deleting map: " + ex.Message;
             }
 

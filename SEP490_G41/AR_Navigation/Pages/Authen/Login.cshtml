@@ -74,18 +74,18 @@
 
 
     <script>
-        $(() => {
-            $('#login-btn').click((event) => {
+        $(document).ready(function () {
+            $('#login-btn').click(function (event) {
                 event.preventDefault(); // Ngăn chặn form submit mặc định
 
-                const username = $('#userName').val();
-                const password = $('#password').val();
+                var username = $('#userName').val();
+                var password = $('#password').val();
 
                 // Gửi yêu cầu đăng nhập qua API
                 $.ajax({
-                    url: `https://finnsapi.developvn.click/api/members/Login?username=${username}&password=${password}`,
+                    url: 'https://finnsapi.developvn.click/api/members/Login?username=' + username + '&password=' + password,
                     type: 'GET',
-                    success: (response) => {
+                    success: function (response) {
                         console.log('Login successful');
                         Swal.fire({
                             icon: 'success',
@@ -96,12 +96,12 @@
                         });
                         console.log('User information:', response.username);
 
-                        const user = { userid: response.memberId, fullname: response.fullName, username: response.username, role: response.roleId, avatar: response.avatar, status: response.status };
+                        var user = { userid: response.memberId, fullname: response.fullName, username: response.username, role: response.roleId, avatar: response.avatar, status: response.status };
                         sessionStorage.setItem('user', JSON.stringify(user));
 
                         window.location.href = '/HomePage/Home';
                     },
-                    error: (xhr, status, error) => {
+                    error: function (xhr, status, error) {
                         console.error('Error while logging in:', error);
                         Swal.fire({
                             icon: 'error',
@@ -111,14 +111,14 @@
                     }
                 });
             });
-
-            $('#logout-link').click((e) => {
+        });
+        $(document).ready(function () {
+            $('#logout-link').click(function (e) {
                 e.preventDefault();
                 sessionStorage.removeItem('user');
                 window.location.href = '/HomePage/Home';
             });
         });
-
 
     </script>
 </body>

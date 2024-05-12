@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ProjectTest.DAOTest
 {
-  /*  public class BuildingDAOTest
+    public class BuildingDAOTest
     {
 
        
@@ -214,5 +214,5 @@ namespace ProjectTest.DAOTest
             // Result: All buildings retrieved successfully
         }
 
-    }*/
+    }
 }

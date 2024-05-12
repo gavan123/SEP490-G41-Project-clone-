@@ -1,18 +1,27 @@
-﻿using BusinessObject.Models;
+﻿using BusinessObject.DTO;
+using BusinessObject.Models;
 using DataAccess.DAO;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace DataAccess.IRepository.Repository
 {
     public class PathShortest
     {
+        private readonly EdgeDAO _edgeDAO;
         private readonly MappointDAO _mappointDAO;
-
-        public PathShortest(MappointDAO mappointDAO)
+        private readonly finsContext _context;
+        public PathShortest(MappointDAO mappointDAO, EdgeDAO edgeDAO, finsContext _context)
         {
             _mappointDAO = mappointDAO;
+            _edgeDAO = edgeDAO;
         }
 
-        public Mappoint? FindPoint(int input)
+        public Mappoint FindPoint(int input)
         {
             using (var context = new finsContext())
             {
@@ -29,7 +38,7 @@ namespace DataAccess.IRepository.Repository
         }
 
         // Có thể thêm phương thức để truy vấn một MapPoint theo Id mà không Dispose
-        public Mappoint? GetMappointById(int id)
+        public Mappoint GetMappointById(int id)
         {
             using (var context = new finsContext())
             {
@@ -92,7 +101,7 @@ namespace DataAccess.IRepository.Repository
                         int adjacentMapPointId = edge.MapPointA == mapPointId ? edge.MapPointB : edge.MapPointA;
 
                         // Tìm đối tượng Mappoint tương ứng trong danh sách pointInAreaList
-                        Mappoint adjacentMapPoint = pointInAreaList.Find(mp => mp.MapPointId == adjacentMapPointId)!;
+                        Mappoint adjacentMapPoint = pointInAreaList.Find(mp => mp.MapPointId == adjacentMapPointId);
 
                         // Nếu tìm thấy, thêm vào danh sách adjacentMapPoints
                         if (adjacentMapPoint != null)
@@ -140,7 +149,7 @@ namespace DataAccess.IRepository.Repository
             }
         }
 
-        public Edge? GetEdge(int p1, int p2)
+        public Edge GetEdge(int p1, int p2)
         {
             using (var context = new finsContext())
             {

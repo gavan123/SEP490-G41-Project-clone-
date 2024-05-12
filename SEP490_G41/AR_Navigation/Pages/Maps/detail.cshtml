@@ -59,7 +59,7 @@
 
     @* trường cho canvas *@
     <div class="selected-image-container" id="map-images-container">
-        <canvas id="canvas_data" style="border: 1px solid black; width: 1065px;"
+        <canvas id="canvas_data" style="border: 1px, black;" width="1065%"
                 onclick="databaseLocation(event)">
         </canvas>
     </div>
@@ -107,12 +107,12 @@
 </div>
 
 <script>
-    $(document).ready(() => {
-        const userJson = sessionStorage.getItem('user');
+    $(document).ready(function () {
+        var userJson = sessionStorage.getItem('user');
         if (!userJson) {
             window.location.href = '/Authen/Login';
         } else {
-            const user = JSON.parse(userJson);
+            var user = JSON.parse(userJson);
             if (user.status !== "active") {
                 // Display SweetAlert message
                 Swal.fire({
@@ -128,23 +128,23 @@
             }
         }
         // Lấy mapId từ URL
-        const mapId = window.location.pathname.split("/").pop();
+        var mapId = window.location.pathname.split("/").pop();
 
         //Get map data by mapId
         $.ajax({
             url: `https://finnsapi.developvn.click/api/maps/${mapId}`,
             type: 'GET',
-            success: (map) => {
+            success: function (map) {
                 // Cập nhật tên bản đồ
                 $('#map-name').text(map.mapName);
                 $('#floor-name').text(map.floorName);
-                const imageSrc = `/Images/Map/${map.mapImage2D}`;
-                const canvas = document.getElementById('canvas_data');
+                var imageSrc = `/Images/Map/${map.mapImage2D}`; 
+                var canvas = document.getElementById('canvas_data');
                 canvas.style.backgroundImage = `url(${imageSrc})`;
 
-                getMapPointsByMapId(mapId, map.buildingId, map.floorId);
+                getMapPointsByMapId(mapId, map.buildingId, map.floorId)
             },
-            error: (xhr, status, error) => {
+            error: function (xhr, status, error) {
                 console.error(xhr.responseText);
                 // Xử lý lỗi nếu có
                 Swal.fire({
@@ -154,38 +154,32 @@
                 });
             }
         });
-
-        $(document).on('click', '#map-images-container img',function ()  {
-            const imageUrl = $(this).attr('src');
+        $(document).on('click', '#map-images-container img', function () {
+            var imageUrl = $(this).attr('src');
             window.open(imageUrl, '_blank');
         });
-
         if (window.location.href.includes('Maps/Detail')) {
             renderEgdes(edgeList, mappointList);
         }
     });
-
 </script>
 <script src="/js/MappointDraw.js"></script>
 <script>
-    document.getElementById('getMPButton').addEventListener('click', () => {
+    document.getElementById('getMPButton').addEventListener('click', function () {
         // Gọi hàm renderPoints từ tệp JavaScript MappointDraw.js và truyền vào mappointList
         renderPoints(mappointList);
     });
-
-    document.getElementById('getEDButton').addEventListener('click', () => {
+    document.getElementById('getEDButton').addEventListener('click', function () {
         // Gọi hàm renderPoints từ tệp JavaScript MappointDraw.js và truyền vào mappointList
         renderEgdes(edgeList, mappointList);
     });
-
-    document.getElementById('connectEdgeButton').addEventListener('click', () => {
+    document.getElementById('connectEdgeButton').addEventListener('click', function () {
         setEdge();
     });
-
     // Delete draw line
-    document.getElementById("clear-canvas-btn").addEventListener("click", () => {
-        const canvas = document.getElementById('canvas_data');
-        const context = canvas.getContext('2d');
+    document.getElementById("clear-canvas-btn").addEventListener("click", function () {
+        var canvas = document.getElementById('canvas_data');
+        var context = canvas.getContext('2d');
         context.clearRect(0, 0, canvas.width, canvas.height); // Xóa tất cả các đường vẽ trên canvas
         edgeAddList = [];
     });

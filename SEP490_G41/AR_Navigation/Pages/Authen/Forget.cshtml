@@ -61,7 +61,7 @@
                             <div id="mess"></div>
                         </div>
                         <button id="btn-send-mail" class="btn btn-success">Send</button>
-                        <button id="btn-cancel" class="btn btn-danger" onclick="window.location.href = '/Authen/Login';">Cancel</button>
+                        <button id="btn-cancel" class="btn btn-danger"><a href="/Authen/Login" style="text-decoration: none; color: white;">Cancel</a></button>
                     </form>
 
                     <!-- Verification Code Form -->
@@ -95,26 +95,27 @@
     </div>
 
     <script>
-        $(() => {
+        $(document).ready(function () {
 
-            const GetCode = (email) => {
+            function GetCode(email) {
                 $.ajax({
                     url: 'https://finnsapi.developvn.click/api/members/GetCode?email=' + email,
                     method: 'GET',
-                    success: (response) => {
+                    success: function (response) {
                         if (response) {
-                            const codeJSON = response;
+                            var codeJSON = response;
                             sessionStorage.setItem('code', JSON.stringify(codeJSON));
                             $("#form-input-email").hide();
                             $("#form-input-valid-code").show();
+
                         }
                     }
                 });
             }
 
-            $("#btn-send-mail").click((e) => {
+            $("#btn-send-mail").click(function (e) {
                 e.preventDefault();
-                const email = $("#email").val().trim();
+                var email = $("#email").val().trim();
 
                 if (email === "") {
                     $("#mess").text("Email is empty.").css("color", "red").show();
@@ -124,10 +125,10 @@
                 $.ajax({
                     url: 'https://finnsapi.developvn.click/api/members/GetMemberByEmail?email=' + email,
                     method: 'GET',
-                    success: (response) => {
+                    success: function (response) {
                         if (response) {
                             GetCode(email)
-                            const uid = response.memberId;
+                            var uid = response.memberId;
                             sessionStorage.setItem('id', JSON.stringify(uid));
                             $("#mess").hide();
 
@@ -135,19 +136,18 @@
                             $("#mess").text("Email isn't correct.").css("color", "red").show();
                         }
                     },
-                    error: (jqXHR, textStatus, errorThrown) => {
+                    error: function (jqXHR, textStatus, errorThrown) {
                         console.error("An error occurred:", textStatus, errorThrown);
                         $("#mess").text("Something went wrong, please try again later.").css("color", "red").show();
                     }
                 });
 
             });
-
-            $("#btn-verify").click((e) => {
+            $("#btn-verify").click(function (e) {
                 e.preventDefault();
-                const codeSession = sessionStorage.getItem('code');
-                const codeEnter = $("#code").val();
-                const code = JSON.parse(codeSession);
+                var codeSession = sessionStorage.getItem('code');
+                var codeEnter = $("#code").val();
+                var code = JSON.parse(codeSession);
                 if (code === codeEnter) {
                     $("#form-input-valid-code").hide();
                     $("#form-input-newpass").show();
@@ -157,12 +157,12 @@
                 }
             });
 
-            $("#btn-change-pass").click((e) => {
+            $("#btn-change-pass").click(function (e) {
                 e.preventDefault();
-                const newpass = $("#newpass").val().trim();
-                const re_newpass = $("#re_newpass").val().trim();
-                const uid = sessionStorage.getItem('id');
-                const id = JSON.parse(uid);
+                var newpass = $("#newpass").val().trim();
+                var re_newpass = $("#re_newpass").val().trim();
+                var uid = sessionStorage.getItem('id');
+                var id = JSON.parse(uid);
                 if (newpass === "" || re_newpass === "") {
                     $("#mess3").text("New password cannot be empty.").css("color", "red").show();
                     return;
@@ -176,13 +176,13 @@
                 $.ajax({
                     url: 'https://finnsapi.developvn.click/api/members/ResetPassword/' + id + '?newpass=' + newpass,
                     method: 'PUT',
-                    success: (response) => {
+                    success: function (response) {
                         $("#mess3").hide();
                         alert("Your password had been reset");
                         window.location.href = '/Authen/Login';
 
                     },
-                    error: (jqXHR, textStatus, errorThrown) => {
+                    error: function (jqXHR, textStatus, errorThrown) {
                         console.error("An error occurred:", textStatus, errorThrown);
                         $("#mess3").text("Something went wrong, please try again later.").css("color", "red").show();
                     }
@@ -190,7 +190,6 @@
 
             });
         });
-
     </script>
 </body>
 </html>

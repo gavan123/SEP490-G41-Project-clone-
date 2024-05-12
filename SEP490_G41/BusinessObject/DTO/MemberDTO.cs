@@ -57,9 +57,9 @@ namespace BusinessObject.DTO
     public class ChangePasswordModel
     {
         public int MemberId { get; set; }
-        public string? OldPassword { get; set; }
-        public string? NewPassword { get; set; }
-        public string? ReNewPassword { get; set; }
+        public string OldPassword { get; set; }
+        public string NewPassword { get; set; }
+        public string ReNewPassword { get; set; }
     }
 
 }

@@ -28,7 +28,7 @@ namespace DataAccess.DAO
             _context.Dispose();
         }
 
-        public Mapmanage? GetMapManageById(int mapId)
+        public Mapmanage GetMapManageById(int mapId)
         {
             if (mapId <= 0)
             {

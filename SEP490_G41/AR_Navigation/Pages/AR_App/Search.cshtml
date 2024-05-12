@@ -51,32 +51,30 @@
         </div>
     </div>
 </body>
-
-</html>
-
 <script>
     // Giả sử kết quả tìm kiếm được lưu trong một mảng
-    var searchResults = [
-        "Result 1",
-        "Result 2",
-        "Result 3"
-    ];
+var searchResults = [
+    "Result 1",
+    "Result 2",
+    "Result 3"
+];
 
-    // Lấy danh sách kết quả từ DOM
-    var resultsList = document.getElementById('results-list');
+// Lấy danh sách kết quả từ DOM
+var resultsList = document.getElementById('results-list');
 
-    // Xóa nội dung hiện tại của danh sách (nếu có)
-    resultsList.innerHTML = '';
+// Xóa nội dung hiện tại của danh sách (nếu có)
+resultsList.innerHTML = '';
 
-    // Thêm mỗi kết quả vào danh sách
-    searchResults.forEach(function (result) {
-        var listItem = document.createElement('li');
-        listItem.className = 'list-group-item';
-        listItem.textContent = result;
-        resultsList.appendChild(listItem);
-    });
+// Thêm mỗi kết quả vào danh sách
+searchResults.forEach(function(result) {
+    var listItem = document.createElement('li');
+    listItem.className = 'list-group-item';
+    listItem.textContent = result;
+    resultsList.appendChild(listItem);
+});
 
-    // Hiển thị phần kết quả tìm kiếm
-    document.getElementById('search-results').style.display = 'block';
+// Hiển thị phần kết quả tìm kiếm
+document.getElementById('search-results').style.display = 'block';
 
 </script>
+</html>

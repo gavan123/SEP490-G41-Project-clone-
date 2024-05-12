@@ -10,7 +10,7 @@ namespace BusinessObject.Models
         public DateTime CreateDate { get; set; }
         public DateTime? UpdateDate { get; set; }
 
-        public virtual Map? Map { get; set; }
-        public virtual Member? Member { get; set; }
+        public virtual Map Map { get; set; }
+        public virtual Member Member { get; set; }
     }
 }

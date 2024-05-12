@@ -18,13 +18,13 @@ namespace AR_Navigation.Pages.Buildings
 
 
         [BindProperty]
-        public IFormFile? ImageFile { get; set; }
+        public IFormFile ImageFile { get; set; }
         public async Task<IActionResult> OnPostCreateBuildingAsync()
         {
 
             string imagesDirectory = Path.Combine(_webHostEnvironment.WebRootPath, "Images/Building");
 
-            string uniqueFileName = "";
+            string uniqueFileName = null;
             if (ImageFile != null && ImageFile.Length > 0)
             {
                 uniqueFileName = ImageFile.FileName;
@@ -47,7 +47,7 @@ namespace AR_Navigation.Pages.Buildings
 
             string imagesDirectory = Path.Combine(_webHostEnvironment.WebRootPath, "Images/Building");
 
-            string uniqueFileName = "";
+            string uniqueFileName = null;
             if (ImageFile != null && ImageFile.Length > 0)
             {
                 uniqueFileName = ImageFile.FileName;

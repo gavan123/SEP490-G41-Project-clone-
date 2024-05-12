@@ -58,7 +58,7 @@ namespace DataAccess.DAO
         #endregion
 
         #region Login
-        public Member? Login(string username, string password)
+        public Member Login(string username, string password)
         {
             var member = _context.Members.FirstOrDefault(m => m.Username.Equals(username) && m.Password.Equals(validate.EncodePassword(password)));
             if (member != null)
@@ -86,18 +86,18 @@ namespace DataAccess.DAO
             {
                 return _context.Members.ToList();
             }
-            var list = _context.Members.Where(m => m.FullName!.Contains(name)).ToList();
+            var list = _context.Members.Where(m => m.FullName.Contains(name)).ToList();
             _context.Dispose();
             return list;
         }
         #endregion
 
-        public string? SetMemberStatus()
+        public string SetMemberStatus()
         {
             return null;
         }
         #region Send code
-        public string? SendCode(string email)
+        public string SendCode(string email)
         {
             var mem = _context.Members.FirstOrDefault(m => m.Email == email);
             if (mem != null)
@@ -126,7 +126,7 @@ namespace DataAccess.DAO
                     _context.Dispose();
                     return code;
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     throw new Exception();
                 }
@@ -135,7 +135,7 @@ namespace DataAccess.DAO
         }
         #endregion
         #region Get member by email
-        public Member? GetMemberByEmail(string email)
+        public Member GetMemberByEmail(string email)
         {
             var member = _context.Members.FirstOrDefault(m => m.Email == email);
             if (member != null)
@@ -163,19 +163,16 @@ namespace DataAccess.DAO
         #endregion
 
         #region Change password
-        public string ChangePassword(int id, ChangePasswordModel changePassword)
+        public string ChangePassword(int id,ChangePasswordModel changePassword)
         {
-            string oldPassword = changePassword.OldPassword ?? ""; 
-            string newPassword = changePassword.NewPassword ?? ""; 
-
-            var mem = _context.Members.FirstOrDefault(m => m.MemberId == id && m.Password.Equals(validate.EncodePassword(oldPassword)));
+            var mem = _context.Members.FirstOrDefault(m => m.MemberId == id && m.Password.Equals(validate.EncodePassword(changePassword.OldPassword)));
             if (mem != null)
             {
                 if (changePassword.OldPassword != changePassword.NewPassword)
                 {
                     if (changePassword.NewPassword == changePassword.ReNewPassword)
                     {
-                        mem.Password = validate.EncodePassword(newPassword);
+                        mem.Password = validate.EncodePassword(changePassword.NewPassword);
                         _context.SaveChanges();
                         _context.Dispose();
                         return "Success";
@@ -186,7 +183,6 @@ namespace DataAccess.DAO
             }
             return "Incorrect";
         }
-
         #endregion
 
         // Cập nhật thông tin Profile

@@ -1,4 +1,4 @@
-﻿@page
+﻿@page 
 @model AR_Navigation.Pages.Profile.MyprofileModel
 @{
     Layout = "_AdminLayout";
@@ -6,12 +6,12 @@
 <div class="container rounded bg-white mt-5 mb-5">
     <h1 class="text-left" style="display: inline;margin-right:20px; border-bottom: 1px solid black;transition: color 0.3s;" onmouseover="this.style.color='blue'" onmouseout="this.style.color=''">Profile</h1>
     <a href="/Profile/ChangePassword">
-        <h3 class="text-left" style="display: inline; transition: color 0.3s;" onmouseover="this.style.color='blue'" onmouseout="this.style.color=''">ChangePassword</h3>
+    <h3 class="text-left" style="display: inline; transition: color 0.3s;" onmouseover="this.style.color='blue'" onmouseout="this.style.color=''">ChangePassword</h3>
     </a>
     <div class="row" id="view-profile">
         <div class="col-md-3 border-right">
             <div class="d-flex flex-column align-items-center text-center p-3 py-5">
-                <img class="rounded-circle mt-5" style="width: 150px; height: 150px;" id="profile-image">
+                <img class="rounded-circle mt-5" width="150px" height="150px" id="profile-image">
                 <span class="font-weight-bold" id="profile-name"></span>
                 <span class="text-black-50" id="profile-email"></span>
             </div>
@@ -124,47 +124,52 @@
 </div>
 
 <script>
-    $(document).ready(() => {
+    $(document).ready(function () {
         //session
-        const userJson = sessionStorage.getItem('user');
-        if (userJson) {
-            const user = JSON.parse(userJson);
-            const userid = user.userid;
-        } else {
+        var userJson = sessionStorage.getItem('user');
+        if (userJson)
+        {
+            var user = JSON.parse(userJson);
+            var userid = user.userid;
+        }else
+        {
             window.location.href = '/Authen/Login';
             return;
         }
         // Gửi yêu cầu AJAX để lấy thông tin profile từ API
-        $.ajax({
-            url: 'https://finnsapi.developvn.click/api/profiles/' + userid, // Thay đổi số 1 thành memberId thực tế của bạn
-            type: 'GET',
-            success: (data) => {
-                // Hiển thị thông tin profile trên trang view profile
-                $('#profile-name').text(data.fullName);
-                $('#profile-email').text(data.email);
-                $('#profile-fullname').val(data.fullName);
-                $('#profile-username').val(data.username);
-                $('#profile-mobile').val(data.phone);
-                $('#profile-address').val(data.address);
-                $('#profile-emails').val(data.email);
-                $('#profile-dob').val(data.doB.substring(0, 10)); // Cắt chuỗi để lấy ngày tháng năm
-                $('#profile-country').val(data.country);
-                const baseUrl = window.location.origin; // Lấy URL cơ sở của trang web
-                $('#profile-image').attr('src', baseUrl + '/Images/Avatar/' + data.avatar);
-            },
-            error: (xhr, status, error) => {
-                console.error('Error fetching profile:', error);
-                // Xử lý lỗi nếu có
-            }
-        });
+        $.ajax
+            ({
+                
+                url: 'https://finnsapi.developvn.click/api/profiles/' + userid, // Thay đổi số 1 thành memberId thực tế của bạn
+                type: 'GET',
+                success: function (data) {
+                    // Hiển thị thông tin profile trên trang view profile
+                    $('#profile-name').text(data.fullName);
+                    $('#profile-email').text(data.email);
+                    $('#profile-fullname').val(data.fullName);
+                    $('#profile-username').val(data.username);
+                    $('#profile-mobile').val(data.phone);
+                    $('#profile-address').val(data.address);
+                    $('#profile-emails').val(data.email);
+                    $('#profile-dob').val(data.doB.substring(0, 10));// Cắt chuỗi để lấy ngày tháng năm
+                    $('#profile-country').val(data.country);
+                    var baseUrl = window.location.origin; // Lấy URL cơ sở của trang web
+                    $('#profile-image').attr('src', baseUrl + '/Images/Avatar/' + data.avatar);
+
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error fetching profile:', error);
+                    // Xử lý lỗi nếu có
+                }
+            });
 
         // Xử lý sự kiện khi người dùng nhấn nút "Edit profile"
-        $('.edit-profile').click(() => {
+        $('.edit-profile').click(function () {
             // Lấy và hiển thị thông tin profile trong form chỉnh sửa
             $.ajax({
                 url: 'https://finnsapi.developvn.click/api/profiles/' + userid,
                 type: 'GET',
-                success: (data) => {
+                success: function (data) {
                     $('#edit-profile-name').val(data.fullName);
                     $('#edit-profile-email').val(data.email);
                     $('#edit-profile-mobile').val(data.phone);
@@ -173,7 +178,7 @@
 
                     $('#edit-profile-dob').val(data.doB.substring(0, 10)); // Cắt chuỗi để lấy ngày tháng năm
                 },
-                error: (xhr, status, error) => {
+                error: function (xhr, status, error) {
                     console.error('Error fetching profile for editing:', error);
                     // Xử lý lỗi nếu có
                 }
@@ -183,17 +188,17 @@
         });
 
         // Xử lý sự kiện khi người dùng nhấn nút "Save Changes"
-        $('#save-profile-changes').click(() => {
-            const newName = $('#edit-profile-name').val();
-            const newEmail = $('#edit-profile-email').val();
-            const newMobile = $('#edit-profile-mobile').val();
-            const newAddress = $('#edit-profile-address').val();
-            const newDOB = new Date($('#edit-profile-dob').val()).toISOString().slice(0, 10); // Format date to 'yyyy-MM-dd'
-            const newCountry = $('#edit-profile-country').val();
+        $('#save-profile-changes').click(function () {
+            var newName = $('#edit-profile-name').val();
+            var newEmail = $('#edit-profile-email').val();
+            var newMobile = $('#edit-profile-mobile').val();
+            var newAddress = $('#edit-profile-address').val();
+            var newDOB = new Date($('#edit-profile-dob').val()).toISOString().slice(0, 10); // Format date to 'yyyy-MM-dd'
+            var newCountry = $('#edit-profile-country').val();
             // Lấy file hình ảnh được chọn
-            const imageInput = $('#edit-profile-image');
+            var imageInput = $('#edit-profile-image');
 
-            const formData = new FormData();
+            var formData = new FormData();
             formData.append('MemberId', userid);
             formData.append('FullName', newName);
             formData.append('Email', newEmail);
@@ -202,9 +207,10 @@
             formData.append('DoB', newDOB);
             formData.append('Country', newCountry);
             if (imageInput[0].files.length > 0) {
-                const imageFile = imageInput[0].files[0];
+                var imageFile = imageInput[0].files[0];
                 formData.append('Avatar', imageFile);
             }
+         
 
             $.ajax({
                 url: 'https://finnsapi.developvn.click/api/profiles',
@@ -212,7 +218,7 @@
                 data: formData,
                 contentType: false,
                 processData: false,
-                success: (response) => {
+                success: function (response) {
                     //alert('Profile updated successfully!');
                     //$('#edit-profile').modal('hide');
                     $('#profile-name').text(newName);
@@ -223,34 +229,35 @@
                         title: 'Profile Updated',
                         text: 'Profile information has been updated successfully!',
                         showConfirmButton: true,
+                       
                     }).then(() => {
                         $('#form-edit-profile').submit();
                     });
                 },
-                error: (xhr, status, error) => {
+                error: function (xhr, status, error) {
                     console.error('Error updating profile:', error);
                     console.log(imageInput[0].files);
                     alert('Failed to update profile. Please try again later.');
                 }
             });
         });
-
         //get image when selected
-        const displaySelectedImage = (input, containerId) => {
-            const file = input.files[0];
-            const reader = new FileReader();
+        function displaySelectedImage(input, containerId) {
+            var file = input.files[0];
+            var reader = new FileReader();
 
-            reader.onload = (e) => {
-                const imgElement = document.createElement('img');
+            reader.onload = function (e) {
+                var imgElement = document.createElement('img');
                 imgElement.src = e.target.result;
                 imgElement.className = "img-fluid rounded";
 
-                const selectedImageContainer = document.getElementById(containerId);
+                var selectedImageContainer = document.getElementById(containerId);
                 selectedImageContainer.innerHTML = '';
                 selectedImageContainer.appendChild(imgElement);
-            };
+            }
 
             reader.readAsDataURL(file);
-        };
+        }
     });
+
 </script>

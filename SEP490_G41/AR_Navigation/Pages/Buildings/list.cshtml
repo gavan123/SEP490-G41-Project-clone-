@@ -204,33 +204,37 @@
 
 <script>
 
-    $(document).ready(() => {
-        const userJson = sessionStorage.getItem('user');
+    $(document).ready(function () {
+         var userJson = sessionStorage.getItem('user');
         if (!userJson) {
             window.location.href = '/Authen/Login';
         } else {
-            const user = JSON.parse(userJson);
+            var user = JSON.parse(userJson);
             if (user.status !== "active") {
+                // Display SweetAlert message
                 Swal.fire({
                     icon: 'error',
                     title: 'Access Denied',
                     text: 'You do not have permission to access this page.',
                     showConfirmButton: false,
-                    timer: 2000
-                }).then(() => {
+                    timer: 2000 // Close the alert after 2 seconds
+                }).then((result) => {
+                    // Redirect to login page after the alert is closed
                     window.location.href = '/HomePage/Home';
                 });
             }
         }
 
-        const itemsPerPage = 5;
-        let currentPage = 1;
+        var itemsPerPage = 5;
+        var currentPage = 1; // Khởi tạo trang hiện tại là 1
 
-        const updateBuildingList = async (buildings, currentPage, itemsPerPage) => {
+        //Buiding table
+        async function updateBuildingList(buildings, currentPage, itemsPerPage) {
             const startIndex = (currentPage - 1) * itemsPerPage;
             const endIndex = startIndex + itemsPerPage;
             const buildingsToShow = buildings.slice(startIndex, endIndex);
 
+            // Sắp xếp danh sách tòa nhà theo tên (buildingName)
             buildings.sort((a, b) => a.buildingName.localeCompare(b.buildingName));
 
             $('#building-list').empty();
@@ -239,6 +243,7 @@
                 const buildingId = building.buildingId;
 
                 try {
+                    // Gửi yêu cầu AJAX để lấy thông tin của tòa nhà
                     const floors = await $.ajax({
                         url: `https://finnsapi.developvn.click/api/floors?$filter=buildingId eq ${buildingId}`,
                         type: 'GET',
@@ -297,32 +302,36 @@
                     console.error('Error loading building count from API: ' + error);
                 }
             }
-        };
+        }
 
-        const createPagination = (totalPages, buildings) => {
-            const pagination = $('#pagination');
+        //tạo phân trang
+        function createPagination(totalPages, buildings) {
+            var pagination = $('#pagination');
 
             if (totalPages > 0) {
                 pagination.empty();
 
-                const prevLi = $('<li class="page-item"><a class="page-link" href="#">Prev</a></li>');
+                // Nút "Prev"
+                var prevLi = $('<li class="page-item"><a class="page-link" href="#">Prev</a></li>');
                 if (currentPage === 1) {
                     prevLi.addClass('disabled');
                 }
                 pagination.append(prevLi);
 
-                const startPage = Math.max(1, currentPage - 1);
-                const endPage = Math.min(totalPages, currentPage + 1);
+                // Hiển thị trang hiện tại và 2 trang xung quanh
+                var startPage = Math.max(1, currentPage - 1);
+                var endPage = Math.min(totalPages, currentPage + 1);
 
-                for (let i = startPage; i <= endPage; i++) {
-                    const pageLi = $(`<li class="page-item"><a class="page-link" href="#">${i}</a></li>`);
+                for (var i = startPage; i <= endPage; i++) {
+                    var pageLi = $('<li class="page-item"><a class="page-link" href="#">' + i + '</a></li>');
                     if (i === currentPage) {
                         pageLi.addClass('active');
                     }
                     pagination.append(pageLi);
                 }
 
-                const nextLi = $('<li class="page-item"><a class="page-link" href="#">Next</a></li>');
+                // Nút "Next"
+                var nextLi = $('<li class="page-item"><a class="page-link" href="#">Next</a></li>');
                 if (currentPage === totalPages) {
                     nextLi.addClass('disabled');
                 }
@@ -335,7 +344,7 @@
 
             pagination.off('click').on('click', 'a', function (event) {
                 event.preventDefault();
-                const page = $(this).parent().text();
+                var page = $(this).parent().text();
                 if (page === 'Prev' && currentPage > 1) {
                     currentPage--;
                 } else if (page === 'Next' && currentPage < totalPages) {
@@ -346,48 +355,53 @@
                 updatePagination(totalPages, buildings);
                 updateBuildingList(buildings, currentPage, itemsPerPage);
             });
-        };
+        }
 
-        const updatePagination = (totalPages, buildings) => {
-            const pagination = $('#pagination');
+        function updatePagination(totalPages, buildings) {
+            var pagination = $('#pagination');
             pagination.find('li').removeClass('active disabled');
 
-            const prevLi = pagination.find('li:first');
+            // Nút "Prev"
+            var prevLi = pagination.find('li:first');
             if (currentPage === 1) {
                 prevLi.addClass('disabled');
             }
 
-            const startPage = Math.max(1, currentPage - 1);
-            const endPage = Math.min(totalPages, currentPage + 1);
+            // Hiển thị trang hiện tại và 2 trang xung quanh
+            var startPage = Math.max(1, currentPage - 1);
+            var endPage = Math.min(totalPages, currentPage + 1);
 
             pagination.find('li:not(:first):not(:last)').each(function (index) {
-                const pageNumber = startPage + index;
+                var pageNumber = startPage + index;
                 $(this).toggleClass('active', pageNumber === currentPage);
                 $(this).find('a').text(pageNumber);
             });
 
-            const nextLi = pagination.find('li:last');
+            // Nút "Next"
+            var nextLi = pagination.find('li:last');
             if (currentPage === totalPages) {
                 nextLi.addClass('disabled');
             }
-        };
+        }
 
+        // Get building list from API
         $.ajax({
             url: 'https://finnsapi.developvn.click/api/buildings',
             type: 'GET',
             dataType: 'json',
-            success: async (buildings) => {
+            success: async function (buildings) {
                 const totalPages = Math.ceil(buildings.length / itemsPerPage);
                 await updateBuildingList(buildings, currentPage, itemsPerPage);
-                createPagination(totalPages, buildings);
+                createPagination(totalPages, buildings); // Truyền danh sách buildings vào hàm createPagination
             },
-            error: (xhr, status, error) => {
+            error: function (xhr, status, error) {
                 console.log('Error loading buildings from API: ' + error);
             }
         });
 
-        $('#building-facility').on('change', async () => {
-            const selectedFacilityId = $(this).val();
+        //Filter building by facility
+        $('#building-facility').on('change', async function () {
+            const selectedFacilityId = $(this).val(); // Lấy facilityId của tùy chọn đã chọn
 
             let url = 'https://finnsapi.developvn.click/api/buildings';
             if (selectedFacilityId !== '0' && selectedFacilityId) {
@@ -407,43 +421,49 @@
             }
         });
 
+
+        //API get facility
         $.ajax({
             url: 'https://finnsapi.developvn.click/api/facilities',
             type: 'GET',
-            success: (response) => {
-                response.forEach((facility) => {
-                    $('#new-building-facility').append(`<option value="${facility.facilityId}">${facility.facilityName}</option>`);
-                    $('#edit-building-facility').append(`<option value="${facility.facilityId}">${facility.facilityName}</option>`);
-                    $('#building-facility').append(`<option value="${facility.facilityId}">${facility.facilityName}</option>`);
+            success: function (response) {
+                response.forEach(function (facility) {
+                    $('#new-building-facility').append('<option value="' + facility.facilityId + '">' + facility.facilityName + '</option>');
+                    $('#edit-building-facility').append('<option value="' + facility.facilityId + '">' + facility.facilityName + '</option>');
+                    $('#building-facility').append('<option value="' + facility.facilityId + '">' + facility.facilityName + '</option>');
                 });
             },
-            error: (xhr, status, error) => {
+            error: function (xhr, status, error) {
                 console.error(error);
             }
         });
 
-        $('#create-building-btn').click(() => {
-            const buildingName = $('#new-building-name').val();
-            const status = $('input[name="statusRadios"]:checked').val();
-            const facilityId = $('#new-building-facility').val();
-            const imageInput = $('#new-building-image');
+        //Create Building API
+        $('#create-building-btn').click(function () {
+            // Get data from input fields
+            var buildingName = $('#new-building-name').val();
+            var status = $('input[name="statusRadios"]:checked').val();
+            var facilityId = $('#new-building-facility').val();
+            var imageInput = $('#new-building-image');
 
-            const formData = new FormData();
+            // Create FormData to send data to the API
+            var formData = new FormData();
             formData.append('BuildingName', buildingName);
             formData.append('Status', status);
             formData.append('FacilityId', facilityId);
             if (imageInput[0].files.length > 0) {
-                const imageFile = imageInput[0].files[0];
+                var imageFile = imageInput[0].files[0];
                 formData.append('Image', imageFile);
             }
 
+            // Send an AJAX POST request to the API
             $.ajax({
                 url: 'https://finnsapi.developvn.click/api/buildings',
                 type: 'POST',
                 data: formData,
                 processData: false,
                 contentType: false,
-                success: (response) => {
+                success: function (response) {
                     console.log('Building added successfully:', response);
                     Swal.fire({
                         icon: 'success',
@@ -455,8 +475,9 @@
                     });
                     $('#create-new-building').modal('hide');
                 },
-                error: (xhr, status, error) => {
+                error: function (xhr, status, error) {
                     console.error('Error adding building:', error);
+                    // Log details of the error response
                     console.log(imageInput[0].files);
                     Swal.fire({
                         icon: 'error',
@@ -467,8 +488,9 @@
             });
         });
 
+        //Delete Building API
         $(document).on('click', '.deleteBuilding', function () {
-            const buildingId = $(this).data('id');
+            var buildingId = $(this).data('id');
 
             Swal.fire({
                 title: 'Are you sure?',
@@ -483,7 +505,7 @@
                     $.ajax({
                         url: 'https://finnsapi.developvn.click/api/buildings/' + buildingId,
                         type: 'DELETE',
-                        success: (response) => {
+                        success: function (response) {
                             console.log(response);
                             Swal.fire(
                                 'Deleted!',
@@ -493,7 +515,7 @@
                                 location.reload();
                             });
                         },
-                        error: (xhr, status, error) => {
+                        error: function (xhr, status, error) {
                             console.error(xhr.responseText);
                             Swal.fire(
                                 'Error!',
@@ -506,16 +528,18 @@
             });
         });
 
+        //Show edit modal have data by buildingId
         $(document).on('click', '.editBuilding', function () {
-            const buildingId = $(this).data('id');
+            var buildingId = $(this).data('id');
             showEditModal(buildingId);
         });
 
-        const showEditModal = (buildingId) => {
+        //Get building data by buildingId
+        function showEditModal(buildingId) {
             $.ajax({
                 url: 'https://finnsapi.developvn.click/api/buildings?filter=buildingId eq ' + buildingId,
                 type: 'GET',
-                success: (response) => {
+                success: function (response) {
                     $('#building-id').val(response[0].buildingId);
                     $('#edit-building-name').val(response[0].buildingName);
                     if (response[0].status === 'active') {
@@ -524,15 +548,16 @@
                         $('#edit-statusDeactive').prop('checked', true);
                     }
                     $('#edit-building').modal('show');
-                    let facilityName = '';
+                    var facilityName = '';
+                    //API get facilities by ID
                     $.ajax({
                         url: 'https://finnsapi.developvn.click/api/facilities?filter=facilityId eq' + response.facilityId,
                         type: 'GET',
                         async: false,
-                        success: (facilityResponse) => {
+                        success: function (facilityResponse) {
                             facilityId = facilityResponse[0].facilityId;
                         },
-                        error: (xhr, status, error) => {
+                        error: function (xhr, status, error) {
                             console.error('Error fetching facility details:', error);
                         }
                     });
@@ -540,26 +565,27 @@
 
                     $('#edit-building').modal('show');
                 },
-                error: (xhr, status, error) => {
+                error: function (xhr, status, error) {
                     console.error('Error fetching building details:', error);
                 }
             });
-        };
+        }
 
-        $('#edit-building-btn').click(() => {
-            const buildingId = $('#building-id').val();
-            const buildingName = $('#edit-building-name').val();
-            const status = $('input[name="edit-statusRadios"]:checked').val();
-            const facilityId = $('#edit-building-facility').val();
-            const imageInput = $('#edit-building-image');
+        //Edit Building
+        $('#edit-building-btn').click(function () {
+            var buildingId = $('#building-id').val();
+            var buildingName = $('#edit-building-name').val();
+            var status = $('input[name="edit-statusRadios"]:checked').val();
+            var facilityId = $('#edit-building-facility').val();
+            var imageInput = $('#edit-building-image');
 
-            const formData = new FormData();
+            var formData = new FormData();
             formData.append('BuildingId', buildingId);
             formData.append('BuildingName', buildingName);
             formData.append('Status', status);
             formData.append('FacilityId', facilityId);
             if (imageInput[0].files.length > 0) {
-                const imageFile = imageInput[0].files[0];
+                var imageFile = imageInput[0].files[0];
                 formData.append('Image', imageFile);
             }
 
@@ -569,7 +595,7 @@
                 data: formData,
                 contentType: false,
                 processData: false,
-                success: (response) => {
+                success: function (response) {
                     Swal.fire({
                         icon: 'success',
                         title: 'Building Updated',
@@ -582,7 +608,7 @@
                     $('#edit-building').modal('hide');
                     console.log('Building updated successfully:', response);
                 },
-                error: (xhr, status, error) => {
+                error: function (xhr, status, error) {
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
@@ -594,23 +620,85 @@
         });
 
 
+        // Add Floor in building
+        $(document).on('click', '.addFloor', function () {
+            var buildingId = $(this).data('id');
+            $('#add-floor-modal').modal('show');
+
+            // Gửi AJAX request
+            $('#add-floor-btn').click(function (event) {
+                event.preventDefault();
+
+                var floorCount = $('#floor-number').val();
+
+                var formDataArray = [];
+
+                for (var i = 1; i <= floorCount; i++) {
+                    var floorData = {
+                        FloorName: 'Floor ' + i,
+                        Greeting: 'Welcome to Floor ' + i,
+                        Status: 'active',
+                        BuildingId: buildingId
+                    };
+
+                    formDataArray.push(floorData);
+                }
+
+
+                $.ajax({
+                    url: 'https://finnsapi.developvn.click/api/floors',
+                    type: 'POST',
+                    data: JSON.stringify(formDataArray),
+                    contentType: 'application/json',
+                    success: function (response) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: 'Floor added successfully!',
+                            showConfirmButton: false,
+                            timer: 1500
+                        }).then(() => {
+                            location.reload();
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(xhr.responseText);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'An error occurred while adding the floor.'
+                        });
+                    }
+                });
+            });
+        });
+
+        //Redirect building detail
+        $(document).on('click', '.viewBuilding', function () {
+            var buildingId = $(this).data('id');
+            window.location.href = `Detail/${buildingId}`;
+        });
+
+    });
+
+
     //get image when selected
-        const displaySelectedImage = (input, containerId) => {
-            const file = input.files[0];
-            const reader = new FileReader();
+    function displaySelectedImage(input, containerId) {
+        var file = input.files[0];
+        var reader = new FileReader();
 
-            reader.onload = (e) => {
-                const imgElement = document.createElement('img');
-                imgElement.src = e.target.result;
-                imgElement.className = "img-fluid rounded";
+        reader.onload = function (e) {
+            var imgElement = document.createElement('img');
+            imgElement.src = e.target.result;
+            imgElement.className = "img-fluid rounded";
 
-                const selectedImageContainer = document.getElementById(containerId);
-                selectedImageContainer.innerHTML = '';
-                selectedImageContainer.appendChild(imgElement);
-            }
-
-            reader.readAsDataURL(file);
+            var selectedImageContainer = document.getElementById(containerId);
+            selectedImageContainer.innerHTML = '';
+            selectedImageContainer.appendChild(imgElement);
         }
+
+        reader.readAsDataURL(file);
+    }
 
 
 </script>

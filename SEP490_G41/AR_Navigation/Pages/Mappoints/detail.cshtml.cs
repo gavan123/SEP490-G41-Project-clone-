@@ -23,13 +23,13 @@ namespace AR_Navigation.Pages.Mappoints
         public int Id { get; set; }
 
         [BindProperty]
-        public IFormFile? ImageFile { get; set; }
+        public IFormFile ImageFile { get; set; }
         public async Task<IActionResult> OnPostEditMappointAsync()
         {
 
             string imagesDirectory = Path.Combine(_webHostEnvironment.WebRootPath, "Images/Mappoint");
 
-            string uniqueFileName = "";
+            string uniqueFileName = null;
             if (ImageFile != null && ImageFile.Length > 0)
             {
                 uniqueFileName = ImageFile.FileName;
